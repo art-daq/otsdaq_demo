@@ -1,0 +1,99 @@
+{
+"document" : {
+"data" : {
+"NAME" : "ARTDAQ_BUILDER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475700062,
+"COL_TYPES" : {
+"SUPERVISOR_INSTANCE" : "NUMBER",
+"BUILDER_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"CONFIGURATION_STRING" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"SUPERVISOR_INSTANCE" : 1,
+"BUILDER_ID" : "1",
+"STATUS" : "on",
+"CONFIGURATION_STRING" : "\n    \tdaq:\n    \t{\n    \t\tevent_builder:\n    \t\t{\n    \t\t\texpected_fragments_per_event:1 \n    \t\t\tfirst_fragment_receiver_rank:0 \n    \t\t\tfragment_receiver_count:1 \n    \t\t\tmpi_buffer_count:16 \n    \t\t\tprint_event_store_stats:true \n    \t\t\tsend_triggers:true \n    \t\t\ttrigger_port:5001 \n    \t\t\tuse_art:true \n    \t\t\tverbose:false\n    \t\t} \n    \t\tmax_fragment_size_words:2.097152e6\n    \t} \n    \toutputs:\n    \t{\n    \t\tnetMonOutput:\n    \t\t{\n    \t\t\tmodule_type:\"RootMPIOutput\"\n    \t\t}\n    \t} \n    \tphysics:\n    \t{\n    \t\tanalyzers:\n    \t\t{\n    \t\t\twf:\n    \t\t\t{\n    \t\t\t\tmodule_type:\"WFViewer\" \n    \t\t\t\tfragment_ids:[0] \n    \t\t\t\tfragment_type_labels:[\"STIB\"] \n    \t\t\t\tprescale:60 \n    \t\t\t\twrite_to_file:true \n    \t\t\t\tfileName:\"/tmp/otsdaqdemo_onmon_evb.root\"\n    \t\t\t}\n    \t\t}  \n    \t\ta1:[\"wf\"] \n    \t\tmy_output_modules:[\"netMonOutput\"]\n    \t} \n    \tprocess_name:\"DAQ\" \n    \tservices:\n    \t{\n    \t\tTiming:\n    \t\t{\n    \t\t\tsummaryOnly:true\n    \t\t} \n    \t\tscheduler:\n    \t\t{\n    \t\t\tfileMode:\"NOMERGE\" \n    \t\t\terrorOnFailureToPut: false\n    \t\t} \n    \t\tuser:\n    \t\t{\n    \t\t\tNetMonTransportServiceInterface:\n    \t\t\t{\n    \t\t\t\tdata_receiver_count:1 \n    \t\t\t\tfirst_data_receiver_rank:2 \n    \t\t\t\tmax_fragment_size_words:2.097152e6 \n    \t\t\t\tmpi_buffer_count:8 \n    \t\t\t\tservice_provider:\"NetMonTransportService\"\n    \t\t\t}\n    \t\t}\n    \t} \n    \tsource:\n    \t{\n    \t\tfragment_type_map:[[1,\"UDP\"], [4,\"STIB\"]] \n    \t\tmodule_type:\"RawInput\" \n    \t\tresume_after_timeout:true \n    \t\twaiting_time:900\n    \t}    \t\n    "
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "1",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"name" : "myConfig_v0",
+"assigned" : "Wed Oct 12 16:36:07 2016"
+},
+{
+"name" : "aaConfig_v0",
+"assigned" : "Thu Oct 20 15:23:15 2016"
+},
+{
+"name" : "PhysicsWizToLatest_v0",
+"assigned" : "Fri Nov  4 11:32:32 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setVersion" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"addToGlobalConfig" : "Wed Oct 12 16:36:07 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 15:23:15 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:32:32 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "4a69da59885142f1a3ac6538"
+}
+}

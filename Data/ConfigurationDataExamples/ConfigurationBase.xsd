@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="ROOT">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="HEADER">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="TYPE">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="EXTENSION_TABLE_NAME" type="xs:string"/>
+                  <xs:element name="NAME" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="RUN">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="RUN_TYPE" type="xs:string"/>
+                  <xs:element name="RUN_NUMBER" type="xs:string"/>
+                  <xs:element name="RUN_BEGIN_TIMESTAMP" type="xs:string"/>
+                  <xs:element name="LOCATION" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DATA_SET">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="PART">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="NAME_LABEL" type="xs:string"/>
+                  <xs:element name="KIND_OF_PART" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VERSION" type="xs:string"/>
+            <xs:element name="COMMENT_DESCRIPTION" type="xs:string"/>
+            <xs:element name="CREATED_BY_USER" type="xs:string"/>
+            <xs:element name="DATA" minOccurs="1" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:any minOccurs="1" maxOccurs="unbounded" processContents='skip'/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+</xs:schema>

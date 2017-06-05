@@ -1,0 +1,85 @@
+{
+"document" : {
+"data" : {
+"NAME" : "ARTDAQ_AGGREGATOR_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475700062,
+"COL_TYPES" : {
+"SUPERVISOR_INSTANCE" : "NUMBER",
+"AGGREGATOR_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"CONFIGURATION_STRING" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"SUPERVISOR_INSTANCE" : 1,
+"AGGREGATOR_ID" : "1",
+"STATUS" : "on",
+"CONFIGURATION_STRING" : "\n\t\tdaq:\n\t\t{\n\t\t\taggregator:\n\t\t\t{\n\t\t\t\tevent_builder_count:1 \n\t\t\t\tevent_queue_depth:20 \n\t\t\t\tevent_queue_wait_time:5 \n\t\t\t\texpected_events_per_bunch:1 \n\t\t\t\tfile_duration:0 \n\t\t\t\tfile_event_count:0 \n\t\t\t\tfile_size_MB:0 \n\t\t\t\tfirst_event_builder_rank:1 \n\t\t\t\tmpi_buffer_count:8 \n\t\t\t\tprint_event_store_stats:true \n\t\t\t\txmlrpc_client_list:\";http://localhost:5100/RPC2,3;http://localhost:5101/RPC2,3;http://localhost:5200/RPC2,4;http://localhost:5201/RPC2,4;http://localhost:5300/RPC2,5;http://localhost:5301/RPC2,5\"\n\t\t\t} \n\t\t\tmax_fragment_size_words:2.097152e6\n\t\t} \n\t\toutputs:\n\t\t{\n\t\t\tnormalOutput:\n\t\t\t{\n\t\t\t\tfileName:\"/tmp/artdaqots_r%06r_sr%02s_%to.root\" \n\t\t\t\tmodule_type:\"RootOutput\"\n\t\t\t}\n\t\t} \n\t\tphysics:\n\t\t{\n\t\t\tmy_output_modules:[\"normalOutput\"] \n\t\t\tp2:[\"BuildInfo\"] \n\t\t\ta1:[\"wf\"] \n\t\t\tproducers:\n\t\t\t{\n\t\t\t\tBuildInfo:\n\t\t\t\t{\n\t\t\t\t\tinstance_name:\"ArtdaqOts\" \n\t\t\t\t\tmodule_type:\"ArtdaqOtsBuildInfo\"\n\t\t\t\t}\n\t\t\t} \n\t\t\tanalyzers:\n\t\t\t{\n\t\t\t\twf:\n\t\t\t\t{\n\t\t\t\t\tmodule_type:\"WFViewer\" \n\t\t\t\t\tfragment_ids:[0] \n\t\t\t\t\tfragment_type_labels:[\"DataGen\"] \n\t\t\t\t\tprescale:60 \n\t\t\t\t\twrite_to_file:true \n\t\t\t\t\tfileName:\"/tmp/otsdaqdemo_onmon.root\"\n\t\t\t\t}\n\t\t\t}\n\t\t} \n\t\tprocess_name:\"DAQAG\" \n\t\tservices:\n\t\t{\n\t\t\tTiming:\n\t\t\t{\n\t\t\t\tsummaryOnly:true\n\t\t\t} \n\t\t\tscheduler:\n\t\t\t{\n\t\t\t\tfileMode:\"NOMERGE\" \n\t\t\t\terrorOnFailureToPut: false\n\t\t\t} \n\t\t\tNetMonTransportServiceInterface:\n\t\t\t{\n\t\t\t\tmax_fragment_size_words:2097152 \n\t\t\t\tservice_provider:\"NetMonTransportService\"\n\t\t\t}\n\t\t} \n\t\tsource:\n\t\t{\n\t\t\tmodule_type:\"NetMonInput\"\n\t\t}\n    "
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "0",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"name" : "configGroup_v2",
+"assigned" : "Thu Oct 20 15:39:17 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setVersion" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 15:39:17 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "a89bf6ce84bd42d6ac8d213e"
+}
+}

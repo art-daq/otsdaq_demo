@@ -1,0 +1,274 @@
+{
+"document" : {
+"data" : {
+"NAME" : "DATA_BUFFER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475700062,
+"COL_TYPES" : {
+"UNIQUE_ID" : "VARCHAR2",
+"DATA_BUFFER_ID" : "VARCHAR2",
+"PROCESSOR_ID" : "VARCHAR2",
+"PROCESSOR_TYPE" : "VARCHAR2",
+"PROCESSOR_CLASS" : "VARCHAR2",
+"PROCESSOR_STATUS" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"UNIQUE_ID" : "0",
+"DATA_BUFFER_ID" : "DataBuffer0",
+"PROCESSOR_ID" : "DataListener0FER0",
+"PROCESSOR_TYPE" : "Producer",
+"PROCESSOR_CLASS" : "UDPDataListenerProducer",
+"PROCESSOR_STATUS" : "on"
+},
+{
+"UNIQUE_ID" : "1",
+"DATA_BUFFER_ID" : "DataBuffer0",
+"PROCESSOR_ID" : "RawDataSaver0FER0",
+"PROCESSOR_TYPE" : "Consumer",
+"PROCESSOR_CLASS" : "RawDataSaverConsumer",
+"PROCESSOR_STATUS" : "on"
+},
+{
+"UNIQUE_ID" : "2",
+"DATA_BUFFER_ID" : "VisualBuffer",
+"PROCESSOR_ID" : "VisualDataListener0",
+"PROCESSOR_TYPE" : "Producer",
+"PROCESSOR_CLASS" : "UDPDataListenerProducer",
+"PROCESSOR_STATUS" : "on"
+},
+{
+"UNIQUE_ID" : "3",
+"DATA_BUFFER_ID" : "VisualBuffer",
+"PROCESSOR_ID" : "DQMHistos0",
+"PROCESSOR_TYPE" : "Consumer",
+"PROCESSOR_CLASS" : "DQMHistosConsumer",
+"PROCESSOR_STATUS" : "on"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "0",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"name" : "test_v0",
+"assigned" : "Tue Oct 18 10:26:26 2016"
+},
+{
+"name" : "lusw_v0",
+"assigned" : "Tue Oct 18 10:35:20 2016"
+},
+{
+"name" : "lusw_v1",
+"assigned" : "Tue Oct 18 10:37:23 2016"
+},
+{
+"name" : "lusw_v2",
+"assigned" : "Tue Oct 18 10:38:30 2016"
+},
+{
+"name" : "lusw_v3",
+"assigned" : "Tue Oct 18 10:39:51 2016"
+},
+{
+"name" : "lusw_v4",
+"assigned" : "Tue Oct 18 10:40:13 2016"
+},
+{
+"name" : "lusw_v5",
+"assigned" : "Tue Oct 18 16:32:11 2016"
+},
+{
+"name" : "lusw_v6",
+"assigned" : "Tue Oct 18 16:33:19 2016"
+},
+{
+"name" : "configGroup_v0",
+"assigned" : "Thu Oct 20 14:08:50 2016"
+},
+{
+"name" : "configGroup_v1",
+"assigned" : "Thu Oct 20 14:09:34 2016"
+},
+{
+"name" : "configGroup_v2",
+"assigned" : "Thu Oct 20 15:39:17 2016"
+},
+{
+"name" : "configGroup_v3",
+"assigned" : "Fri Oct 21 16:17:14 2016"
+},
+{
+"name" : "configGroup_v4",
+"assigned" : "Fri Oct 21 16:30:29 2016"
+},
+{
+"name" : "configGroup_v5",
+"assigned" : "Fri Oct 21 16:41:17 2016"
+},
+{
+"name" : "configGroup_v6",
+"assigned" : "Fri Nov  4 11:00:08 2016"
+},
+{
+"name" : "configGroup_v7",
+"assigned" : "Fri Nov  4 11:03:42 2016"
+},
+{
+"name" : "configGroup_v8",
+"assigned" : "Fri Nov  4 12:38:12 2016"
+},
+{
+"name" : "configGroup_v9",
+"assigned" : "Fri Nov  4 16:40:37 2016"
+},
+{
+"name" : "configGroup_v10",
+"assigned" : "Fri Nov  4 16:43:01 2016"
+},
+{
+"name" : "configGroup_v11",
+"assigned" : "Fri Nov  4 16:46:00 2016"
+},
+{
+"name" : "configGroup_v12",
+"assigned" : "Fri Nov  4 16:48:16 2016"
+},
+{
+"name" : "configGroup_v13",
+"assigned" : "Mon Nov  7 10:34:53 2016"
+},
+{
+"name" : "configGroup_v14",
+"assigned" : "Mon Nov  7 10:45:53 2016"
+},
+{
+"name" : "configGroup_v15",
+"assigned" : "Mon Nov  7 10:49:21 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setVersion" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 10:26:26 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 10:35:20 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 10:37:23 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 10:38:30 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 10:39:51 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 10:40:13 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 16:32:11 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 18 16:33:19 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 14:08:50 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 14:09:34 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 15:39:17 2016"
+},
+{
+"addToGlobalConfig" : "Fri Oct 21 16:17:14 2016"
+},
+{
+"addToGlobalConfig" : "Fri Oct 21 16:30:29 2016"
+},
+{
+"addToGlobalConfig" : "Fri Oct 21 16:41:17 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:00:08 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:03:42 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 12:38:12 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:40:37 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:43:01 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:46:00 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:48:16 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:34:53 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:45:53 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:49:21 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "5886f36fb2ac45e0a0aada95"
+}
+}

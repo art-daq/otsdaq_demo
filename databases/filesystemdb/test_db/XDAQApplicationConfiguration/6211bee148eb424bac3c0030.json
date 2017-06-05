@@ -1,0 +1,203 @@
+{
+"document" : {
+"data" : {
+"NAME" : "XDAQ_APPLICATION_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1476212834,
+"COL_TYPES" : {
+"APPLICATION_GROUP" : "VARCHAR2",
+"APPLICATION" : "VARCHAR2",
+"SUPERVISOR_CONFIGURATION" : "VARCHAR2",
+"SUPERVISOR_UID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"CLASS" : "VARCHAR2",
+"ID" : "VARCHAR2",
+"INSTANCE" : "VARCHAR2",
+"NETWORK" : "VARCHAR2",
+"GROUP" : "VARCHAR2",
+"MODULE" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "Supervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "Supervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "FESupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "FESupervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "ChatSupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "ChatSupervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "ConsoleSupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "ConsoleSupervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "DataManagerSupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "DataManagerSupervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "LogbookSupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "LogbookSupervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "VisualSupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "Supervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "ConfigurationGUISupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "ConfigurationGUISupervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+},
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "MacroMakerSupervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "MacroMakerSupervisor0",
+"STATUS" : "On",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "/home/rrivera/ots/build_slf6.x86_64/otsdaq/lib/libSupervisor.so"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "3",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Tue Oct 11 14:07:14 2016"
+},
+{
+"name" : "myContext_v4",
+"assigned" : "Tue Oct 11 14:07:33 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Tue Oct 11 14:07:14 2016"
+},
+{
+"setVersion" : "Tue Oct 11 14:07:14 2016"
+},
+{
+"setConfigurableEntity" : "Tue Oct 11 14:07:14 2016"
+},
+{
+"addToGlobalConfig" : "Tue Oct 11 14:07:33 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "6211bee148eb424bac3c0030"
+}
+}

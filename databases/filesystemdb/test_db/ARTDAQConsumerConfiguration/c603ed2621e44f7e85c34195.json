@@ -1,0 +1,95 @@
+{
+"document" : {
+"data" : {
+"NAME" : "ARTDAQ_CONSUMER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475700062,
+"COL_TYPES" : {
+"PROCESSOR_ID" : "VARCHAR2",
+"CONFIGURATION_STRING" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"PROCESSOR_ID" : "ARTDAQBoardReader0PurdueFE0",
+"CONFIGURATION_STRING" : "\n    \tdaq:\n    \t{\n    \t\tfragment_receiver:\n    \t\t{\n    \t\t\tboard_id:0 \n    \t\t\tevent_builder_count:1 \n    \t\t\tfirst_event_builder_rank:1 \n    \t\t\tfragment_id:0 \n    \t\t\tfragment_type:\"STIB\" \n    \t\t\tgenerator:\"STIBReceiver\" \n    \t\t\tip:\"127.0.0.1\" \n    \t\t\tmpi_buffer_count:16 \n    \t\t\tmpi_sync_interval:50 \n    \t\t\tport:3001 \n    \t\t\ttrigger_mode:ignore \n    \t\t\tsleep_on_stop_us:500000 \n    \t\t\ttrigger_port:5001 \n    \t\t\tsupervisorType:\"ARTDAQDataManager\"\n    \t\t\tsupervisorInstance:1\n    \t\t\tbufferID:\"ARTDAQBuffer\"\n    \t\t\tprocessorID:\"STIBReceiver0\"\n    \t\t} \n    \t\tmax_fragment_size_words:262144\n    \t}\n    "
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "1",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"name" : "myConfig_v0",
+"assigned" : "Wed Oct 12 16:36:07 2016"
+},
+{
+"name" : "aaConfig_v0",
+"assigned" : "Thu Oct 20 15:23:15 2016"
+},
+{
+"name" : "PhysicsWizToLatest_v0",
+"assigned" : "Fri Nov  4 11:32:32 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setVersion" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"addToGlobalConfig" : "Wed Oct 12 16:36:07 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 15:23:15 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:32:32 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "c603ed2621e44f7e85c34195"
+}
+}

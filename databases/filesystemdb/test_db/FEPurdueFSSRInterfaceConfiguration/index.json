@@ -1,0 +1,32 @@
+{
+"version" : {
+"0" : [
+"c7268852abb04c22a4cc9340"
+]
+},
+"configurations.name" : {
+"notprovided" : [
+"c7268852abb04c22a4cc9340"
+],
+"configGroup_v26" : [
+"c7268852abb04c22a4cc9340"
+],
+"configGroup_v27" : [
+"c7268852abb04c22a4cc9340"
+],
+"configGroup_v30" : [
+"c7268852abb04c22a4cc9340"
+],
+"configGroup_v31" : [
+"c7268852abb04c22a4cc9340"
+],
+"configGroup_v33" : [
+"c7268852abb04c22a4cc9340"
+]
+},
+"configurable_entity.name" : {
+"OTSROOT" : [
+"c7268852abb04c22a4cc9340"
+]
+}
+}

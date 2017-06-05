@@ -1,0 +1,87 @@
+{
+"document" : {
+"data" : {
+"NAME" : "GROUP_ALIASES_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1479316282,
+"COL_TYPES" : {
+"GROUP_KEY_ALIAS" : "VARCHAR2",
+"GROUP_NAME" : "VARCHAR2",
+"GROUP_KEY" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"GROUP_KEY_ALIAS" : "Physics",
+"GROUP_NAME" : "configGroup",
+"GROUP_KEY" : "25",
+"COMMENT_DESCRIPTION" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479316282"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "21",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Nov 16 11:11:22 2016"
+},
+{
+"name" : "PhysicsWizBackbone_v10",
+"assigned" : "Wed Nov 16 11:11:33 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Nov 16 11:11:22 2016"
+},
+{
+"setVersion" : "Wed Nov 16 11:11:22 2016"
+},
+{
+"setConfigurableEntity" : "Wed Nov 16 11:11:22 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 11:11:33 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "e23d94a1da8c48bd94e86001"
+}
+}

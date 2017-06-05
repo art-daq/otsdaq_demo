@@ -1,0 +1,44 @@
+{
+"version" : {
+"0" : [
+"9a51dd8b4b4b45709eaa4f30"
+],
+"1" : [
+"ec10551d04304b20930d4a7f"
+],
+"2" : [
+"3cd30fe2ad954c2da8abfbd9"
+],
+"3" : [
+"c201186afcf9470192890b76"
+]
+},
+"configurations.name" : {
+"notprovided" : [
+"3cd30fe2ad954c2da8abfbd9",
+"9a51dd8b4b4b45709eaa4f30",
+"c201186afcf9470192890b76",
+"ec10551d04304b20930d4a7f"
+],
+"myConfig_v0" : [
+"c201186afcf9470192890b76"
+],
+"aaConfig_v0" : [
+"c201186afcf9470192890b76"
+],
+"configGroup_v2" : [
+"9a51dd8b4b4b45709eaa4f30"
+],
+"PhysicsWizToLatest_v0" : [
+"c201186afcf9470192890b76"
+]
+},
+"configurable_entity.name" : {
+"OTSROOT" : [
+"3cd30fe2ad954c2da8abfbd9",
+"9a51dd8b4b4b45709eaa4f30",
+"c201186afcf9470192890b76",
+"ec10551d04304b20930d4a7f"
+]
+}
+}

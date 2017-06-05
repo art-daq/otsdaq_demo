@@ -1,0 +1,118 @@
+{
+"document" : {
+"data" : {
+"NAME" : "FE_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1478893952,
+"COL_TYPES" : {
+"SUPERVISOR_TYPE" : "VARCHAR2",
+"SUPERVISOR_INSTANCE" : "VARCHAR2",
+"FRONT_END_ID" : "VARCHAR2",
+"FRONT_END_TYPE" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"SUPERVISOR_TYPE" : "FE",
+"SUPERVISOR_INSTANCE" : "1",
+"FRONT_END_ID" : "OtsFrontEnd0",
+"FRONT_END_TYPE" : "FEPurdueNetworkMasterInterface",
+"COMMENT_DESCRIPTION" : "DEFAULT",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov 11 13:52:32 2016 CST"
+},
+{
+"SUPERVISOR_TYPE" : "FE",
+"SUPERVISOR_INSTANCE" : "1",
+"FRONT_END_ID" : "OtsFrontEnd1",
+"FRONT_END_TYPE" : "FEWRPurdueFSSRInterface",
+"COMMENT_DESCRIPTION" : "DEFAULT",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov 11 13:52:32 2016 CST"
+},
+{
+"SUPERVISOR_TYPE" : "FE",
+"SUPERVISOR_INSTANCE" : "2",
+"FRONT_END_ID" : "OtsFrontEnd2",
+"FRONT_END_TYPE" : "FEWRPurdueFSSRInterface",
+"COMMENT_DESCRIPTION" : "DEFAULT",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov 11 13:52:32 2016 CST"
+},
+{
+"SUPERVISOR_TYPE" : "FE",
+"SUPERVISOR_INSTANCE" : "3",
+"FRONT_END_ID" : "OtsFrontEnd3",
+"FRONT_END_TYPE" : "FEWRPurdueFSSRInterface",
+"COMMENT_DESCRIPTION" : "DEFAULT",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov 11 13:52:32 2016 CST"
+},
+{
+"SUPERVISOR_TYPE" : "FE",
+"SUPERVISOR_INSTANCE" : "4",
+"FRONT_END_ID" : "OtsFrontEnd4",
+"FRONT_END_TYPE" : "FEWROtsUDPFSSRInterface",
+"COMMENT_DESCRIPTION" : "DEFAULT",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov 11 13:52:32 2016 CST"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "6",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Fri Nov 11 13:52:32 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Fri Nov 11 13:52:32 2016"
+},
+{
+"setVersion" : "Fri Nov 11 13:52:32 2016"
+},
+{
+"setConfigurableEntity" : "Fri Nov 11 13:52:32 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "6de19dc7cca24eae82ff9392"
+}
+}

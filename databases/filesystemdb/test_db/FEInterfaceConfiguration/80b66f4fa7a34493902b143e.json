@@ -1,0 +1,131 @@
+{
+"document" : {
+"data" : {
+"NAME" : "FE_INTERFACE_CONFIGURATION",
+"COMMENT" : "All interface know to demo are here",
+"AUTHOR" : "",
+"CREATION_TIME" : 1479329053,
+"COL_TYPES" : {
+"FE_INTERFACE_GROUP_ID" : "VARCHAR2",
+"FE_INTERFACE_UID" : "VARCHAR2",
+"FE_INTERFACE_PLUGIN_NAME" : "VARCHAR2",
+"LINK_TO_FE_TYPE_CONFIGURATION" : "VARCHAR2",
+"LINK_TO_FE_TYPE_UID" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"FE_INTERFACE_GROUP_ID" : "FEInterface0",
+"FE_INTERFACE_UID" : "OtsFrontEnd0",
+"FE_INTERFACE_PLUGIN_NAME" : "FEOtsUDPTemplateInterface",
+"LINK_TO_FE_TYPE_CONFIGURATION" : "FEOtsUDPTemplateInterfaceConfiguration",
+"LINK_TO_FE_TYPE_UID" : "OtsFrontEnd0",
+"COMMENT_DESCRIPTION" : "No comment",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479329053"
+},
+{
+"FE_INTERFACE_GROUP_ID" : "FEInterface0",
+"FE_INTERFACE_UID" : "OtsFrontEnd1",
+"FE_INTERFACE_PLUGIN_NAME" : "FENIMPlusInterface",
+"LINK_TO_FE_TYPE_CONFIGURATION" : "FENIMPlusInterfaceConfiguration",
+"LINK_TO_FE_TYPE_UID" : "OtsFrontEnd1",
+"COMMENT_DESCRIPTION" : "No Comment",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "0"
+},
+{
+"FE_INTERFACE_GROUP_ID" : "FEInterface0",
+"FE_INTERFACE_UID" : "OtsFrontEnd2",
+"FE_INTERFACE_PLUGIN_NAME" : "FEOtsUDPFSSRInterface",
+"LINK_TO_FE_TYPE_CONFIGURATION" : "FEOtsUDPFSSRInterfaceConfiguration",
+"LINK_TO_FE_TYPE_UID" : "OtsFrontEnd2",
+"COMMENT_DESCRIPTION" : "No Comment",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "0"
+},
+{
+"FE_INTERFACE_GROUP_ID" : "FEInterface0",
+"FE_INTERFACE_UID" : "OtsFrontEnd4",
+"FE_INTERFACE_PLUGIN_NAME" : "FEPurdueFSSRInterface",
+"LINK_TO_FE_TYPE_CONFIGURATION" : "FEPurdueFSSRInterfaceConfiguration",
+"LINK_TO_FE_TYPE_UID" : "OtsFrontEnd4",
+"COMMENT_DESCRIPTION" : "<input type=\"text\" onkeydown=\"keyHandler(event)\" style=\"margin:-4px -2px -4px -1px;width:142px; height:30px\" value=\"No Comment\"><div style=\"padding:5px;background-color:#eeeeee;border:1px solid #555555;position:relative;width:105px;height:20px;margin:0 -122px -32px 10px;text-size: 16px;\"><a href=\"javascript:editCellOK(4,5);\" style=\"color:green\"><b style=\"color:green\">OK</b></a> | <a href=\"javascript:editCellCancel();\" style=\"color:red\"><b style=\"color:red\">Cancel</b></a></div>",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479329053"
+},
+{
+"FE_INTERFACE_GROUP_ID" : "FEInterface0",
+"FE_INTERFACE_UID" : "OtsFrontEnd5",
+"FE_INTERFACE_PLUGIN_NAME" : "FEPurdueNetworkMasterInterface",
+"LINK_TO_FE_TYPE_CONFIGURATION" : "FEPurdueNetworkMasterInterfaceConfiguration",
+"LINK_TO_FE_TYPE_UID" : "OtsFrontEnd5",
+"COMMENT_DESCRIPTION" : "No Comment",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479329053"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "8",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Nov 16 14:44:13 2016"
+},
+{
+"name" : "configGroup_v30",
+"assigned" : "Wed Nov 16 14:44:37 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Nov 16 14:44:13 2016"
+},
+{
+"setVersion" : "Wed Nov 16 14:44:13 2016"
+},
+{
+"setConfigurableEntity" : "Wed Nov 16 14:44:13 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 14:44:37 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "80b66f4fa7a34493902b143e"
+}
+}

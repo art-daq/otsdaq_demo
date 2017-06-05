@@ -1,0 +1,122 @@
+{
+"document" : {
+"data" : {
+"NAME" : "UDP_DATA_STREAMER_CONSUMER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475700062,
+"COL_TYPES" : {
+"PROCESSOR_ID" : "VARCHAR2",
+"IP_ADDRESS" : "VARCHAR2",
+"PORT" : "NUMBER",
+"STREAM_TO_IP_ADDRESS" : "VARCHAR2",
+"STREAM_TO_PORT" : "NUMBER"
+},
+"DATA_SET" : [
+{
+"PROCESSOR_ID" : "DataStreamer0PurdueFE0",
+"IP_ADDRESS" : "192.168.133.1",
+"PORT" : 48000,
+"STREAM_TO_IP_ADDRESS" : "192.168.133.1",
+"STREAM_TO_PORT" : 50000
+},
+{
+"PROCESSOR_ID" : "DataStreamer0PurdueFE1",
+"IP_ADDRESS" : "192.168.133.1",
+"PORT" : 48001,
+"STREAM_TO_IP_ADDRESS" : "192.168.133.1",
+"STREAM_TO_PORT" : 50000
+},
+{
+"PROCESSOR_ID" : "DataStreamer0PurdueFE2",
+"IP_ADDRESS" : "192.168.133.1",
+"PORT" : 48002,
+"STREAM_TO_IP_ADDRESS" : "192.168.133.1",
+"STREAM_TO_PORT" : 50000
+},
+{
+"PROCESSOR_ID" : "DataStreamer0OtsUDPFE3",
+"IP_ADDRESS" : "192.168.133.1",
+"PORT" : 48003,
+"STREAM_TO_IP_ADDRESS" : "192.168.133.1",
+"STREAM_TO_PORT" : 50000
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "3",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"name" : "myConfig_v0",
+"assigned" : "Wed Oct 12 16:36:07 2016"
+},
+{
+"name" : "aaConfig_v0",
+"assigned" : "Thu Oct 20 15:23:15 2016"
+},
+{
+"name" : "PhysicsWizToLatest_v0",
+"assigned" : "Fri Nov  4 11:32:32 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setVersion" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"addToGlobalConfig" : "Wed Oct 12 16:36:07 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 15:23:15 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:32:32 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "14117e6b5183491a8d8c9284"
+}
+}

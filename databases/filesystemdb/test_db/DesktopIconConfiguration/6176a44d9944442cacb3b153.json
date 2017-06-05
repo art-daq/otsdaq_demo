@@ -1,0 +1,210 @@
+{
+"document" : {
+"data" : {
+"NAME" : "DESKTOP_ICON_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1476734096,
+"COL_TYPES" : {
+"ICON_NAME" : "VARCHAR2",
+"CAPTION" : "VARCHAR2",
+"APPLICATION_GROUP" : "VARCHAR2",
+"FORCE_ONLY_ONE_INSTANCE" : "VARCHAR2",
+"REQUIRED_PERMISSION_LEVEL" : "VARCHAR2",
+"IMAGE_URL" : "VARCHAR2",
+"WINDOW_CONTENT_URL" : "VARCHAR2",
+"COMMENT" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"ICON_NAME" : "Calibrate",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "Physics",
+"CAPTION" : "Physics",
+"APPLICATION_GROUP" : "PHY",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "1",
+"IMAGE_URL" : "icon-Physics.gif",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Physics.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "Chat",
+"CAPTION" : "Chat",
+"APPLICATION_GROUP" : "CHAT",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "1",
+"IMAGE_URL" : "icon-Chat.png",
+"WINDOW_CONTENT_URL" : "/urn:xdaq-application:lid=250/",
+"COMMENT" : "lid number must match XDAQ supervisor lid",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "SystemStatus",
+"CAPTION" : "System Status",
+"APPLICATION_GROUP" : "SYS",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "1",
+"IMAGE_URL" : "icon-SystemStatus.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/SystemStatus.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "Visualizer",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "ConfigureGUI",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "MacroMaker",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "NOvA Log",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "DB Utilities",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "Console",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+},
+{
+"ICON_NAME" : "Logbook",
+"CAPTION" : "Calibrate",
+"APPLICATION_GROUP" : "CAL",
+"FORCE_ONLY_ONE_INSTANCE" : "True",
+"REQUIRED_PERMISSION_LEVEL" : "100",
+"IMAGE_URL" : "icon-Calibrate.png",
+"WINDOW_CONTENT_URL" : "/WebPath/html/Calibrations.html",
+"COMMENT" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Oct 17 14:54:56 2016 CDT"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "1",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Mon Oct 17 14:54:56 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Mon Oct 17 14:54:56 2016"
+},
+{
+"setVersion" : "Mon Oct 17 14:54:56 2016"
+},
+{
+"setConfigurableEntity" : "Mon Oct 17 14:54:56 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "6176a44d9944442cacb3b153"
+}
+}

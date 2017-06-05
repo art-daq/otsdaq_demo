@@ -1,0 +1,153 @@
+{
+"version" : {
+"0" : [
+"6d834841b7ec46589a939bdd"
+],
+"1" : [
+"dfc268a23aeb4ce1b29e343a"
+],
+"2" : [
+"81d3b2cfd01c4d72a50c1709"
+],
+"3" : [
+"6211bee148eb424bac3c0030"
+],
+"4" : [
+"5d9df741965545d0b1a0877b"
+],
+"5" : [
+"d3e97c200fed463b8905e3b7"
+],
+"6" : [
+"800ec32907ba4409b566f5d4"
+],
+"7" : [
+"9065bd3cde1b4e84b43810f9"
+],
+"8" : [
+"65bc2719d02c493db7faaef5"
+],
+"9" : [
+"67459adaf108492da31e72e8"
+],
+"10" : [
+"5750a1a5d6884c5498ac199d"
+],
+"11" : [
+"0d494d24dd274a3aaa7a9003"
+],
+"12" : [
+"53369789cce0401ba9091fef"
+],
+"13" : [
+"2e52428ee0be44779dd071fd"
+],
+"14" : [
+"5ce3aef9ef524394b26cba23"
+]
+},
+"configurations.name" : {
+"notprovided" : [
+"0d494d24dd274a3aaa7a9003",
+"2e52428ee0be44779dd071fd",
+"53369789cce0401ba9091fef",
+"5750a1a5d6884c5498ac199d",
+"5ce3aef9ef524394b26cba23",
+"5d9df741965545d0b1a0877b",
+"6211bee148eb424bac3c0030",
+"65bc2719d02c493db7faaef5",
+"67459adaf108492da31e72e8",
+"6d834841b7ec46589a939bdd",
+"800ec32907ba4409b566f5d4",
+"81d3b2cfd01c4d72a50c1709",
+"9065bd3cde1b4e84b43810f9",
+"d3e97c200fed463b8905e3b7",
+"dfc268a23aeb4ce1b29e343a"
+],
+"myContext_v0" : [
+"6d834841b7ec46589a939bdd"
+],
+"myContext_v1" : [
+"6d834841b7ec46589a939bdd"
+],
+"myContext_v2" : [
+"6d834841b7ec46589a939bdd"
+],
+"myContext_v3" : [
+"dfc268a23aeb4ce1b29e343a"
+],
+"myContext_v4" : [
+"6211bee148eb424bac3c0030"
+],
+"myContext_v5" : [
+"d3e97c200fed463b8905e3b7"
+],
+"lorenzoContext_v0" : [
+"d3e97c200fed463b8905e3b7"
+],
+"myContext_v6" : [
+"800ec32907ba4409b566f5d4"
+],
+"myContext_v7" : [
+"9065bd3cde1b4e84b43810f9"
+],
+"myContext_v8" : [
+"9065bd3cde1b4e84b43810f9"
+],
+"myContext_v12" : [
+"9065bd3cde1b4e84b43810f9"
+],
+"aaContext_v0" : [
+"9065bd3cde1b4e84b43810f9"
+],
+"aaContext_v1" : [
+"9065bd3cde1b4e84b43810f9"
+],
+"aaContext_v2" : [
+"65bc2719d02c493db7faaef5"
+],
+"aaContext_v3" : [
+"65bc2719d02c493db7faaef5"
+],
+"aaContext_v4" : [
+"65bc2719d02c493db7faaef5"
+],
+"aaContext_v5" : [
+"67459adaf108492da31e72e8"
+],
+"aaContext_v6" : [
+"67459adaf108492da31e72e8"
+],
+"aaContext_v7" : [
+"5750a1a5d6884c5498ac199d"
+],
+"aaContext_v8" : [
+"5750a1a5d6884c5498ac199d"
+],
+"aaContext_v9" : [
+"53369789cce0401ba9091fef"
+],
+"aaContext_v10" : [
+"5ce3aef9ef524394b26cba23"
+]
+},
+"configurable_entity.name" : {
+"OTSROOT" : [
+"0d494d24dd274a3aaa7a9003",
+"2e52428ee0be44779dd071fd",
+"53369789cce0401ba9091fef",
+"5750a1a5d6884c5498ac199d",
+"5ce3aef9ef524394b26cba23",
+"5d9df741965545d0b1a0877b",
+"6211bee148eb424bac3c0030",
+"65bc2719d02c493db7faaef5",
+"67459adaf108492da31e72e8",
+"6d834841b7ec46589a939bdd",
+"800ec32907ba4409b566f5d4",
+"81d3b2cfd01c4d72a50c1709",
+"9065bd3cde1b4e84b43810f9",
+"d3e97c200fed463b8905e3b7",
+"dfc268a23aeb4ce1b29e343a"
+]
+}
+}

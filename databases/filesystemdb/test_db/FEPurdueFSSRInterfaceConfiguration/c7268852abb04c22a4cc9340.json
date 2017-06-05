@@ -1,0 +1,143 @@
+{
+"document" : {
+"data" : {
+"NAME" : "FE_PURDUE_FSSR_INTERFACE_CONFIGURATION",
+"COMMENT" : "No comment.",
+"AUTHOR" : "",
+"CREATION_TIME" : 1479320120,
+"COL_TYPES" : {
+"INTERFACE_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"FIRMWARE_VERSION" : "NUMBER",
+"INTERFACE_IP_ADDRESS" : "VARCHAR2",
+"INTERFACE_PORT" : "NUMBER",
+"HOST_IP_ADDRESS" : "VARCHAR2",
+"HOST_PORT" : "NUMBER",
+"STREAM_TO_IP_ADDRESS" : "VARCHAR2",
+"STREAM_TO_PORT" : "NUMBER",
+"CLOCK_SELECT" : "VARCHAR2",
+"CLOCK_SPEED_M_HZ" : "NUMBER",
+"CHANNEL_STATUS0" : "VARCHAR2",
+"CHANNEL_STATUS1" : "VARCHAR2",
+"CHANNEL_STATUS2" : "VARCHAR2",
+"CHANNEL_STATUS3" : "VARCHAR2",
+"CHANNEL_STATUS4" : "VARCHAR2",
+"CHANNEL_STATUS5" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"INTERFACE_ID" : "OtsFrontEnd4",
+"STATUS" : "On",
+"FIRMWARE_VERSION" : "0",
+"INTERFACE_IP_ADDRESS" : "192.168.133.11",
+"INTERFACE_PORT" : "2011",
+"HOST_IP_ADDRESS" : "192.168.133.100",
+"HOST_PORT" : "10100",
+"STREAM_TO_IP_ADDRESS" : "192.168.133.100",
+"STREAM_TO_PORT" : "4950",
+"CLOCK_SELECT" : "DEFAULT",
+"CLOCK_SPEED_M_HZ" : "0",
+"CHANNEL_STATUS0" : "DEFAULT",
+"CHANNEL_STATUS1" : "DEFAULT",
+"CHANNEL_STATUS2" : "DEFAULT",
+"CHANNEL_STATUS3" : "DEFAULT",
+"CHANNEL_STATUS4" : "DEFAULT",
+"CHANNEL_STATUS5" : "DEFAULT",
+"COMMENT_DESCRIPTION" : "No Comment",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479320120"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "0",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Nov 16 12:15:20 2016"
+},
+{
+"name" : "configGroup_v26",
+"assigned" : "Wed Nov 16 12:16:22 2016"
+},
+{
+"name" : "configGroup_v27",
+"assigned" : "Wed Nov 16 12:21:06 2016"
+},
+{
+"name" : "configGroup_v30",
+"assigned" : "Wed Nov 16 14:44:37 2016"
+},
+{
+"name" : "configGroup_v31",
+"assigned" : "Wed Nov 16 14:48:59 2016"
+},
+{
+"name" : "configGroup_v33",
+"assigned" : "Wed Nov 16 15:29:45 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Nov 16 12:15:20 2016"
+},
+{
+"setVersion" : "Wed Nov 16 12:15:20 2016"
+},
+{
+"setConfigurableEntity" : "Wed Nov 16 12:15:20 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 12:16:22 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 12:21:06 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 14:44:37 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 14:48:59 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 15:29:45 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "c7268852abb04c22a4cc9340"
+}
+}

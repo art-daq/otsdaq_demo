@@ -1,0 +1,103 @@
+{
+"document" : {
+"data" : {
+"NAME" : "UDP_DATA_LISTENER_PRODUCER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1479143947,
+"COL_TYPES" : {
+"PROCESSOR_UID" : "VARCHAR2",
+"BUFFER_SIZE" : "NUMBER",
+"IP_ADDRESS" : "VARCHAR2",
+"PORT" : "NUMBER",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"PROCESSOR_UID" : "DB0DataListener0",
+"BUFFER_SIZE" : "1000",
+"IP_ADDRESS" : "192.168.133.100",
+"PORT" : "20000",
+"COMMENT_DESCRIPTION" : "DEFAULT",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479143947"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "5",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Mon Nov 14 11:19:07 2016"
+},
+{
+"name" : "configGroup_v16",
+"assigned" : "Mon Nov 14 11:26:10 2016"
+},
+{
+"name" : "configGroup_v17",
+"assigned" : "Mon Nov 14 11:29:52 2016"
+},
+{
+"name" : "configGroup_v18",
+"assigned" : "Mon Nov 14 11:38:37 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Mon Nov 14 11:19:07 2016"
+},
+{
+"setVersion" : "Mon Nov 14 11:19:07 2016"
+},
+{
+"setConfigurableEntity" : "Mon Nov 14 11:19:07 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 11:26:10 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 11:29:52 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 11:38:37 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "30a8a617b433407db024afbb"
+}
+}

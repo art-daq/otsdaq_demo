@@ -1,0 +1,113 @@
+{
+"document" : {
+"data" : {
+"NAME" : "XDAQ_APPLICATION_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475703604,
+"COL_TYPES" : {
+"APPLICATION_GROUP" : "VARCHAR2",
+"APPLICATION" : "VARCHAR2",
+"SUPERVISOR_CONFIGURATION" : "VARCHAR2",
+"SUPERVISOR_UID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"CLASS" : "VARCHAR2",
+"ID" : "VARCHAR2",
+"INSTANCE" : "VARCHAR2",
+"NETWORK" : "VARCHAR2",
+"GROUP" : "VARCHAR2",
+"MODULE" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"APPLICATION_GROUP" : "testContextApps",
+"APPLICATION" : "Supervisor",
+"SUPERVISOR_CONFIGURATION" : "TheSupervisorConfiguration",
+"SUPERVISOR_UID" : "Supervisor0",
+"STATUS" : "1",
+"CLASS" : "ots::Supervisor",
+"ID" : "200",
+"INSTANCE" : "1",
+"NETWORK" : "local",
+"GROUP" : "daq",
+"MODULE" : "libSupervisor.so"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "0",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 16:40:04 2016"
+},
+{
+"name" : "myContext_v0",
+"assigned" : "Wed Oct  5 16:42:10 2016"
+},
+{
+"name" : "myContext_v1",
+"assigned" : "Thu Oct  6 20:29:48 2016"
+},
+{
+"name" : "myContext_v2",
+"assigned" : "Mon Oct 10 12:33:34 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 16:40:04 2016"
+},
+{
+"setVersion" : "Wed Oct  5 16:40:04 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 16:40:04 2016"
+},
+{
+"addToGlobalConfig" : "Wed Oct  5 16:42:10 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct  6 20:29:48 2016"
+},
+{
+"addToGlobalConfig" : "Mon Oct 10 12:33:34 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "6d834841b7ec46589a939bdd"
+}
+}

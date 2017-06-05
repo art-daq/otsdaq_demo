@@ -1,0 +1,123 @@
+{
+"document" : {
+"data" : {
+"NAME" : "XDAQ_CONTEXT_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "admin",
+"CREATION_TIME" : 1478273071,
+"COL_TYPES" : {
+"CONTEXT_UID" : "VARCHAR2",
+"LINK_TO_APPLICATION_CONFIGURATION" : "VARCHAR2",
+"APPLICATION_GROUP_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"ID" : "VARCHAR2",
+"ADDRESS" : "VARCHAR2",
+"PORT" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"CONTEXT_UID" : "mainContext",
+"LINK_TO_APPLICATION_CONFIGURATION" : "XDAQApplicationConfiguration",
+"APPLICATION_GROUP_ID" : "testContextApps",
+"STATUS" : "On",
+"ID" : "0",
+"ADDRESS" : "http://rulinux03.dhcp.fnal.gov",
+"PORT" : "1994",
+"COMMENT_DESCRIPTION" : "main context",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov  4 10:24:31 2016 CDT"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "8",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Fri Nov  4 10:24:31 2016"
+},
+{
+"name" : "aaContext_v6",
+"assigned" : "Fri Nov  4 10:24:37 2016"
+},
+{
+"name" : "aaContext_v7",
+"assigned" : "Fri Nov  4 16:41:02 2016"
+},
+{
+"name" : "aaContext_v8",
+"assigned" : "Mon Nov 14 10:17:12 2016"
+},
+{
+"name" : "aaContext_v9",
+"assigned" : "Mon Nov 14 10:39:56 2016"
+},
+{
+"name" : "aaContext_v10",
+"assigned" : "Mon Nov 14 11:34:11 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Fri Nov  4 10:24:31 2016"
+},
+{
+"setVersion" : "Fri Nov  4 10:24:31 2016"
+},
+{
+"setConfigurableEntity" : "Fri Nov  4 10:24:31 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 10:24:37 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:41:02 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 10:17:12 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 10:39:56 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 11:34:11 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "ca5ea3591c564105b3c137f7"
+}
+}

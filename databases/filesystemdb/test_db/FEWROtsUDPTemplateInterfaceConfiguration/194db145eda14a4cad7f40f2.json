@@ -1,0 +1,115 @@
+{
+"document" : {
+"data" : {
+"NAME" : "FEWR_OTS_UDP_TEMPLATE_INTERFACE_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1478275194,
+"COL_TYPES" : {
+"INTERFACE_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"FIRMWARE_VERSION" : "NUMBER",
+"IP_ADDRESS" : "VARCHAR2",
+"PORT" : "NUMBER",
+"INTERFACE_IP_ADDRESS" : "VARCHAR2",
+"INTERFACE_PORT" : "NUMBER",
+"STREAMING_IP_ADDRESS" : "VARCHAR2",
+"STREAMING_PORT" : "NUMBER",
+"CLOCK_SELECT" : "VARCHAR2",
+"CLOCK_SPEED_MHZ" : "NUMBER",
+"CHANNEL0_STATUS" : "VARCHAR2",
+"CHANNEL1_STATUS" : "VARCHAR2",
+"CHANNEL2_STATUS" : "VARCHAR2",
+"CHANNEL3_STATUS" : "VARCHAR2",
+"CHANNEL4_STATUS" : "VARCHAR2",
+"CHANNEL5_STATUS" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"INTERFACE_ID" : "OtsFrontEnd",
+"STATUS" : "on",
+"FIRMWARE_VERSION" : 1,
+"IP_ADDRESS" : "127.0.0.1",
+"PORT" : 4950,
+"INTERFACE_IP_ADDRESS" : "192.168.133.100",
+"INTERFACE_PORT" : 10101,
+"STREAMING_IP_ADDRESS" : "192.168.133.100",
+"STREAMING_PORT" : 47100,
+"CLOCK_SELECT" : "",
+"CLOCK_SPEED_MHZ" : 0,
+"CHANNEL0_STATUS" : "",
+"CHANNEL1_STATUS" : "",
+"CHANNEL2_STATUS" : "",
+"CHANNEL3_STATUS" : "",
+"CHANNEL4_STATUS" : "",
+"CHANNEL5_STATUS" : "",
+"COMMENT_DESCRIPTION" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov  4 10:59:54 2016 CDT"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "2",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Fri Nov  4 10:59:54 2016"
+},
+{
+"name" : "configGroup_v6",
+"assigned" : "Fri Nov  4 11:00:08 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Fri Nov  4 10:59:54 2016"
+},
+{
+"setVersion" : "Fri Nov  4 10:59:54 2016"
+},
+{
+"setConfigurableEntity" : "Fri Nov  4 10:59:54 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:00:08 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "194db145eda14a4cad7f40f2"
+}
+}

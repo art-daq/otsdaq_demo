@@ -1,0 +1,88 @@
+{
+"document" : {
+"data" : {
+"NAME" : "DATA_BUFFER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1479143593,
+"COL_TYPES" : {
+"DATA_BUFFER_GROUP_ID" : "VARCHAR2",
+"PROCESSOR_UID" : "VARCHAR2",
+"PROCESSOR_TYPE" : "VARCHAR2",
+"PROCESSOR_PLUGIN_NAME" : "VARCHAR2",
+"LINK_TO_PROCESSOR_CONFIGURATION" : "VARCHAR2",
+"LINK_TO_PROCESSOR_UID" : "VARCHAR2",
+"PROCESSOR_STATUS" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"DATA_BUFFER_GROUP_ID" : "DataBuffer0",
+"PROCESSOR_UID" : "DB0DataListener0",
+"PROCESSOR_TYPE" : "Producer",
+"PROCESSOR_PLUGIN_NAME" : "UDPDataListenerProducer",
+"LINK_TO_PROCESSOR_CONFIGURATION" : "UDPDataListenerProducerConfiguration",
+"LINK_TO_PROCESSOR_UID" : "DB0DataListener0",
+"PROCESSOR_STATUS" : "On",
+"COMMENT_DESCRIPTION" : "No Comment",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479143593"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "4",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Mon Nov 14 11:13:13 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Mon Nov 14 11:13:13 2016"
+},
+{
+"setVersion" : "Mon Nov 14 11:13:13 2016"
+},
+{
+"setConfigurableEntity" : "Mon Nov 14 11:13:13 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "df32e14cc1b348339ff8fb0e"
+}
+}

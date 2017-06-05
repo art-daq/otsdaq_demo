@@ -1,0 +1,91 @@
+{
+"document" : {
+"data" : {
+"NAME" : "XDAQ_CONTEXT_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475703502,
+"COL_TYPES" : {
+"CONTEXT_NAME" : "VARCHAR2",
+"APPLICATION_CONFIGURATION" : "VARCHAR2",
+"APPLICATION_GROUP" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"ID" : "VARCHAR2",
+"ADDRESS" : "VARCHAR2",
+"PORT" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"CONTEXT_NAME" : "testContext",
+"APPLICATION_CONFIGURATION" : "XDAQApplicationConfiguration",
+"APPLICATION_GROUP" : "testContextApps",
+"STATUS" : "On",
+"ID" : "0",
+"ADDRESS" : "rulinux03.dhcp.fnal.gov",
+"PORT" : "1983"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "1",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 16:38:22 2016"
+},
+{
+"name" : "myContext_v0",
+"assigned" : "Wed Oct  5 16:42:10 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 16:38:22 2016"
+},
+{
+"setVersion" : "Wed Oct  5 16:38:22 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 16:38:22 2016"
+},
+{
+"addToGlobalConfig" : "Wed Oct  5 16:42:10 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "1c3160ab27624fe89049f95a"
+}
+}

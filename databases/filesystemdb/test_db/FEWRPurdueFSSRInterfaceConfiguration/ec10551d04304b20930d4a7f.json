@@ -1,0 +1,104 @@
+{
+"document" : {
+"data" : {
+"NAME" : "FEWR_PURDUE_FSSR_INTERFACE_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475700062,
+"COL_TYPES" : {
+"INTERFACE_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"FIRMWARE_VERSION" : "NUMBER",
+"IP_ADDRESS" : "VARCHAR2",
+"PORT" : "NUMBER",
+"INTERFACE_IP_ADDRESS" : "VARCHAR2",
+"INTERFACE_PORT" : "NUMBER",
+"STREAMING_IP_ADDRESS" : "VARCHAR2",
+"STREAMING_PORT" : "NUMBER",
+"CLOCK_SELECT" : "VARCHAR2",
+"CLOCK_SPEED_MHZ" : "NUMBER",
+"CHANNEL0_STATUS" : "VARCHAR2",
+"CHANNEL1_STATUS" : "VARCHAR2",
+"CHANNEL2_STATUS" : "VARCHAR2",
+"CHANNEL3_STATUS" : "VARCHAR2",
+"CHANNEL4_STATUS" : "VARCHAR2",
+"CHANNEL5_STATUS" : "VARCHAR2"
+},
+"DATA_SET" : [
+{
+"INTERFACE_ID" : "PurdueFSSR0",
+"STATUS" : "on",
+"FIRMWARE_VERSION" : 1,
+"IP_ADDRESS" : "192.168.133.20",
+"PORT" : 47000,
+"INTERFACE_IP_ADDRESS" : "192.168.133.1",
+"INTERFACE_PORT" : 10001,
+"STREAMING_IP_ADDRESS" : "192.168.133.1",
+"STREAMING_PORT" : 47000,
+"CLOCK_SELECT" : "Internal",
+"CLOCK_SPEED_MHZ" : 13,
+"CHANNEL0_STATUS" : "on",
+"CHANNEL1_STATUS" : "on",
+"CHANNEL2_STATUS" : "on",
+"CHANNEL3_STATUS" : "on",
+"CHANNEL4_STATUS" : "off",
+"CHANNEL5_STATUS" : "off"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "1",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 15:41:02 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setVersion" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 15:41:02 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "ec10551d04304b20930d4a7f"
+}
+}

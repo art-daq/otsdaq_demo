@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ROOT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../ConfigurationBase.xsd">
+
+ <HEADER>
+  <TYPE>
+   <EXTENSION_TABLE_NAME>ARTDAQ_AGGREGATOR_CONFIGURATION</EXTENSION_TABLE_NAME>
+   <NAME>ARTDAQAggregatorConfiguration</NAME>
+  </TYPE>
+  <RUN>
+   <RUN_TYPE>ARTDAQAggregatorConfiguration</RUN_TYPE>
+   <RUN_NUMBER>1</RUN_NUMBER>
+   <RUN_BEGIN_TIMESTAMP>2013-01-29 17:22:10</RUN_BEGIN_TIMESTAMP>
+   <LOCATION>CERN P5</LOCATION>
+  </RUN>
+ </HEADER>
+
+  <DATA_SET>
+ 
+   <PART>
+    <NAME_LABEL>CMS--ROOT</NAME_LABEL>
+    <KIND_OF_PART>Detector ROOT</KIND_OF_PART>
+   </PART>
+   <VERSION>0</VERSION>
+   <COMMENT_DESCRIPTION></COMMENT_DESCRIPTION>
+   <CREATED_BY_USER></CREATED_BY_USER>
+  
+   <DATA>
+    <SUPERVISOR_INSTANCE>1</SUPERVISOR_INSTANCE>
+    <AGGREGATOR_ID>1</AGGREGATOR_ID>
+    <STATUS>on</STATUS>
+    <CONFIGURATION_STRING>
+		daq:
+		{
+			aggregator:
+			{
+				event_builder_count:1 
+				event_queue_depth:20 
+				event_queue_wait_time:5 
+				expected_events_per_bunch:1 
+				file_duration:0 
+				file_event_count:0 
+				file_size_MB:0 
+				first_event_builder_rank:1 
+				mpi_buffer_count:8 
+				print_event_store_stats:true 
+				xmlrpc_client_list:";http://localhost:5100/RPC2,3;http://localhost:5101/RPC2,3;http://localhost:5200/RPC2,4;http://localhost:5201/RPC2,4;http://localhost:5300/RPC2,5;http://localhost:5301/RPC2,5"
+			} 
+			max_fragment_size_words:2.097152e6
+		} 
+		outputs:
+		{
+			normalOutput:
+			{
+				fileName:"/tmp/artdaqots_r%06r_sr%02s_%to.root" 
+				module_type:"RootOutput"
+			}
+		} 
+		physics:
+		{
+			my_output_modules:["normalOutput"] 
+			p2:["BuildInfo"] 
+			a1:["wf"] 
+			producers:
+			{
+				BuildInfo:
+				{
+					instance_name:"ArtdaqOts" 
+					module_type:"ArtdaqOtsBuildInfo"
+				}
+			} 
+			analyzers:
+			{
+				wf:
+				{
+					module_type:"WFViewer" 
+					fragment_ids:[0] 
+					fragment_type_labels:["DataGen"] 
+					prescale:60 
+					write_to_file:true 
+					fileName:"/tmp/otsdaqdemo_onmon.root"
+				}
+			}
+		} 
+		process_name:"DAQAG" 
+		services:
+		{
+			Timing:
+			{
+				summaryOnly:true
+			} 
+			scheduler:
+			{
+				fileMode:"NOMERGE" 
+				errorOnFailureToPut: false
+			} 
+			NetMonTransportServiceInterface:
+			{
+				max_fragment_size_words:2097152 
+				service_provider:"NetMonTransportService"
+			}
+		} 
+		source:
+		{
+			module_type:"NetMonInput"
+		}
+    </CONFIGURATION_STRING>
+   </DATA>
+
+  
+ </DATA_SET>
+</ROOT> 

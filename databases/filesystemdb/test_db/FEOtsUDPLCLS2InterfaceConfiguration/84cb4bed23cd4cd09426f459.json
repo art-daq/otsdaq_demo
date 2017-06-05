@@ -1,0 +1,145 @@
+{
+"document" : {
+"data" : {
+"NAME" : "FE_OTS_UDPLCLS2INTERFACE_CONFIGURATION",
+"COMMENT" : "No comment.",
+"AUTHOR" : "",
+"CREATION_TIME" : 1479320043,
+"COL_TYPES" : {
+"INTERFACE_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"FIRMWARE_VERSION" : "NUMBER",
+"INTERFACE_IP_ADDRESS" : "VARCHAR2",
+"INTERFACE_PORT" : "NUMBER",
+"HOST_IP_ADDRESS" : "VARCHAR2",
+"HOST_PORT" : "NUMBER",
+"STREAM_TO_IP_ADDRESS" : "VARCHAR2",
+"STREAM_TO_PORT" : "NUMBER",
+"NUMBER_OF_WORDS" : "NUMBER",
+"DATA_RATE" : "NUMBER",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"INTERFACE_ID" : "OtsFrontEnd3",
+"STATUS" : "On",
+"FIRMWARE_VERSION" : "1",
+"INTERFACE_IP_ADDRESS" : "192.168.133.10",
+"INTERFACE_PORT" : "2010",
+"HOST_IP_ADDRESS" : "192.168.133.100",
+"HOST_PORT" : "10100",
+"STREAM_TO_IP_ADDRESS" : "192.168.133.100",
+"STREAM_TO_PORT" : "4950",
+"NUMBER_OF_WORDS" : "0",
+"DATA_RATE" : "0",
+"COMMENT_DESCRIPTION" : "No Comment",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "1479320043"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "0",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Nov 16 12:14:03 2016"
+},
+{
+"name" : "configGroup_v26",
+"assigned" : "Wed Nov 16 12:16:22 2016"
+},
+{
+"name" : "configGroup_v27",
+"assigned" : "Wed Nov 16 12:21:06 2016"
+},
+{
+"name" : "configGroup_v28",
+"assigned" : "Wed Nov 16 12:32:06 2016"
+},
+{
+"name" : "configGroup_v29",
+"assigned" : "Wed Nov 16 13:59:05 2016"
+},
+{
+"name" : "configGroup_v30",
+"assigned" : "Wed Nov 16 14:44:37 2016"
+},
+{
+"name" : "configGroup_v31",
+"assigned" : "Wed Nov 16 14:48:59 2016"
+},
+{
+"name" : "configGroup_v33",
+"assigned" : "Wed Nov 16 15:29:45 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Nov 16 12:14:03 2016"
+},
+{
+"setVersion" : "Wed Nov 16 12:14:03 2016"
+},
+{
+"setConfigurableEntity" : "Wed Nov 16 12:14:03 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 12:16:22 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 12:21:06 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 12:32:06 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 13:59:05 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 14:44:37 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 14:48:59 2016"
+},
+{
+"addToGlobalConfig" : "Wed Nov 16 15:29:45 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "84cb4bed23cd4cd09426f459"
+}
+}

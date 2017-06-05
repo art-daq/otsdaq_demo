@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ROOT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../ConfigurationBase.xsd">
+
+ <HEADER>
+  <TYPE>
+   <EXTENSION_TABLE_NAME>UDP_DATA_LISTENER_PRODUCER_CONFIGURATION</EXTENSION_TABLE_NAME>
+   <NAME>UDPDataListenerProducerConfiguration</NAME>
+  </TYPE>
+  <RUN>
+   <RUN_TYPE>UDPDataListenerProducerConfiguration</RUN_TYPE>
+   <RUN_NUMBER>1</RUN_NUMBER>
+   <RUN_BEGIN_TIMESTAMP>2013-01-29 17:22:10</RUN_BEGIN_TIMESTAMP>
+   <LOCATION>CERN P5</LOCATION>
+  </RUN>
+ </HEADER>
+
+  <DATA_SET>
+ 
+   <PART>
+    <NAME_LABEL>CMS--ROOT</NAME_LABEL>
+    <KIND_OF_PART>Detector ROOT</KIND_OF_PART>
+   </PART>
+   <VERSION>1</VERSION>
+   <COMMENT_DESCRIPTION></COMMENT_DESCRIPTION>
+   <CREATED_BY_USER></CREATED_BY_USER>
+
+   <DATA>
+    <PROCESSOR_ID>DataListener0PurdueFE0</PROCESSOR_ID>
+    <BUFFER_SIZE>1000</BUFFER_SIZE>
+    <IP_ADDRESS>192.168.133.1</IP_ADDRESS>
+    <PORT>47000</PORT>
+   </DATA>
+
+   <DATA>
+    <PROCESSOR_ID>VisualDataListener0</PROCESSOR_ID>
+    <BUFFER_SIZE>1000</BUFFER_SIZE>
+    <IP_ADDRESS>192.168.133.1</IP_ADDRESS>
+    <PORT>50000</PORT>
+   </DATA>
+
+</DATA_SET>
+</ROOT> 

@@ -1,0 +1,84 @@
+{
+"document" : {
+"data" : {
+"NAME" : "UDP_DATA_LISTENER_PRODUCER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1475700062,
+"COL_TYPES" : {
+"PROCESSOR_ID" : "VARCHAR2",
+"BUFFER_SIZE" : "NUMBER",
+"IP_ADDRESS" : "VARCHAR2",
+"PORT" : "NUMBER"
+},
+"DATA_SET" : [
+{
+"PROCESSOR_ID" : "DataListener0PurdueFE0",
+"BUFFER_SIZE" : 1000,
+"IP_ADDRESS" : "192.168.133.1",
+"PORT" : 47000
+},
+{
+"PROCESSOR_ID" : "VisualDataListener0",
+"BUFFER_SIZE" : 1000,
+"IP_ADDRESS" : "192.168.133.1",
+"PORT" : 50000
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "1",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Wed Oct  5 15:41:02 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setVersion" : "Wed Oct  5 15:41:02 2016"
+},
+{
+"setConfigurableEntity" : "Wed Oct  5 15:41:02 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "0f1d71f520a543cbad6bc7d9"
+}
+}

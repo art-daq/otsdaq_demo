@@ -1,0 +1,136 @@
+{
+"document" : {
+"data" : {
+"NAME" : "FE_SUPERVISOR_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1478295752,
+"COL_TYPES" : {
+"SUPERVISOR_UID" : "VARCHAR2",
+"LINK_TO_FE_INTERFACE_CONFIGURATION" : "VARCHAR2",
+"FE_INTERFACE_GROUP_ID" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"SUPERVISOR_UID" : "FESupervisor0",
+"LINK_TO_FE_INTERFACE_CONFIGURATION" : "FEInterfaceConfiguration",
+"FE_INTERFACE_GROUP_ID" : "FEInterface0",
+"COMMENT_DESCRIPTION" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Nov  4 16:42:32 2016 CDT"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "1",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Fri Nov  4 16:42:32 2016"
+},
+{
+"name" : "configGroup_v10",
+"assigned" : "Fri Nov  4 16:43:01 2016"
+},
+{
+"name" : "configGroup_v11",
+"assigned" : "Fri Nov  4 16:46:00 2016"
+},
+{
+"name" : "configGroup_v12",
+"assigned" : "Fri Nov  4 16:48:16 2016"
+},
+{
+"name" : "configGroup_v13",
+"assigned" : "Mon Nov  7 10:34:53 2016"
+},
+{
+"name" : "configGroup_v14",
+"assigned" : "Mon Nov  7 10:45:53 2016"
+},
+{
+"name" : "configGroup_v15",
+"assigned" : "Mon Nov  7 10:49:21 2016"
+},
+{
+"name" : "configGroup_v16",
+"assigned" : "Mon Nov 14 11:26:10 2016"
+},
+{
+"name" : "configGroup_v17",
+"assigned" : "Mon Nov 14 11:29:52 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Fri Nov  4 16:42:32 2016"
+},
+{
+"setVersion" : "Fri Nov  4 16:42:32 2016"
+},
+{
+"setConfigurableEntity" : "Fri Nov  4 16:42:32 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:43:01 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:46:00 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:48:16 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:34:53 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:45:53 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:49:21 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 11:26:10 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov 14 11:29:52 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "427643b354464f87987ae25c"
+}
+}

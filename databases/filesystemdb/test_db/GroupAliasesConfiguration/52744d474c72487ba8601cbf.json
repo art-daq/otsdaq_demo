@@ -1,0 +1,87 @@
+{
+"document" : {
+"data" : {
+"NAME" : "GROUP_ALIASES_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1478537379,
+"COL_TYPES" : {
+"GROUP_KEY_ALIAS" : "VARCHAR2",
+"GROUP_NAME" : "VARCHAR2",
+"GROUP_KEY" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"GROUP_KEY_ALIAS" : "Physics",
+"GROUP_NAME" : "configGroup",
+"GROUP_KEY" : "15",
+"COMMENT_DESCRIPTION" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Mon Nov  7 10:49:39 2016 CST"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "16",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Mon Nov  7 10:49:39 2016"
+},
+{
+"name" : "aaBackbone_v12",
+"assigned" : "Mon Nov  7 10:49:47 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Mon Nov  7 10:49:39 2016"
+},
+{
+"setVersion" : "Mon Nov  7 10:49:39 2016"
+},
+{
+"setConfigurableEntity" : "Mon Nov  7 10:49:39 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:49:47 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "52744d474c72487ba8601cbf"
+}
+}

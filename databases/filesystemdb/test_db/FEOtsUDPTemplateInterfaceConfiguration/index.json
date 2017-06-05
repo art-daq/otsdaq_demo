@@ -1,0 +1,69 @@
+{
+"version" : {
+"0" : [
+"aec4c82b0fde40b69874b0d3"
+],
+"1" : [
+"f06791c5bcad44519b8464d2"
+],
+"2" : [
+"34707657cd07412d99548ce9"
+]
+},
+"configurations.name" : {
+"notprovided" : [
+"34707657cd07412d99548ce9",
+"aec4c82b0fde40b69874b0d3",
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v20" : [
+"aec4c82b0fde40b69874b0d3"
+],
+"configGroup_v21" : [
+"aec4c82b0fde40b69874b0d3"
+],
+"configGroup_v22" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v23" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v24" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v25" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v26" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v27" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v28" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v29" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v30" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v31" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v33" : [
+"f06791c5bcad44519b8464d2"
+],
+"configGroup_v34" : [
+"34707657cd07412d99548ce9"
+]
+},
+"configurable_entity.name" : {
+"OTSROOT" : [
+"34707657cd07412d99548ce9",
+"aec4c82b0fde40b69874b0d3",
+"f06791c5bcad44519b8464d2"
+]
+}
+}

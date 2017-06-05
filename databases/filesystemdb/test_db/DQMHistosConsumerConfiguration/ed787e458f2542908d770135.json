@@ -1,0 +1,166 @@
+{
+"document" : {
+"data" : {
+"NAME" : "DQM_HISTOS_CONSUMER_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1477085997,
+"COL_TYPES" : {
+"PROCESSOR_ID" : "VARCHAR2",
+"FILE_PATH" : "VARCHAR2",
+"RADIX_FILE_NAME" : "VARCHAR2",
+"SAVE_FILE" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"PROCESSOR_ID" : "DQMHistos0",
+"FILE_PATH" : "/tmp/",
+"RADIX_FILE_NAME" : "DQMHistos0",
+"SAVE_FILE" : "1",
+"COMMENT_DESCRIPTION" : "",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Fri Oct 21 16:39:57 2016 CDT"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"origin" : {
+"format" : "json"
+},
+"version" : "0",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Fri Oct 21 16:39:57 2016"
+},
+{
+"name" : "configGroup_v5",
+"assigned" : "Fri Oct 21 16:41:16 2016"
+},
+{
+"name" : "configGroup_v6",
+"assigned" : "Fri Nov  4 11:00:08 2016"
+},
+{
+"name" : "configGroup_v7",
+"assigned" : "Fri Nov  4 11:03:42 2016"
+},
+{
+"name" : "PhysicsWizToLatest_v0",
+"assigned" : "Fri Nov  4 11:32:32 2016"
+},
+{
+"name" : "configGroup_v8",
+"assigned" : "Fri Nov  4 12:38:12 2016"
+},
+{
+"name" : "configGroup_v9",
+"assigned" : "Fri Nov  4 16:40:37 2016"
+},
+{
+"name" : "configGroup_v10",
+"assigned" : "Fri Nov  4 16:43:01 2016"
+},
+{
+"name" : "configGroup_v11",
+"assigned" : "Fri Nov  4 16:46:00 2016"
+},
+{
+"name" : "configGroup_v12",
+"assigned" : "Fri Nov  4 16:48:16 2016"
+},
+{
+"name" : "configGroup_v13",
+"assigned" : "Mon Nov  7 10:34:53 2016"
+},
+{
+"name" : "configGroup_v14",
+"assigned" : "Mon Nov  7 10:45:53 2016"
+},
+{
+"name" : "configGroup_v15",
+"assigned" : "Mon Nov  7 10:49:21 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Fri Oct 21 16:39:57 2016"
+},
+{
+"setVersion" : "Fri Oct 21 16:39:57 2016"
+},
+{
+"setConfigurableEntity" : "Fri Oct 21 16:39:57 2016"
+},
+{
+"addToGlobalConfig" : "Fri Oct 21 16:41:16 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:00:08 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:03:42 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 11:32:32 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 12:38:12 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:40:37 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:43:01 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:46:00 2016"
+},
+{
+"addToGlobalConfig" : "Fri Nov  4 16:48:16 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:34:53 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:45:53 2016"
+},
+{
+"addToGlobalConfig" : "Mon Nov  7 10:49:21 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "ed787e458f2542908d770135"
+}
+}

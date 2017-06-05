@@ -1,0 +1,146 @@
+{
+"document" : {
+"data" : {
+"NAME" : "XDAQ_CONTEXT_CONFIGURATION",
+"COMMENT" : "comment_ \" \" ",
+"AUTHOR" : "",
+"CREATION_TIME" : 1476980333,
+"COL_TYPES" : {
+"CONTEXT_NAME" : "VARCHAR2",
+"LINK_TO_APPLICATION_CONFIGURATION" : "VARCHAR2",
+"APPLICATION_GROUP_ID" : "VARCHAR2",
+"STATUS" : "VARCHAR2",
+"ID" : "VARCHAR2",
+"ADDRESS" : "VARCHAR2",
+"PORT" : "VARCHAR2",
+"COMMENT_DESCRIPTION" : "VARCHAR2",
+"AUTHOR" : "VARCHAR2",
+"RECORD_INSERTION_TIME" : "TIMESTAMP WITH TIMEZONE"
+},
+"DATA_SET" : [
+{
+"CONTEXT_NAME" : "mainContext",
+"LINK_TO_APPLICATION_CONFIGURATION" : "XDAQApplicationConfiguration",
+"APPLICATION_GROUP_ID" : "testContextApps",
+"STATUS" : "On",
+"ID" : "0",
+"ADDRESS" : "http://rulinux03.dhcp.fnal.gov",
+"PORT" : "1994",
+"COMMENT_DESCRIPTION" : "main context",
+"AUTHOR" : "admin",
+"RECORD_INSERTION_TIME" : "Thu Oct 20 11:18:53 2016 CDT"
+}
+]
+},
+"metadata" : {
+"comments" : {
+"empty" : "empty"
+}
+},
+"search" : [
+{
+"name" : "find any",
+"query" : "not defined"
+}
+]
+},
+"source" : {
+"encoding" : "base64",
+"format" : "json",
+"rawdata" : "as"
+},
+"version" : "7",
+"configurations" : [
+{
+"name" : "notprovided",
+"assigned" : "Thu Oct 20 11:18:53 2016"
+},
+{
+"name" : "myContext_v8",
+"assigned" : "Thu Oct 20 11:19:48 2016"
+},
+{
+"name" : "myContext_v12",
+"assigned" : "Thu Oct 20 11:54:20 2016"
+},
+{
+"name" : "aaContext_v0",
+"assigned" : "Thu Oct 20 12:03:38 2016"
+},
+{
+"name" : "aaContext_v1",
+"assigned" : "Thu Oct 20 16:44:24 2016"
+},
+{
+"name" : "aaContext_v2",
+"assigned" : "Fri Oct 21 10:33:59 2016"
+},
+{
+"name" : "aaContext_v3",
+"assigned" : "Fri Oct 21 16:50:12 2016"
+},
+{
+"name" : "aaContext_v4",
+"assigned" : "Thu Oct 27 10:24:28 2016"
+},
+{
+"name" : "aaContext_v5",
+"assigned" : "Tue Nov  1 14:10:15 2016"
+}
+],
+"aliases" : {
+"active" : [
+
+],
+"history" : [
+
+]
+},
+"changelog" : "empty",
+"bookkeeping" : {
+"isdeleted" : false,
+"isreadonly" : true,
+"created" : "Tue Dec 29 18:19:25 2015",
+"updates" : [
+{
+"addToGlobalConfig" : "Thu Oct 20 11:18:53 2016"
+},
+{
+"setVersion" : "Thu Oct 20 11:18:53 2016"
+},
+{
+"setConfigurableEntity" : "Thu Oct 20 11:18:53 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 11:19:48 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 11:54:20 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 12:03:38 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 20 16:44:24 2016"
+},
+{
+"addToGlobalConfig" : "Fri Oct 21 10:33:59 2016"
+},
+{
+"addToGlobalConfig" : "Fri Oct 21 16:50:12 2016"
+},
+{
+"addToGlobalConfig" : "Thu Oct 27 10:24:28 2016"
+},
+{
+"addToGlobalConfig" : "Tue Nov  1 14:10:15 2016"
+}
+]
+},
+"configurable_entity" : {
+"name" : "OTSROOT"
+},
+"_id" : {
+"_oid" : "4bd9db93fc574f85bd802ced"
+}
+}
