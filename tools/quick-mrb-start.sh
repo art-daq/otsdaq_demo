@@ -38,7 +38,7 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0;
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0;
 while [ -n "${1-}" ];do
     if expr "x${1-}" : 'x-' >/dev/null;then
         op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
@@ -143,7 +143,7 @@ if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
 
   # 06-Mar-2017, KAB: re-fetch the product_deps file based on the tag
   mv product_deps product_deps.orig
-  wget https://cdcvs.fnal.gov/redmine/projects/artdaq-demo/repository/revisions/$tag/raw/ups/product_deps
+  wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps
   demo_version=`grep "parent otsdaq_demo" $Base/download/product_deps|awk '{print $3}'`
   tag=$demo_version
 fi
