@@ -1,147 +1,28 @@
 {
 "version" : {
-"0" : [
-"8099ffe9e53e42b1a4a9fd82"
-],
 "1" : [
-"488958db2ce44ccd8a40860d"
-],
-"2" : [
-"42b2cc7c61f945e29befaae3"
-],
-"3" : [
-"8d4b48317f41402182e4b645"
+"5d53f3e46dad4c57be09b1d4"
 ],
 "4" : [
-"a9c71f7094d44c629cd688fb"
-],
-"5" : [
-"bd6b8ef4060c451bb00d3568"
-],
-"6" : [
-"86d21e0f535b4accb24fd23c"
-],
-"7" : [
-"9f2e8b9b53ad4cd7899a3410"
-],
-"8" : [
-"80b66f4fa7a34493902b143e"
-],
-"9" : [
-"8faa4ae89fda40debd975303"
-],
-"10" : [
-"ec4a4a09800646249fed8e31"
-],
-"11" : [
-"b3c2290eaf184a7ebad6b352"
+"d5f10cc2bcf343aead0285b0"
 ]
 },
 "configurations.name" : {
 "notprovided" : [
-"42b2cc7c61f945e29befaae3",
-"488958db2ce44ccd8a40860d",
-"8099ffe9e53e42b1a4a9fd82",
-"80b66f4fa7a34493902b143e",
-"86d21e0f535b4accb24fd23c",
-"8d4b48317f41402182e4b645",
-"8faa4ae89fda40debd975303",
-"9f2e8b9b53ad4cd7899a3410",
-"a9c71f7094d44c629cd688fb",
-"b3c2290eaf184a7ebad6b352",
-"bd6b8ef4060c451bb00d3568",
-"ec4a4a09800646249fed8e31"
+"5d53f3e46dad4c57be09b1d4",
+"d5f10cc2bcf343aead0285b0"
 ],
-"configGroup_v9" : [
-"8099ffe9e53e42b1a4a9fd82"
+"artdaqConfig_v1" : [
+"5d53f3e46dad4c57be09b1d4"
 ],
-"configGroup_v10" : [
-"8099ffe9e53e42b1a4a9fd82"
-],
-"configGroup_v11" : [
-"488958db2ce44ccd8a40860d"
-],
-"configGroup_v12" : [
-"488958db2ce44ccd8a40860d"
-],
-"configGroup_v13" : [
-"488958db2ce44ccd8a40860d"
-],
-"configGroup_v14" : [
-"488958db2ce44ccd8a40860d"
-],
-"configGroup_v15" : [
-"488958db2ce44ccd8a40860d"
-],
-"configGroup_v16" : [
-"42b2cc7c61f945e29befaae3"
-],
-"configGroup_v17" : [
-"42b2cc7c61f945e29befaae3"
-],
-"configGroup_v18" : [
-"42b2cc7c61f945e29befaae3"
-],
-"configGroup_v19" : [
-"42b2cc7c61f945e29befaae3"
-],
-"configGroup_v20" : [
-"42b2cc7c61f945e29befaae3"
-],
-"configGroup_v21" : [
-"8d4b48317f41402182e4b645"
-],
-"configGroup_v22" : [
-"8d4b48317f41402182e4b645"
-],
-"configGroup_v23" : [
-"8d4b48317f41402182e4b645"
-],
-"configGroup_v24" : [
-"a9c71f7094d44c629cd688fb"
-],
-"configGroup_v25" : [
-"bd6b8ef4060c451bb00d3568"
-],
-"configGroup_v26" : [
-"bd6b8ef4060c451bb00d3568"
-],
-"configGroup_v27" : [
-"86d21e0f535b4accb24fd23c"
-],
-"configGroup_v28" : [
-"bd6b8ef4060c451bb00d3568"
-],
-"configGroup_v29" : [
-"9f2e8b9b53ad4cd7899a3410"
-],
-"configGroup_v30" : [
-"80b66f4fa7a34493902b143e"
-],
-"configGroup_v31" : [
-"8faa4ae89fda40debd975303"
-],
-"configGroup_v33" : [
-"ec4a4a09800646249fed8e31"
-],
-"configGroup_v34" : [
-"8d4b48317f41402182e4b645"
+"defaultConfig_v4" : [
+"d5f10cc2bcf343aead0285b0"
 ]
 },
 "configurable_entity.name" : {
 "OTSROOT" : [
-"42b2cc7c61f945e29befaae3",
-"488958db2ce44ccd8a40860d",
-"8099ffe9e53e42b1a4a9fd82",
-"80b66f4fa7a34493902b143e",
-"86d21e0f535b4accb24fd23c",
-"8d4b48317f41402182e4b645",
-"8faa4ae89fda40debd975303",
-"9f2e8b9b53ad4cd7899a3410",
-"a9c71f7094d44c629cd688fb",
-"b3c2290eaf184a7ebad6b352",
-"bd6b8ef4060c451bb00d3568",
-"ec4a4a09800646249fed8e31"
+"5d53f3e46dad4c57be09b1d4",
+"d5f10cc2bcf343aead0285b0"
 ]
 }
 }

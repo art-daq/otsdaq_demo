@@ -1,90 +1,28 @@
 {
 "version" : {
-"0" : [
-"db47b69d2ed446e1988b23a3"
-],
 "1" : [
-"eaa7dc4a8436478e9a0f49ea"
+"f27dd97fe31848838d7e4164"
 ],
-"3" : [
-"14117e6b5183491a8d8c9284"
+"4" : [
+"660d1d995f0542cf868e6259"
 ]
 },
 "configurations.name" : {
 "notprovided" : [
-"14117e6b5183491a8d8c9284",
-"db47b69d2ed446e1988b23a3",
-"eaa7dc4a8436478e9a0f49ea"
+"660d1d995f0542cf868e6259",
+"f27dd97fe31848838d7e4164"
 ],
-"myConfig_v0" : [
-"14117e6b5183491a8d8c9284"
+"artdaqConfig_v1" : [
+"f27dd97fe31848838d7e4164"
 ],
-"lusw_v5" : [
-"db47b69d2ed446e1988b23a3"
-],
-"lusw_v6" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v0" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v1" : [
-"db47b69d2ed446e1988b23a3"
-],
-"aaConfig_v0" : [
-"14117e6b5183491a8d8c9284"
-],
-"configGroup_v2" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v3" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v4" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v5" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v6" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v7" : [
-"db47b69d2ed446e1988b23a3"
-],
-"PhysicsWizToLatest_v0" : [
-"14117e6b5183491a8d8c9284"
-],
-"configGroup_v8" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v9" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v10" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v11" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v12" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v13" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v14" : [
-"db47b69d2ed446e1988b23a3"
-],
-"configGroup_v15" : [
-"db47b69d2ed446e1988b23a3"
+"defaultConfig_v4" : [
+"660d1d995f0542cf868e6259"
 ]
 },
 "configurable_entity.name" : {
 "OTSROOT" : [
-"14117e6b5183491a8d8c9284",
-"db47b69d2ed446e1988b23a3",
-"eaa7dc4a8436478e9a0f49ea"
+"660d1d995f0542cf868e6259",
+"f27dd97fe31848838d7e4164"
 ]
 }
 }

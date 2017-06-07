@@ -1,157 +1,28 @@
 {
 "version" : {
-"0" : [
-"0b04bf98bd6e420c861969bb"
-],
 "1" : [
-"d2c6f5d7a4264629b406bd16"
-],
-"3" : [
-"2fee48b226b54fdc807139e6"
+"48deea9239eb429e96388f0f"
 ],
 "4" : [
-"3b1efbc4388e4b31a83cd457"
-],
-"5" : [
-"cfaa1906c901408e8621f1dd"
+"128e90b6f24e426c8f2105fb"
 ]
 },
 "configurations.name" : {
 "notprovided" : [
-"0b04bf98bd6e420c861969bb",
-"2fee48b226b54fdc807139e6",
-"3b1efbc4388e4b31a83cd457",
-"cfaa1906c901408e8621f1dd",
-"d2c6f5d7a4264629b406bd16"
+"128e90b6f24e426c8f2105fb",
+"48deea9239eb429e96388f0f"
 ],
-"myConfig_v0" : [
-"2fee48b226b54fdc807139e6"
+"artdaqConfig_v1" : [
+"48deea9239eb429e96388f0f"
 ],
-"lusw_v5" : [
-"0b04bf98bd6e420c861969bb"
-],
-"lusw_v6" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v0" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v1" : [
-"0b04bf98bd6e420c861969bb"
-],
-"aaConfig_v0" : [
-"2fee48b226b54fdc807139e6"
-],
-"configGroup_v2" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v3" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v4" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v5" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v6" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v7" : [
-"0b04bf98bd6e420c861969bb"
-],
-"PhysicsWizToLatest_v0" : [
-"2fee48b226b54fdc807139e6"
-],
-"configGroup_v8" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v9" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v10" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v11" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v12" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v13" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v14" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v15" : [
-"0b04bf98bd6e420c861969bb"
-],
-"configGroup_v16" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v17" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v18" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v19" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v20" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v21" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v22" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v23" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v24" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v25" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v26" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v27" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v28" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v29" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v30" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v31" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v32" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v33" : [
-"cfaa1906c901408e8621f1dd"
-],
-"configGroup_v34" : [
-"cfaa1906c901408e8621f1dd"
+"defaultConfig_v4" : [
+"128e90b6f24e426c8f2105fb"
 ]
 },
 "configurable_entity.name" : {
 "OTSROOT" : [
-"0b04bf98bd6e420c861969bb",
-"2fee48b226b54fdc807139e6",
-"3b1efbc4388e4b31a83cd457",
-"cfaa1906c901408e8621f1dd",
-"d2c6f5d7a4264629b406bd16"
+"128e90b6f24e426c8f2105fb",
+"48deea9239eb429e96388f0f"
 ]
 }
 }

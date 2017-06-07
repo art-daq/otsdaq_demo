@@ -1,123 +1,28 @@
 {
 "version" : {
-"0" : [
-"48e83689101b48029bb4b19e"
-],
-"1" : [
-"1c3160ab27624fe89049f95a"
-],
 "2" : [
-"6d2f704bddf24725b8002e48"
-],
-"3" : [
-"38ea8a9f54844fc2b57f3123"
-],
-"4" : [
-"203793a2e4214d0a92842dcb"
+"580af630d1904b2aaa08cce8"
 ],
 "5" : [
-"dd415829459549ed8e073a89"
-],
-"6" : [
-"2776a09461c04057b53026a4"
-],
-"7" : [
-"4bd9db93fc574f85bd802ced"
-],
-"8" : [
-"ca5ea3591c564105b3c137f7"
+"52a1f65968464f889cdbf763"
 ]
 },
 "configurations.name" : {
 "notprovided" : [
-"1c3160ab27624fe89049f95a",
-"203793a2e4214d0a92842dcb",
-"2776a09461c04057b53026a4",
-"38ea8a9f54844fc2b57f3123",
-"48e83689101b48029bb4b19e",
-"4bd9db93fc574f85bd802ced",
-"6d2f704bddf24725b8002e48",
-"ca5ea3591c564105b3c137f7",
-"dd415829459549ed8e073a89"
+"52a1f65968464f889cdbf763",
+"580af630d1904b2aaa08cce8"
 ],
-"myContext_v0" : [
-"1c3160ab27624fe89049f95a"
+"artdaqContext_v2" : [
+"580af630d1904b2aaa08cce8"
 ],
-"myContext_v1" : [
-"48e83689101b48029bb4b19e"
-],
-"myContext_v2" : [
-"6d2f704bddf24725b8002e48"
-],
-"myContext_v3" : [
-"6d2f704bddf24725b8002e48"
-],
-"myContext_v4" : [
-"6d2f704bddf24725b8002e48"
-],
-"myContext_v5" : [
-"6d2f704bddf24725b8002e48"
-],
-"lorenzoContext_v0" : [
-"38ea8a9f54844fc2b57f3123"
-],
-"myContext_v6" : [
-"2776a09461c04057b53026a4"
-],
-"myContext_v7" : [
-"2776a09461c04057b53026a4"
-],
-"myContext_v8" : [
-"4bd9db93fc574f85bd802ced"
-],
-"myContext_v12" : [
-"4bd9db93fc574f85bd802ced"
-],
-"aaContext_v0" : [
-"4bd9db93fc574f85bd802ced"
-],
-"aaContext_v1" : [
-"4bd9db93fc574f85bd802ced"
-],
-"aaContext_v2" : [
-"4bd9db93fc574f85bd802ced"
-],
-"aaContext_v3" : [
-"4bd9db93fc574f85bd802ced"
-],
-"aaContext_v4" : [
-"4bd9db93fc574f85bd802ced"
-],
-"aaContext_v5" : [
-"4bd9db93fc574f85bd802ced"
-],
-"aaContext_v6" : [
-"ca5ea3591c564105b3c137f7"
-],
-"aaContext_v7" : [
-"ca5ea3591c564105b3c137f7"
-],
-"aaContext_v8" : [
-"ca5ea3591c564105b3c137f7"
-],
-"aaContext_v9" : [
-"ca5ea3591c564105b3c137f7"
-],
-"aaContext_v10" : [
-"ca5ea3591c564105b3c137f7"
+"testContext_v5" : [
+"52a1f65968464f889cdbf763"
 ]
 },
 "configurable_entity.name" : {
 "OTSROOT" : [
-"1c3160ab27624fe89049f95a",
-"203793a2e4214d0a92842dcb",
-"2776a09461c04057b53026a4",
-"38ea8a9f54844fc2b57f3123",
-"48e83689101b48029bb4b19e",
-"4bd9db93fc574f85bd802ced",
-"6d2f704bddf24725b8002e48",
-"ca5ea3591c564105b3c137f7",
-"dd415829459549ed8e073a89"
+"52a1f65968464f889cdbf763",
+"580af630d1904b2aaa08cce8"
 ]
 }
 }
