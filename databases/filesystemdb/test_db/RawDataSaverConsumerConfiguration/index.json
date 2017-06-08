@@ -1,144 +1,28 @@
 {
 "version" : {
-"0" : [
-"55d35b435ddc41ac93d3d113"
-],
 "1" : [
-"0829455aaca640ab8351a472"
+"aca50a9b85864fe7aee28d84"
 ],
-"2" : [
-"f5a2819c1ffa493bb57fedd6"
+"4" : [
+"81d08b0417b34fb2822e3850"
 ]
 },
 "configurations.name" : {
 "notprovided" : [
-"0829455aaca640ab8351a472",
-"55d35b435ddc41ac93d3d113",
-"f5a2819c1ffa493bb57fedd6"
+"81d08b0417b34fb2822e3850",
+"aca50a9b85864fe7aee28d84"
 ],
-"myConfig_v0" : [
-"0829455aaca640ab8351a472"
+"artdaqConfig_v1" : [
+"aca50a9b85864fe7aee28d84"
 ],
-"lusw_v5" : [
-"55d35b435ddc41ac93d3d113"
-],
-"lusw_v6" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v0" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v1" : [
-"55d35b435ddc41ac93d3d113"
-],
-"aaConfig_v0" : [
-"0829455aaca640ab8351a472"
-],
-"configGroup_v2" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v3" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v4" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v5" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v6" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v7" : [
-"55d35b435ddc41ac93d3d113"
-],
-"PhysicsWizToLatest_v0" : [
-"0829455aaca640ab8351a472"
-],
-"configGroup_v8" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v9" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v10" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v11" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v12" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v13" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v14" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v15" : [
-"55d35b435ddc41ac93d3d113"
-],
-"configGroup_v16" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v17" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v18" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v19" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v20" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v21" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v22" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v23" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v24" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v25" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v26" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v27" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v28" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v29" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v30" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v31" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v33" : [
-"f5a2819c1ffa493bb57fedd6"
-],
-"configGroup_v34" : [
-"f5a2819c1ffa493bb57fedd6"
+"defaultConfig_v4" : [
+"81d08b0417b34fb2822e3850"
 ]
 },
 "configurable_entity.name" : {
 "OTSROOT" : [
-"0829455aaca640ab8351a472",
-"55d35b435ddc41ac93d3d113",
-"f5a2819c1ffa493bb57fedd6"
+"81d08b0417b34fb2822e3850",
+"aca50a9b85864fe7aee28d84"
 ]
 }
 }

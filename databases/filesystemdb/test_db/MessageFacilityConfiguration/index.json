@@ -1,38 +1,28 @@
 {
 "version" : {
-"0" : [
-"b49d278808b241c68437395b"
+"2" : [
+"1c24e0372e2c43b89b8da7ae"
+],
+"5" : [
+"19c847f503ab4041bee1d3df"
 ]
 },
 "configurations.name" : {
 "notprovided" : [
-"b49d278808b241c68437395b"
+"19c847f503ab4041bee1d3df",
+"1c24e0372e2c43b89b8da7ae"
 ],
-"aaContext_v4" : [
-"b49d278808b241c68437395b"
+"artdaqContext_v2" : [
+"1c24e0372e2c43b89b8da7ae"
 ],
-"aaContext_v5" : [
-"b49d278808b241c68437395b"
-],
-"aaContext_v6" : [
-"b49d278808b241c68437395b"
-],
-"aaContext_v7" : [
-"b49d278808b241c68437395b"
-],
-"aaContext_v8" : [
-"b49d278808b241c68437395b"
-],
-"aaContext_v9" : [
-"b49d278808b241c68437395b"
-],
-"aaContext_v10" : [
-"b49d278808b241c68437395b"
+"testContext_v5" : [
+"19c847f503ab4041bee1d3df"
 ]
 },
 "configurable_entity.name" : {
 "OTSROOT" : [
-"b49d278808b241c68437395b"
+"19c847f503ab4041bee1d3df",
+"1c24e0372e2c43b89b8da7ae"
 ]
 }
 }
