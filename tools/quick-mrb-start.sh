@@ -2,6 +2,8 @@
 # quick-mrb-start.sh - Eric Flumerfelt, May 20, 2016
 # Downloads otsdaq_demo as an MRB-controlled repository
 
+unsetup_all
+		
 git_status=`git status 2>/dev/null`
 git_sts=$?
 if [ $git_sts -eq 0 ];then
@@ -200,7 +202,7 @@ else
 mrb gitCheckout -t ${demo_version} -d otsdaq_demo http://cdcvs.fnal.gov/projects/otsdaq-demo
 fi
 fi
-cp -a $MRB_SOURCE/otsdaq_demo/NoGitDataDemo $MRB_SOURCE/otsdaq_demo/NoGitData
+cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
 
 cd $Base
     cat >setupOTSDAQDEMO <<-EOF
