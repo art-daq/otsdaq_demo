@@ -53,9 +53,9 @@ echo
 echo "*****************************************************"
 echo "Installing tutorial data as database.."
 echo 
-echo "mv tmpd1234//filesystemdb/test_db ${ADU_PATH}"
+echo "mv tmpd1234/databases/filesystemdb/test_db ${ADU_PATH}"
 echo
-mv tmpd1234/filesystemdb/test_db ${ADU_PATH}
+mv tmpd1234/databases/filesystemdb/test_db ${ADU_PATH}
 
 echo
 echo "Cleaning up downloads.."
