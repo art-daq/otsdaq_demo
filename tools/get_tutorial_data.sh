@@ -22,6 +22,18 @@ fi
 # move download user data into position
 
 
+#attempt to mkdir for full path so that it exists to move the user data to
+# assuming mkdir is non-destructive
+PATH_ARR=$(echo ${USER_DATA} | tr '/' "\n")
+UD_PATH=""
+for UD_EL in ${PATH_ARR[@]}
+do
+	#echo $UD_EL
+	#echo $UD_PATH
+	mkdir $UD_PATH &> null #hide output
+	UD_PATH="$UD_PATH/$UD_EL"
+done
+
 
 # download tutorial user data
 echo 
