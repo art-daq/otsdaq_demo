@@ -249,8 +249,7 @@ cd $Base
 	echo # This script is intended to be sourced.
 
 	sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running the otsdaq-demo.'; exit; }" || exit
-
-		unset PRODUCTS
+		
 		source $Base/products/setup
         setup mrb
         setup git
