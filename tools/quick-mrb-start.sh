@@ -264,8 +264,11 @@ cd $Base
 
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
         export ARTDAQ_DATABASE_URI="$MRB_SOURCE/otsdaq_demo/NoGitDatabases"
-
-
+        		
+        echo "Now your user data path is USER_DATA=${USER_DATA}"
+        echo "Now your database path is ARTDAQ_DATABASE_URI=${ARTDAQ_DATABASE_URI}"
+		echo
+		
         alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
         alias kx='StartOTS.sh -k'
        

@@ -39,7 +39,6 @@ echo
 echo "unzip tutorial_database_v2.zip -d tmpd1234"
 unzip tutorial_database_v2.zip -d tmpd1234
 
-exit 
 # bkup current database
 echo 
 echo "*****************************************************"
