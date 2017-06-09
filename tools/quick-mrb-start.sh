@@ -245,11 +245,12 @@ chmod 755 get_tutorial_database.sh
 
 
 cd $Base
-    cat >setupOTSDAQDEMO <<-EOF
+    cat >setup_ots.sh <<-EOF
 	echo # This script is intended to be sourced.
 
 	sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running the otsdaq-demo.'; exit; }" || exit
 
+		unset PRODUCTS
 		source $Base/products/setup
         setup mrb
         setup git
@@ -259,20 +260,12 @@ cd $Base
         export CETPKG_INSTALL=$Base/products
 		export CETPKG_J=16
 
-
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
+        export ARTDAQ_DATABASE_URI="$MRB_SOURCE/otsdaq_demo/NoGitDatabases"
 
-
-        #export OTSDAQ_REPO="$MRB_SOURCE/otsdaq"
-        #export FHICL_FILE_PATH=.:\$OTSDAQ_REPO/tools/fcl:\$FHICL_FILE_PATH
-        #export OTSDAQDEMO_BUILD="$MRB_BUILDDIR/build_otsdaq_demo"        
-        #export OTSDAQDEMO_REPO="$MRB_SOURCE/srcs/otsdaq_demo"
-        #export OTSDAQ_BUILD="$MRB_BUILDDIR/build_otsdaq"
-        #export OTSDAQUTILITIES_BUILD="$MRB_BUILDDIR/build_otsdaq_utilities"
-        #export OTSDAQUTILITIES_REPO="$MRB_SOURCE/srcs/otsdaq_utilities"
 
         alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
-        alias kx='killall -9 xdaq.exe; killall -9 mpirun; killall -9 mf_rcv_n_fwd'
+        alias kx='StartOTS.sh -k'
        
         echo
         echo "Now use 'StartOTS.sh' to start otsdaq"
