@@ -250,12 +250,15 @@ cd $Base
 
 	sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running the otsdaq-demo.'; exit; }" || exit
 		
+		echo "Initially your products path was PRODUCTS=${PRODUCTS}"
 		source $Base/products/setup
         setup mrb
         setup git
         source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
         source mrbSetEnv
-
+		echo "Now your products path is PRODUCTS=${PRODUCTS}"
+		echo
+		
         export CETPKG_INSTALL=$Base/products
 		export CETPKG_J=16
 
@@ -271,6 +274,7 @@ cd $Base
         echo " Or use 'StartOTS.sh --wiz' to configure otsdaq"
         echo
         echo "    use 'kx' to kill otsdaq processes"
+		echo
   
 	EOF
     #
@@ -283,13 +287,18 @@ set -u
 export CETPKG_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 mrb build    # VERBOSE=1
 installStatus=$?
+		
+echo
+echo
 
 if [ $installStatus -eq 0 ]; then
     echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://cdcvs.fnal.gov/redmine/projects/otsdaq/wiki"
     echo
+	echo
 else
     echo "BUILD ERROR!!! SOMETHING IS VERY WRONG!!!"
     echo
+	echo
 fi
 
 endtime=`date`
