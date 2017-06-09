@@ -22,8 +22,19 @@ fi
 # move download database into position
 
 ADU_PATH=$(echo ${ARTDAQ_DATABASE_URI} | cut -d':' -f2)
-echo "URI Path = ${ADU_PATH}"
+echo "artdaq database filesystem URI Path = ${ADU_PATH}"
 
+#attempt to mkdir for full path so that it exists to move the database to
+# assuming mkdir is non-destructive
+ADU_ARR=$(echo ${ADU_PATH} | tr '/' "\n")
+ADU_PATH=""
+for ADU_EL in ${ADU_ARR[@]}
+do
+	#echo $ADU_EL
+	#echo $ADU_PATH
+	mkdir $ADU_PATH &> null #hide output
+	ADU_PATH="$ADU_PATH/$ADU_EL"
+done
 
 # download tutorial database
 echo 
