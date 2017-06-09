@@ -202,7 +202,47 @@ else
 mrb gitCheckout -t ${demo_version} -d otsdaq_demo http://cdcvs.fnal.gov/projects/otsdaq-demo
 fi
 fi
-cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
+
+########################################
+########################################
+## Setup USER_DATA and databases
+########################################
+########################################
+#cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
+
+#Take from tutorial data 
+export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
+		
+#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
+
+#download get_tutorial_data script
+wget goo.gl/lryGG9 -O get_tutorial_data.sh
+
+#change permissions so the script is executable
+chmod 755 get_tutorial_data.sh
+
+#execute script
+./get_tutorial_data.sh
+
+
+export ARTDAQ_DATABASE_URI="$MRB_SOURCE/otsdaq_demo/NoGitDatabases"
+#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
+
+#download get_tutorial_data script
+wget goo.gl/yEhbY4 -O get_tutorial_database.sh
+
+#change permissions so the script is executable
+chmod 755 get_tutorial_database.sh
+
+#execute script
+./get_tutorial_database.sh
+
+########################################
+########################################
+## END Setup USER_DATA and databases
+########################################
+########################################
+
 
 cd $Base
     cat >setupOTSDAQDEMO <<-EOF
@@ -210,14 +250,14 @@ cd $Base
 
 	sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running the otsdaq-demo.'; exit; }" || exit
 
-	source $Base/products/setup
+		source $Base/products/setup
         setup mrb
         setup git
         source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
         source mrbSetEnv
 
         export CETPKG_INSTALL=$Base/products
-	export CETPKG_J=16
+		export CETPKG_J=16
 
 
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
@@ -231,7 +271,7 @@ cd $Base
         #export OTSDAQUTILITIES_BUILD="$MRB_BUILDDIR/build_otsdaq_utilities"
         #export OTSDAQUTILITIES_REPO="$MRB_SOURCE/srcs/otsdaq_utilities"
 
-	alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
+        alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
         alias kx='killall -9 xdaq.exe; killall -9 mpirun; killall -9 mf_rcv_n_fwd'
        
         echo
@@ -253,7 +293,7 @@ mrb build    # VERBOSE=1
 installStatus=$?
 
 if [ $installStatus -eq 0 ]; then
-    echo "otsdaq-demo has been installed correctly. Use 'source setupOTSDAQDEMO; StartOTS.sh' to start the software"
+    echo "otsdaq-demo has been installed correctly. Use 'source setupOTSDAQDEMO; StartOTS.sh --wiz' to start the software"
     echo
 else
     echo "BUILD ERROR!!! SOMETHING IS VERY WRONG!!!"
