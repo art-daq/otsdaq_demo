@@ -225,7 +225,7 @@ chmod 755 get_tutorial_data.sh
 ./get_tutorial_data.sh
 
 
-export ARTDAQ_DATABASE_URI="$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
 #... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
 #download get_tutorial_data script
@@ -263,10 +263,10 @@ cd $Base
 		export CETPKG_J=16
 
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
-        export ARTDAQ_DATABASE_URI="$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+        export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
         		
-        echo "Now your user data path is USER_DATA=${USER_DATA}"
-        echo "Now your database path is ARTDAQ_DATABASE_URI=${ARTDAQ_DATABASE_URI}"
+        echo "Now your user data path is USER_DATA = ${USER_DATA}"
+        echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
 		echo
 		
         alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
