@@ -297,7 +297,8 @@ echo
 
 if [ $installStatus -eq 0 ]; then
     echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://cdcvs.fnal.gov/redmine/projects/otsdaq/wiki"
-    echo
+    echo	
+	echo "In the future, when you open a new terminal, just use 'source setup_ots.sh' to setup your ots installation."
 	echo
 else
     echo "BUILD ERROR!!! SOMETHING IS VERY WRONG!!!"
