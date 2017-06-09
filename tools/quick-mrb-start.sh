@@ -286,7 +286,7 @@ mrb build    # VERBOSE=1
 installStatus=$?
 
 if [ $installStatus -eq 0 ]; then
-    echo "otsdaq-demo has been installed correctly. Use 'source setupOTSDAQDEMO; StartOTS.sh --wiz' to start the software"
+    echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://cdcvs.fnal.gov/redmine/projects/otsdaq/wiki"
     echo
 else
     echo "BUILD ERROR!!! SOMETHING IS VERY WRONG!!!"
