@@ -251,6 +251,11 @@ cd $Base
 	sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running the otsdaq-demo.'; exit; }" || exit
 		
 		echo "Initially your products path was PRODUCTS=${PRODUCTS}"
+		
+		#unalias because the original VM aliased for users
+		unalias kx
+		unalias StartOTS.sh
+		
 		source $Base/products/setup
         setup mrb
         setup git
