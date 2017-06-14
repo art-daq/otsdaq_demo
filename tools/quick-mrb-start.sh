@@ -216,7 +216,7 @@ export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
 #... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
 #download get_tutorial_data script
-wget goo.gl/lryGG9 -O get_tutorial_data.sh
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
 
 #change permissions so the script is executable
 chmod 755 get_tutorial_data.sh
@@ -229,7 +229,7 @@ export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabase
 #... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
 #download get_tutorial_data script
-wget goo.gl/yEhbY4 -O get_tutorial_database.sh
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh
 
 #change permissions so the script is executable
 chmod 755 get_tutorial_database.sh
