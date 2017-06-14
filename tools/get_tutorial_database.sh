@@ -32,7 +32,7 @@ for ADU_EL in ${ADU_ARR[@]}
 do
 	#echo $ADU_EL
 	#echo $ADU_PATH
-	mkdir $ADU_PATH &> null #hide output
+	mkdir $ADU_PATH &>/dev/null #hide output
 	ADU_PATH="$ADU_PATH/$ADU_EL"
 done
 

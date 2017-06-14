@@ -2,7 +2,7 @@
 # quick-mrb-start.sh - Eric Flumerfelt, May 20, 2016
 # Downloads otsdaq_demo as an MRB-controlled repository
 
-unsetup_all
+unsetup_all >/dev/null 2>&1
 		
 git_status=`git status 2>/dev/null`
 git_sts=$?
@@ -253,8 +253,8 @@ cd $Base
 	echo "Initially your products path was PRODUCTS=\${PRODUCTS}"
 	
 	#unalias because the original VM aliased for users
-	unalias kx
-	unalias StartOTS.sh
+	unalias kx >/dev/null 2>&1
+	unalias StartOTS.sh >/dev/null 2>&1
 	
 	PRODUCTS_SAVE=\${PRODUCTS}	
 	source $Base/products/setup

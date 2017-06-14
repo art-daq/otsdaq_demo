@@ -30,7 +30,7 @@ for UD_EL in ${PATH_ARR[@]}
 do
 	#echo $UD_EL
 	#echo $UD_PATH
-	mkdir $UD_PATH &> null #hide output
+	mkdir $UD_PATH &>/dev/null #hide output
 	UD_PATH="$UD_PATH/$UD_EL"
 done
 
