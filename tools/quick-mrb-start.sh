@@ -250,19 +250,23 @@ cd $Base
 
 	sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running the otsdaq-demo.'; exit; }" || exit
 		
-		echo "Initially your products path was PRODUCTS=${PRODUCTS}"
-		
-		#unalias because the original VM aliased for users
-		unalias kx
-		unalias StartOTS.sh
-		
-		source $Base/products/setup
-        setup mrb
+	echo "Initially your products path was PRODUCTS=\${PRODUCTS}"
+	
+	#unalias because the original VM aliased for users
+	unalias kx
+	unalias StartOTS.sh
+	
+	PRODUCTS_SAVE=\${PRODUCTS}	
+	source $Base/products/setup
+        PRODUCTS=\${PRODUCTS}:\${PRODUCTS_SAVE}
+        
+
+	setup mrb
         setup git
         source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
         source mrbSetEnv
-		echo "Now your products path is PRODUCTS=${PRODUCTS}"
-		echo
+	echo "Now your products path is PRODUCTS=\${PRODUCTS}"
+	echo
 		
         export CETPKG_INSTALL=$Base/products
 		export CETPKG_J=16
@@ -270,8 +274,8 @@ cd $Base
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
         export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
         		
-        echo "Now your user data path is USER_DATA = ${USER_DATA}"
-        echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
+        echo "Now your user data path is USER_DATA = \${USER_DATA}"
+        echo "Now your database path is ARTDAQ_DATABASE_URI = \${ARTDAQ_DATABASE_URI}"
 		echo
 		
         alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
