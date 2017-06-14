@@ -256,9 +256,9 @@ cd $Base
 	unalias kx >/dev/null 2>&1
 	unalias StartOTS.sh >/dev/null 2>&1
 	
-	PRODUCTS_SAVE=\${PRODUCTS}:${PRODUCTS_SET}
+	PRODUCTS_SAVE=\${PRODUCTS:+\${PRODUCTS}:}${PRODUCTS_SET:-}
 	source $Base/products/setup
-        PRODUCTS=\${PRODUCTS}:\${PRODUCTS_SAVE}
+        PRODUCTS=\${PRODUCTS:+\${PRODUCTS}:}\${PRODUCTS_SAVE:-}
         
 
 	setup mrb
