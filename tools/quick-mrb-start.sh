@@ -19,12 +19,10 @@ test -d log || mkdir log
 
 env_opts_var=`basename $0 | sed 's/\.sh$//' | tr 'a-z-' 'A-Z_'`_OPTS
 USAGE="\
-   usage: `basename $0` [options] [demo_root]
-examples: `basename $0` .
+   usage: `basename $0` [options]
+examples: `basename $0`
           `basename $0` --run-ots
           `basename $0` --debug
-If the \"demo_root\" optional parameter is not supplied, the user will be
-prompted for this location.
 --run-ots     runs otsdaq
 --debug       perform a debug build
 --develop     Install the develop version of the software (may be unstable!)
