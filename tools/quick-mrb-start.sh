@@ -260,9 +260,9 @@ cd $Base
         
 
 	setup mrb
-        setup git
-        source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
-        source mrbSetEnv
+	setup git
+	source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
+	source mrbSetEnv
 	echo "Now your products path is PRODUCTS=\${PRODUCTS}"
 	echo
 
