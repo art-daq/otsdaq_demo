@@ -22,6 +22,8 @@ else
   kdialog --yesno "Start OTS in Wizard Mode?"
   if [[ $? -eq 0 ]]; then
     StartOTS.sh --wiz
+	
+	#FIXME get verify code from StartOTS url printout .. or change StartOTS to have an option for launching chrome
     google-chrome http://otsdaq:2015/urn:xdaq-application:lid=290/Verify?code=fa37
   fi
 fi
