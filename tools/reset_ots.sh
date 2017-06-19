@@ -1,7 +1,17 @@
+#!/bin/bash
 
-#FIX ME .. detect if on VM or not before running cd and source?
-cd ~/Desktop/otsdaq-v1_01_01/log
-source ~/Desktop/otsdaq-v1_01_01/setup_ots.sh
+if ! [ -e setup_ots.sh ]; then
+  kdialog --error "You must run this script from an OTSDAQ installation directory!"
+  exit 1
+fi
+
+Base=$PWD
+alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
+stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
+exec  > >(tee "$Base/log/$alloutput_file")
+exec 2> >(tee "$Base/log/$stderr_file")
+
+source setup_ots.sh
 
 
 #ask if user is sure they want to reset ots
