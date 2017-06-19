@@ -16,7 +16,7 @@ source setup_ots.sh
 kdialog --yesno "Start OTS?"
 if [[ $? -eq 0 ]];then
   StartOTS.sh
-  google-chrome http://otsdaq:2015/urn:xdaq-application:lid=200
+  google-chrome http://otsdaq:2015/urn:xdaq-application:lid=200#1
 else
   kdialog --yesno "Start OTS in Wizard Mode?"
   if [[ $? -eq 0 ]]; then
