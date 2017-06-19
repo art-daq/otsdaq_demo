@@ -15,6 +15,7 @@ source setup_ots.sh
 
 kdialog --yesno "Start OTS?"
 if [[ $? -eq 0 ]];then
+  StartOTS.sh --wiz #just to test activate the saved groups  
   StartOTS.sh
   google-chrome http://otsdaq:2015/urn:xdaq-application:lid=200#1
 else
