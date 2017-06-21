@@ -269,8 +269,8 @@ cd $Base
 		# Setup environment when building with MRB (As there's no setupARTDAQOTS file)
 		
 		  export OTSDAQ_DEMO_LIB=\${MRB_BUILDDIR}/otsdaq_demo/lib
-		  export OTSDAQ_LIB=\${MRB_BUILDDIR}/otsdaq/lib
-		  export OTSDAQ_UTILITIES_LIB=\${MRB_BUILDDIR}/otsdaq_utilities/lib
+		  #export OTSDAQ_LIB=\${MRB_BUILDDIR}/otsdaq/lib
+		  #export OTSDAQ_UTILITIES_LIB=\${MRB_BUILDDIR}/otsdaq_utilities/lib
 		#Done with Setup environment when building with MRB (As there's no setupARTDAQOTS file)
 	
 	
