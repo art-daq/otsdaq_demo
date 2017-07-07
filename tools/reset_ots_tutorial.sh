@@ -80,8 +80,8 @@ if [[ $? -eq 0 ]];then #yes
 	########################################
 	
 
-    echo "Now your user data path is USER_DATA = \${USER_DATA}"
-    echo "Now your database path is ARTDAQ_DATABASE_URI = \${ARTDAQ_DATABASE_URI}"
+    echo "Now your user data path is USER_DATA = ${USER_DATA}"
+    echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
 fi
 
 
