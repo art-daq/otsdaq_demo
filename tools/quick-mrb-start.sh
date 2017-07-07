@@ -275,7 +275,7 @@ cd $Base
 	
 	
         export CETPKG_INSTALL=$Base/products
-		export CETPKG_J=16
+		export CETPKG_J=4
 		
 		export OTS_MAIN_PORT=2015
 
