@@ -13,7 +13,7 @@ exec 2> >(tee "$Base/log/$stderr_file")
 
 source setup_ots.sh
 
-kdialog --yesno "Start OTS?"
+kdialog --yesno "Start OTS (in Normal Mode)?"
 if [[ $? -eq 0 ]];then
   StartOTS.sh --wiz #just to test activate the saved groups  
   StartOTS.sh --chrome #launch normal mode and open chrome
