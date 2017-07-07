@@ -76,8 +76,8 @@ if [[ $? -eq 0 ]];then #yes
 	########################################
 	
 
-    echo "Now your user data path is USER_DATA = \${USER_DATA}"
-    echo "Now your database path is ARTDAQ_DATABASE_URI = \${ARTDAQ_DATABASE_URI}"
+    echo "Now your user data path is USER_DATA = ${USER_DATA}"
+    echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
 	
 	echo
 	echo
@@ -110,8 +110,8 @@ cp -a $MRB_SOURCE/otsdaq_demo/databases $MRB_SOURCE/otsdaq_demo/NoGitDatabases
 export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
 export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
 
-echo "Now your user data path is USER_DATA = \${USER_DATA}"
-echo "Now your database path is ARTDAQ_DATABASE_URI = \${ARTDAQ_DATABASE_URI}"
+echo "Now your user data path is USER_DATA = ${USER_DATA}"
+echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
 
 echo
 echo
