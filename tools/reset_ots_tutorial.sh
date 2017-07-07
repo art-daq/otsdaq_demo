@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! [ -e setup_ots.sh ]; then
-  kdialog --error "You must run this script from an OTSDAQ installation directory!"
+  kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
   exit 1
 fi
 
@@ -31,6 +31,7 @@ source setup_ots.sh
 kdialog --yesno "Before (re)starting the tutorial, this script will stop existing tutorial process. Are you sure you want to proceed?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not continue with tutorial reset. Exiting script."
+	kdialog --msgbox "User decided to not continue with tutorial reset. Exiting script."
 	exit
 fi
 
@@ -88,6 +89,7 @@ fi
 kdialog --yesno "Do you want to start the tutorial processes (i.e. the emulator and OTS in normal mode)?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not start the tutorial. Exiting script."
+	kdialog --msgbox "User decided to not start the tutorial. Exiting script."
 	exit
 fi
 
@@ -95,12 +97,13 @@ fi
 echo "User decided to start up the tutorial."
 
 StartOTS.sh --wiz #just to test activate the saved groups  
-StartOTS.sh
-google-chrome http://otsdaq:2015/urn:xdaq-application:lid=200#1
+StartOTS.sh --chrome #launch normal mode and open chrome
+#google-chrome http://otsdaq:2015/urn:xdaq-application:lid=200#1
 
 #start hardware emulator on port 4000
 ots_udp_hw_emulator 4000 &
 
 echo
 echo
-echo "tutorial reset script complete."
+echo "Tutorial reset script complete."
+kdialog --msgbox "Tutorial reset script complete."

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! [ -e setup_ots.sh ]; then
-  kdialog --error "You must run this script from an OTSDAQ installation directory!"
+  kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
   exit 1
 fi
 
@@ -27,6 +27,7 @@ source setup_ots.sh
 kdialog --yesno "Are you sure you want to reset OTS (and clear all user data)?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not continue with reset. Exiting reset script."
+	kdialog --msgbox "User decided to not continue with reset. Exiting reset script."
 	exit
 fi
 
@@ -81,12 +82,14 @@ if [[ $? -eq 0 ]];then #yes
 	echo
 	echo
 	echo "reset script complete."
+	kdialog --msgbox "Reset script complete."
 	exit
 fi
 
 kdialog --yesno "Reset user data to default data?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not reset user data. Exiting reset script."
+	kdialog --msgbox "User decided to not reset user data. Exiting reset script."
 	exit
 fi
 
@@ -113,3 +116,4 @@ echo "Now your database path is ARTDAQ_DATABASE_URI = \${ARTDAQ_DATABASE_URI}"
 echo
 echo
 echo "reset script complete."
+kdialog --msgbox "Reset script complete."

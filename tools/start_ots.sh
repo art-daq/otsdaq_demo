@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! [ -e setup_ots.sh ]; then
-  kdialog --error "You must run this script from an OTSDAQ installation directory!"
+  kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
   exit 1
 fi
 
@@ -16,15 +16,18 @@ source setup_ots.sh
 kdialog --yesno "Start OTS?"
 if [[ $? -eq 0 ]];then
   StartOTS.sh --wiz #just to test activate the saved groups  
-  StartOTS.sh
-  google-chrome http://otsdaq:2015/urn:xdaq-application:lid=200#1
+  StartOTS.sh --chrome #launch normal mode and open chrome
+	
+  #google-chrome http://otsdaq:2015/urn:xdaq-application:lid=200#1
 else
   kdialog --yesno "Start OTS in Wizard Mode?"
   if [[ $? -eq 0 ]]; then
-    StartOTS.sh --wiz
+    StartOTS.sh --wiz --chrome #launch wiz mode and open chrome
 	
 	#FIXME get verify code from StartOTS url printout .. or change StartOTS to have an option for launching chrome
-    google-chrome http://otsdaq:2015/urn:xdaq-application:lid=290/Verify?code=fa37
+	#google-chrome http://otsdaq:2015/urn:xdaq-application:lid=290/Verify?code=fa37
   fi
 fi
 
+
+kdialog --msgbox "Start OTS script complete."

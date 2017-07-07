@@ -276,6 +276,8 @@ cd $Base
 	
         export CETPKG_INSTALL=$Base/products
 		export CETPKG_J=16
+		
+		export OTS_MAIN_PORT=2015
 
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
         export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
