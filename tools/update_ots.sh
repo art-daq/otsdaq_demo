@@ -41,3 +41,11 @@ chmod 755 update_ots_donotrun.sh
 
 #execute script
 ./update_ots_donotrun.sh
+
+echo "cleaning up..."
+
+#remove downloaded script
+rm update_ots_donotrun.sh
+
+echo "done."
+echo
