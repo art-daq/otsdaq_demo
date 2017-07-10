@@ -57,6 +57,7 @@ echo "Backing up current database.."
 echo 
 echo "mv ${ADU_PATH} ${ADU_PATH}.bak"
 echo
+rm -rf ${ADU_PATH}.bak
 mv ${ADU_PATH} ${ADU_PATH}.bak
 
 # move download user data into position

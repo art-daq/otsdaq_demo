@@ -56,6 +56,7 @@ echo "Backing up current user data.."
 echo 
 echo "mv ${USER_DATA} ${USER_DATA}.bak"
 echo
+rm -rf ${USER_DATA}.bak
 mv ${USER_DATA} ${USER_DATA}.bak
 
 # move download user data into position
