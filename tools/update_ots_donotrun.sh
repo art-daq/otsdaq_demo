@@ -31,7 +31,7 @@ source setup_ots.sh
 #	if no known update process, say so, done
 #	else, conduct update process
 
-kdialog --yesno "Are you sure you want to update OTS (possibly to an unstable version)?"
+kdialog --yesno "Are you sure you want to update OTSDAQ (possibly to an unstable version)?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not continue with update. Exiting update script."
 	kdialog --msgbox "User decided to not continue with update. Exiting update script."
@@ -55,7 +55,7 @@ echo "OTS_VERSION_STRING=$OTS_VERSION_STRING"
 		
 if [ "$OTS_VERSION_STRING" == "starting_version_for_v2_of_VM" ]; then
 	echo "Updating..."
-	dbusRef=`kdialog --progressbar "Updating your otsdaq installation to latest..." 3`
+	dbusRef=`kdialog --progressbar "Updating your OTSDAQ installation to latest..." 3`
 
 	qdbus $dbusRef Set "" value 1
 	
