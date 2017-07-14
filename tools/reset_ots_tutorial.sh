@@ -37,8 +37,8 @@ source setup_ots.sh
 
 kdialog --yesno "This script will start the tutorial.\n\nBefore (re)starting the tutorial, this script will stop any existing tutorial process.\n\nDo you want to proceed?"
 if [[ $? -eq 1 ]];then #no
-	echo "User decided to not continue with tutorial reset. Exiting script."
-	kdialog --msgbox "User decided to not continue with tutorial reset. Exiting script."
+	echo "User decided to not continue with starting the tutorial. Exiting script."
+	kdialog --msgbox "You decided to not continue with starting the tutorial. Exiting script."
 	exit
 fi
 
@@ -105,7 +105,7 @@ fi
 kdialog --yesno "Do you want to start the tutorial processes (i.e. the emulator and OTS in normal mode)?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not start the tutorial. Exiting script."
-	kdialog --msgbox "User decided to not start the tutorial. Exiting script."
+	kdialog --msgbox "You decided to not start the tutorial. Exiting script."
 	exit
 fi
 
