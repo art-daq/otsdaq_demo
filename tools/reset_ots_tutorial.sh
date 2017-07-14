@@ -35,7 +35,7 @@ source setup_ots.sh
 
 
 
-kdialog --yesno "This script will start the tutorial.\n\nBefore (re)starting the tutorial, this script will stop existing tutorial process. Do you want to proceed?"
+kdialog --yesno "This script will start the tutorial.\n\nBefore (re)starting the tutorial, this script will stop existing tutorial process.\n\nDo you want to proceed?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not continue with tutorial reset. Exiting script."
 	kdialog --msgbox "User decided to not continue with tutorial reset. Exiting script."
