@@ -35,7 +35,7 @@ source setup_ots.sh
 
 
 
-kdialog --yesno "Before (re)starting the tutorial, this script will stop existing tutorial process. Are you sure you want to proceed?"
+kdialog --yesno "This script will start the tutorial. Before (re)starting the tutorial, this script will stop existing tutorial process. Do you want to proceed?"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not continue with tutorial reset. Exiting script."
 	kdialog --msgbox "User decided to not continue with tutorial reset. Exiting script."
@@ -43,7 +43,7 @@ if [[ $? -eq 1 ]];then #no
 fi
 
 
-kdialog --yesno "Reset user data for 'First Demo' tutorial (setup data for the beginning of the tutorial)?"
+kdialog --yesno "Do you want to reset user data for the 'First Demo' tutorial (i.e. setup data for the beginning of the tutorial)?"
 if [[ $? -eq 0 ]];then #yes
 
 

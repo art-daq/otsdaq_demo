@@ -22,22 +22,8 @@ source setup_ots.sh
 
 
 #Steps:
-#	ask if user wants to start the tutorial
-#		if no, proceed
-#		if yes, switch scripts to reset_ots_tutorial
-#
 #	ask if user wants to start normal mode 
 #	ask if user wants to start wiz mode
-
-
-kdialog --yesno "Do you want to start the OTS tutorial?"
-if [[ $? -eq 0 ]];then
-	rm tmp12345_reset_ots_tutorial.sh
-	cp /home/otsdaq/Desktop/otsdaq-v1_01_01/srcs/otsdaq_demo/tools/reset_ots_tutorial.sh tmp12345_reset_ots_tutorial.sh
-	./tmp12345_reset_ots_tutorial.sh
-	rm tmp12345_reset_ots_tutorial.sh
-	exit
-fi
 
 
 kdialog --yesno "Start OTS (in Normal Mode)?"
