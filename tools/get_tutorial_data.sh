@@ -1,4 +1,26 @@
 #!/bin/sh
+
+
+if ! [ -e setup_ots.sh ]; then
+  kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
+  exit 1
+fi
+
+Base=$PWD
+#commenting out unique filename generation
+# no need to keep more than one past log for standard users 
+#alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
+#stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
+#exec  > >(tee "$Base/log/$alloutput_file")
+mkdir "$Base/script_log"  &>/dev/null #hide output
+rm "$Base/script_log/$(basename $0).script"
+rm "$Base/script_log/$(basename $0)_stderr.script"
+exec  > >(tee "$Base/script_log/$(basename $0).script")
+#exec 2> >(tee "$Base/script_log/$stderr_file")
+exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
+
+source setup_ots.sh
+
 echo "********************************************************************************"
 echo "************ Gettings otsdaq tutorial Data (user settings, etc.)... ************"
 echo "********************************************************************************"

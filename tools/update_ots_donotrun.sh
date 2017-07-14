@@ -62,7 +62,7 @@ if [ "$OTS_VERSION_STRING" == "starting_version_for_v2_of_VM" ]; then
 	UpdateOTS.sh
 	
 	qdbus $dbusRef Set "" value 2
-	
+		
 	mrb b
 	
 	qdbus $dbusRef Set "" value 3
