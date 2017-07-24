@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 if ! [ -e setup_ots.sh ]; then
