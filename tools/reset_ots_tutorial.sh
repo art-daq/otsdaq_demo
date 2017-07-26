@@ -42,6 +42,8 @@ if [[ $? -eq 1 ]];then #no
 	exit
 fi
 
+StartOTS.sh --killall
+killall -9 ots_udp_hw_emulator
 
 kdialog --yesno "Do you want to reset user data for the 'First Demo' tutorial (i.e. setup data for the beginning of the tutorial)?"
 if [[ $? -eq 0 ]];then #yes
