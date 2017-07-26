@@ -1,68 +1,32 @@
 {
 "ouid" : [
-"016cf53c026b435e8f34146b",
-"11622c674a9043faa1bbee8a",
-"1517cfb2fc704e9b9da31ac6",
-"480f92f5ceb244f5b5a40ae4",
-"68aa090e8c3b4fb3ba55866a",
-"8d113f01d40942f5a0af7615"
+"2ad8ef5c310c4538ae0c3aa3",
+"a89da9c21f0340438b55c81a"
 ],
 "version" : {
 "0" : [
-"1517cfb2fc704e9b9da31ac6"
+"a89da9c21f0340438b55c81a"
 ],
 "3" : [
-"11622c674a9043faa1bbee8a"
-],
-"4" : [
-"480f92f5ceb244f5b5a40ae4"
-],
-"5" : [
-"68aa090e8c3b4fb3ba55866a"
-],
-"6" : [
-"016cf53c026b435e8f34146b"
-],
-"7" : [
-"8d113f01d40942f5a0af7615"
+"2ad8ef5c310c4538ae0c3aa3"
 ]
 },
 "configurations.name" : {
 "notprovided" : [
-"016cf53c026b435e8f34146b",
-"11622c674a9043faa1bbee8a",
-"1517cfb2fc704e9b9da31ac6",
-"480f92f5ceb244f5b5a40ae4",
-"68aa090e8c3b4fb3ba55866a",
-"8d113f01d40942f5a0af7615"
-],
-"GroupAliasTreeEditWizBackbone_v0" : [
-"1517cfb2fc704e9b9da31ac6"
-],
-"GroupAliasTreeEditWizBackbone_v3" : [
-"11622c674a9043faa1bbee8a"
+"2ad8ef5c310c4538ae0c3aa3",
+"a89da9c21f0340438b55c81a"
 ],
 "TableEditWizBackbone_v0" : [
-"480f92f5ceb244f5b5a40ae4"
+"a89da9c21f0340438b55c81a"
 ],
-"TableEditWizBackbone_v1" : [
-"68aa090e8c3b4fb3ba55866a"
-],
-"GroupAliasTreeEditWizBackbone_v4" : [
-"016cf53c026b435e8f34146b"
-],
-"TableEditWizBackbone_v2" : [
-"8d113f01d40942f5a0af7615"
+"TableEditWizBackbone_v3" : [
+"2ad8ef5c310c4538ae0c3aa3"
 ]
 },
 "entities.name" : {
 "OTSROOT" : [
-"016cf53c026b435e8f34146b",
-"11622c674a9043faa1bbee8a",
-"1517cfb2fc704e9b9da31ac6",
-"480f92f5ceb244f5b5a40ae4",
-"68aa090e8c3b4fb3ba55866a",
-"8d113f01d40942f5a0af7615"
+"2ad8ef5c310c4538ae0c3aa3",
+"a89da9c21f0340438b55c81a"
 ]
 },
 "aliases.active.name" : {
