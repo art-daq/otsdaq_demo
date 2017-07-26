@@ -281,6 +281,7 @@ cd $Base
 
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
         export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+        export OTSDAQ_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData/OutputData"
         		
         echo "Now your user data path is USER_DATA = \${USER_DATA}"
         echo "Now your database path is ARTDAQ_DATABASE_URI = \${ARTDAQ_DATABASE_URI}"

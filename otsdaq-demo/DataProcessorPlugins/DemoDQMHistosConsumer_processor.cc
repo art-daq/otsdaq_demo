@@ -1,5 +1,5 @@
-#include "otsdaq-core/DataProcessorPlugins/DQMHistosConsumer.h"
-#include "otsdaq-core/ConfigurationPluginDataFormats/DQMHistosConsumerConfiguration.h"
+#include "otsdaq-demo/DataProcessorPlugins/DemoDQMHistosConsumer.h"
+#include "otsdaq-demo/DemoRootUtilities/DemoDQMHistos.h"
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
 #include "otsdaq-core/Macros/ProcessorPluginMacros.h"
@@ -12,50 +12,40 @@ using namespace ots;
 
 
 //========================================================================================================================
-DQMHistosConsumer::DQMHistosConsumer(std::string supervisorApplicationUID, std::string bufferUID, std::string processorUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& configurationPath)
+DemoDQMHistosConsumer::DemoDQMHistosConsumer(std::string supervisorApplicationUID, std::string bufferUID, std::string processorUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& configurationPath)
 : WorkLoop             (processorUID)
-, DQMHistos            (supervisorApplicationUID, bufferUID, processorUID)
 , DQMHistosConsumerBase(supervisorApplicationUID, bufferUID, processorUID, LowConsumerPriority)
-, Configurable   (theXDAQContextConfigTree, configurationPath)
-, filePath_            (theXDAQContextConfigTree.getNode(configurationPath).getNode("FilePath").getValue<std::string>())
-, fileRadix_           (theXDAQContextConfigTree.getNode(configurationPath).getNode("RadixFileName").getValue<std::string>())
-, saveFile_            (theXDAQContextConfigTree.getNode(configurationPath).getNode("SaveFile").getValue<bool>())
+, Configurable         (theXDAQContextConfigTree, configurationPath)
+, saveDQMFile_         (theXDAQContextConfigTree.getNode(configurationPath).getNode("SaveDQMFile").getValue<bool>())
+, DQMFilePath_         (theXDAQContextConfigTree.getNode(configurationPath).getNode("DQMFilePath").getValue<std::string>())
+, DQMFilePrefix_       (theXDAQContextConfigTree.getNode(configurationPath).getNode("DQMFileNamePrefix").getValue<std::string>())
+, dqmHistos_           (new DemoDQMHistos())
 
 {
 }
 
 //========================================================================================================================
-DQMHistosConsumer::~DQMHistosConsumer(void)
+DemoDQMHistosConsumer::~DemoDQMHistosConsumer(void)
 {
 	closeFile();
 }
 
 //========================================================================================================================
-void DQMHistosConsumer::startProcessingData(std::string runNumber)
+void DemoDQMHistosConsumer::startProcessingData(std::string runNumber)
 {
 	//IMPORTANT
 	//The file must be always opened because even the LIVE DQM uses the pointer to it
-	openFile(filePath_ + "/" + fileRadix_ + "_Run" + runNumber + ".root");
+	DQMHistosBase::openFile(DQMFilePath_ + "/" + DQMFilePrefix_ + "_Run" + runNumber + ".root");
 
-
-	currentDirectory_ = theFile_->mkdir("General", "General");
-	currentDirectory_->cd();
-	sequenceNumbers_ = new TH1I("SequenceNumber", "Sequence Number", 256, 0, 255);
-
-	dataNumbers_ = new TH1I("Data", "Data", 101, 0, 0x400000*100);
-
-	//for(int i=40;i<80;++i)
-	//	sequenceNumbers_->Fill(i);
-
-	//DQMHistos::book();
+	dqmHistos_->book(DQMHistosBase::theFile_);
 	DataConsumer::startProcessingData(runNumber);
 }
 
 //========================================================================================================================
-void DQMHistosConsumer::stopProcessingData(void)
+void DemoDQMHistosConsumer::stopProcessingData(void)
 {
 	DataConsumer::stopProcessingData();
-	if(saveFile_)
+	if(saveDQMFile_)
 	{
 		save();
 	}
@@ -63,7 +53,7 @@ void DQMHistosConsumer::stopProcessingData(void)
 }
 
 //========================================================================================================================
-bool DQMHistosConsumer::workLoopThread(toolbox::task::WorkLoop* workLoop)
+bool DemoDQMHistosConsumer::workLoopThread(toolbox::task::WorkLoop* workLoop)
 {
 	//__MOUT__ << DataProcessor::processorUID_ << " running, because workloop: " <<
 	//	WorkLoop::continueWorkLoop_ << std::endl;
@@ -72,7 +62,7 @@ bool DQMHistosConsumer::workLoopThread(toolbox::task::WorkLoop* workLoop)
 }
 
 //========================================================================================================================
-void DQMHistosConsumer::fastRead(void)
+void DemoDQMHistosConsumer::fastRead(void)
 {
 	//__MOUT__ << processorUID_ << " running!" << std::endl;
 	//This is making a copy!!!
@@ -85,41 +75,14 @@ void DQMHistosConsumer::fastRead(void)
 
 	//HW emulator
 	//	 Burst Type | Sequence | 8B data
-
 	__MOUT__ << "Size fill: " << dataP_->length() << std::endl;
+	dqmHistos_->fill(*dataP_,*headerP_);
 
-	unsigned long long dataQW = *((unsigned long long *)&((*dataP_)[2]));
-	{ //print
-		__SS__ << "dataP Read: 0x ";
-		for(unsigned int i=0; i<(*dataP_).size(); ++i)
-			ss << std::hex << (int)(((*dataP_)[i]>>4)&0xF) <<
-			(int)(((*dataP_)[i])&0xF) << " " << std::dec;
-		ss << std::endl;
-		__MOUT__ << "\n" << ss.str();
-
-		__MOUT__ << "sequence = " << (int)*((unsigned char *)&((*dataP_)[1])) << std::endl;
-
-		__MOUT__ << "dataQW = 0x" << std::hex << (dataQW) << " " <<
-				std::dec << dataQW << std::endl;
-	}
-
-
-	sequenceNumbers_->Fill(
-			(unsigned int)(
-			*((unsigned char *)&((*dataP_)[1]))
-			));
-	dataNumbers_->Fill(
-			dataQW
-			//*((unsigned long long *)&((*dataP_)[2]))
-			);
-
-
-	//DQMHistos::fill(*dataP_,*headerP_);
 	DataConsumer::setReadSubBuffer<std::string, std::map<std::string, std::string>>();
 }
 
 //========================================================================================================================
-void DQMHistosConsumer::slowRead(void)
+void DemoDQMHistosConsumer::slowRead(void)
 {
 	//__MOUT__ << DataProcessor::processorUID_ << " running!" << std::endl;
 	//This is making a copy!!!
@@ -132,4 +95,4 @@ void DQMHistosConsumer::slowRead(void)
 	//DQMHistos::fill(data_,header_);
 }
 
-DEFINE_OTS_PROCESSOR(DQMHistosConsumer)
+DEFINE_OTS_PROCESSOR(DemoDQMHistosConsumer)

@@ -12,10 +12,9 @@ Base=$PWD
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 #exec  > >(tee "$Base/log/$alloutput_file")
 mkdir "$Base/script_log"  &>/dev/null #hide output
-rm "$Base/script_log/$(basename $0).script"
-rm "$Base/script_log/$(basename $0)_stderr.script"
+rm "$Base/script_log/$(basename $0).script" >/dev/null 2>&1
+rm "$Base/script_log/$(basename $0)_stderr.script" >/dev/null 2>&1
 exec  > >(tee "$Base/script_log/$(basename $0).script")
-#exec 2> >(tee "$Base/script_log/$stderr_file")
 exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
 
 source setup_ots.sh
