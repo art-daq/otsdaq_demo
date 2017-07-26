@@ -55,7 +55,7 @@ echo "OTS_VERSION_STRING=$OTS_VERSION_STRING"
 		
 if [ "$OTS_VERSION_STRING" == "starting_version_for_v2_of_VM" ]; then
 	echo "Updating..."
-	dbusRef=`kdialog --progressbar "Updating your OTSDAQ installation to latest (this may take several minutes to compile the updates)..." 3`
+	dbusRef=`kdialog --progressbar "Updating your OTSDAQ installation to latest...\n(this may take several minutes to compile the updates)" 3`
 
 	qdbus $dbusRef Set "" value 1
 	
