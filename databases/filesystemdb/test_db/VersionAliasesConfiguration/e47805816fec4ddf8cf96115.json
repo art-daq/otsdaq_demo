@@ -64,6 +64,10 @@
 {
 "name" : "GroupAliasTreeEditWizBackbone_v4",
 "assigned" : "Wed Jul 26 12:00:04 2017"
+},
+{
+"name" : "TableEditWizBackbone_v2",
+"assigned" : "Wed Jul 26 14:27:34 2017"
 }
 ],
 "changelog" : "notprovided",
@@ -133,6 +137,14 @@
 "value" : {
 "name" : "GroupAliasTreeEditWizBackbone_v4",
 "assigned" : "Wed Jul 26 12:00:04 2017"
+}
+},
+{
+"event" : "addConfiguration",
+"timestamp" : "Wed Jul 26 14:27:34 2017",
+"value" : {
+"name" : "TableEditWizBackbone_v2",
+"assigned" : "Wed Jul 26 14:27:34 2017"
 }
 }
 ],

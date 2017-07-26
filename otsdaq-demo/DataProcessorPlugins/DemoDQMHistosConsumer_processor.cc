@@ -4,10 +4,6 @@
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
 #include "otsdaq-core/Macros/ProcessorPluginMacros.h"
 
-
-
-#include <unistd.h>
-
 using namespace ots;
 
 
