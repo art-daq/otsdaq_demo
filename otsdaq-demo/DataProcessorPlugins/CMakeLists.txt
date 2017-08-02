@@ -1,5 +1,10 @@
 simple_plugin(DemoDQMHistosConsumer "processor"
-	DataManager
+	DemoRootUtilities
+    RootUtilities
+    DataManager
+    WorkLoopManager
+    ConfigurationInterface
+    ConfigurationDataFormats
 	${ROOT_BASIC_LIB_LIST}
   )
 

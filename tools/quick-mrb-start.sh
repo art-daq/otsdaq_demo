@@ -2,6 +2,8 @@
 # quick-mrb-start.sh - Eric Flumerfelt, May 20, 2016
 # Downloads otsdaq_demo as an MRB-controlled repository
 
+unsetup_all >/dev/null 2>&1
+		
 git_status=`git status 2>/dev/null`
 git_sts=$?
 if [ $git_sts -eq 0 ];then
@@ -17,12 +19,10 @@ test -d log || mkdir log
 
 env_opts_var=`basename $0 | sed 's/\.sh$//' | tr 'a-z-' 'A-Z_'`_OPTS
 USAGE="\
-   usage: `basename $0` [options] [demo_root]
-examples: `basename $0` .
+   usage: `basename $0` [options]
+examples: `basename $0`
           `basename $0` --run-ots
           `basename $0` --debug
-If the \"demo_root\" optional parameter is not supplied, the user will be
-prompted for this location.
 --run-ots     runs otsdaq
 --debug       perform a debug build
 --develop     Install the develop version of the software (may be unstable!)
@@ -200,43 +200,103 @@ else
 mrb gitCheckout -t ${demo_version} -d otsdaq_demo http://cdcvs.fnal.gov/projects/otsdaq-demo
 fi
 fi
-cp -a $MRB_SOURCE/otsdaq_demo/NoGitDataDemo $MRB_SOURCE/otsdaq_demo/NoGitData
+
+########################################
+########################################
+## Setup USER_DATA and databases
+########################################
+########################################
+#cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
+
+#Take from tutorial data 
+export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
+		
+#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
+
+#download get_tutorial_data script
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
+
+#change permissions so the script is executable
+chmod 755 get_tutorial_data.sh
+
+#execute script
+./get_tutorial_data.sh
+
+
+export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
+
+#download get_tutorial_database script
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh
+
+#change permissions so the script is executable
+chmod 755 get_tutorial_database.sh
+
+#execute script
+./get_tutorial_database.sh
+
+########################################
+########################################
+## END Setup USER_DATA and databases
+########################################
+########################################
+
 
 cd $Base
-    cat >setupOTSDAQDEMO <<-EOF
+    cat >setup_ots.sh <<-EOF
 	echo # This script is intended to be sourced.
 
 	sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running the otsdaq-demo.'; exit; }" || exit
-
+		
+	echo "Initially your products path was PRODUCTS=\${PRODUCTS}"
+	
+	#unalias because the original VM aliased for users
+	unalias kx >/dev/null 2>&1
+	unalias StartOTS.sh >/dev/null 2>&1
+	
+	PRODUCTS_SAVE=\${PRODUCTS:+\${PRODUCTS}}${PRODUCTS_SET:+\:${PRODUCTS_SET}}
 	source $Base/products/setup
-        setup mrb
-        setup git
-        source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
-        source mrbSetEnv
+        PRODUCTS=\${PRODUCTS:+\${PRODUCTS}}\${PRODUCTS_SAVE:+\:\${PRODUCTS_SAVE}}
+        
 
+	setup mrb
+	setup git
+	source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
+	source mrbSetEnv
+	echo "Now your products path is PRODUCTS=\${PRODUCTS}"
+	echo
+
+		# Setup environment when building with MRB (As there's no setupARTDAQOTS file)
+		
+		  export OTSDAQ_DEMO_LIB=\${MRB_BUILDDIR}/otsdaq_demo/lib
+		  #export OTSDAQ_LIB=\${MRB_BUILDDIR}/otsdaq/lib
+		  #export OTSDAQ_UTILITIES_LIB=\${MRB_BUILDDIR}/otsdaq_utilities/lib
+		#Done with Setup environment when building with MRB (As there's no setupARTDAQOTS file)
+	
+	
         export CETPKG_INSTALL=$Base/products
-	export CETPKG_J=16
-
+		export CETPKG_J=4
+		
+		export OTS_MAIN_PORT=2015
 
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
-
-
-        #export OTSDAQ_REPO="$MRB_SOURCE/otsdaq"
-        #export FHICL_FILE_PATH=.:\$OTSDAQ_REPO/tools/fcl:\$FHICL_FILE_PATH
-        #export OTSDAQDEMO_BUILD="$MRB_BUILDDIR/build_otsdaq_demo"        
-        #export OTSDAQDEMO_REPO="$MRB_SOURCE/srcs/otsdaq_demo"
-        #export OTSDAQ_BUILD="$MRB_BUILDDIR/build_otsdaq"
-        #export OTSDAQUTILITIES_BUILD="$MRB_BUILDDIR/build_otsdaq_utilities"
-        #export OTSDAQUTILITIES_REPO="$MRB_SOURCE/srcs/otsdaq_utilities"
-
-	alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
-        alias kx='killall -9 xdaq.exe; killall -9 mpirun; killall -9 mf_rcv_n_fwd'
+        export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+        export OTSDAQ_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData/OutputData"
+        		
+        echo "Now your user data path is USER_DATA = \${USER_DATA}"
+        echo "Now your database path is ARTDAQ_DATABASE_URI = \${ARTDAQ_DATABASE_URI}"
+		echo
+		
+        alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
+        alias kx='StartOTS.sh -k'
        
         echo
-        echo "Now use 'StartOTS.sh' to start otsdaq"
-        echo " Or use 'StartOTS.sh --wiz' to configure otsdaq"
+        echo "Now use 'StartOTS.sh --wiz' to configure otsdaq"
+        echo " 	Then use 'StartOTS.sh' to start otsdaq"
+        echo " 	Or use 'StartOTS.sh --help' for more options"
         echo
         echo "    use 'kx' to kill otsdaq processes"
+		echo
   
 	EOF
     #
@@ -249,13 +309,19 @@ set -u
 export CETPKG_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 mrb build    # VERBOSE=1
 installStatus=$?
+		
+echo
+echo
 
 if [ $installStatus -eq 0 ]; then
-    echo "otsdaq-demo has been installed correctly. Use 'source setupOTSDAQDEMO; StartOTS.sh' to start the software"
-    echo
+    echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://cdcvs.fnal.gov/redmine/projects/otsdaq/wiki"
+    echo	
+	echo "In the future, when you open a new terminal, just use 'source setup_ots.sh' to setup your ots installation."
+	echo
 else
     echo "BUILD ERROR!!! SOMETHING IS VERY WRONG!!!"
     echo
+	echo
 fi
 
 endtime=`date`

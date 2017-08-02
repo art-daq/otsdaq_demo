@@ -29,19 +29,14 @@ using namespace ots;
 //}
 //========================================================================================================================
 FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
-: Socket            (
+: Socket               (
 		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
-, FEVInterface      (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
-, OtsUDPHardware    (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
+, FEVInterface         (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
+, OtsUDPHardware       (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
-, OtsUDPFirmware    (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>(), "OtsFirmwareCore")
+, OtsUDPFirmware       (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>(), "OtsFirmwareCore")
 {
-//    __MOUT__ << "FE name: " << interfaceUID << std::endl;
-//    __MOUT__ << " Interface IP: "   << FEVInterface::theXDAQContextConfigTree_.getNode(interfaceConfigurationPath).getNode("IPAddress").getValue<std::string>() << std::endl;
-//    __MOUT__ << " Interface Port: " << FEVInterface::theXDAQContextConfigTree_.getNode(interfaceConfigurationPath).getNode("Port").getValue<std::string>() << std::endl;
-//    __MOUT__ << " IP: "             << FEVInterface::theXDAQContextConfigTree_.getNode(interfaceConfigurationPath).getNode("IP").getValue<std::string>() << std::endl;
-//    __MOUT__ << " Port: "           << FEVInterface::theXDAQContextConfigTree_.getNode(interfaceConfigurationPath).getNode("IPAddress").getValue<std::string>() << std::endl;
 	universalAddressSize_ = 8;
 	universalDataSize_    = 8;
 }
@@ -99,9 +94,9 @@ void FEOtsUDPTemplateInterface::runSequenceOfCommands(const std::string &treeLin
 				writeBuffer.resize(0);
 				OtsUDPFirmware::write(writeBuffer, writeAddress, writeHistory[writeAddress]);
 				OtsUDPHardware::write(writeBuffer);
-//				writeBuffer.resize(0);
-//				OtsUDPFirmware::read(writeBuffer, writeAddress);
-//				OtsUDPHardware::read(writeBuffer,readBuffer);
+				//				writeBuffer.resize(0);
+				//				OtsUDPFirmware::read(writeBuffer, writeAddress);
+				//				OtsUDPHardware::read(writeBuffer,readBuffer);
 			}
 		}
 	}
@@ -135,11 +130,11 @@ void FEOtsUDPTemplateInterface::configure(void)
 	OtsUDPFirmware::setupBurstDestination(writeBuffer,
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>(),
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToPort").getValue<uint64_t>()
-			);
+	);
 	OtsUDPHardware::write(writeBuffer);
 
-//
-//
+	//
+	//
 	__MOUT__ << "Reading back burst dest MAC/IP/Port: "  << std::endl;
 	writeBuffer.resize(0);
 	OtsUDPFirmware::readBurstDestinationMAC(writeBuffer);
@@ -221,42 +216,42 @@ bool FEOtsUDPTemplateInterface::running(void)
 	//		//example!
 	//		//play with array of 8 LEDs at address 0x1003
 
-//
-//	bool flashLEDsWhileRunning = false;
-//	if(flashLEDsWhileRunning)
-//	{
-//		std::string writeBuffer;
-//		int state = -1;
-//		while(WorkLoop::continueWorkLoop_)
-//		{
-//			//while running
-//			//play with the LEDs at address 0x1003
-//
-//			++state;
-//			if(state < 8)
-//			{
-//				writeBuffer.resize(0);
-//				OtsUDPFirmware::write(writeBuffer, 0x1003,1<<state);
-//				OtsUDPHardware::write(writeBuffer);
-//			}
-//			else if(state%2 == 1 && state < 11)
-//			{
-//				writeBuffer.resize(0);
-//				OtsUDPFirmware::write(writeBuffer, 0x1003, 0xFF);
-//				OtsUDPHardware::write(writeBuffer);
-//			}
-//			else if(state%2 == 0 && state < 11)
-//			{
-//				writeBuffer.resize(0);
-//				OtsUDPFirmware::write(writeBuffer, 0x1003,0);
-//				OtsUDPHardware::write(writeBuffer);
-//			}
-//			else
-//				state = -1;
-//
-//			sleep(1);
-//		}
-//	}
+	//
+	//	bool flashLEDsWhileRunning = false;
+	//	if(flashLEDsWhileRunning)
+	//	{
+	//		std::string writeBuffer;
+	//		int state = -1;
+	//		while(WorkLoop::continueWorkLoop_)
+	//		{
+	//			//while running
+	//			//play with the LEDs at address 0x1003
+	//
+	//			++state;
+	//			if(state < 8)
+	//			{
+	//				writeBuffer.resize(0);
+	//				OtsUDPFirmware::write(writeBuffer, 0x1003,1<<state);
+	//				OtsUDPHardware::write(writeBuffer);
+	//			}
+	//			else if(state%2 == 1 && state < 11)
+	//			{
+	//				writeBuffer.resize(0);
+	//				OtsUDPFirmware::write(writeBuffer, 0x1003, 0xFF);
+	//				OtsUDPHardware::write(writeBuffer);
+	//			}
+	//			else if(state%2 == 0 && state < 11)
+	//			{
+	//				writeBuffer.resize(0);
+	//				OtsUDPFirmware::write(writeBuffer, 0x1003,0);
+	//				OtsUDPHardware::write(writeBuffer);
+	//			}
+	//			else
+	//				state = -1;
+	//
+	//			sleep(1);
+	//		}
+	//	}
 
 	return false;
 }
@@ -266,9 +261,9 @@ bool FEOtsUDPTemplateInterface::running(void)
 //NOTE: buffer for returnValue must be max UDP size to handle return possibility
 int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnValue)
 {
-    __MOUT__ << "address size " << universalAddressSize_ << std::endl;
+	__MOUT__ << "address size " << universalAddressSize_ << std::endl;
 
-    __MOUT__ << "Request: ";
+	__MOUT__ << "Request: ";
 	for(unsigned int i=0;i<universalAddressSize_;++i)
 		printf("%2.2X",(unsigned char)address[i]);
 	std::cout << std::endl;
@@ -276,14 +271,14 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 	std::string readBuffer(universalDataSize_,0); //0 fill to correct number of bytes
 
 	//OtsUDPHardware::read(FSSRFirmware::universalRead(address), readBuffer) < 0;
-    if(OtsUDPHardware::read(OtsUDPFirmware::universalRead(address), readBuffer) < 0) // data reply
-    {
-    	__MOUT__ << "Caught it! This is when it's getting time out error" << std::endl;
-    	return -1;
-    }
-    __MOUT__ << "Result SIZE: " << readBuffer.size() << std::endl;
-    std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
-    return 0;
+	if(OtsUDPHardware::read(OtsUDPFirmware::universalRead(address), readBuffer) < 0) // data reply
+	{
+		__MOUT__ << "Caught it! This is when it's getting time out error" << std::endl;
+		return -1;
+	}
+	__MOUT__ << "Result SIZE: " << readBuffer.size() << std::endl;
+	std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
+	return 0;
 }
 
 //========================================================================================================================
@@ -291,14 +286,14 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 //NOTE: buffer for writeValue must be at least size universalDataSize_
 void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeValue)
 {
-    __MOUT__ << "address size " << universalAddressSize_ << std::endl;
-    __MOUT__ << "data size " << universalDataSize_ << std::endl;
-    __MOUT__ << "Sending: ";
-    for(unsigned int i=0;i<universalAddressSize_;++i)
-    	printf("%2.2X",(unsigned char)address[i]);
+	__MOUT__ << "address size " << universalAddressSize_ << std::endl;
+	__MOUT__ << "data size " << universalDataSize_ << std::endl;
+	__MOUT__ << "Sending: ";
+	for(unsigned int i=0;i<universalAddressSize_;++i)
+		printf("%2.2X",(unsigned char)address[i]);
 	std::cout << std::endl;
 
-    OtsUDPHardware::write(OtsUDPFirmware::universalWrite(address,writeValue)); // data request
+	OtsUDPHardware::write(OtsUDPFirmware::universalWrite(address,writeValue)); // data request
 }
 
 DEFINE_OTS_INTERFACE(FEOtsUDPTemplateInterface)
