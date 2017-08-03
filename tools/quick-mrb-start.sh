@@ -132,7 +132,11 @@ fi
 # Get all the information we'll need to decide which exact flavor of the software to install
 notag=0
 if [ -z "${tag:-}" ]; then 
-  tag=develop;
+  if [[ $opt_develop -eq 0 ]];then
+    tag=master
+  else
+    tag=develop
+  fi
   notag=1;
 fi
 if [[ -e product_deps ]]; then mv product_deps product_deps.save; fi
