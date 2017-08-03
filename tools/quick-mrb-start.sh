@@ -210,6 +210,7 @@ fi
 ## Setup USER_DATA and databases
 ########################################
 ########################################
+cd $Base
 #cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
 
 #Take from tutorial data 
