@@ -55,7 +55,8 @@ echo "OTS_VERSION_STRING=$OTS_VERSION_STRING"
 		
 if [ "$OTS_VERSION_STRING" == "starting_version_for_v2_of_VM" ]; then
 	echo "Updating..."
-	dbusRef=`kdialog --progressbar "Updating your OTSDAQ installation to latest...\n(this may take several minutes to compile the updates)" 3`
+	dbusRef="$(kdialog --progressbar 'Updating your OTSDAQ installation to latest... 
+(this may take several minutes to compile the updates)' 4)"
 
 	qdbus $dbusRef Set "" value 1
 	
@@ -66,7 +67,52 @@ if [ "$OTS_VERSION_STRING" == "starting_version_for_v2_of_VM" ]; then
 	mrb b
 	
 	qdbus $dbusRef Set "" value 3
+
+	# download user data to pull components: XDAQConfigurations *.xml and ConfigurationInfo *.xml 
+	echo 
+	echo "*****************************************************"
+	echo "Downloading baseline user data.."
+	echo 
+	echo "wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip"
+	echo
+	wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip
+	echo
+	echo "Unzipping tutorial user data.."
+	echo 
+	echo "unzip tutorial_Data_v2.zip -d tmp01234"
+	unzip tutorial_Data_v2.zip -d tmp01234	
+
+	# bkup current user data
+	echo 
+	echo "*****************************************************"
+	echo "Backing up current user data.."
+	echo 
+	echo "cp -r ${USER_DATA} ${USER_DATA}.bak"
+	echo
+	rm -rf ${USER_DATA}.bak
+	cp -r ${USER_DATA} ${USER_DATA}.bak
 	
+	# move download user data components into position
+	echo 
+	echo "*****************************************************"
+	echo "Installing tutorial data as user data.."
+	echo 
+	echo "cp tmp01234/NoGitData/XDAQConfigurations/*.xml ${USER_DATA}/XDAQConfigurations/"
+	echo
+	cp tmp01234/NoGitData/XDAQConfigurations/*.xml ${USER_DATA}/XDAQConfigurations/
+	echo 
+	echo "cp tmp01234/NoGitData/ConfigurationInfo/*.xml ${USER_DATA}/ConfigurationInfo/"
+	echo
+	cp tmp01234/NoGitData/ConfigurationInfo/*.xml ${USER_DATA}/ConfigurationInfo/
+	
+	echo
+	echo "Cleaning up downloads.."
+	echo 
+	echo "rm -rf tmp01234; rm -rf tutorial_Data_v2.zip"
+	echo
+	rm -rf tmp01234; rm -rf tutorial_Data_v2.zip
+	
+	qdbus $dbusRef Set "" value 4
 
 	qdbus $dbusRef close
 else

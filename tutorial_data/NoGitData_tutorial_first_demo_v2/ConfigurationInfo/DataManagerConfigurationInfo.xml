@@ -6,7 +6,7 @@
 				<COLUMN Type="UID" 	 Name="DataBufferUID" 	 StorageName="DATA_BUFFER_UID" 		DataType="VARCHAR2"/>
 				<COLUMN Type="ChildLink-0" 	 Name="LinkToDataBufferConfiguration" 	 StorageName="LINK_TO_DATA_BUFFER_CONFIGURATION" 		DataType="VARCHAR2"/>
 				<COLUMN Type="ChildLinkGroupID-0" 	 Name="LinkToDataBufferGroupID" 	 StorageName="LINK_TO_DATA_BUFFER_GROUP_ID" 		DataType="VARCHAR2"/>
-				<COLUMN Type="OnOff" 	 Name="DataBufferStatus" 	 StorageName="DATA_BUFFER_STATUS" 		DataType="VARCHAR2"/>
+				<COLUMN Type="OnOff" 	 Name="Status" 	 StorageName="STATUS" 		DataType="VARCHAR2"/>
 				<COLUMN Type="Comment" 	 Name="CommentDescription" 	 StorageName="COMMENT_DESCRIPTION" 		DataType="VARCHAR2"/>
 				<COLUMN Type="Author" 	 Name="Author" 	 StorageName="AUTHOR" 		DataType="VARCHAR2"/>
 				<COLUMN Type="Timestamp" 	 Name="RecordInsertionTime" 	 StorageName="RECORD_INSERTION_TIME" 		DataType="TIMESTAMP WITH TIMEZONE"/>
