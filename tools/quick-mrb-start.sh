@@ -334,6 +334,6 @@ fi
 
 endtime=`date`
 
-echo "Build start time: $starttime"
-echo "Build end time:   $endtime"
+echo "Install start time: $starttime"
+echo "Install end time:   $endtime"
 
