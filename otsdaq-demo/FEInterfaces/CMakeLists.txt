@@ -24,7 +24,20 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
   ${CETLIB_EXCEPT}
   )
     
-simple_plugin(myNewInterface "interface"
+#simple_plugin(myNewInterface "interface"
+#  DAQHardware
+#  FECore
+#  WorkLoopManager
+#  MessageFacility
+#  NetworkUtilities
+#  ConfigurationInterface
+#  ConfigurationDataFormats
+#  $ENV{XERCES_C_LIB}/libxerces-c.so
+#  ${CETLIB}
+#  ${CETLIB_EXCEPT}
+#  )
+  
+simple_plugin(FEOtsEthernetProgramInterface "interface"
   DAQHardware
   FECore
   WorkLoopManager
@@ -32,11 +45,11 @@ simple_plugin(myNewInterface "interface"
   NetworkUtilities
   ConfigurationInterface
   ConfigurationDataFormats
+  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
   $ENV{XERCES_C_LIB}/libxerces-c.so
   ${CETLIB}
   ${CETLIB_EXCEPT}
   )
-  
   
 #simple_plugin(FEPurduePSI46DigInterface "interface"
 #  otsdaq-demo_UserConfigurationDataFormats_FEWOtsUDPHardwareConfiguration_configuration

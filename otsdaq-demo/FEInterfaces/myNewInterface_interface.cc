@@ -13,23 +13,23 @@ using namespace ots;
 
 //========================================================================================================================
 myNewInterface::myNewInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
-: Socket            (
+: Socket            	(
 		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
-, FEVInterface      (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
-, OtsUDPHardware    (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
+, FEVInterface      	(interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
+, OtsUDPHardware    	(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
-, OtsUDPFirmware    (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>(), "OtsFirmwareCore")
+, OtsUDPFirmwareDataGen	(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
 	universalAddressSize_ = 8;
 	universalDataSize_    = 8;
 
 	//register FE Macro Functions
-	registerFEMacroFunction("testFunction",
-			static_cast<FEVInterface::frontEndMacroFunction_t>(&myNewInterface::testFunction),
-			std::vector<std::string>{"arg1","arg2","arg3"},
-			std::vector<std::string>{"oarg1","oarg2"},
-			255);
+	registerFEMacroFunction("testFunction",	//feMacroName
+			static_cast<FEVInterface::frontEndMacroFunction_t>(&myNewInterface::testFunction), //feMacroFunction
+			std::vector<std::string>{"arg1","arg2","arg3"}, //namesOfInputArgs
+			std::vector<std::string>{"oarg1","oarg2"},		//namesOfOutputArgs
+			255); //requiredUserPermissions
 	registerFEMacroFunction("testFunction2",
 			static_cast<FEVInterface::frontEndMacroFunction_t>(&myNewInterface::testFunction),
 			std::vector<std::string>{"targ1"},
@@ -122,7 +122,7 @@ void myNewInterface::configure(void)
 			<< std::endl;
 
 	writeBuffer.resize(0);
-	OtsUDPFirmware::setupBurstDestination(writeBuffer,
+	OtsUDPFirmwareCore::setDataDestination(writeBuffer,
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>(),
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToPort").getValue<uint64_t>()
 	);

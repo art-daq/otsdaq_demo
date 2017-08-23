@@ -3,14 +3,14 @@
 
 #include "otsdaq-core/FECore/FEVInterface.h"
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
-#include "otsdaq-components/DAQHardware/OtsUDPFirmware.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
 
 #include <string>
 
 namespace ots
 {
 
-class myNewInterface : public FEVInterface, public OtsUDPHardware, public OtsUDPFirmware
+class myNewInterface : public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
 {
 
 public:
