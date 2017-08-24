@@ -52,7 +52,10 @@ using namespace ots;
 //}
 //========================================================================================================================
 FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
-: FEOtsUDPTemplateInterface(interfaceUID,theXDAQContextConfigTree,interfaceConfigurationPath)
+: Socket               (
+		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
+		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
+, FEOtsUDPTemplateInterface(interfaceUID,theXDAQContextConfigTree,interfaceConfigurationPath)
 //: Socket               (
 //		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 //		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
