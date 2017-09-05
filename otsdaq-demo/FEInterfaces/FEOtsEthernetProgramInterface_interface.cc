@@ -449,7 +449,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	FILE *bitstream = fopen(path.c_str(), "rb");
 	if (!bitstream) {
 		__SS__ << "Failed to read bitsream";
-		__MOUT_ERR__ << ss.str();
+		__MOUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
