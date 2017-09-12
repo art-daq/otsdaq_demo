@@ -60,7 +60,13 @@ if [[ $? -eq 0 ]];then #yes
 	########################################
 	
 	#Take from tutorial data 
-	export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
+
+	if [ "x$USER_DATA" == "x" ]; then
+		#export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
+		echo "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
+		kdialog --msgbox "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
+		exit
+	fi
 		
 	#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 	
@@ -75,7 +81,14 @@ if [[ $? -eq 0 ]];then #yes
 	./get_tutorial_artdaq_data.sh
 	qdbus $dbusRef Set "" value 3
 	
-	export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+
+	if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
+		#export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+		echo "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db. Exiting script."
+		kdialog --msgbox "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
+		exit
+	fi
+	
 	#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 	
 	#download get_tutorial_artdaq_data script
@@ -99,6 +112,11 @@ if [[ $? -eq 0 ]];then #yes
 	
     echo "Now your user data path is USER_DATA = ${USER_DATA}"
     echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
+	
+
+	#clean up
+	rm get_tutorial_artdaq_database.sh
+	rm get_tutorial_artdaq_data.sh
 fi
 
 
