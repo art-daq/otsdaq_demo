@@ -27,10 +27,11 @@ source setup_ots.sh
 
 
 repo=`kdialog --title "Install ots Repository" --inputbox "Name of repository to install (e.g. 'prep'):" `
-if [[ $? -eq 0 ]];then
+if [ "x$repo" == "x" ];then
   kdialog --msgbox "User decided not to proceed. Exiting."
   exit
 fi
+
 echo "repo=$repo"
 
 
