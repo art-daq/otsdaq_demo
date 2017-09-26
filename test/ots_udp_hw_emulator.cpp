@@ -245,11 +245,11 @@ int main(int argc, char** argv)
 
 				for(int i=0; i<numberOfBytes; i++)
 				{
-					if((i-RX_ADDR_OFFSET)%8==0) __COUT__ << std::endl;
+					if((i-RX_ADDR_OFFSET)%8==0) __PRINTF__("\n");
 					__PRINTF__("%2.2X", (unsigned char)buff[handlerIndex + i]);
 					//__COUT__ << std::hex << std::setw(2) << (int)(unsigned char)buff[i] << std::dec;
 				}
-				__COUT__ << std::endl;
+				__PRINTF__("\n");
 
 
 				//handle packet
@@ -260,8 +260,7 @@ int main(int argc, char** argv)
 					memcpy((void *)&addr,(void *)&buff[handlerIndex + RX_ADDR_OFFSET],8);
 
 					__COUT__ << std::hex << ":::" << "Read address: 0x" << hex << addr;
-					__PRINTF__(" 0x%16.16lX", addr);
-					__COUT__ << endl;
+					__PRINTF__(" 0x%16.16lX \n", addr);
 
 					//setup response packet based on address
 					buff[handlerIndex + 0] = 0; //read type
@@ -305,8 +304,8 @@ int main(int argc, char** argv)
 					uint64_t addr;
 					memcpy((void *)&addr,(void *)&buff[handlerIndex + RX_ADDR_OFFSET],8);
 					__COUT__ << std::hex << ":::" << "hw: Line " << std::dec << __LINE__ << ":::" << "Write address: 0x" << std::hex << addr;
-					__PRINTF__(" 0x%16.16lX", addr);
-					__COUT__ << std::endl;
+					__PRINTF__(" 0x%16.16lX \n", addr);
+
 
 					switch(addr) //define address space
 					{

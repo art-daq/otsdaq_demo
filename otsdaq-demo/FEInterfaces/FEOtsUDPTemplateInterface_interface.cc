@@ -35,7 +35,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 , FEVInterface         (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
 , OtsUDPHardware       (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
-, OtsUDPFirmware       (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>(), "OtsFirmwareCore")
+, OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
 	universalAddressSize_ = 8;
 	universalDataSize_    = 8;
@@ -47,6 +47,10 @@ FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void)
 
 
 //========================================================================================================================
+//runSequenceOfCommands
+//	runs a sequence of write commands from a linked section of the configuration tree
+//		based on these fields:
+//			- WriteAddress,  WriteValue, StartingBitPosition, BitFieldSize
 void FEOtsUDPTemplateInterface::runSequenceOfCommands(const std::string &treeLinkName)
 {
 	std::map<uint64_t,uint64_t> writeHistory;
@@ -92,10 +96,10 @@ void FEOtsUDPTemplateInterface::runSequenceOfCommands(const std::string &treeLin
 				__MOUT__ << msg << std::endl;
 
 				writeBuffer.resize(0);
-				OtsUDPFirmware::write(writeBuffer, writeAddress, writeHistory[writeAddress]);
+				OtsUDPFirmwareCore::write(writeBuffer, writeAddress, writeHistory[writeAddress]);
 				OtsUDPHardware::write(writeBuffer);
 				//				writeBuffer.resize(0);
-				//				OtsUDPFirmware::read(writeBuffer, writeAddress);
+				//				OtsUDPFirmwareCore::read(writeBuffer, writeAddress);
 				//				OtsUDPHardware::read(writeBuffer,readBuffer);
 			}
 		}
@@ -116,8 +120,8 @@ void FEOtsUDPTemplateInterface::configure(void)
 	__MOUT__ << "configure" << std::endl;
 	__MOUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << std::endl;
 
-	std::string writeBuffer;
-	std::string readBuffer;
+	std::string sendBuffer;
+	std::string recvBuffer;
 
 	__MOUT__ << "Setting Destination IP: " <<
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>()
@@ -126,30 +130,30 @@ void FEOtsUDPTemplateInterface::configure(void)
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToPort").getValue<unsigned int>()
 			<< std::endl;
 
-	writeBuffer.resize(0);
-	OtsUDPFirmware::setupBurstDestination(writeBuffer,
+	sendBuffer.resize(0);
+	OtsUDPFirmwareCore::setDataDestination(sendBuffer,
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>(),
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToPort").getValue<uint64_t>()
 	);
-	OtsUDPHardware::write(writeBuffer);
+	OtsUDPHardware::write(sendBuffer);
 
 	//
 	//
 	__MOUT__ << "Reading back burst dest MAC/IP/Port: "  << std::endl;
-	writeBuffer.resize(0);
-	OtsUDPFirmware::readBurstDestinationMAC(writeBuffer);
-	OtsUDPHardware::read(writeBuffer,readBuffer);
-	writeBuffer.resize(0);
-	OtsUDPFirmware::readBurstDestinationIP(writeBuffer);
-	OtsUDPHardware::read(writeBuffer,readBuffer);
-	writeBuffer.resize(0);
-	OtsUDPFirmware::readBurstDestinationPort(writeBuffer);
-	OtsUDPHardware::read(writeBuffer,readBuffer);
+	sendBuffer.resize(0);
+	OtsUDPFirmwareCore::readDataDestinationMAC(sendBuffer);
+	OtsUDPHardware::read(sendBuffer,recvBuffer);
+	sendBuffer.resize(0);
+	OtsUDPFirmwareCore::readDataDestinationIP(sendBuffer);
+	OtsUDPHardware::read(sendBuffer,recvBuffer);
+	sendBuffer.resize(0);
+	OtsUDPFirmwareCore::readDataDestinationPort(sendBuffer);
+	OtsUDPHardware::read(sendBuffer,recvBuffer);
 
 
-	writeBuffer.resize(0);
-	OtsUDPFirmware::read(writeBuffer,0x5);
-	OtsUDPHardware::read(writeBuffer,readBuffer);
+	sendBuffer.resize(0);
+	OtsUDPFirmwareCore::readControlDestinationPort(sendBuffer);
+	OtsUDPHardware::read(sendBuffer,recvBuffer);
 
 	//Run Configure Sequence Commands
 	runSequenceOfCommands("LinkToConfigureSequence");
@@ -193,7 +197,9 @@ void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 	//Run Start Sequence Commands
 	runSequenceOfCommands("LinkToStartSequence");
 
-	OtsUDPHardware::write(OtsUDPFirmware::startBurst());
+	std::string sendBuffer;
+	OtsUDPFirmwareCore::startBurst(sendBuffer);
+	OtsUDPHardware::write(sendBuffer);
 }
 
 //========================================================================================================================
@@ -205,7 +211,9 @@ void FEOtsUDPTemplateInterface::stop(void)
 
 	runSequenceOfCommands("LinkToStopSequence");
 
-	OtsUDPHardware::write(OtsUDPFirmware::stopBurst());
+	std::string sendBuffer;
+	OtsUDPFirmwareCore::stopBurst(sendBuffer);
+	OtsUDPHardware::write(sendBuffer);
 }
 
 //========================================================================================================================
@@ -231,19 +239,19 @@ bool FEOtsUDPTemplateInterface::running(void)
 	//			if(state < 8)
 	//			{
 	//				writeBuffer.resize(0);
-	//				OtsUDPFirmware::write(writeBuffer, 0x1003,1<<state);
+	//				OtsUDPFirmwareCore::write(writeBuffer, 0x1003,1<<state);
 	//				OtsUDPHardware::write(writeBuffer);
 	//			}
 	//			else if(state%2 == 1 && state < 11)
 	//			{
 	//				writeBuffer.resize(0);
-	//				OtsUDPFirmware::write(writeBuffer, 0x1003, 0xFF);
+	//				OtsUDPFirmwareCore::write(writeBuffer, 0x1003, 0xFF);
 	//				OtsUDPHardware::write(writeBuffer);
 	//			}
 	//			else if(state%2 == 0 && state < 11)
 	//			{
 	//				writeBuffer.resize(0);
-	//				OtsUDPFirmware::write(writeBuffer, 0x1003,0);
+	//				OtsUDPFirmwareCore::write(writeBuffer, 0x1003,0);
 	//				OtsUDPHardware::write(writeBuffer);
 	//			}
 	//			else
@@ -268,14 +276,21 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 		printf("%2.2X",(unsigned char)address[i]);
 	std::cout << std::endl;
 
-	std::string readBuffer(universalDataSize_,0); //0 fill to correct number of bytes
+	std::string readBuffer, sendBuffer;
+	OtsUDPFirmwareCore::read(sendBuffer,address,1 /*size*/);
 
 	//OtsUDPHardware::read(FSSRFirmware::universalRead(address), readBuffer) < 0;
-	if(OtsUDPHardware::read(OtsUDPFirmware::universalRead(address), readBuffer) < 0) // data reply
+	try
+	{
+		OtsUDPHardware::read(sendBuffer, readBuffer); // data reply
+	}
+	catch(std::runtime_error &e)
 	{
 		__MOUT__ << "Caught it! This is when it's getting time out error" << std::endl;
+		__MOUT_ERR__ << e.what() << std::endl;
 		return -1;
 	}
+
 	__MOUT__ << "Result SIZE: " << readBuffer.size() << std::endl;
 	std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
 	return 0;
@@ -293,7 +308,9 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 		printf("%2.2X",(unsigned char)address[i]);
 	std::cout << std::endl;
 
-	OtsUDPHardware::write(OtsUDPFirmware::universalWrite(address,writeValue)); // data request
+	std::string sendBuffer;
+	OtsUDPFirmwareCore::write(sendBuffer,address,writeValue,1 /*size*/);
+	OtsUDPHardware::write(sendBuffer); // data request
 }
 
 DEFINE_OTS_INTERFACE(FEOtsUDPTemplateInterface)

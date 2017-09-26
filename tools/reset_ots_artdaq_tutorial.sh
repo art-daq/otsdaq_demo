@@ -34,7 +34,7 @@ source setup_ots.sh
 
 
 
-kdialog --yesno "This script will start the tutorial.\n\nBefore (re)starting the tutorial, this script will stop any existing tutorial process.\n\nDo you want to proceed?\n"
+kdialog --yesno "This script will start the artdaq tutorial.\n\nBefore (re)starting the tutorial, this script will stop any existing tutorial process.\n\nDo you want to proceed?\n"
 if [[ $? -eq 1 ]];then #no
 	echo "User decided to not continue with starting the tutorial. Exiting script."
 	kdialog --msgbox "You decided to not continue with starting the tutorial. Exiting script."
@@ -44,14 +44,14 @@ fi
 StartOTS.sh --killall
 killall -9 ots_udp_hw_emulator
 
-kdialog --yesno "Do you want to reset user data for the 'First Demo' tutorial (i.e. setup data for the beginning of the tutorial)?"
+kdialog --yesno "Do you want to reset user data for the 'artdaq Demo' tutorial (i.e. setup data for the beginning of the tutorial)?"
 if [[ $? -eq 0 ]];then #yes
 
 
-	dbusRef=`kdialog --progressbar "Installing 'First Demo' tutorial user data and database..." 5`
+	dbusRef=`kdialog --progressbar "Installing 'artdaq Demo' tutorial user data and database..." 5`
 	qdbus $dbusRef Set "" value 1
 	
-	echo "User decided to reset to 'First Demo' tutorial data."
+	echo "User decided to reset to 'artdaq Demo' tutorial data."
 	
 	########################################
 	########################################
@@ -59,9 +59,8 @@ if [[ $? -eq 0 ]];then #yes
 	########################################
 	########################################
 	
-	#Take from tutorial data
+	#Take from tutorial data 
 
-	
 	if [ "x$USER_DATA" == "x" ]; then
 		#export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
 		echo "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
@@ -71,16 +70,17 @@ if [[ $? -eq 0 ]];then #yes
 		
 	#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 	
-	#download get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
+	#download get_tutorial_artdaq_data script
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_artdaq_data.sh -O get_tutorial_artdaq_data.sh
 	qdbus $dbusRef Set "" value 2
 	
 	#change permissions so the script is executable
-	chmod 755 get_tutorial_data.sh
+	chmod 755 get_tutorial_artdaq_data.sh
 	
 	#execute script
-	./get_tutorial_data.sh
+	./get_tutorial_artdaq_data.sh
 	qdbus $dbusRef Set "" value 3
+	
 
 	if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
 		#export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
@@ -88,18 +88,18 @@ if [[ $? -eq 0 ]];then #yes
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		exit
 	fi
-			
+	
 	#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 	
-	#download get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh
+	#download get_tutorial_artdaq_data script
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_artdaq_database.sh -O get_tutorial_artdaq_database.sh
 	qdbus $dbusRef Set "" value 4
 	
 	#change permissions so the script is executable
-	chmod 755 get_tutorial_database.sh
+	chmod 755 get_tutorial_artdaq_database.sh
 	
 	#execute script
-	./get_tutorial_database.sh
+	./get_tutorial_artdaq_database.sh
 	qdbus $dbusRef Set "" value 5
 	
 	########################################
@@ -113,9 +113,10 @@ if [[ $? -eq 0 ]];then #yes
     echo "Now your user data path is USER_DATA = ${USER_DATA}"
     echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
 	
+
 	#clean up
-	rm get_tutorial_database.sh
-	rm get_tutorial_data.sh
+	rm get_tutorial_artdaq_database.sh
+	rm get_tutorial_artdaq_data.sh
 fi
 
 

@@ -132,7 +132,11 @@ fi
 # Get all the information we'll need to decide which exact flavor of the software to install
 notag=0
 if [ -z "${tag:-}" ]; then 
-  tag=develop;
+  if [[ $opt_develop -eq 0 ]];then
+    tag=master
+  else
+    tag=develop
+  fi
   notag=1;
 fi
 if [[ -e product_deps ]]; then mv product_deps product_deps.save; fi
@@ -201,45 +205,7 @@ mrb gitCheckout -t ${demo_version} -d otsdaq_demo http://cdcvs.fnal.gov/projects
 fi
 fi
 
-########################################
-########################################
-## Setup USER_DATA and databases
-########################################
-########################################
-#cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
 
-#Take from tutorial data 
-export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
-		
-#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
-
-#download get_tutorial_data script
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
-
-#change permissions so the script is executable
-chmod 755 get_tutorial_data.sh
-
-#execute script
-./get_tutorial_data.sh
-
-
-export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
-#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
-
-#download get_tutorial_database script
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh
-
-#change permissions so the script is executable
-chmod 755 get_tutorial_database.sh
-
-#execute script
-./get_tutorial_database.sh
-
-########################################
-########################################
-## END Setup USER_DATA and databases
-########################################
-########################################
 
 
 cd $Base
@@ -301,6 +267,48 @@ cd $Base
 	EOF
     #
 
+########################################
+########################################
+## Setup USER_DATA and databases
+########################################
+########################################
+cd $Base
+#cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
+
+#Take from tutorial data 
+export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
+		
+#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
+
+#download get_tutorial_data script
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
+
+#change permissions so the script is executable
+chmod 755 get_tutorial_data.sh
+
+#execute script
+./get_tutorial_data.sh
+
+
+export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
+
+#download get_tutorial_database script
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh
+
+#change permissions so the script is executable
+chmod 755 get_tutorial_database.sh
+
+#execute script
+./get_tutorial_database.sh
+
+########################################
+########################################
+## END Setup USER_DATA and databases
+########################################
+########################################	
+	
+	
 # Build artdaq_demo
 cd $MRB_BUILDDIR
 set +u
@@ -326,6 +334,6 @@ fi
 
 endtime=`date`
 
-echo "Build start time: $starttime"
-echo "Build end time:   $endtime"
+echo "Install start time: $starttime"
+echo "Install end time:   $endtime"
 

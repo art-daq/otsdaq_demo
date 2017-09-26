@@ -3,14 +3,14 @@
 
 #include "otsdaq-core/FECore/FEVInterface.h"
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
-#include "otsdaq-components/DAQHardware/OtsUDPFirmware.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
 
 #include <string>
 
 namespace ots
 {
 
-class FEOtsUDPTemplateInterface : public FEVInterface, public OtsUDPHardware, public OtsUDPFirmware
+class FEOtsUDPTemplateInterface	: public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
 {
 
 public:
@@ -18,19 +18,19 @@ public:
 	FEOtsUDPTemplateInterface     (const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
 	virtual ~FEOtsUDPTemplateInterface(void);
 
-	void configure        	(void);
-	void halt             	(void);
-	void pause            	(void);
-	void resume           	(void);
+	void configure        	(void) override;
+	void halt             	(void) override;
+	void pause            	(void) override;
+	void resume           	(void) override;
 	void start            	(std::string runNumber) override;
-	void stop             	(void);
-	bool running   		  	(void);
+	void stop             	(void) override;
+	bool running   		  	(void) override;
 
-	int universalRead	  	(char* address, char* readValue) override;
-	void universalWrite	  	(char* address, char* writeValue) override;
+	virtual int universalRead	  	(char* address, char* readValue) override;
+	virtual void universalWrite	  	(char* address, char* writeValue) override;
 
-    //void configureFEW     (void);
-    //void configureDetector(const DACStream& theDACStream);
+	//void configureFEW     (void);
+	//void configureDetector(const DACStream& theDACStream);
 
 private:
 	void runSequenceOfCommands(const std::string &treeLinkName);
