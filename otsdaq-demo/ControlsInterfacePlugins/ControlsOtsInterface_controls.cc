@@ -29,7 +29,7 @@ void ControlsOtsInterface::destroy()
 
 std::string ControlsOtsInterface::getList(std::string format)
 {
-	//__MOUT__ << theXDAQContextConfigTree.getNode(controlsConfigurationPath).getValue << std::endl;
+	//__COUT__ << theXDAQContextConfigTree.getNode(controlsConfigurationPath).getValue << std::endl;
 	return (std::string) "list";
 }
 void ControlsOtsInterface::subscribe(std::string Name)
