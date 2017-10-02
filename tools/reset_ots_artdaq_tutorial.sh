@@ -1,8 +1,24 @@
 #!/bin/bash
 
+
+#determine if kdialog is functional 
+# if not alias to echo
+KDIALOG_ALWAYS_YES=0
+kdialog --print-winid &>/dev/null #hide output
+if [[ $? -eq 1 ]];then #no
+	#instead of e.g. /usr/bin/kdialog
+	# only works if the script was sourced!
+	alias kdialog="echo"
+	which kdialog
+	KDIALOG_ALWAYS_YES=1
+	echo "kdialog is not functional, attempty to bypass with alias echo and KDIALOG_ALWAYS_YES"
+fi
+
+
 if ! [ -e setup_ots.sh ]; then
   kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
-  exit 1
+  return  #return is used if script is sourced
+  exit  #exit is used if script is run ./reset...
 fi
 
 Base=$PWD
@@ -35,9 +51,10 @@ source setup_ots.sh
 
 
 kdialog --yesno "This script will start the artdaq tutorial.\n\nBefore (re)starting the tutorial, this script will stop any existing tutorial process.\n\nDo you want to proceed?\n"
-if [[ $? -eq 1 ]];then #no
+if [[ $KDIALOG_ALWAYS_YES == 0 && $? -eq 1 ]]; then #no
 	echo "User decided to not continue with starting the tutorial. Exiting script."
 	kdialog --msgbox "You decided to not continue with starting the tutorial. Exiting script."
+	return
 	exit
 fi
 
@@ -45,7 +62,7 @@ StartOTS.sh --killall
 killall -9 ots_udp_hw_emulator
 
 kdialog --yesno "Do you want to reset user data for the 'artdaq Demo' tutorial (i.e. setup data for the beginning of the tutorial)?"
-if [[ $? -eq 0 ]];then #yes
+if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]];then #yes
 
 
 	dbusRef=`kdialog --progressbar "Installing 'artdaq Demo' tutorial user data and database..." 5`
@@ -65,6 +82,7 @@ if [[ $? -eq 0 ]];then #yes
 		#export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
 		echo "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
+		return
 		exit
 	fi
 		
@@ -86,6 +104,7 @@ if [[ $? -eq 0 ]];then #yes
 		#export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
 		echo "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
+		return
 		exit
 	fi
 	
@@ -122,9 +141,10 @@ fi
 
 
 kdialog --yesno "Do you want to start the tutorial processes (i.e. the emulator and OTS in normal mode)?"
-if [[ $? -eq 1 ]];then #no
+if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
 	echo "User decided to not start the tutorial. Exiting script."
 	kdialog --msgbox "You decided to not start the tutorial. Exiting script."
+	return
 	exit
 fi
 
