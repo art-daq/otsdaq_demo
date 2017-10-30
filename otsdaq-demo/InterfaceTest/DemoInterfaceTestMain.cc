@@ -4,8 +4,6 @@
 #include "otsdaq-core/ConfigurationInterface/ConfigurationManager.h"
 #include "otsdaq-core/ConfigurationDataFormats/ConfigurationGroupKey.h"
 #include "otsdaq-core/ConfigurationInterface/ConfigurationInterface.h"
-#include "otsdaq-core/ConfigurationPluginDataFormats/Configurations.h"
-#include "otsdaq-core/ConfigurationPluginDataFormats/FEConfiguration.h"
 #include "otsdaq-demo/FEInterfaces/FEOtsUDPTemplateInterface_interface.cc"
 /*
 
