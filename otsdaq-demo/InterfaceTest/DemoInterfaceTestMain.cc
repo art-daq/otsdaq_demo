@@ -1,67 +1,64 @@
-/*
-#include "otsdaq-demo/FEInterfaces/FEWInterfacesManager.h"
+#include <iostream>
+#include <fstream>
+
 #include "otsdaq-core/ConfigurationInterface/ConfigurationManager.h"
 #include "otsdaq-core/ConfigurationDataFormats/ConfigurationGroupKey.h"
-
-#include "otsdaq-demo/FEInterfaces/FEWOtsGenericInterface.h"
-#include "otsdaq-demo/FEInterfaces/FEWPurdueFSSRInterface.h"
-#include "otsdaq-core/FECore/FEVInterface.h"
-
 #include "otsdaq-core/ConfigurationInterface/ConfigurationInterface.h"
 #include "otsdaq-core/ConfigurationPluginDataFormats/Configurations.h"
-//#include "otsdaq-core/ConfigurationDataFormats/FrontEndConfiguration.h"
+#include "otsdaq-core/ConfigurationPluginDataFormats/FEConfiguration.h"
+#include "otsdaq-demo/FEInterfaces/FEOtsUDPTemplateInterface_interface.cc"
+/*
+
 #include "otsdaq-core/ConfigurationDataFormats/FEWOtsUDPHardwareConfiguration.h"
-
-#include <iostream>
-
 #include "../FEInterfaces/FEWOtsUDPFSSRInterface.h"
 #include "../FEInterfaces/FEWOtsUDPHCALInterface.h"
-
-using namespace ots;
 */
-int main()
+using namespace ots;
+
+int main(int argc, char** argv)
 {
-	return 1;
-}
-/*
 	//Variables
-	const int supervisorInstance_    = 1;
-	const int ConfigurationGroupKeyValue_ = 0;
-	const ConfigurationGroupKey* theConfigurationGroupKey_ = new ConfigurationGroupKey(ConfigurationGroupKeyValue_);
+	const int          supervisorInstance_    = 1;
+	const unsigned int configurationKeyValue_ = 1;
 
-	////////////////////////////////////////////////////////////////
-	//INSERTED GLOBALLY IN THE CODE
-//	ConfigurationManager*   theConfigurationManager_ = new ConfigurationManager;
-//	FEWInterfacesManager    theFEWInterfacesManager_(theConfigurationManager_, supervisorInstance_);
-//
-//	theConfigurationManager_->setupFEWSupervisorConfiguration(theConfigurationGroupKey_,supervisorInstance_);
-//	theFEWInterfacesManager_.configure();
-	////////////////////////////////////////////////////////////////
+	ConfigurationManager* theConfigurationManager_ = new ConfigurationManager();
 
-	////////////////////////////////////////////////////////////////
-	//Getting just the informations about the FEWInterface
+	std::string  XDAQContextConfigurationName_ = "XDAQContextConfiguration";
+	std::string  supervisorContextUID_         = "mainContext";
+	std::string  supervisorApplicationUID_     = "FESupervisor";
+	std::string  interfaceUID_                 = "ExampleInterface0";
+	std::string  supervisorConfigurationPath_  = "/" + supervisorContextUID_ + 
+	                                             "/LinkToApplicationConfiguration/" + 
+						     supervisorApplicationUID_ + 
+						     "/LinkToSupervisorConfiguration";
+	const ConfigurationTree theXDAQContextConfigTree_ = theConfigurationManager_->getNode(XDAQContextConfigurationName_);
 
-//	const int fecInterfaceNumber_ = 0;
-//	ConfigurationInterface* theInterface_;
-//	theInterface_ = ConfigurationInterface::getInstance(true);//FIXME This will be variable because if false it takes it from the database
-//	Configurations* configurations = 0;
-//	theInterface_->get(configurations);
-//	FEConfiguration* frontEndConfiguration = 0;
-//	theInterface_->get(frontEndConfiguration, theConfigurationGroupKey_, configurations);
-//	FEWOtsUDPHardwareConfiguration* interfaceConfiguration_ = 0;
-//
-//	if(configurations->findKOC(theConfigurationGroupKey_->key(),"FEWOtsUDPHardwareConfiguration"))
-//		theInterface_->get(interfaceConfiguration_, theConfigurationGroupKey_, configurations);
-////	FEVInterface* theFEWInterface = new FEWOtsUDPFSSRInterface(fecInterfaceNumber_, "OTS_UDP", interfaceConfiguration_);
-////	FEVInterface* theFEWInterface = new FEWZEDRyanInterface(fecInterfaceNumber_, "OTS_UDP", interfaceConfiguration_);
-//	FEVInterface* theFEWInterface = new FEWOtsGenericInterface(fecInterfaceNumber_, "OTS_UDP", "FSSR", interfaceConfiguration_);
-////	FEVInterface* theFEWInterface = new FEWZEDHCALInterface(fecInterfaceNumber_, interfaceConfiguration_);
-//
-//	theFEWInterface->configureFEW();
-//	// theFEWInterface->start();
-//	//theFEWInterface->configureDetector();
-	////////////////////////////////////////////////////////////////
+	std::string configurationGroupName = "defaultConfig";
+	std::pair<std::string , ConfigurationGroupKey> theGroup(configurationGroupName, ConfigurationGroupKey(configurationKeyValue_));
+
+	theConfigurationManager_->loadConfigurationGroup(theGroup.first, theGroup.second, true);
+
+	FEOtsUDPTemplateInterface* theInterface_ = new FEOtsUDPTemplateInterface(
+						   interfaceUID_,
+						   theXDAQContextConfigTree_,
+						   supervisorConfigurationPath_       + 
+						   "/LinkToFEInterfaceConfiguration/" + 
+						   interfaceUID_                      + 
+						   "/LinkToFETypeConfiguration");
+	std::cout << "Done with new" << std::endl;
+	// Test interface class methods here //
+	theInterface_->configure();
+	theInterface_->start(std::string(argv[1]));
+	unsigned int second = 1000;//x1ms
+	unsigned int time = 60*60*second;
+	unsigned int counter=0;
+	while(counter++<time)
+		{
+		   theInterface_->running();//There is a 1ms sleep inside the running
+		   //std::cout << counter << std::endl;
+		}
+	theInterface_->stop();
 
 	return 0;
 }
-*/
+
