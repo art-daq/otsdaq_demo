@@ -12,7 +12,41 @@ if [[ $? -eq 1 ]];then #no
 	alias kdialog="echo"
 	which kdialog
 	KDIALOG_ALWAYS_YES=1
-	echo "kdialog is not functional, attempty to bypass with alias echo and KDIALOG_ALWAYS_YES"
+	#echo "kdialog is not functional, attempt to bypass with alias echo and KDIALOG_ALWAYS_YES"
+	echo "kdialog is not functional, bypassing user prompts"	
+	echo
+
+	source setup_ots.sh
+
+	StartOTS.sh --killall
+	killall -9 ots_udp_hw_emulator
+	
+	#download and run get_tutorial_data script
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
+	chmod 755 get_tutorial_data.sh
+	./get_tutorial_data.sh
+		
+	#download and run get_tutorial_database script
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh	
+	chmod 755 get_tutorial_database.sh
+	./get_tutorial_database.sh
+	
+	#clean up
+	rm get_tutorial_database.sh
+	rm get_tutorial_data.sh
+
+	StartOTS.sh --wiz #just to test activate the saved groups  
+	StartOTS.sh  #launch normal mode and open chrome
+	
+	#start hardware emulator on port 4000
+	ots_udp_hw_emulator 4000 &
+
+	echo
+	echo
+	echo "Tutorial reset script complete."
+	
+	return  #return is used if script is sourced
+	exit  #exit is used if script is run ./reset...
 fi
 
 
