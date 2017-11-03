@@ -51,7 +51,7 @@ void DemoDQMHistosConsumer::stopProcessingData(void)
 //========================================================================================================================
 bool DemoDQMHistosConsumer::workLoopThread(toolbox::task::WorkLoop* workLoop)
 {
-	//__COUT__ << DataProcessor::processorUID_ << " running, because workloop: " <<
+	//__MOUT__ << DataProcessor::processorUID_ << " running, because workloop: " <<
 	//	WorkLoop::continueWorkLoop_ << std::endl;
 	fastRead();
 	return WorkLoop::continueWorkLoop_;
@@ -60,18 +60,18 @@ bool DemoDQMHistosConsumer::workLoopThread(toolbox::task::WorkLoop* workLoop)
 //========================================================================================================================
 void DemoDQMHistosConsumer::fastRead(void)
 {
-	//__COUT__ << processorUID_ << " running!" << std::endl;
+	//__MOUT__ << processorUID_ << " running!" << std::endl;
 	//This is making a copy!!!
 	if(DataConsumer::read(dataP_, headerP_) < 0)
 	{
 		usleep(100);
 		return;
 	}
-	__COUT__ << DataProcessor::processorUID_ << " UID: " << supervisorApplicationUID_ << std::endl;
+	__MOUT__ << DataProcessor::processorUID_ << " UID: " << supervisorApplicationUID_ << std::endl;
 
 	//HW emulator
 	//	 Burst Type | Sequence | 8B data
-	__COUT__ << "Size fill: " << dataP_->length() << std::endl;
+	__MOUT__ << "Size fill: " << dataP_->length() << std::endl;
 	dqmHistos_->fill(*dataP_,*headerP_);
 
 	DataConsumer::setReadSubBuffer<std::string, std::map<std::string, std::string>>();
@@ -80,14 +80,14 @@ void DemoDQMHistosConsumer::fastRead(void)
 //========================================================================================================================
 void DemoDQMHistosConsumer::slowRead(void)
 {
-	//__COUT__ << DataProcessor::processorUID_ << " running!" << std::endl;
+	//__MOUT__ << DataProcessor::processorUID_ << " running!" << std::endl;
 	//This is making a copy!!!
 	if(DataConsumer::read(data_, header_) < 0)
 	{
 		usleep(1000);
 		return;
 	}
-	__COUT__ << DataProcessor::processorUID_ << " UID: " << supervisorApplicationUID_ << std::endl;
+	__MOUT__ << DataProcessor::processorUID_ << " UID: " << supervisorApplicationUID_ << std::endl;
 	//DQMHistos::fill(data_,header_);
 }
 
