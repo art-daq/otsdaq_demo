@@ -170,7 +170,7 @@ FEOtsEthernetProgramInterface::~FEOtsEthernetProgramInterface(void)
 //				__MOUT__ << msg << std::endl;
 //
 //				sendBuffer.resize(0);
-//				OtsUDPFirmwareCore::write(sendBuffer, writeAddress, writeHistory[writeAddress]);
+//				OtsUDPFirmwareCore::writeAdvanced(sendBuffer, writeAddress, writeHistory[writeAddress]);
 //				OtsUDPHardware::write(sendBuffer);
 //				//				sendBuffer.resize(0);
 //				//				OtsUDPFirmwareCore::read(sendBuffer, writeAddress);
@@ -310,19 +310,19 @@ void FEOtsEthernetProgramInterface::configure(void)
 //	//			if(state < 8)
 //	//			{
 //	//				sendBuffer.resize(0);
-//	//				OtsUDPFirmwareCore::write(sendBuffer, 0x1003,1<<state);
+//	//				OtsUDPFirmwareCore::writeAdvanced(sendBuffer, 0x1003,1<<state);
 //	//				OtsUDPHardware::write(sendBuffer);
 //	//			}
 //	//			else if(state%2 == 1 && state < 11)
 //	//			{
 //	//				sendBuffer.resize(0);
-//	//				OtsUDPFirmwareCore::write(sendBuffer, 0x1003, 0xFF);
+//	//				OtsUDPFirmwareCore::writeAdvanced(sendBuffer, 0x1003, 0xFF);
 //	//				OtsUDPHardware::write(sendBuffer);
 //	//			}
 //	//			else if(state%2 == 0 && state < 11)
 //	//			{
 //	//				sendBuffer.resize(0);
-//	//				OtsUDPFirmwareCore::write(sendBuffer, 0x1003,0);
+//	//				OtsUDPFirmwareCore::writeAdvanced(sendBuffer, 0x1003,0);
 //	//				OtsUDPHardware::write(sendBuffer);
 //	//			}
 //	//			else
@@ -512,7 +512,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 		};
 
 		sendBuffer.resize(0);
-		OtsUDPFirmwareCore::write(sendBuffer,
+		OtsUDPFirmwareCore::writeAdvanced(sendBuffer,
 				UDP_CORE_BLOCK_ADDRESS /*block*/ | FLASH_COMMAND_BASE /*addr*/,
 				dataVec /*data*/);
 		OtsUDPHardware::write(sendBuffer);
@@ -611,7 +611,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 
 		//ready, so send data
 		sendBuffer.resize(0);
-		OtsUDPFirmwareCore::write(sendBuffer,
+		OtsUDPFirmwareCore::writeAdvanced(sendBuffer,
 				UDP_CORE_BLOCK_ADDRESS /*block*/ | FLASH_WRITE_DATA /*addr*/,
 				page_data /*data*/,
 				page_size/8 /*size in quadwords*/,
@@ -639,7 +639,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 		if(page == 0)
 		{
 			sendBuffer.resize(0);
-			OtsUDPFirmwareCore::write(sendBuffer,
+			OtsUDPFirmwareCore::writeAdvanced(sendBuffer,
 					UDP_CORE_BLOCK_ADDRESS /*block*/ | FLASH_COMMAND_BASE /*addr*/,
 					1 /*data*/);
 			OtsUDPHardware::write(sendBuffer);
@@ -692,7 +692,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 //	std::cout << std::endl;
 //
 //	std::string sendBuffer;
-//	OtsUDPFirmwareCore::write(sendBuffer,address,writeValue,1 /*size*/);
+//	OtsUDPFirmwareCore::writeAdvanced(sendBuffer,address,writeValue,1 /*size*/);
 //	OtsUDPHardware::write(sendBuffer); // data request
 //}
 

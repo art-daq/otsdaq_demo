@@ -96,7 +96,7 @@ void FEOtsUDPTemplateInterface::runSequenceOfCommands(const std::string &treeLin
 				__MOUT__ << msg << std::endl;
 
 				writeBuffer.resize(0);
-				OtsUDPFirmwareCore::write(writeBuffer, writeAddress, writeHistory[writeAddress]);
+				OtsUDPFirmwareCore::writeAdvanced(writeBuffer, writeAddress, writeHistory[writeAddress]);
 				OtsUDPHardware::write(writeBuffer);
 				//				writeBuffer.resize(0);
 				//				OtsUDPFirmwareCore::read(writeBuffer, writeAddress);
@@ -277,7 +277,7 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 	std::cout << std::endl;
 
 	std::string readBuffer, sendBuffer;
-	OtsUDPFirmwareCore::read(sendBuffer,address,1 /*size*/);
+	OtsUDPFirmwareCore::readAdvanced(sendBuffer,address,1 /*size*/);
 
 	//OtsUDPHardware::read(FSSRFirmware::universalRead(address), readBuffer) < 0;
 	try
@@ -309,7 +309,7 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 	std::cout << std::endl;
 
 	std::string sendBuffer;
-	OtsUDPFirmwareCore::write(sendBuffer,address,writeValue,1 /*size*/);
+	OtsUDPFirmwareCore::writeAdvanced(sendBuffer,address,writeValue,1 /*size*/);
 	OtsUDPHardware::write(sendBuffer); // data request
 }
 
