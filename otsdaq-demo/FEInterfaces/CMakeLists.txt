@@ -49,6 +49,7 @@ simple_plugin(FEOtsEthernetProgramInterface "interface"
   $ENV{XERCES_C_LIB}/libxerces-c.so
   ${CETLIB}
   ${CETLIB_EXCEPT}
+	${MF_MESSAGELOGGER}
   )
   
 #simple_plugin(FEPurduePSI46DigInterface "interface"

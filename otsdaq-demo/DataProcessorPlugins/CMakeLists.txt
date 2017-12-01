@@ -3,9 +3,11 @@ simple_plugin(DemoDQMHistosConsumer "processor"
     RootUtilities
     DataManager
     WorkLoopManager
+	MessageFacility
     ConfigurationInterface
     ConfigurationDataFormats
 	${ROOT_BASIC_LIB_LIST}
+	${MF_MESSAGELOGGER}
   )
 
 install_headers()
