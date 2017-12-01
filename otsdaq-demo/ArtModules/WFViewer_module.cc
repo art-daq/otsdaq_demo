@@ -81,7 +81,7 @@ ots::WFViewer::WFViewer (fhicl::ParameterSet const & ps):
   outputFileName_(ps.get<std::string>("fileName","otsdaqdemo_onmon.root")),
   writeOutput_(ps.get<bool>("write_to_file", false))
 {
-   __MOUT__ << "WFViewer CONSTRUCTOR BEGIN!!!!" << std::endl;
+   __COUT__ << "WFViewer CONSTRUCTOR BEGIN!!!!" << std::endl;
    prescale_ = 1;
    if (num_x_plots_ == std::numeric_limits<std::size_t>::max() ||
        num_y_plots_ == std::numeric_limits<std::size_t>::max() ) {

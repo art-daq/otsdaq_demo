@@ -39,7 +39,7 @@ ots::DataGenReceiver::DataGenReceiver(fhicl::ParameterSet const & ps)
 //========================================================================================================================
 bool ots::DataGenReceiver::getNext_(artdaq::FragmentPtrs & output)
 {
-	//__MOUT__ << "READING DATA!" << std::endl;
+	//__COUT__ << "READING DATA!" << std::endl;
 	if (should_stop())
 		return false;
 

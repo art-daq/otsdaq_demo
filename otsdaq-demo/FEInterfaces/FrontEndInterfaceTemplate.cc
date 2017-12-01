@@ -17,7 +17,7 @@ FrontEndInterfaceTemplate::FrontEndInterfaceTemplate(std::string name) :
 	universalAddressSize_ = 4;
 	universalDataSize_    = 4;
 
-	__MOUT__ << "FrontEndInterfaceTemplate instantiated with name: " << name << std::endl;
+	__COUT__ << "FrontEndInterfaceTemplate instantiated with name: " << name << std::endl;
 }
 
 //========================================================================================================================
