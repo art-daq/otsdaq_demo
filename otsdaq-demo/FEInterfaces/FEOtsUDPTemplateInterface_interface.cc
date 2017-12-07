@@ -123,6 +123,16 @@ void FEOtsUDPTemplateInterface::configure(void)
 	std::string sendBuffer;
 	std::string recvBuffer;
 
+	__COUT__ << "Configuration Path Table: " <<
+				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationName() <<
+				"-v" <<
+				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationVersion() <<
+				std::endl;
+
+	__COUT__ << "Configured Firmware Version: " <<
+				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("FirmwareVersion").getValue<unsigned int>()
+				<< std::endl;
+
 	__COUT__ << "Setting Destination IP: " <<
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>()
 			<< std::endl;
