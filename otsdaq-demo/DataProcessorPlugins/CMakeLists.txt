@@ -9,6 +9,15 @@ simple_plugin(DemoDQMHistosConsumer "processor"
 	${ROOT_BASIC_LIB_LIST}
 	${MF_MESSAGELOGGER}
   )
+  
+simple_plugin(RawDataVisualizerConsumer "processor"	    
+    DataManager
+    WorkLoopManager
+	MessageFacility
+    ConfigurationInterface
+    ConfigurationDataFormats
+	${MF_MESSAGELOGGER}
+  )
 
 install_headers()
 install_source()
