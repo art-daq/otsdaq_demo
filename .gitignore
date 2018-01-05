@@ -19,3 +19,6 @@ Data/ServiceData/LogbookData/
 Data/ServiceData/LoginData/UsersData/UserPreferencesData/
 NoGitData_latest/
 checkinAll.log
+bin
+obj
+*.vcxproj*
