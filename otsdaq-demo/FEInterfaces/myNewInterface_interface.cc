@@ -87,13 +87,17 @@ myNewInterface::~myNewInterface(void)
 
 
 //========================================================================================================================
-void myNewInterface::testFunction(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut)
+void myNewInterface::testFunction(__ARGS__)
 {
 	__COUT__ << "in...\n" << __COUT_HDR_P__ << "# of input args = " << argsIn.size() << std::endl;
 	__COUT__ << "in...\n" << __COUT_HDR_P__ << "# of output args = " << argsOut.size() << std::endl;
 	for(auto &argIn:argsIn)
 		__COUT__ << argIn.first << ": " << argIn.second << std::endl;
 
+//	unsigned int numberOfTriggers =	__GET_ARG_IN__(unsigned int,"numberOfTriggers");
+//	unsigned int clocksOfDelayBetweenTriggers = __GET_ARG_IN__(unsigned int,"clocksOfDelayBetweenTriggers");
+//	std::string& triggersWereLaunched =	__GET_ARG_OUT__("triggersWereLaunched"");
+//	__SET_ARG_OUT__(float,"triggersWereLaunched",42.2f);
 
 	for(unsigned int i=0;i<argsOut.size();++i)
 		argsOut[i].second = argsOut[i].first + "-NewValue";
