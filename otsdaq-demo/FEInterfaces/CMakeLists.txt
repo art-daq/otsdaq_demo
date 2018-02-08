@@ -11,18 +11,6 @@ include_directories(${CMAKE_BINARY_DIR}/artdaq)
 #install_source()
 
   
-simple_plugin(FEOtsUDPTemplateInterface "interface"
-  DAQHardware
-  FECore
-  WorkLoopManager
-  MessageFacility
-  NetworkUtilities
-  ConfigurationInterface
-  ConfigurationDataFormats
-  $ENV{XERCES_C_LIB}/libxerces-c.so
-  ${CETLIB}
-  ${CETLIB_EXCEPT}
-  )
     
 #simple_plugin(myNewInterface "interface"
 #  DAQHardware
@@ -38,18 +26,19 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
 #  )
   
 simple_plugin(FEOtsEthernetProgramInterface "interface"
-  DAQHardware
-  FECore
-  WorkLoopManager
-  MessageFacility
-  NetworkUtilities
-  ConfigurationInterface
-  ConfigurationDataFormats
-  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
-  $ENV{XERCES_C_LIB}/libxerces-c.so
-  ${CETLIB}
-  ${CETLIB_EXCEPT}
-	${MF_MESSAGELOGGER}
+	otsdaq-components_FEInterfaces_FEOtsUDPTemplateInterface_interface
+#  DAQHardware
+#  FECore
+#  WorkLoopManager
+#  MessageFacility
+#  NetworkUtilities
+#  ConfigurationInterface
+#  ConfigurationDataFormats
+#  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
+#  $ENV{XERCES_C_LIB}/libxerces-c.so
+#  ${CETLIB}
+#  ${CETLIB_EXCEPT}
+#	${MF_MESSAGELOGGER}
   )
   
 #simple_plugin(FEPurduePSI46DigInterface "interface"

@@ -29,8 +29,6 @@ public:
 	virtual int universalRead	  	(char* address, char* readValue) override;
 	virtual void universalWrite	  	(char* address, char* writeValue) override;
 
-	//void configureFEW     (void);
-	//void configureDetector(const DACStream& theDACStream);
 
 private:
 	void runSequenceOfCommands(const std::string &treeLinkName);
