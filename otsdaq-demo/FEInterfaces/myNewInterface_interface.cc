@@ -16,14 +16,8 @@ myNewInterface::myNewInterface(const std::string& interfaceUID, const Configurat
 : Socket            	(
 		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
-, FEVInterface      	(interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
-, OtsUDPHardware    	(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
-		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
-, OtsUDPFirmwareDataGen	(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
+, FEOtsUDPTemplateInterface      	(interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
 {
-	universalAddressSize_ = 8;
-	universalDataSize_    = 8;
-
 	//register FE Macro Functions
 	registerFEMacroFunction("testFunction",	//feMacroName
 			static_cast<FEVInterface::frontEndMacroFunction_t>(&myNewInterface::testFunction), //feMacroFunction
