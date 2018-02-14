@@ -94,10 +94,26 @@ void myNewInterface::testFunction(__ARGS__)
 	for(auto &argIn:argsIn)
 		__COUT__ << argIn.first << ": " << argIn.second << std::endl;
 
-//	unsigned int numberOfTriggers =	__GET_ARG_IN__(unsigned int,"numberOfTriggers");
-//	unsigned int clocksOfDelayBetweenTriggers = __GET_ARG_IN__(unsigned int,"clocksOfDelayBetweenTriggers");
-//	std::string& triggersWereLaunched =	__GET_ARG_OUT__("triggersWereLaunched"");
-//	__SET_ARG_OUT__(float,"triggersWereLaunched",42.2f);
+
+//	unsigned int numberOfTriggers =	__GET_ARG_IN__("numberOfTriggers",unsigned int);
+//	unsigned int signalHiDuration = __GET_ARG_IN__("signalHiDuration",unsigned int);
+//	unsigned int signalLoDuration = __GET_ARG_IN__("signalLoDuration",unsigned int);
+//	std::string& triggersWereLaunched =	__GET_ARG_OUT__("triggersWereLaunched");
+//	std::string numberOfTriggersStr = __GET_ARG_IN__("numberOfTriggers",std::string);
+//
+//	__COUTV__(numberOfTriggers);
+//	__COUTV__(signalHiDuration);
+//	__COUTV__(signalLoDuration);
+//	__COUTV__(numberOfTriggersStr);
+
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
+//	triggersWereLaunched = "Done!";
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
+//	__SET_ARG_OUT__("triggersWereLaunched",42.2f);//,unsigned int);
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
+//	__SET_ARG_OUT__("triggersWereLaunched",42.2f);//,float);
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
+
 
 	for(unsigned int i=0;i<argsOut.size();++i)
 		argsOut[i].second = argsOut[i].first + "-NewValue";
