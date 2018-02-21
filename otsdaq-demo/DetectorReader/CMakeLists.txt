@@ -23,7 +23,7 @@ cet_make(LIBRARY_NAME DetectorReader
 		 DAQHardware
 		 EventBuilder
          FiniteStateMachine
-         SupervisorDescriptorInfo
+         SupervisorInfo
          WorkLoopManager
          XmlUtilities
          FECore

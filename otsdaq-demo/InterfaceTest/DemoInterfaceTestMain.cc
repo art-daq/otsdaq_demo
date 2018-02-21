@@ -8,8 +8,8 @@
 /*
 
 #include "otsdaq-core/ConfigurationDataFormats/FEWOtsUDPHardwareConfiguration.h"
-#include "../FEInterfaces/FEWOtsUDPFSSRInterface.h"
-#include "../FEInterfaces/FEWOtsUDPHCALInterface.h"
+#include "otsdaq-components/FEInterfaces/FEWOtsUDPFSSRInterface.h"
+#include "otsdaq-components/FEInterfaces/FEWOtsUDPHCALInterface.h"
 */
 using namespace ots;
 
