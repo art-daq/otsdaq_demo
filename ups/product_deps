@@ -21,13 +21,17 @@ product		 version	optional
 otsdaq              v1_01_04
 otsdaq_utilities    v1_01_04
 otsdaq_components   v1_01_04
-xdaq                -
+xdaq                v14_4_0
 cetbuildtools       v7_01_00    -        only_for_build
 end_product_list
 
 # -nq- here means there is no qualifier
 # a "-" here means the dependent product is not required by the parent and will not be setup
 qualifier    	   otsdaq	 otsdaq_utilities	 otsdaq_components	 xdaq	       notes
+e15:s64:prof       e15:s64:prof  e15:s64:prof            e15:s64:prof            e15:prof      -std=c++14
+e15:s64:debug      e15:s64:debug e15:s64:debug           e15:s64:debug           e15:debug     -std=c++14
+e14:s50:prof       e14:s50:prof  e14:s50:prof            e14:s50:prof            e14:prof      -std=c++14
+e14:s50:debug      e14:s50:debug e14:s50:debug           e14:s50:debug           e14:debug     -std=c++14
 e10:s46:prof       e10:s46:prof  e10:s46:prof            e10:s46:prof            e10:prof      -std=c++14
 e10:s46:debug      e10:s46:debug e10:s46:debug           e10:s46:debug           e10:debug     -std=c++14
 end_qualifier_list
