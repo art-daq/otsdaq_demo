@@ -1,10 +1,12 @@
 #ifndef _ots_FEOtsEthernetProgramInterface_h_
 #define _ots_FEOtsEthernetProgramInterface_h_
 
-#include "otsdaq-core/FECore/FEVInterface.h"
-#include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
-#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
-#include "otsdaq-demo/FEInterfaces/FEOtsUDPTemplateInterface.h"
+#include "otsdaq-components/FEInterfaces/FEOtsUDPTemplateInterface.h"
+
+//#include "otsdaq-core/FECore/FEVInterface.h"
+//#include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
+//#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
+//#include "otsdaq-demo/FEInterfaces/FEOtsUDPTemplateInterface.h"
 
 
 #include <string>

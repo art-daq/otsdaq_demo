@@ -1,16 +1,14 @@
 #ifndef _ots_myNewInterface_h_
 #define _ots_myNewInterface_h_
 
-#include "otsdaq-core/FECore/FEVInterface.h"
-#include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
-#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
+#include "otsdaq-components/FEInterfaces/FEOtsUDPTemplateInterface.h"
 
 #include <string>
 
 namespace ots
 {
 
-class myNewInterface : public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+class myNewInterface : public FEOtsUDPTemplateInterface
 {
 
 public:

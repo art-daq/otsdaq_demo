@@ -16,14 +16,8 @@ myNewInterface::myNewInterface(const std::string& interfaceUID, const Configurat
 : Socket            	(
 		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
-, FEVInterface      	(interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
-, OtsUDPHardware    	(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
-		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
-, OtsUDPFirmwareDataGen	(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
+, FEOtsUDPTemplateInterface      	(interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
 {
-	universalAddressSize_ = 8;
-	universalDataSize_    = 8;
-
 	//register FE Macro Functions
 	registerFEMacroFunction("testFunction",	//feMacroName
 			static_cast<FEVInterface::frontEndMacroFunction_t>(&myNewInterface::testFunction), //feMacroFunction
@@ -93,12 +87,32 @@ myNewInterface::~myNewInterface(void)
 
 
 //========================================================================================================================
-void myNewInterface::testFunction(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut)
+void myNewInterface::testFunction(__ARGS__)
 {
 	__COUT__ << "in...\n" << __COUT_HDR_P__ << "# of input args = " << argsIn.size() << std::endl;
 	__COUT__ << "in...\n" << __COUT_HDR_P__ << "# of output args = " << argsOut.size() << std::endl;
 	for(auto &argIn:argsIn)
 		__COUT__ << argIn.first << ": " << argIn.second << std::endl;
+
+
+//	unsigned int numberOfTriggers =	__GET_ARG_IN__("numberOfTriggers",unsigned int);
+//	unsigned int signalHiDuration = __GET_ARG_IN__("signalHiDuration",unsigned int);
+//	unsigned int signalLoDuration = __GET_ARG_IN__("signalLoDuration",unsigned int);
+//	std::string& triggersWereLaunched =	__GET_ARG_OUT__("triggersWereLaunched");
+//	std::string numberOfTriggersStr = __GET_ARG_IN__("numberOfTriggers",std::string);
+//
+//	__COUTV__(numberOfTriggers);
+//	__COUTV__(signalHiDuration);
+//	__COUTV__(signalLoDuration);
+//	__COUTV__(numberOfTriggersStr);
+
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
+//	triggersWereLaunched = "Done!";
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
+//	__SET_ARG_OUT__("triggersWereLaunched",42.2f);//,unsigned int);
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
+//	__SET_ARG_OUT__("triggersWereLaunched",42.2f);//,float);
+//	__COUT__ << "triggersWereLaunched " << triggersWereLaunched << __E__;
 
 
 	for(unsigned int i=0;i<argsOut.size();++i)

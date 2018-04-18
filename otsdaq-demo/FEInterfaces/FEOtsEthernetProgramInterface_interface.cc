@@ -32,41 +32,13 @@ using namespace ots;
 /////////////////////////////////=======================================
 
 
-
-//========================================================================================================================
-//FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(unsigned int name,
-//		std::string daqHardwareType, std::string firmwareType, const FEWConfiguration* configuration)
-//:Socket            (theConfiguration_->getInterfaceIPAddress(name), theConfiguration_->getInterfacePort(name))
-//,FEVInterface     (name,daqHardwareType,firmwareType,configuration)
-//,OtsUDPHardware    (theConfiguration_->getIPAddress(name), theConfiguration_->getPort(name))
-//,FSSRFirmware      (theConfiguration_->getFirmwareVersion(name), "PurdueFirmwareCore")
-//,theConfiguration_ ((FEWOtsUDPHardwareConfiguration*)configuration)
-//
-//{
-//    __MOUT__ << __PRETTY_FUNCTION__ << "Few name: " << name
-//    << " Interface IP: "   << theConfiguration_->getInterfaceIPAddress(name)
-//    << " Interface Port: " << theConfiguration_->getInterfacePort(name)
-//    << " IP: "             << theConfiguration_->getIPAddress(name)
-//    << " Port: "           << theConfiguration_->getPort(name)
-//    << std::endl;
-//}
 //========================================================================================================================
 FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
 : Socket               (
 		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
 , FEOtsUDPTemplateInterface(interfaceUID,theXDAQContextConfigTree,interfaceConfigurationPath)
-//: Socket               (
-//		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
-//		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
-//, FEVInterface         (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
-//, OtsUDPHardware       (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
-//		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
-//, OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
-	universalAddressSize_ = 8;
-	universalDataSize_    = 8;
-
 	//register FE Macro Functions
 	registerFEMacroFunction("getListOfProgramFiles" /*feMacroName*/,
 			static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsEthernetProgramInterface::getListOfProgramFiles) /*feMacroFunction*/,
@@ -81,11 +53,11 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& 
 	//	argsIn.push_back(frontEndMacroInArg_t("arg3","val3"));
 
 
-	__MOUT__ << std::endl;
-	__MOUT__ << std::endl;
-	__MOUT__ << __COUT_HDR_P__ << "# of args = " << argsIn.size() << std::endl;
+	__COUT__ << std::endl;
+	__COUT__ << std::endl;
+	__COUT__ << __COUT_HDR_P__ << "# of args = " << argsIn.size() << std::endl;
 	for(auto &argIn:argsIn)
-		__MOUT__ << argIn.first << ": " << argIn.second << std::endl;
+		__COUT__ << argIn.first << ": " << argIn.second << std::endl;
 
 
 	std::vector<std::string> returnStrings;
@@ -97,15 +69,15 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& 
 		std::string argName;
 		while (getline(inputStream, argName, ','))
 		{
-			__MOUT__ << "argName " << argName << std::endl;
+			__COUT__ << "argName " << argName << std::endl;
 
 			returnStrings.push_back(std::string("test"));
 			argsOut.push_back(FEVInterface::frontEndMacroOutArg_t(
 					argName,
 					returnStrings[returnStrings.size()-1]));
 			//
-			//			__MOUT__ << argsOut[argsOut.size()-1].first << std::endl;
-			//			__MOUT__ << argsOut[argsOut.size()-1].second << std::endl;
+			//			__COUT__ << argsOut[argsOut.size()-1].first << std::endl;
+			//			__COUT__ << argsOut[argsOut.size()-1].second << std::endl;
 		}
 	}
 
@@ -113,95 +85,30 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& 
 	if(mapOfFEMacroIt != mapOfFEMacroFunctions_.end())
 	{
 		(this->*(mapOfFEMacroIt->second.macroFunction_))(argsIn,argsOut);
-		__MOUT__ << "Made it " << std::endl;
+		__COUT__ << "Made it " << std::endl;
 		for(auto &arg:argsOut)
-			__MOUT__ << arg.first << ": " << arg.second << std::endl;
+			__COUT__ << arg.first << ": " << arg.second << std::endl;
 	}
 }
 
 //========================================================================================================================
 FEOtsEthernetProgramInterface::~FEOtsEthernetProgramInterface(void)
 {}
-//
-//
-////========================================================================================================================
-//void FEOtsEthernetProgramInterface::runSequenceOfCommands(const std::string &treeLinkName)
-//{
-//	std::map<uint64_t,uint64_t> writeHistory;
-//	uint64_t writeAddress, writeValue, bitMask;
-//	uint8_t bitPosition;
-//
-//	std::string sendBuffer;
-//	std::string recvBuffer;
-//	char msg[1000];
-//	try
-//	{
-//		auto configSeqLink = theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode(treeLinkName);
-//
-//		if(configSeqLink.isDisconnected())
-//			__MOUT__ << "Disconnected configure sequence" << std::endl;
-//		else
-//		{
-//			__MOUT__ << "Handling configure sequence." << std::endl;
-//			auto childrenMap = configSeqLink.getChildrenMap();
-//			for(const auto &child:childrenMap)
-//			{
-//				//WriteAddress and WriteValue fields
-//
-//				writeAddress = child.second.getNode("WriteAddress").getValue<uint64_t>();
-//				writeValue = child.second.getNode("WriteValue").getValue<uint64_t>();
-//				bitPosition = child.second.getNode("StartingBitPosition").getValue<uint8_t>();
-//				bitMask = (1 << child.second.getNode("BitFieldSize").getValue<uint8_t>())-1;
-//
-//				writeValue &= bitMask;
-//				writeValue <<= bitPosition;
-//				bitMask = ~(bitMask<<bitPosition);
-//
-//				//place into write history
-//				if(writeHistory.find(writeAddress) == writeHistory.end())
-//					writeHistory[writeAddress] = 0;//init to 0
-//
-//				writeHistory[writeAddress] &= bitMask; //clear incoming bits
-//				writeHistory[writeAddress] |= writeValue; //add incoming bits
-//
-//				sprintf(msg,"\t Writing %s: \t %ld(0x%lX) \t %ld(0x%lX)", child.first.c_str(),
-//						writeAddress, writeAddress,
-//						writeHistory[writeAddress], writeHistory[writeAddress]);
-//				__MOUT__ << msg << std::endl;
-//
-//				sendBuffer.resize(0);
-//				OtsUDPFirmwareCore::writeAdvanced(sendBuffer, writeAddress, writeHistory[writeAddress]);
-//				OtsUDPHardware::write(sendBuffer);
-//				//				sendBuffer.resize(0);
-//				//				OtsUDPFirmwareCore::read(sendBuffer, writeAddress);
-//				//				OtsUDPHardware::read(sendBuffer,recvBuffer);
-//			}
-//		}
-//	}
-//	catch(const std::runtime_error &e)
-//	{
-//		__MOUT__ << "Error accessing sequence, so giving up:\n" << e.what() << std::endl;
-//	}
-//	catch(...)
-//	{
-//		__MOUT__ << "Unknown Error accessing sequence, so giving up." << std::endl;
-//	}
-//}
 
 //========================================================================================================================
 void FEOtsEthernetProgramInterface::configure(void)
 {
 	FEOtsUDPTemplateInterface::configure();
-//	__MOUT__ << "configure" << std::endl;
-//	__MOUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << std::endl;
+//	__COUT__ << "configure" << std::endl;
+//	__COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << std::endl;
 //
 //	std::string sendBuffer;
 //	std::string recvBuffer;
 //
-//	__MOUT__ << "Setting Destination IP: " <<
+//	__COUT__ << "Setting Destination IP: " <<
 //			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>()
 //			<< std::endl;
-//	__MOUT__ << "And Destination Port: " <<
+//	__COUT__ << "And Destination Port: " <<
 //			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToPort").getValue<unsigned int>()
 //			<< std::endl;
 //
@@ -214,7 +121,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 //
 //	//
 //	//
-//	__MOUT__ << "Reading back burst dest MAC/IP/Port: "  << std::endl;
+//	__COUT__ << "Reading back burst dest MAC/IP/Port: "  << std::endl;
 //	sendBuffer.resize(0);
 //	OtsUDPFirmwareCore::readBurstDestinationMAC(sendBuffer);
 //	OtsUDPHardware::read(sendBuffer,recvBuffer);
@@ -233,40 +140,40 @@ void FEOtsEthernetProgramInterface::configure(void)
 //	//Run Configure Sequence Commands
 //	runSequenceOfCommands("LinkToConfigureSequence");
 //
-	__MOUT__ << "Done with configuring."  << std::endl;
+	__COUT__ << "Done with configuring."  << std::endl;
 }
 
 //========================================================================================================================
 //void FEOtsEthernetProgramInterface::configureDetector(const DACStream& theDACStream)
 //{
-//	__MOUT__ << "\tconfigureDetector" << std::endl;
+//	__COUT__ << "\tconfigureDetector" << std::endl;
 //}
 
 ////========================================================================================================================
 //void FEOtsEthernetProgramInterface::halt(void)
 //{
-//	__MOUT__ << "\tHalt" << std::endl;
+//	__COUT__ << "\tHalt" << std::endl;
 //	stop();
 //}
 //
 ////========================================================================================================================
 //void FEOtsEthernetProgramInterface::pause(void)
 //{
-//	__MOUT__ << "\tPause" << std::endl;
+//	__COUT__ << "\tPause" << std::endl;
 //	stop();
 //}
 //
 ////========================================================================================================================
 //void FEOtsEthernetProgramInterface::resume(void)
 //{
-//	__MOUT__ << "\tResume" << std::endl;
+//	__COUT__ << "\tResume" << std::endl;
 //	start("");
 //}
 //
 ////========================================================================================================================
 //void FEOtsEthernetProgramInterface::start(std::string )//runNumber)
 //{
-//	__MOUT__ << "\tStart" << std::endl;
+//	__COUT__ << "\tStart" << std::endl;
 //
 //
 //	//Run Start Sequence Commands
@@ -278,7 +185,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 ////========================================================================================================================
 //void FEOtsEthernetProgramInterface::stop(void)
 //{
-//	__MOUT__ << "\tStop" << std::endl;
+//	__COUT__ << "\tStop" << std::endl;
 //
 //	//Run Stop Sequence Commands
 //
@@ -290,7 +197,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 ////========================================================================================================================
 //bool FEOtsEthernetProgramInterface::running(void)
 //{
-//	__MOUT__ << "\running" << std::endl;
+//	__COUT__ << "\running" << std::endl;
 //
 //	//		//example!
 //	//		//play with array of 8 LEDs at address 0x1003
@@ -358,11 +265,11 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroInArgs_t 
 
 		while((entry = readdir(pDIR)))
 		{
-			//__MOUT__ << int(entry->d_type) << " " << entry->d_name << "\n" << std::endl;
+			//__COUT__ << int(entry->d_type) << " " << entry->d_name << "\n" << std::endl;
 			if( entry->d_name[0] != '.' && (entry->d_type == 0 || //0 == UNKNOWN (which can happen - seen in SL7 VM)
 					entry->d_type == 4 || entry->d_type == 8))
 			{
-				__MOUT__ << int(entry->d_type) << " " << entry->d_name <<
+				__COUT__ << int(entry->d_type) << " " << entry->d_name <<
 						" " << std::string(entry->d_name).find(".bin") << " " <<
 						strlen(entry->d_name)-4 << "\n" << std::endl;
 
@@ -392,7 +299,7 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroInArgs_t 
 	}
 	else
 	{
-		__MOUT__ << "Failed to access directory contents!" << std::endl;
+		__COUT__ << "Failed to access directory contents!" << std::endl;
 	}
 
 	auto &returnString = FEVInterface::getFEMacroOutputArgument(argsOut,"listOfProgramFiles");
@@ -400,7 +307,7 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroInArgs_t 
 	for(const auto &name:listOfProgramFiles)
 	{
 		if(returnString.size()) returnString += ",";
-		__MOUT__ << "name " << name << std::endl;
+		__COUT__ << "name " << name << std::endl;
 		returnString += name;
 	}
 }
@@ -444,12 +351,12 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	}
 	std::string path = PROGRAM_FILE_PATH + file;
 
-	__MOUT__ << "Programmable file path: " << path << std::endl;
+	__COUT__ << "Programmable file path: " << path << std::endl;
 
 	FILE *bitstream = fopen(path.c_str(), "rb");
 	if (!bitstream) {
 		__SS__ << "Failed to read bitsream";
-		__MOUT_ERR__ << "\n" << ss.str();
+		__COUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -488,15 +395,14 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	uint64_t bSize = ftell(bitstream)/8;//divide by 8 to get number of qwds
 	rewind(bitstream);
 
-	__MOUT__ << "Programmable file size [quad-words]: " << bSize << std::endl;
+	__COUT__ << "Programmable file size [quad-words]: " << bSize << std::endl;
 
 	std::string sendBuffer;
 	std::string recvBuffer;
 	uint64_t 	recvQuadWord;
 
 	//send reset command to Ethernet block which will reset flash block
-	sendBuffer.resize(0);
-	OtsUDPFirmwareCore::forceReset(sendBuffer);
+	OtsUDPFirmwareCore::ethernetReset(sendBuffer);
 	OtsUDPHardware::write(sendBuffer);
 
 	//sleep to allow reset to complete
@@ -540,7 +446,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 			char str[100];
 			sprintf(str, "Place: %lX  Page: %d", ftell(bitstream), page);
 			//sprintf(str, "Place: %X  Page: %d  Returns: %d", ftell(bitstream),page,num_page_ready_returns);
-			__MOUT__ << str << std::endl;;
+			__COUT__ << str << std::endl;;
 		}
 
 		//if (page == 512) break;
@@ -551,7 +457,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 		{
 			if (result == 0)
 			{
-				__MOUT__ << "Done" << std::endl;
+				__COUT__ << "Done" << std::endl;
 				break;
 			}
 			else //0-fill
@@ -589,9 +495,9 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 			{
 				//no reply or incorrect reply
 				if (recvQuadWord == 3)
-					__MOUT_ERR__ << "No active command" << std::endl;
+					__COUT_ERR__ << "No active command" << std::endl;
 				else
-					__MOUT_ERR__ << "Error in writing multiple pages" << std::endl;
+					__COUT_ERR__ << "Error in writing multiple pages" << std::endl;
 
 				break;
 			}
@@ -601,12 +507,12 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 			//			thisbytesoff = ftell(bitstream) - returnaddr;
 			//			if (thisbytesoff != bytesoff) {
 			//				sprintf(str, "New offset: %X", thisbytesoff);
-			//				__MOUT__ << str << std::endl;
+			//				__COUT__ << str << std::endl;
 			//				bytesoff = thisbytesoff;
 			//			}
 			//		}
 
-			//__MOUT__ << "Got next page response" << std::endl;
+			//__COUT__ << "Got next page response" << std::endl;
 		}
 
 		//ready, so send data
@@ -644,7 +550,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 					1 /*data*/);
 			OtsUDPHardware::write(sendBuffer);
 
-			__MOUT__ << "Sending \"GO\" command..." << std::endl;
+			__COUT__ << "Sending \"GO\" command..." << std::endl;
 		}
 
 		page++;
@@ -653,47 +559,5 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 //	fclose(outfile);
 	std::fclose(bitstream);
 }
-////========================================================================================================================
-////NOTE: buffer for address must be at least size universalAddressSize_
-////NOTE: buffer for returnValue must be max UDP size to handle return possibility
-//int ots::FEOtsEthernetProgramInterface::universalRead(char *address, char *returnValue)
-//{
-//	__MOUT__ << "address size " << universalAddressSize_ << std::endl;
-//
-//	__MOUT__ << "Request: ";
-//	for(unsigned int i=0;i<universalAddressSize_;++i)
-//		printf("%2.2X",(unsigned char)address[i]);
-//	std::cout << std::endl;
-//
-//	std::string recvBuffer, sendBuffer;
-//	OtsUDPFirmwareCore::read(sendBuffer,address,1 /*size*/);
-//
-//	//OtsUDPHardware::read(FSSRFirmware::universalRead(address), recvBuffer) < 0;
-//	if(OtsUDPHardware::read(sendBuffer, recvBuffer) < 0) // data reply
-//	{
-//		__MOUT__ << "Caught it! This is when it's getting time out error" << std::endl;
-//		return -1;
-//	}
-//	__MOUT__ << "Result SIZE: " << recvBuffer.size() << std::endl;
-//	std::memcpy(returnValue,recvBuffer.substr(2).c_str(),universalDataSize_);
-//	return 0;
-//}
-//
-////========================================================================================================================
-////NOTE: buffer for address must be at least size universalAddressSize_
-////NOTE: buffer for writeValue must be at least size universalDataSize_
-//void ots::FEOtsEthernetProgramInterface::universalWrite(char* address, char* writeValue)
-//{
-//	__MOUT__ << "address size " << universalAddressSize_ << std::endl;
-//	__MOUT__ << "data size " << universalDataSize_ << std::endl;
-//	__MOUT__ << "Sending: ";
-//	for(unsigned int i=0;i<universalAddressSize_;++i)
-//		printf("%2.2X",(unsigned char)address[i]);
-//	std::cout << std::endl;
-//
-//	std::string sendBuffer;
-//	OtsUDPFirmwareCore::writeAdvanced(sendBuffer,address,writeValue,1 /*size*/);
-//	OtsUDPHardware::write(sendBuffer); // data request
-//}
 
 DEFINE_OTS_INTERFACE(FEOtsEthernetProgramInterface)
