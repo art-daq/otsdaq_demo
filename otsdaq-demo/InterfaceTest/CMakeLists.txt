@@ -8,6 +8,7 @@ cet_make_exec(DemoInterfaceTestMain
 		ConfigurationDataFormats
         	WorkLoopManager
 		NetworkUtilities
+		otsdaq-components_FEInterfaces_FEOtsUDPTemplateInterface_interface
 		$ENV{XDAQ_LIB}/libxdaq.so
 		$ENV{XDAQ_LIB}/libconfig.so
 		$ENV{XDAQ_LIB}/libpeer.so

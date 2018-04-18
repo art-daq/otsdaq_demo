@@ -1,4 +1,5 @@
 simple_plugin(DemoDQMHistosConsumer "processor"
+    Configurable
 	DemoRootUtilities
     RootUtilities
     DataManager

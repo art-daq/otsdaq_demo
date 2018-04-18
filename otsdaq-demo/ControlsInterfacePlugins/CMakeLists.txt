@@ -29,6 +29,7 @@
 simple_plugin(ControlsOtsInterface "controls"	
     	ControlsCore
 	${CETLIB}
+	Configurable
         ConfigurationInterface
   )
 
