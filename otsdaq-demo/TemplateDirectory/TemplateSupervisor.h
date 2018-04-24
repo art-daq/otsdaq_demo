@@ -33,12 +33,12 @@ public:
 
     XDAQ_INSTANTIATOR();
 
-    TemplateSupervisor            (xdaq::ApplicationStub * s) throw (xdaq::exception::Exception);
+    TemplateSupervisor            (xdaq::ApplicationStub * s) ;
     virtual ~TemplateSupervisor   (void);
     void init                  (void);
     void destroy               (void);
-    void Default               (xgi::Input* in, xgi::Output* out) throw (xgi::exception::Exception);
-                              
+    void Default               (xgi::Input* in, xgi::Output* out) ;
+
 
 private:
 
