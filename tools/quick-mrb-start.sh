@@ -27,6 +27,7 @@ examples: `basename $0`
 --debug       perform a debug build
 --develop     Install the develop version of the software (may be unstable!)
 --tag         Install a specific tag of otsdaq
+-e, -s        Use specific qualifiers when building otsdaq
 -v            Be more verbose
 -x            set -x this script
 -w            Check out repositories read/write
@@ -48,6 +49,8 @@ while [ -n "${1-}" ];do
             \?*|h*)     eval $op1chr; do_help=1;;
             v*)         eval $op1chr; opt_v=`expr $opt_v + 1`;;
             x*)         eval $op1chr; set -x;;
+			s*)         eval $op1arg; squalifier=$1; shift;;
+			e*)         eval $op1arg; equalifier=$1; shift;;
 			w*)         eval $op1chr; opt_w=`expr $opt_w + 1`;;
             -tag)     eval $op1arg; tag=$1; shift;;
             -run-ots)  opt_run_ots=--run-ots;;
@@ -79,6 +82,57 @@ stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1
 exec  > >(tee "$Base/log/$alloutput_file")
 exec 2> >(tee "$Base/log/$stderr_file")
 
+function detectAndPull() {
+	local startDir=$PWD
+	cd $Base/download
+	local packageName=$1
+	local packageOs=$2
+	if [[ "$packageOs" != "noarch" ]]; then
+		local packageOsArch="$2-x86_64"
+		packageOs=`echo $packageOsArch|sed 's/-x86_64-x86_64/-x86_64/g'`
+	fi
+
+	if [ $# -gt 2 ];then
+		local qualifiers=$3
+		if [[ "$qualifiers" == "nq" ]]; then
+			qualifiers=
+		fi
+	fi
+	if [ $# -gt 3 ];then
+		local packageVersion=$4
+	else
+		local packageVersion=`curl http://scisoft.fnal.gov/scisoft/packages/${packageName}/ 2>/dev/null|grep ${packageName}|grep "id=\"v"|tail -1|sed 's/.* id="\(v.*\)".*/\1/'`
+	fi
+	local packageDotVersion=`echo $packageVersion|sed 's/_/\./g'|sed 's/v//'`
+
+	if [[ "$packageOs" != "noarch" ]]; then
+		local upsflavor=`ups flavor`
+		local packageQualifiers="-`echo $qualifiers|sed 's/:/-/g'`"
+		local packageUPSString="-f $upsflavor -q$qualifiers"
+	fi
+	local packageInstalled=`ups list -aK+ $packageName $packageVersion ${packageUPSString-}|grep -c "$packageName"`
+	if [ $packageInstalled -eq 0 ]; then
+		local packagePath="$packageName/$packageVersion/$packageName-$packageDotVersion-${packageOs}${packageQualifiers-}.tar.bz2"
+		wget http://scisoft.fnal.gov/scisoft/packages/$packagePath >/dev/null 2>&1
+		local packageFile=$( echo $packagePath | awk 'BEGIN { FS="/" } { print $NF }' )
+
+		if [[ ! -e $packageFile ]]; then
+			if [[ "$packageOs" == "slf7-x86_64" ]]; then
+				# Try sl7, as they're both valid...
+				detectAndPull $packageName sl7-x86_64 ${qualifiers:-"nq"} $packageVersion
+			else
+				echo "Unable to download $packageName"
+				return 1
+			fi
+		else
+			local returndir=$PWD
+			cd $Base/products
+			tar -xjf $Base/download/$packageFile
+			cd $returndir
+		fi
+	fi
+	cd $startDir
+}
 cd $Base/download
 
 # 28-Feb-2017, KAB: use central products areas, if available and not skipped
@@ -154,13 +208,22 @@ fi
 otsdaq_version=`grep "^otsdaq " $Base/download/product_deps | awk '{print $2}'`
 utilities_version=`grep "^otsdaq_utilities " $Base/download/product_deps | awk '{print $2}'`
 defaultQuals=`grep "defaultqual" $Base/download/product_deps|awk '{print $2}'`
-equalifier=`echo $defaultQuals|cut -f1 -d:`
-squalifier=`echo $defaultQuals|cut -f2 -d:`
-
-if [[ -n "${opt_debug:-}" ]] ; then
-    build_type="debug"
+defaultE=`echo $defaultQuals|cut -f1 -d:`
+defaultS=`echo $defaultQuals|cut -f2 -d:`
+if [ -n "${equalifier-}" ]; then 
+	equalifier="e${equalifier}";
 else
-    build_type="prof"
+	equalifier=$defaultE
+fi
+if [ -n "${squalifier-}" ]; then
+	squalifier="s${squalifier}"
+else
+	squalifier=$defaultS
+fi
+if [[ -n "${opt_debug:-}" ]] ; then
+	build_type="debug"
+else
+	build_type="prof"
 fi
 
 wget http://scisoft.fnal.gov/scisoft/bundles/tools/pullProducts
