@@ -198,7 +198,7 @@ int main(void)
 
     cout << "Waiting for DAQ communication..." << endl;
     bool triggered = false;
-    unsigned ndata = 2*64;
+    const unsigned ndata = 2*64;
     unsigned count = 0;
     while(1)
     {

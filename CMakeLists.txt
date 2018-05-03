@@ -64,13 +64,7 @@ find_ups_boost( v1_50_0 filesystem
  )
 
 
-##find_package(MPI QUIET)
-
-check_ups_version(xdaq "$ENV{XDAQ_VERSION}" v14_0_0 PRODUCT_OLDER_VAR slf6_xdaq)
-if(slf6_xdaq)
-	message("Building on SLF6, defining NOCONST")
- 	add_definitions(-DXDAQ_NOCONST)
-endif()
+find_package(MPI QUIET)
 
 # macros for art_dictionary and simple_plugin
 include(ArtDictionary)

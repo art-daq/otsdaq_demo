@@ -27,13 +27,14 @@ include_directories(${CMAKE_BINARY_DIR}/artdaq)
   
 simple_plugin(FEOtsEthernetProgramInterface "interface"
 	otsdaq-components_FEInterfaces_FEOtsUDPTemplateInterface_interface
-#  DAQHardware
-#  FECore
-#  WorkLoopManager
+  DAQHardware
+  FECore
+  Configurable
+  WorkLoopManager
 #  MessageFacility
-#  NetworkUtilities
-#  ConfigurationInterface
-#  ConfigurationDataFormats
+  NetworkUtilities
+  ConfigurationInterface
+  ConfigurationDataFormats
 #  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
 #  $ENV{XERCES_C_LIB}/libxerces-c.so
 #  ${CETLIB}
