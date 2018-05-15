@@ -4,7 +4,6 @@
 #include "otsdaq-core/SOAPUtilities/SOAPMessenger.h"
 
 #include <xdaq/Application.h>
-#include "otsdaq-core/Macros/XDAQApplicationMacros.h"
 #include <xgi/Method.h>
 
 #include <xoap/MessageReference.h>
