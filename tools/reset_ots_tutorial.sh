@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Please do not source this script, run it as ./reset_ots_tutorial.sh"
+return  >/dev/null 2>&1 #return is used if script is sourced
 
 
 #determine if kdialog is functional 
@@ -12,8 +14,8 @@ if [[ $? -eq 1 ]];then #no
 	alias kdialog="echo"
 	which kdialog
 	KDIALOG_ALWAYS_YES=1
-	#echo "kdialog is not functional, attempt to bypass with alias echo and KDIALOG_ALWAYS_YES"
-	echo "kdialog is not functional, bypassing user prompts"	
+	#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, attempt to bypass with alias echo and KDIALOG_ALWAYS_YES"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, bypassing user prompts"	
 	echo
 
 	source setup_ots.sh
@@ -43,16 +45,16 @@ if [[ $? -eq 1 ]];then #no
 
 	echo
 	echo
-	echo "Tutorial reset script complete."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Tutorial reset script complete."
 	
-	return  #return is used if script is sourced
+	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit  #exit is used if script is run ./reset...
 fi
 
 
 if ! [ -e setup_ots.sh ]; then
   kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
-  return  #return is used if script is sourced
+  return  >/dev/null 2>&1 #return is used if script is sourced
   exit  #exit is used if script is run ./reset...
 fi
 
@@ -89,7 +91,7 @@ source setup_ots.sh
 
 kdialog --yesno "This script will start the tutorial.\n\nBefore (re)starting the tutorial, this script will stop any existing tutorial process.\n\nDo you want to proceed?\n"
 if [[ $KDIALOG_ALWAYS_YES == 0 && $? -eq 1 ]];then #no
-	echo "User decided to not continue with starting the tutorial. Exiting script."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to not continue with starting the tutorial. Exiting script."
 	kdialog --msgbox "You decided to not continue with starting the tutorial. Exiting script."
 	return
 	exit
@@ -105,7 +107,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	dbusRef=`kdialog --progressbar "Installing 'First Demo' tutorial user data and database..." 5`
 	qdbus $dbusRef Set "" value 1
 	
-	echo "User decided to reset to 'First Demo' tutorial data."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to reset to 'First Demo' tutorial data."
 	
 	########################################
 	########################################
@@ -118,7 +120,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	
 	if [ "x$USER_DATA" == "x" ]; then
 		#export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
-		echo "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
+		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		return
 		exit
@@ -139,7 +141,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 
 	if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
 		#export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
-		echo "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db. Exiting script."
+		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		return
 		exit
@@ -166,8 +168,8 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	
 	qdbus $dbusRef close
 	
-    echo "Now your user data path is USER_DATA = ${USER_DATA}"
-    echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
+    echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Now your user data path is USER_DATA = ${USER_DATA}"
+    echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
 	
 	#clean up
 	rm get_tutorial_database.sh
@@ -178,14 +180,14 @@ fi
 
 kdialog --yesno "Do you want to start the tutorial processes (i.e. the emulator and OTS in normal mode)?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
-	echo "User decided to not start the tutorial. Exiting script."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to not start the tutorial. Exiting script."
 	kdialog --msgbox "You decided to not start the tutorial. Exiting script."
 	return
 	exit
 fi
 
 
-echo "User decided to start up the tutorial."
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to start up the tutorial."
 
 dbusRef=`kdialog --progressbar "Starting tutorial and launching OTS..." 4`
 qdbus $dbusRef Set "" value 1
@@ -202,7 +204,7 @@ qdbus $dbusRef Set "" value 4
 
 echo
 echo
-echo "Tutorial reset script complete."
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Tutorial reset script complete."
 
 qdbus $dbusRef close
 

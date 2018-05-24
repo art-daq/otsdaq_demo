@@ -68,8 +68,8 @@ wget otsdaq.fnal.gov/downloads/tutorial_Data_v2_2.zip
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Unzipping tutorial user data.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t unzip tutorial_Data_v2.zip -d tmp01234"
-unzip tutorial_Data_v2.zip -d tmp01234
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t unzip tutorial_Data_v2_2.zip -d tmp01234"
+unzip tutorial_Data_v2_2.zip -d tmp01234
 
 # bkup current user data
 echo 
