@@ -62,9 +62,9 @@ echo
 echo "*****************************************************"
 echo "Downloading tutorial user data.."
 echo 
-echo "wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip"
+echo "wget otsdaq.fnal.gov/downloads/tutorial_Data_v2_2.zip"
 echo
-wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip
+wget otsdaq.fnal.gov/downloads/tutorial_Data_v2_2.zip
 echo
 echo "Unzipping tutorial user data.."
 echo 
@@ -93,9 +93,9 @@ mv tmp01234/NoGitData ${USER_DATA}
 echo
 echo "Cleaning up downloads.."
 echo 
-echo "rm -rf tmp01234; rm -rf tutorial_Data_v2.zip"
+echo "rm -rf tmp01234; rm -rf tutorial_Data_v2_2.zip"
 echo
-rm -rf tmp01234; rm -rf tutorial_Data_v2.zip
+rm -rf tmp01234; rm -rf tutorial_Data_v2_2.zip
 
 echo 
 echo "*****************************************************"

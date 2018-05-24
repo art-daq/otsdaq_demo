@@ -63,9 +63,9 @@ echo
 echo "*****************************************************"
 echo "Downloading tutorial database.."
 echo 
-echo "wget otsdaq.fnal.gov/downloads/tutorial_database_v2.zip"
+echo "wget otsdaq.fnal.gov/downloads/tutorial_database_v2_2.zip"
 echo
-wget otsdaq.fnal.gov/downloads/tutorial_database_v2.zip
+wget otsdaq.fnal.gov/downloads/tutorial_database_v2_2.zip
 echo
 echo "Unzipping tutorial database.."
 echo 
@@ -94,9 +94,9 @@ mv tmpd1234/databases/filesystemdb/test_db ${ADU_PATH}
 echo
 echo "Cleaning up downloads.."
 echo 
-echo "rm -rf tmpd1234; rm -rf tutorial_database_v2.zip"
+echo "rm -rf tmpd1234; rm -rf tutorial_database_v2_2.zip"
 echo
-rm -rf tmpd1234; rm -rf tutorial_database_v2.zip
+rm -rf tmpd1234; rm -rf tutorial_database_v2_2.zip
 
 echo 
 echo "*****************************************************"
