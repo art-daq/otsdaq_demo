@@ -21,17 +21,17 @@ exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
 
 source setup_ots.sh
 
-echo "********************************************************************************"
-echo "**** Gettings otsdaq tutorial Database (configuration tables, etc.)... *********"
-echo "********************************************************************************"
-echo ""
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t ********************************************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t **** Gettings otsdaq tutorial Database (configuration tables, etc.)... *********"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t ********************************************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t "
 
 
 if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
-	echo "Error."
-	echo "Environment variable ARTDAQ_DATABASE_URI not setup!"
-	echo "To setup, use 'export ARTDAQ_DATABASE_URI=filesystemdb://<path to database>'" 
-	echo "           e.g. filesystemdb:///home/rrivera/databases/filesystemdb/test_db"
+	echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Error."
+	echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Environment variable ARTDAQ_DATABASE_URI not setup!"
+	echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t To setup, use 'export ARTDAQ_DATABASE_URI=filesystemdb://<path to database>'" 
+	echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t            e.g. filesystemdb:///home/rrivera/databases/filesystemdb/test_db"
 	echo 
 	echo 
 	echo
@@ -44,7 +44,7 @@ fi
 # move download database into position
 
 ADU_PATH=$(echo ${ARTDAQ_DATABASE_URI} | cut -d':' -f2)
-echo "artdaq database filesystem URI Path = ${ADU_PATH}"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t artdaq database filesystem URI Path = ${ADU_PATH}"
 
 #attempt to mkdir for full path so that it exists to move the database to
 # assuming mkdir is non-destructive
@@ -60,48 +60,48 @@ done
 
 # download tutorial database
 echo 
-echo "*****************************************************"
-echo "Downloading tutorial database.."
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Downloading tutorial database.."
 echo 
-echo "wget otsdaq.fnal.gov/downloads/tutorial_database_v2_2.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget otsdaq.fnal.gov/downloads/tutorial_database_v2_2.zip"
 echo
 wget otsdaq.fnal.gov/downloads/tutorial_database_v2_2.zip
 echo
-echo "Unzipping tutorial database.."
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Unzipping tutorial database.."
 echo 
-echo "unzip tutorial_database_v2.zip -d tmpd1234"
-unzip tutorial_database_v2.zip -d tmpd1234
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t unzip tutorial_database_v2_2.zip -d tmpd1234"
+unzip tutorial_database_v2_2.zip -d tmpd1234
 
 # bkup current database
 echo 
-echo "*****************************************************"
-echo "Backing up current database.."
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Backing up current database.."
 echo 
-echo "mv ${ADU_PATH} ${ADU_PATH}.bak"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t mv ${ADU_PATH} ${ADU_PATH}.bak"
 echo
 rm -rf ${ADU_PATH}.bak
 mv ${ADU_PATH} ${ADU_PATH}.bak
 
 # move download user data into position
 echo 
-echo "*****************************************************"
-echo "Installing tutorial data as database.."
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Installing tutorial data as database.."
 echo 
-echo "mv tmpd1234/databases/filesystemdb/test_db ${ADU_PATH}"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t mv tmpd1234/databases/filesystemdb/test_db ${ADU_PATH}"
 echo
 mv tmpd1234/databases/filesystemdb/test_db ${ADU_PATH}
 
 echo
-echo "Cleaning up downloads.."
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Cleaning up downloads.."
 echo 
-echo "rm -rf tmpd1234; rm -rf tutorial_database_v2_2.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t rm -rf tmpd1234; rm -rf tutorial_database_v2_2.zip"
 echo
 rm -rf tmpd1234; rm -rf tutorial_database_v2_2.zip
 
 echo 
-echo "*****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"
 echo 
-echo "otsdaq tutorial database installed!"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t otsdaq tutorial database installed!"
 echo
 echo
 
