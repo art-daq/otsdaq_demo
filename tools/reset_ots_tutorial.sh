@@ -1,8 +1,43 @@
 #!/bin/bash
+# reset_ots_tutorial.sh
+#	Launches the specified otsdaq tutorial (and version). If no tutorial name is specified
+#	it will default to first_demo.
+#
+# usage: --tutorial <tutorial name> --version <version string>
+#
+#   tutorial 
+#		e.g. ${TUTORIAL} or artdaq
+#   version 
+#		usually looks like v2_2 to represent v2.2 release, for example 
+#		(underscores might more universal for web downloads than periods)
+#
+#  example run:
+#	./reset_ots_tutorial.sh --tutorial first_demo --version v2_2
+#
 
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Please do not source this script, run it as ./reset_ots_tutorial.sh"
 return  >/dev/null 2>&1 #return is used if script is sourced
 
+
+echo
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting parameters..."
+echo
+
+#setup defaul parameters
+TUTORIAL='first_demo'
+VERSION='v2_2'
+
+if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
+	TUTORIAL="$2"
+fi
+
+if [[ "$3"  == "--version" && "x$4" != "x" ]]; then
+	VERSION="$4"
+fi
+
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
+echo		
 
 #determine if kdialog is functional 
 # if not alias to echo
@@ -26,12 +61,12 @@ if [[ $? -eq 1 ]];then #no
 	#download and run get_tutorial_data script
 	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
 	chmod 755 get_tutorial_data.sh
-	./get_tutorial_data.sh
+	./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
 		
 	#download and run get_tutorial_database script
 	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh	
 	chmod 755 get_tutorial_database.sh
-	./get_tutorial_database.sh
+	./get_tutorial_database.sh --tutorial ${TUTORIAL} --version ${VERSION}
 	
 	#clean up
 	rm get_tutorial_database.sh
@@ -100,14 +135,14 @@ fi
 StartOTS.sh --killall
 killall -9 ots_udp_hw_emulator
 
-kdialog --yesno "Do you want to reset user data for the 'First Demo' tutorial (i.e. setup data for the beginning of the tutorial)?"
+kdialog --yesno "Do you want to reset user data for the '${TUTORIAL} ${VERSION}' tutorial (i.e. setup data for the beginning of the tutorial)?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 
 
-	dbusRef=`kdialog --progressbar "Installing 'First Demo' tutorial user data and database..." 5`
+	dbusRef=`kdialog --progressbar "Installing '${TUTORIAL} ${VERSION}' tutorial user data and database..." 5`
 	qdbus $dbusRef Set "" value 1
 	
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to reset to 'First Demo' tutorial data."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to reset to '${TUTORIAL} ${VERSION}' tutorial data."
 	
 	########################################
 	########################################
@@ -136,7 +171,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	chmod 755 get_tutorial_data.sh
 	
 	#execute script
-	./get_tutorial_data.sh
+	./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
 	qdbus $dbusRef Set "" value 3
 
 	if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
@@ -157,7 +192,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	chmod 755 get_tutorial_database.sh
 	
 	#execute script
-	./get_tutorial_database.sh
+	./get_tutorial_database.sh --tutorial ${TUTORIAL} --version ${VERSION}
 	qdbus $dbusRef Set "" value 5
 	
 	########################################

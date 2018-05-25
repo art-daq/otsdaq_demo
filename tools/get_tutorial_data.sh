@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# usage: --tutorial <tutorial name> --version <version string>
+#
+#   tutorial 
+#		e.g. ${TUTORIAL} or artdaq
+#   version 
+#		usually looks like v2_2 to represent v2.2 release, for example 
+#		(underscores might more universal for web downloads than periods)
+#
+#  example run:
+#	./get_tutorial_data.sh --tutorial first_demo --version v2_2
+#
 
 if ! [ -e setup_ots.sh ]; then
   kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
@@ -18,6 +29,24 @@ rm "$Base/script_log/$(basename $0)_stderr.script"
 exec  > >(tee "$Base/script_log/$(basename $0).script")
 #exec 2> >(tee "$Base/script_log/$stderr_file")
 exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
+
+
+#setup defaul parameters
+TUTORIAL='first_demo'
+VERSION='v2_2'
+
+if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
+	TUTORIAL="$2"
+fi
+
+if [[ "$3"  == "--version" && "x$4" != "x" ]]; then
+	VERSION="$4"
+fi
+
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t VERSION  \t= $VERSION"
+echo		
+
 
 source setup_ots.sh
 
@@ -62,14 +91,14 @@ echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Downloading tutorial user data.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget otsdaq.fnal.gov/downloads/tutorial_Data_v2_2.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip"
 echo
-wget otsdaq.fnal.gov/downloads/tutorial_Data_v2_2.zip
+wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Unzipping tutorial user data.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t unzip tutorial_Data_v2_2.zip -d tmp01234"
-unzip tutorial_Data_v2_2.zip -d tmp01234
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t unzip tutorial_${TUTORIAL}_${VERSION}_Data.zip -d tmp01234"
+unzip tutorial_${TUTORIAL}_${VERSION}_Data.zip -d tmp01234
 
 # bkup current user data
 echo 
@@ -93,9 +122,9 @@ mv tmp01234/NoGitData ${USER_DATA}
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Cleaning up downloads.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t rm -rf tmp01234; rm -rf tutorial_Data_v2_2.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t rm -rf tmp01234; rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip"
 echo
-rm -rf tmp01234; rm -rf tutorial_Data_v2_2.zip
+rm -rf tmp01234; rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip
 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
