@@ -27,16 +27,25 @@ echo " _|_"
 echo " \ /"
 echo "  - "
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t ========================================================"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Please do not source this script, run it as ./reset_ots_tutorial.sh"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Please source this script, run it as source reset_ots_tutorial.sh"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t usage: --tutorial <tutorial name> --version <version string>"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutorial will default to '${TUTORIAL} ${VERSION}'"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t for example..."
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t source reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
 
-return  >/dev/null 2>&1 #return is used if script is sourced
+
+SOURCEDCHECK=$(basename $0&>/dev/null 2>&1 && echo "hi") #use to check if script was sourced or ./ ran (and avoid printint anything out)
+
+if [ "x$SOURCEDCHECK" != "x" ]; then
+	#detects if not sourced! Require source so that non-kdialog route works
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Not sourced. Exiting."	
+	exit
+fi	
+
+#return  >/dev/null 2>&1 #return is used if script is sourced
 
 
 echo
@@ -112,18 +121,26 @@ fi
 
 
 Base=$PWD
+
 #commenting out unique filename generation
 # no need to keep more than one past log for standard users 
 #alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
-#exec  > >(tee "$Base/log/$alloutput_file")
+
+
 mkdir "$Base/script_log"  &>/dev/null #hide output
-rm "$Base/script_log/$(basename $0).script" >/dev/null 2>&1
-rm "$Base/script_log/$(basename $0)_stderr.script" >/dev/null 2>&1
-exec  > >(tee "$Base/script_log/$(basename $0).script")
-exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
+SCRIPTNAME='reset_ots_tutorial'
+
+rm "$Base/script_log/${SCRIPTNAME}.script" >/dev/null 2>&1
+rm "$Base/script_log/${SCRIPTNAME}_stderr.script" >/dev/null 2>&1
+exec  > >(tee "$Base/script_log/${SCRIPTNAME}.script")
+exec 2> >(tee "$Base/script_log/${SCRIPTNAME}_stderr.script")
+
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Script log saved here $Base/script_log/${SCRIPTNAME}.script and $Base/script_log/${SCRIPTNAME}_stderr.script"
 
 source setup_ots.sh
+
+
 
 
 #Steps:
@@ -141,10 +158,10 @@ source setup_ots.sh
 
 
 
-kdialog --yesno "This script will start the tutorial.\n\nBefore (re)starting the tutorial, this script will stop any existing tutorial process.\n\nDo you want to proceed?\n"
+kdialog --yesno "This script starts otsdaq tutorials.\n\nBefore (re)starting the tutorial, this script will stop any existing tutorial process.\n\nDo you want to proceed?\n"
 if [[ $KDIALOG_ALWAYS_YES == 0 && $? -eq 1 ]];then #no
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to not continue with starting the tutorial. Exiting script."
-	kdialog --msgbox "You decided to not continue with starting the tutorial. Exiting script."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided NOT to continue with starting the tutorial. Exiting script."
+	kdialog --msgbox "You decided NOT to continue with starting the tutorial. Exiting script."
 	return
 	exit
 fi
@@ -152,7 +169,7 @@ fi
 StartOTS.sh --killall
 killall -9 ots_udp_hw_emulator
 
-kdialog --yesno "Do you want to reset user data for the '${TUTORIAL} ${VERSION}' tutorial (i.e. setup data for the beginning of the tutorial)?"
+kdialog --yesno "Do you want to reset user data and database for the '${TUTORIAL} ${VERSION}' otsdaq tutorial (i.e. setup your ots installation for the beginning of the tutorial)?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 
 
@@ -170,8 +187,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	#Take from tutorial data
 
 	
-	if [ "x$USER_DATA" == "x" ]; then
-		#export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
+	if [ "x$USER_DATA" == "x" ]; then		
 		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		return
@@ -230,10 +246,10 @@ fi
 
 
 
-kdialog --yesno "Do you want to start the tutorial processes (i.e. the emulator and OTS in normal mode)?"
+kdialog --yesno "Do you want to start the otsdaq tutorial processes (i.e. the emulator and ots in normal mode)?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to not start the tutorial. Exiting script."
-	kdialog --msgbox "You decided to not start the tutorial. Exiting script."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided NOT to start the tutorial. Exiting script."
+	kdialog --msgbox "You decided NOT to start the tutorial. Exiting script."
 	return
 	exit
 fi
@@ -241,7 +257,7 @@ fi
 
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to start up the tutorial."
 
-dbusRef=`kdialog --progressbar "Starting tutorial and launching OTS..." 4`
+dbusRef=`kdialog --progressbar "Starting tutorial and launching ots..." 4`
 qdbus $dbusRef Set "" value 1
 
 StartOTS.sh --wiz #just to test activate the saved groups  
