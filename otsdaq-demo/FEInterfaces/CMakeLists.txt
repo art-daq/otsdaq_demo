@@ -32,6 +32,7 @@ simple_plugin(FEOtsEthernetProgramInterface "interface"
   Configurable
   WorkLoopManager
 #  MessageFacility
+   Macros
   NetworkUtilities
   ConfigurationInterface
   ConfigurationDataFormats
