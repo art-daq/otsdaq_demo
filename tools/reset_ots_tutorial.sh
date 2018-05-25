@@ -19,10 +19,19 @@
 TUTORIAL='first_demo'
 VERSION='v2_2'
 
+echo
+echo "  |"
+echo "  |"
+echo "  |"
+echo " _|_"
+echo " \ /"
+echo "  - "
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t ========================================================"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Please do not source this script, run it as ./reset_ots_tutorial.sh"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t usage: --tutorial <tutorial name> --version <version string>"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutorial will default to ${TUTORIAL} ${VERSION}"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutorial will default to '${TUTORIAL} ${VERSION}'"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t for example..."
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
