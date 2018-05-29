@@ -1,5 +1,5 @@
 #include "otsdaq-demo/Generators/STIBReceiver.hh"
-#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+#include "otsdaq-core/Macros/CoutMacros.h"
 
 //#include "art/Utilities/Exception.h"
 #include "artdaq/Application/GeneratorMacros.hh"

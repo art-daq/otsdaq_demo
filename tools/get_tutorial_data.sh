@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# usage: --tutorial <tutorial name> --version <version string>
+#
+#   tutorial 
+#		e.g. ${TUTORIAL} or artdaq
+#   version 
+#		usually looks like v2_2 to represent v2.2 release, for example 
+#		(underscores might more universal for web downloads than periods)
+#
+#  example run:
+#	./get_tutorial_data.sh --tutorial first_demo --version v2_2
+#
 
 if ! [ -e setup_ots.sh ]; then
   kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
@@ -19,21 +30,39 @@ exec  > >(tee "$Base/script_log/$(basename $0).script")
 #exec 2> >(tee "$Base/script_log/$stderr_file")
 exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
 
+
+#setup defaul parameters
+TUTORIAL='first_demo'
+VERSION='v2_2'
+
+if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
+	TUTORIAL="$2"
+fi
+
+if [[ "$3"  == "--version" && "x$4" != "x" ]]; then
+	VERSION="$4"
+fi
+
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t VERSION  \t= $VERSION"
+echo		
+
+
 source setup_ots.sh
 
-echo "********************************************************************************"
-echo "************ Gettings otsdaq tutorial Data (user settings, etc.)... ************"
-echo "********************************************************************************"
-echo ""
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t ********************************************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t ************ Gettings otsdaq tutorial Data (user settings, etc.)... ************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t ********************************************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t "
 
 
 if [ "x$USER_DATA" == "x" ]; then
-	echo "Error."
-	echo "Environment variable USER_DATA not setup!"
-	echo "To setup, use 'export USER_DATA=<path to user data>'"
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Error."
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Environment variable USER_DATA not setup!"
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t To setup, use 'export USER_DATA=<path to user data>'"
 	echo 
 	echo
-	echo "(If you do not have a user data folder copy '<path to ots source>/otsdaq-demo/Data' as your starting point.)"
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t (If you do not have a user data folder copy '<path to ots source>/otsdaq-demo/Data' as your starting point.)"
 	echo
 	exit    
 fi
@@ -59,48 +88,48 @@ done
 
 # download tutorial user data
 echo 
-echo "*****************************************************"
-echo "Downloading tutorial user data.."
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Downloading tutorial user data.."
 echo 
-echo "wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip"
 echo
-wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip
+wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
 echo
-echo "Unzipping tutorial user data.."
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Unzipping tutorial user data.."
 echo 
-echo "unzip tutorial_Data_v2.zip -d tmp01234"
-unzip tutorial_Data_v2.zip -d tmp01234
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t unzip tutorial_${TUTORIAL}_${VERSION}_Data.zip -d tmp01234"
+unzip tutorial_${TUTORIAL}_${VERSION}_Data.zip -d tmp01234
 
 # bkup current user data
 echo 
-echo "*****************************************************"
-echo "Backing up current user data.."
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Backing up current user data.."
 echo 
-echo "mv ${USER_DATA} ${USER_DATA}.bak"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv ${USER_DATA} ${USER_DATA}.bak"
 echo
 rm -rf ${USER_DATA}.bak
 mv ${USER_DATA} ${USER_DATA}.bak
 
 # move download user data into position
 echo 
-echo "*****************************************************"
-echo "Installing tutorial data as user data.."
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Installing tutorial data as user data.."
 echo 
-echo "mv tmp01234/NoGitData ${USER_DATA}"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv tmp01234/NoGitData ${USER_DATA}"
 echo
 mv tmp01234/NoGitData ${USER_DATA}
 
 echo
-echo "Cleaning up downloads.."
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Cleaning up downloads.."
 echo 
-echo "rm -rf tmp01234; rm -rf tutorial_Data_v2.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t rm -rf tmp01234; rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip"
 echo
-rm -rf tmp01234; rm -rf tutorial_Data_v2.zip
+rm -rf tmp01234; rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip
 
 echo 
-echo "*****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo 
-echo "otsdaq tutorial Data installed!"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t otsdaq tutorial Data installed!"
 echo
 echo
 

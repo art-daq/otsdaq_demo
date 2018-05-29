@@ -5,6 +5,7 @@ simple_plugin(DemoDQMHistosConsumer "processor"
     DataManager
     WorkLoopManager
 #	MessageFacility
+	Macros
     ConfigurationInterface
     ConfigurationDataFormats
 	${ROOT_BASIC_LIB_LIST}

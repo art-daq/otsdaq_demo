@@ -1,7 +1,7 @@
 #include "otsdaq-demo/DataProcessorPlugins/DemoDQMHistosConsumer.h"
 #include "otsdaq-demo/DemoRootUtilities/DemoDQMHistos.h"
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
-#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+#include "otsdaq-core/Macros/CoutMacros.h"
 #include "otsdaq-core/Macros/ProcessorPluginMacros.h"
 
 using namespace ots;
