@@ -89,7 +89,7 @@ if [[ $? -eq 1 ]];then #no
 	rm get_tutorial_data.sh
 
 	StartOTS.sh --wiz #just to test activate the saved groups  
-	StartOTS.sh  #launch normal mode and open chrome
+	StartOTS.sh  #launch normal mode and open firefox
 	
 	#start hardware emulator on port 4000
 	ots_udp_hw_emulator 4000 &
@@ -253,7 +253,7 @@ qdbus $dbusRef Set "" value 1
 StartOTS.sh --wiz #just to test activate the saved groups  
 qdbus $dbusRef Set "" value 2
 
-StartOTS.sh --chrome #launch normal mode and open chrome
+StartOTS.sh --firefox #launch normal mode and open firefox
 qdbus $dbusRef Set "" value 3
 
 #start hardware emulator on port 4000
