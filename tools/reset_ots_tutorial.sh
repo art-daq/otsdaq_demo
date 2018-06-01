@@ -27,23 +27,13 @@ echo " _|_"
 echo " \ /"
 echo "  - "
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t ========================================================"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Please source this script, run it as source reset_ots_tutorial.sh"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t usage: --tutorial <tutorial name> --version <version string>"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutorial will default to '${TUTORIAL} ${VERSION}'"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t for example..."
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t source reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
 
-
-SOURCEDCHECK=$(basename $0&>/dev/null 2>&1 && echo "hi") #use to check if script was sourced or ./ ran (and avoid printint anything out)
-
-if [ "x$SOURCEDCHECK" != "x" ]; then
-	#detects if not sourced! Require source so that non-kdialog route works
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Not sourced. Exiting."	
-	exit
-fi	
 
 #return  >/dev/null 2>&1 #return is used if script is sourced
 
