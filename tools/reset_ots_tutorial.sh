@@ -14,6 +14,9 @@
 #  example run:
 #	./reset_ots_tutorial.sh --tutorial first_demo --version v2_2
 #
+#	NOTE: if kdialog is not installed this script must be sourced to bypass kdialog prompts
+#		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_2
+#
 
 #setup default parameters
 TUTORIAL='first_demo'
