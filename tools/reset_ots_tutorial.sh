@@ -256,12 +256,22 @@ qdbus $dbusRef Set "" value 1
 StartOTS.sh --wiz #just to test activate the saved groups  
 qdbus $dbusRef Set "" value 2
 
-StartOTS.sh --firefox #launch normal mode and open firefox
 qdbus $dbusRef Set "" value 3
 
 #start hardware emulator on port 4000
 ots_udp_hw_emulator 4000 &
 qdbus $dbusRef Set "" value 4
+
+kdialog --yesno "Do you want this script to launch your web browser?"
+if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided NOT to launch web browser. Exiting script."
+	StartOTS.sh
+	kdialog --msgbox "You decided NOT to launch web browser. Tutorial reset script complete."
+	return
+	exit
+fi
+
+StartOTS.sh --firefox #launch normal mode and open firefox
 
 echo
 echo
