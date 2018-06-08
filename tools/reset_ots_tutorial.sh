@@ -20,7 +20,7 @@
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_2'
+VERSION='v2_1'
 
 echo
 echo "  |"
