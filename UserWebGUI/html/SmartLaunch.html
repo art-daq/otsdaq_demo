@@ -7,94 +7,13 @@
 	<link href='/WebPath/css/fonts.css?family=Comfortaa:400' rel='stylesheet' type='text/css'>
 		
 	
-
+	
 	<!-- FTBFWebPath is link (> ln -s linkpath linkname) in otsdaq_utilities/WebPath -->
-	<link rel="stylesheet" type="text/css" href="/WebPath/FTBFWebPath/css/library/pretty-checkbox.min.css">
-	<link rel="stylesheet" type="text/css" href="/WebPath/FTBFWebPath/css/library/MaterialDesign-Webfont-master/css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="/WebPath/css/library/pretty-checkbox.min.css">
+	<link rel="stylesheet" type="text/css" href="/WebPath/css/library/MaterialDesign-Webfont-master/css/materialdesignicons.min.css">
 	
 	<link rel="stylesheet" type="text/css" href="/WebPath/css/ConfigurationAPI.css">
-	
-	<style type="text/css">			
-		
-		body {	
-			padding:0;
-			margin:0;
-			background-color:white;
-		}
-
-		/* make links have a hand cursor */
-		a {
-			cursor: pointer;
-		}
-		
-		#subsystemDiv div, #refreshLink a {
-			color: rgb(136, 102, 102);
-			text-size: 20px;
-			font-family: "Comfortaa";
-		}
-		
-		#refreshLink {
-			float:left; 
-			margin: 10px;
-		}
-		#refreshLink:hover {
-			text-decoration:underline;
-		}
-
-		.linkDiv {
-			border: 0;
-			border-radius: 20px;
-			position: absolute;
-		}
-
-		
-		#subsystemDiv, #launchDiv {
-			position: absolute;
-			display: none;
-			/*border: 1px solid blue;*/
-		}
-		
-		#subsystemDiv {
-			padding-top: 20px;
-			padding-left: 10px;
-			padding-bottom: -10px;
-			border: 2px solid rgb(193, 187, 187);
-			border-radius: 10px;
-		}
-		.ssCheckbox {
-			float: left;
-		}	
-	
-		#launchDiv {
-			background-color: red;
-			box-shadow: inset rgba(255,254,255,0.6) 0 0.3em .3em,
-					inset rgba(0,0,0,0.15) 0 -0.1em .3em, /* inner shadow */
-					rgb(141, 76, 76) 0 .1em 3px,
-					0px 10px 0px rgb(107, 23, 23);
-			border-radius: 300px/200px;
-			text-align:center;
-		    font-size: 30px;
-		    font-family: arial;
-		    color: white;
-		    text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
-		}
-
-		#launchDiv:active {
-			margin-top:	10px;
-			box-shadow: inset rgba(255,254,255,0.6) 0 0.3em .3em,
-					inset rgba(0,0,0,0.15) 0 -0.1em .3em, /* inner shadow */
-					rgb(100,100,100) 0 .1em 3px;
-		}
-		
-		#launchLink  {
-			position: absolute;
-			border: 0;
-			-webkit-user-select: 	auto; /* prevent highlight selection (does not stop ghost images, must use el.ondragstart = function() {return false;}; */
-			-moz-user-select: 		none;
-			user-select:			none;
-			outline: none;  /* to stop firefox selection*/	
-		}	
-	</style>
+	<link rel="stylesheet" type="text/css" href="/WebPath/css/SmartLaunch.css">
 	
 	
 	<script type="text/JavaScript" src="/WebPath/js/Globals.js"></script>	
@@ -102,37 +21,38 @@
 	<script type="text/JavaScript" src="/WebPath/js/DesktopWindowContentCode.js"></script>
 	<script type="text/JavaScript" src="/WebPath/js/js_lib/SimpleContextMenu.js"></script>
 	<script type="text/JavaScript" src="/WebPath/js/js_lib/ConfigurationAPI.js"></script>
+
+	<script type="text/JavaScript" src="/WebPath/js/SmartLaunch.js"></script>
 	
 	<script>		
 	
-		//Smart Launch desktop icon from:
-		//	http://icons.iconarchive.com/icons/bokehlicia/captiva/256/rocket-icon.png
-	
-		
-		//	Description of Iterate Functionality/Behavior:
-		//	
-		//		Checkboxes on left to select detector systems to include
-		//		Giant button on right to launch
-		//
-		//		Launch means:
-		//			- enable associated contexts
-		//			- save new context group, activate (do not alias)
-		//			- save user active sessions
-		//			- relaunch otsdaq normal mode
-		//			- load active sessions
-		//			- detect in GUI that system is back alive
-	
 
-	//functions:			
-		//init()
-		//createElements()
-		//redrawWindow()
-		//readEnabledSubsystems()
-		//launch()
-		//gatewayLaunchOts()
+	//	Note: modeled off of template in otsdaq_utilities/WebGUI/html/SmartLaunch.html 
+	//
+	//	Smart Launch for otsdaq demo -- names of contexts are just examples:
+	//	
+	//		Checkboxes on left to select configuration systems to enable
+	//		Giant button on right to launch
+	//	
+	//		The user can copy this template into their own repository and 
+	//			and make custom groupings of contexts. For example,
+	//			the Tracker might consist of 5 contents, and could then
+	//			be reduced to a single checkbox.
+	//		Use SmartLaunch.subsystems and SmartLaunch.systemToContextMap to define custom context groups.
+	//
+	//		Launch means:
+	//			- enable associated contexts
+	//			- save new context group, activate (do not alias)
+	//			- save user active sessions
+	//			- relaunch otsdaq normal mode
+	//			- load active sessions
+	//			- detect in GUI that system is back alive
+	//
+	//
 
-	var _MENU_PRIMARY_COLOR = "rgb(220, 187, 165)";
-	var _MENU_SECONDARY_COLOR = "rgb(130, 51, 51)";
+
+
+	SmartLaunch.doShowContexts = true; //true to also include contexts
 	
 	var _NAME_STRIPS 	= "Strip Telescope";
 	var _NAME_MWPC 		= "Wire Chambers";
@@ -160,355 +80,23 @@
 										  ];
 	
 	
-	//for display
-	var _CHECKBOX_H = 40;
-	var _CHECKBOX_W = 240;
-	var _LAUNCH_MIN_W = 525;
-	var _MARGIN = 40;
-	
-	
-	var _needEventListeners = true;
-	
-	var _subsetBasePath = "XDAQContextConfiguration";
-	
-	var _systemStatusArray = [];
-	
-	
+
 	//=====================================================================================
 	//init ~~
 	//	init called once body has loaded
 	function init() 
-	{						
-		Debug.log("Smart Launch init ");
-		DesktopContent.tooltip("Smart Launch",
-				"Welcome to the Smart Launch user interface. "+
-				"Select which detector subsystems you want to enable, and then press the launch button!"
-		);
-
-		createElements();
-
-		if(_needEventListeners)
-		{
-			window.addEventListener("resize",redrawWindow);
-			_needEventListeners = false;
-		}
-					
-		//redrawWindow();
-		readEnabledSubsystems();
-		
-	} //end init()
-
-	//=====================================================================================
-	//createElements ~~
-	//	called initially to create checkbox and button elements
-	function createElements()
-	{
-		Debug.log("createElements");
-		
-		
-		var el;
-		for(var i=0; i<_subsystems.length; ++i)
-		{ 
-			el = document.createElement("div");
-			
-		}
-		
-	} //end createElements()
-
-	//=====================================================================================
-	//readEnabledSubsystems ~~
-	//	call redrawWindow when complete
-	function readEnabledSubsystems()
-	{
-		Debug.log("readEnabledSubsystems");
-
-		var recordsArray = [];
-		
-		for(let i=0; i<_subsystems.length; ++i)
-		{ 
-			for(let j=0; j<_systemToContextMap[_subsystems[i]].length; ++j)
-				recordsArray.push(_systemToContextMap[_subsystems[i]][j]);
-		}
-		console.log("recordsArray",recordsArray);
-		
-		ConfigurationAPI.getFieldValuesForRecords(
-				_subsetBasePath,
-				recordsArray,
-				["Status"],
-				localStatusForRecordsHandler
-		);
-
-		//////////////////////////////
-		function localStatusForRecordsHandler(recFieldValues)
-		{
-			Debug.log("localStatusForRecordsHandler value-length=" + recFieldValues.length)
-			var statusArray = []; //clear
-			for(var i in recFieldValues)				
-				statusArray.push(
-						recFieldValues[i].fieldValue == "On"?true:false);//recFieldValues[i].fieldUID .. recFieldValues[i].fieldPath + ": " +
-
-			console.log("statusArray",statusArray);
-			
-			_systemStatusArray = []; //clear
-			let k=0;
-			for(let i=0; i<_subsystems.length; ++i)
-			{ 
-				_systemStatusArray.push(true);
-				for(let j=0; j<_systemToContextMap[_subsystems[i]].length; ++j,++k)
-					if(!statusArray[k]) //found one off exception
-						_systemStatusArray[i] = false; //so consider entire subsystem off
-			}
-							 
-			console.log("_systemStatusArray",_systemStatusArray);
-			
-			redrawWindow();
-			
-		} //end localStatusForRecordsHandler()
-		
-	} //end readEnabledSubsystems()
-		
-	
-	//=====================================================================================
-	//redrawWindow ~~
-	//	called when page is resized
-	function redrawWindow()
-	{
-		//adjust link divs to proper size
-		//	use ratio of new-size/original-size to determine proper size
-
-		var w = window.innerWidth | 0;
-		var h = window.innerHeight | 0;	  
-		
-		if(w < _LAUNCH_MIN_W)
-			w = _LAUNCH_MIN_W;
-
-		Debug.log("redrawWindow to " + w + " - " + h);	
-		
-		var sdiv = document.getElementById("subsystemDiv");
-		var ldiv = document.getElementById("launchDiv");
-		
-		var chkH = _CHECKBOX_H;
-		var chkW = _CHECKBOX_W;
-		
-		var sdivH = chkH*_subsystems.length;
-		var sdivX = _MARGIN;
-		var sdivY = (h-sdivH)/2;
-		if(sdivY < _MARGIN)
-			sdivY = _MARGIN;
-
-		var ldivX = _MARGIN + chkW;
-		var ldivSz = h;		
-		if(ldivSz > w - ldivX - _MARGIN*3) //pick min of w/h
-			ldivSz = w - ldivX - _MARGIN*3;
-		var ldivY = (h-ldivSz)/2;
-		
-		
-		//draw checkboxes
-		{			
-			let str = "";
-			for(let i=0;i<_subsystems.length;++i)
-			{
-				str += "<div class='ssCheckbox' style='height:" + chkH + "px;" +
-						"' >";
-				str += "<div class='pretty p-icon p-round p-smooth'>"; //p-smooth for slow transition
-				str += " <input type='checkbox' class='subsystemCheckboxes' " +
-						(_systemStatusArray[i]?"checked":"") +
-						"/>";
-				str += "<div class='state p-success'>";
-				str += "<i class='icon mdi mdi-check'></i>";
-				str += "<label>" + _subsystems[i] + "</label>";
-				str += "</div>";
-				str += "</div>";
-				str += "</div>";
-				str += "<div id='clearDiv'></div>";
-			}
-			
-			
-			
-			sdiv.style.left = (sdivX-20) + "px";
-			sdiv.style.top = sdivY + "px";
-			sdiv.style.height = sdivH + "px";
-			
-			sdiv.innerHTML = "";
-			sdiv.innerHTML = str;			
-			sdiv.style.display = "block"; 
-		}		
-
-		//draw launch button
-		{			
-
-			ldiv.style.left = (ldivX + (w - ldivX - _MARGIN*2 - ldivSz)/2) + "px";
-			ldiv.style.top = (ldivY+((ldivSz-ldivSz*200/300)/2)) + "px";
-			//ldiv.style.height = (ldivSz*200/300) + "px";
-			ldiv.style.width = ldivSz + "px";
-			ldiv.style.paddingTop = (ldivSz*200/300/2 - 36/2) + "px"; //ratio of size minus font size
-			ldiv.style.paddingBottom = (ldivSz*200/300/2- 36/2) + "px";
-			//ldiv.style.paddingLeft = (ldivSz/2) + "px";
-			//ldiv.style.paddingRight = (ldivSz/2) + "px";
-			
-			ldiv.style.display = "block"; 
-			//ldiv.innerHTML = str;		
-		}
-		
-	} //end redrawWindow()
-	
-	//=====================================================================================
-	//launch ~~
-	function launch()
-	{
-		Debug.log("launch");
-		DesktopContent.popUpVerification( 
-				"Are you sure you want to relaunch otsdaq?",
-				localLaunch,
-				0,"#efeaea",0,"#770000");
-		
-		//============
-		function localLaunch()
-		{
-			Debug.log("localLaunch");
-			
-			var checkboxes = document.getElementsByClassName('subsystemCheckboxes'); 
-			console.log("checkboxes",checkboxes);
-			var checkedArray = [];
-			for(let i=0;i<checkboxes.length;++i)
-				checkedArray.push(checkboxes[i].checked);
-			console.log("checkedArray",checkedArray);
-			
-			var recordsArray = [];
-			var valuesArray = [];
-			for(let i=0; i<_subsystems.length; ++i)
-			{ 
-				for(let j=0; j<_systemToContextMap[_subsystems[i]].length; ++j)
-				{
-					recordsArray.push(_systemToContextMap[_subsystems[i]][j]);
-					valuesArray.push(checkedArray[i]?"1":"0");
-					
-				}
-			}
-			console.log("recordsArray",recordsArray);
-			console.log("valuesArray",valuesArray);
-			
-			var recordIndex = 0;
-			var localModifiedTables = undefined;
-			//sequentially send request for each record until done
-			localSetSequenceOfRecords();
-			
-			//===========================
-			function localSetSequenceOfRecords()
-			{
-				ConfigurationAPI.setFieldValuesForRecords(
-						_subsetBasePath,
-						recordsArray[recordIndex],
-						"Status", //fieldArr
-						valuesArray[recordIndex], //valueArr
-						function(modifiedTables)
-						{
-					Debug.log("recordIndex = " + recordIndex);
-					++recordIndex;
-					if(recordIndex == recordsArray.length)
-					{
-						Debug.log("Done with sequence.");
-
-						//proceed to save (quietly) tables, groups, aliases
-						ConfigurationAPI.saveModifiedTables(modifiedTables,
-								/////////////////////
-								function(savedTables, savedGroups, savedAliases)
-								{
-							if(!savedTables.length)
-							{
-								Debug.log("Something went very wrong. Notify administrators.",
-										Debug.HIGH_PRIORITY);
-								return;					
-							}
-
-							Debug.log("Successfully applied subsystem selections!", Debug.INFO_PRIORITY);
-
-
-							//relaunch
-							gatewayLaunchOts();
-							
-
-								}); //end saveModifiedTables handler
-						return;
-					}
-					
-					console.log("setFieldValuesForRecords modifiedTables",modifiedTables);
-					localModifiedTables = modifiedTables;
-					localSetSequenceOfRecords();
-
-						} //end setFieldValuesForRecords handler
-				,localModifiedTables);
-			} //end localSetSequenceOfRecords()
-		}
+	{		
+		SmartLaunch.create();
 	}
-	
-	//=====================================================================================
-	//gatewayLaunchOts ~~
-	function gatewayLaunchOts() 
-	{
-		Debug.log("Relaunching otsdaq!",Debug.INFO_PRIORITY);
-
-		//block check
-		
-		DesktopContent._blockSystemCheckMailbox.innerHTML = "1";
-		
-		//now in all future requests must ignoreSystemBlock
-		
-		DesktopContent.XMLHttpRequest("Request?" + 
-				"RequestType=gatewayLaunchOTS", //end get data 
-				"", //end post data
-				function(req) //start handler
-				{
-			Debug.log("gatewayLaunchOts handler ");
-			
-			
-			var countDown = 10;
-			localCountDown();
-			//=================
-			function localCountDown()
-			{
-				Debug.log("Waiting " + countDown + " seconds for startup sequence...",
-						Debug.INFO_PRIORITY);
-
-				window.setTimeout(function() {
-					Debug.log("localCountDown handler ");
-					--countDown;
-					if(countDown == 0)
-					{
-						//end blackout
-						DesktopContent._blockSystemCheckMailbox.innerHTML = "";
-						init();
-						Debug.log("And we are back!",Debug.INFO_PRIORITY);
-						return;
-					}
-					localCountDown();
-				}, //end blackout-end handler 
-				1000/*ms*/);
-			}// end localCountDown
-			
-				}, //end gatewayLaunchOTS req handler
-				0, //handler param
-				0,0,true, //progressHandler, callHandlerOnErr, showLoadingOverlay
-				true /*targetSupervisor*/, true /*ignoreSystemBlock*/);
-	} //end gatewayLaunchOts()
-	
 	
 	</script>
 </head>
 	
 
-<body onload='Javascript:init();'>	
+<body onload='Javascript:init();'>		
 	
-	<div id='content'>
-	<div id='refreshLink'><a onclick='init()'>Refresh</a></div>
-	
-		
-	<!-- body content populated by javascript -->
-	<div id='subsystemDiv'></div>
-	<a id='launchLink' onclick='launch()'>
-	<div id='launchDiv'>Launch</div>
-	</a>
-	</div>
 </body>
 	
 </html>
+
+	
