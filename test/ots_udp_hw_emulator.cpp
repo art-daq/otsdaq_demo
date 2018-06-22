@@ -196,7 +196,7 @@ int main(int argc, char** argv)
 	struct timeval tv;
 	fd_set readfds, masterfds;
 	tv.tv_sec = 0;
-	tv.tv_usec = 0;//500000; RAR moved timeout to sleep to freeup processor
+	tv.tv_usec = 0;//500000; RAR moved timeout to sleep to free up processor
 	FD_ZERO(&masterfds);
 	FD_SET(sockfd, &masterfds);
 
