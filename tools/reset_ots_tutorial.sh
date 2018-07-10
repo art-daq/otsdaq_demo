@@ -46,6 +46,7 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting para
 echo
 
 
+
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
 elif [[ "x$1" != "x" ]]; then
@@ -61,8 +62,8 @@ fi
 
 
 
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
+#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
+#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
 echo		
 
 #determine if kdialog is functional 
@@ -173,6 +174,24 @@ fi
 StartOTS.sh --killall
 killall -9 ots_udp_hw_emulator
 
+#if no parameters and kdialog is working, check which tutorial the user wants
+if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t No user parameters found, so checking which tutorial to run."
+	
+	kdialog --yesno "Do you want to proceed with the default tutorial, '${TUTORIAL} ${VERSION}?'\n\n(if not, you will be prompted for tutorial name and version)"
+	if [[ $? -eq 1 ]]; then #no
+	
+		TUTORIAL=$(kdialog --inputbox "Please enter the desired tutorial name (e.g. 'first_demo'):" "first_demo")
+		VERSION=$(kdialog --inputbox "Please enter the desired tutorial version (e.g. 'v2_2'):" "v2_2")
+		
+	fi
+	
+fi
+
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
+echo		
+
 kdialog --yesno "Do you want to reset user data and database for the '${TUTORIAL} ${VERSION}' otsdaq tutorial (i.e. setup your ots installation for the beginning of the tutorial)?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 
@@ -256,8 +275,19 @@ fi
 ########################################
 
 
-#if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
-#	TUTORIAL="$2"
+if [[ "$TUTORIAL"  == "nim_plus" ]]; then
+
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Starting the ${TUTORIAL} tutorial extra steps..."
+	mv install_ots_repo.sh install_ots_repo.sh.bk
+	wget https://cdcvs.fnal.gov/redmine/projects/prepmodernization/repository/revisions/develop/raw/tools/install_ots_repo.sh -P ./
+	source install_ots_repo.sh #install prep modernization repo and table definitions
+	rm -rf install_ots_repo.sh
+	mv install_ots_repo.sh.bk install_ots_repo.sh
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Done with the ${TUTORIAL} tutorial extra steps."
+	
+else
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t No extra steps needed for the ${TUTORIAL} tutorial."
+fi
 
 ########################################
 ########################################
