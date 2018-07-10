@@ -20,7 +20,7 @@
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_1'
+VERSION='v2_2'
 
 echo
 echo "  |"
@@ -48,11 +48,18 @@ echo
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
+elif [[ "x$1" != "x" ]]; then
+
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Illegal parameters.. See above for usage."
+	return  >/dev/null 2>&1 #return is used if script is sourced
+	exit  #exit is used if script is run ./reset...
 fi
 
 if [[ "$3"  == "--version" && "x$4" != "x" ]]; then
 	VERSION="$4"
 fi
+
+
 
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
@@ -65,10 +72,14 @@ kdialog --print-winid &>/dev/null #hide output
 if [[ $? -eq 1 ]];then #no
 	#instead of e.g. /usr/bin/kdialog
 	# only works if the script was sourced!
+
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, attempt to bypass with alias echo and KDIALOG_ALWAYS_YES"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Note: kdialog bypass only works if reset_ots_tutorial.sh was sourced."
+		
 	alias kdialog="echo"
 	which kdialog
 	KDIALOG_ALWAYS_YES=1
-	#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, attempt to bypass with alias echo and KDIALOG_ALWAYS_YES"
+	
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, bypassing user prompts"	
 	echo
 
@@ -238,6 +249,22 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 fi
 
 
+########################################
+########################################
+## START extra steps for specific tutorials
+########################################
+########################################
+
+
+#if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
+#	TUTORIAL="$2"
+
+########################################
+########################################
+## END extra steps for specific tutorials
+########################################
+########################################
+
 
 kdialog --yesno "Do you want to start the otsdaq tutorial processes (i.e. the emulator and ots in normal mode)?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
@@ -250,22 +277,28 @@ fi
 
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to start up the tutorial."
 
-dbusRef=`kdialog --progressbar "Starting tutorial and launching ots..." 4`
+dbusRef=`kdialog --progressbar "Starting tutorial and launching ots..." 7`
 qdbus $dbusRef Set "" value 1
 
 StartOTS.sh --wiz #just to test activate the saved groups  
 qdbus $dbusRef Set "" value 2
 
+sleep 3 #give time to activate configuration
+qdbus $dbusRef Set "" value 3
+sleep 3 #give time to activate configuration
+qdbus $dbusRef Set "" value 4
+sleep 3 #give time to activate configuration
+qdbus $dbusRef Set "" value 5
 
 #start hardware emulator on port 4000
 ots_udp_hw_emulator 4000 &
-qdbus $dbusRef Set "" value 3
+qdbus $dbusRef Set "" value 6
 
 kdialog --yesno "Do you want this script to launch your web browser?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided NOT to launch web browser. Exiting script."
 	StartOTS.sh
-	qdbus $dbusRef Set "" value 4
+	qdbus $dbusRef Set "" value 7
 	qdbus $dbusRef close
 	kdialog --msgbox "You decided NOT to launch web browser. Tutorial reset script complete."
 	return
@@ -273,7 +306,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
 fi
 
 StartOTS.sh --firefox #launch normal mode and open firefox
-qdbus $dbusRef Set "" value 4
+qdbus $dbusRef Set "" value 7
 
 echo
 echo
