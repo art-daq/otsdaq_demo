@@ -181,7 +181,7 @@ if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
 	kdialog --yesno "Do you want to proceed with the default tutorial, '${TUTORIAL} ${VERSION}?'\n\n(if not, you will be prompted for tutorial name and version)"
 	if [[ $? -eq 1 ]]; then #no
 	
-		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" --default "first_demo")
+		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" --default "first_demo")
 		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" --default "v2_2")
 		
 	fi
