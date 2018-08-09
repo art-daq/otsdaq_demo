@@ -367,6 +367,19 @@ chmod 755 get_tutorial_database.sh
 #execute script
 ./get_tutorial_database.sh
 
+
+
+
+#copy tutorial launching scripts
+echo
+echo -e "UpdateOTS.sh [${LINENO}]  \t updating tutorial launch scripts..."
+rm get_tutorial_data.sh &>/dev/null 2>&1 #hide output
+rm get_tutorial_database.sh &>/dev/null 2>&1 #hide output
+rm reset_ots_tutorial.sh &>/dev/null 2>&1 #hide output
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh	
+chmod 755 reset_ots_tutorial.sh
+
+
 ########################################
 ########################################
 ## END Setup USER_DATA and databases
