@@ -36,6 +36,10 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutoria
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t for example..."
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t NOTE: This script uses kdialog for prompts. If kdialog is not installed this script must be sourced to bypass kdialog prompts"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
 
 
 #return  >/dev/null 2>&1 #return is used if script is sourced
@@ -70,7 +74,8 @@ echo
 # if not alias to echo
 KDIALOG_ALWAYS_YES=0
 kdialog --print-winid &>/dev/null #hide output
-if [[ $? -eq 1 ]];then #no
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog test  \t= $?"
+if [[ $? -eq 1 || $? -eq 0 ]];then #no
 	#instead of e.g. /usr/bin/kdialog
 	# only works if the script was sourced!
 
@@ -116,6 +121,10 @@ if [[ $? -eq 1 ]];then #no
 	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit  #exit is used if script is run ./reset...
 fi
+
+#for testing KDIALOG ALWAYS
+#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"
+#return  >/dev/null 2>&1 #return is used if script is sourced
 
 
 if ! [ -e setup_ots.sh ]; then
@@ -167,7 +176,8 @@ kdialog --yesno "This script starts otsdaq tutorials.\n\nBefore (re)starting the
 if [[ $KDIALOG_ALWAYS_YES == 0 && $? -eq 1 ]];then #no
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided NOT to continue with starting the tutorial. Exiting script."
 	kdialog --msgbox "You decided NOT to continue with starting the tutorial. Exiting script."
-	return
+
+	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit
 fi
 
@@ -213,7 +223,8 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	if [ "x$USER_DATA" == "x" ]; then		
 		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
-		return
+
+		return  >/dev/null 2>&1 #return is used if script is sourced
 		exit
 	fi
 		
@@ -234,7 +245,8 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 		#export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
 		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
-		return
+
+		return  >/dev/null 2>&1 #return is used if script is sourced
 		exit
 	fi
 			
@@ -300,11 +312,14 @@ kdialog --yesno "Do you want to start the otsdaq tutorial processes (i.e. the em
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided NOT to start the tutorial. Exiting script."
 	kdialog --msgbox "You decided NOT to start the tutorial. Exiting script."
-	return
+	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit
 fi
 
-
+#if script is sourced, stop here before running executables
+return  >/dev/null 2>&1 #return is used if script is sourced
+		
+		
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to start up the tutorial."
 
 dbusRef=`kdialog --progressbar "Starting tutorial and launching ots..." 7`
@@ -331,7 +346,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
 	qdbus $dbusRef Set "" value 7
 	qdbus $dbusRef close
 	kdialog --msgbox "You decided NOT to launch web browser. Tutorial reset script complete."
-	return
+	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit
 fi
 
