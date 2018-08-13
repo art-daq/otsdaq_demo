@@ -126,8 +126,8 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* ]]; then #no
 fi
 
 #for testing KDIALOG ALWAYS
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"
-return  >/dev/null 2>&1 #return is used if script is sourced
+#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"
+#return  >/dev/null 2>&1 #return is used if script is sourced
 
 
 if ! [ -e setup_ots.sh ]; then
