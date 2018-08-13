@@ -73,9 +73,12 @@ echo
 #determine if kdialog is functional 
 # if not alias to echo
 KDIALOG_ALWAYS_YES=0
-kdialog --print-winid &>/dev/null #hide output
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog test  \t= $?"
-if [[ $? -eq 1 || $? -eq 0 ]];then #no
+
+unalias kdialog >/dev/null 2>&1 
+KDIALOG_TEST="$(which kdialog 2>&1)"
+#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
+		
+if [[ "$KDIALOG_TEST" == *"no kdialog"* ]]; then #no
 	#instead of e.g. /usr/bin/kdialog
 	# only works if the script was sourced!
 
@@ -123,8 +126,8 @@ if [[ $? -eq 1 || $? -eq 0 ]];then #no
 fi
 
 #for testing KDIALOG ALWAYS
-#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"
-#return  >/dev/null 2>&1 #return is used if script is sourced
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"
+return  >/dev/null 2>&1 #return is used if script is sourced
 
 
 if ! [ -e setup_ots.sh ]; then
