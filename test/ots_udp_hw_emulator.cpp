@@ -180,7 +180,7 @@ int main(int argc, char** argv)
 
 	//hardware "registers"
 	uint64_t 	data_gen_cnt = 0;
-	uint64_t 	data_gen_rate = 1<<16;
+	uint64_t 	data_gen_rate = 100; //number of loops to wait
 	uint8_t		led_register = 0;
 	uint8_t		dataEnabled = 0;
 
@@ -196,7 +196,7 @@ int main(int argc, char** argv)
 	struct timeval tv;
 	fd_set readfds, masterfds;
 	tv.tv_sec = 0;
-	tv.tv_usec = 500000;
+	tv.tv_usec = 0;//500000; RAR moved timeout to sleep to free up processor
 	FD_ZERO(&masterfds);
 	FD_SET(sockfd, &masterfds);
 
@@ -207,6 +207,8 @@ int main(int argc, char** argv)
 
 	while(1)
 	{
+		usleep(3000); //sleep 3ms to free up processor (downfall is less responsive, but likely not noticeable)
+
 		readfds = masterfds; //copy to reset timeout select
 		select(sockfd+1, &readfds, NULL, NULL, &tv);
 
@@ -382,7 +384,7 @@ int main(int argc, char** argv)
 
 			__COUT__ << std::hex << ":::" << "\n\n" << addressSpaceSS.str() << "\n\n";
 
-		}
+		} //end packet received if
 		else
 		{
 			//no packet received (timeout)
@@ -452,7 +454,7 @@ int main(int argc, char** argv)
 
 			++count;
 		}
-	}
+	} //end main loop
 
 	close(sockfd);
 

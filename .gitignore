@@ -8,7 +8,6 @@ cetpkg_variable_report
 diag_report
 otsdaq_demo-v1_00_00
 otsdaq-demo/tmp/
-NoGitData/
 *ProgressBarData*
 Data/XDAQConfigurations/*_Run.xml
 Data/DEPRECATEDXDAQConfigurations/*_Run.xml
@@ -17,7 +16,7 @@ Data_latest/
 Data/DEPRECATEDConfigurationDataExamples*	
 Data/ServiceData/LogbookData/
 Data/ServiceData/LoginData/UsersData/UserPreferencesData/
-NoGitData_latest/
+NoGit*
 checkinAll.log
 bin
 obj

@@ -36,7 +36,7 @@ if [[ $? -eq 0 ]];then
 	
 	qdbus $dbusRef Set "" value 2
 	
-	StartOTS.sh --chrome #launch normal mode and open chrome
+	StartOTS.sh --firefox #launch normal mode and open firefox
 	
 	qdbus $dbusRef Set "" value 3
 	qdbus $dbusRef close	
@@ -46,7 +46,7 @@ else
 	dbusRef=`kdialog --progressbar "Launching OTS in Wizard Mode" 2`
 	qdbus $dbusRef Set "" value 1
 	
-    StartOTS.sh --wiz --chrome #launch wiz mode and open chrome
+    StartOTS.sh --wiz --firefox #launch wiz mode and open firefox
 	
 	qdbus $dbusRef Set "" value 2
 	qdbus $dbusRef close
