@@ -357,7 +357,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	if (!bitstream) {
 		__SS__ << "Failed to read bitsream";
 		__COUT_ERR__ << "\n" << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 	//keep as placeholder for potentially handling mcs files (in addition to bin files)

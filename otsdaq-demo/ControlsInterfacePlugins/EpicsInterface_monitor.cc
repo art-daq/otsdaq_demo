@@ -444,7 +444,7 @@ void EpicsInterface::subscribeToChannel (std::string pvName, chtype subscription
 //	while(ca_state(mapOfPVInfo_.find(pvName)->second->channelID) == cs_conn && i<2)
 //		Sleep(1);
 //	if(i==2)
-//		{__SS__;throw std::runtime_error(ss.str() + "Channel failed for " + pvName);}
+//		{__SS__;__THROW__(ss.str() + "Channel failed for " + pvName);}
 	
 	
 	SEVCHK(ca_create_subscription(dbf_type_to_DBR(mapOfPVInfo_.find(pvName)->second->channelType),1,mapOfPVInfo_.find(pvName)->second->channelID, DBE_VALUE | DBE_ALARM | DBE_PROPERTY, eventCallback, this, &(mapOfPVInfo_.find(pvName)->second->eventID)),"EpicsInterface::subscribeToChannel() : ca_create_subscription"); 
