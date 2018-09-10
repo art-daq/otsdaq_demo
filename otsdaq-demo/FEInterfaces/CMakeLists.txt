@@ -10,7 +10,9 @@ include_directories(${CMAKE_BINARY_DIR}/artdaq)
 #install_headers()
 #install_source()
 
-  
+ #simple_plugin(CFOFrontEndInterface "interface"
+ # FECore
+ #)
     
 #simple_plugin(myNewInterface "interface"
 #  DAQHardware
@@ -43,24 +45,3 @@ simple_plugin(FEOtsEthernetProgramInterface "interface"
 #	${MF_MESSAGELOGGER}
   )
   
-#simple_plugin(FEPurduePSI46DigInterface "interface"
-#  otsdaq-demo_UserConfigurationDataFormats_FEWOtsUDPHardwareConfiguration_configuration
-#  DAQHardware
-#  FECore
-#  ${CETLIB}
-#  )
-  
-#simple_plugin(FEPurdueVIPICInterface "interface"
-#  otsdaq-demo_UserConfigurationDataFormats_FEWOtsUDPHardwareConfiguration_configuration
-#  DAQHardware
-#  FECore
-#  ${CETLIB}
-#  )
-  
-#simple_plugin(FEZEDRyanInterface "interface"
-#  otsdaq-demo_UserConfigurationDataFormats_FEWOtsUDPHardwareConfiguration_configuration
-#  DAQHardware
-#  FECore
-#  ${CETLIB}
-#  )
- 
