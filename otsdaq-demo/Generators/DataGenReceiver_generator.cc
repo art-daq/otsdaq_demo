@@ -31,7 +31,7 @@ ots::DataGenReceiver::DataGenReceiver(fhicl::ParameterSet const & ps)
 , lastFrag_                 (std::chrono::high_resolution_clock::now())
 {
 	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << std::endl;
-	mf::LogInfo("DataGenReceiver") << "MY TRIGGER MODE IS: " << ps.get<std::string>("trigger_mode","UNDEFINED!!!");
+	TLOG(TLVL_INFO, "DataGenReceiver") << "MY TRIGGER MODE IS: " << ps.get<std::string>("trigger_mode","UNDEFINED!!!");
 	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "registering to buffer!"<< std::endl;
 	registerToBuffer();
 }
@@ -80,7 +80,7 @@ void ots::DataGenReceiver::ProcessData_(artdaq::FragmentPtrs & frags) {
 		output.open(outputPath, std::ios::out | std::ios::app | std::ios::binary );
 	}
 
-	mf::LogInfo("DataGenReceiver") << "Starting DataGenReceiver Packet Processing Loop" << std::endl;
+	TLOG(TLVL_INFO, "DataGenReceiver") << "Starting DataGenReceiver Packet Processing Loop" << std::endl;
 	//	for( auto packet = packetBuffers_.begin(); packet != packetBuffers_.end(); ++packet ) {
 
 	std::size_t initial_payload_size = 0;
@@ -103,7 +103,7 @@ void ots::DataGenReceiver::ProcessData_(artdaq::FragmentPtrs & frags) {
 		output.write(&buffer_[0],sizeof(DataGenFragment::DataBlob));
 	}
 	//	}
-	mf::LogInfo("DataGenReceiver") <<"Done with DataGenReceiver Packet Processing Loop. Deleting PacketBuffers" << std::endl;
+	TLOG(TLVL_INFO, "DataGenReceiver") <<"Done with DataGenReceiver Packet Processing Loop. Deleting PacketBuffers" << std::endl;
 	//	packetBuffers_.clear();
 	return;
 }

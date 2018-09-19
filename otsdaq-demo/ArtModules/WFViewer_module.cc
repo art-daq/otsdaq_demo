@@ -201,7 +201,7 @@ void ots::WFViewer::analyze (art::Event const & e) {
     }
 
     if (expected_sequence_id != frag.sequenceID()) {
-      mf::LogWarning("WFViewer") << "Warning in WFViewer: expected fragment with sequence ID " << expected_sequence_id << ", received one with sequence ID " << frag.sequenceID();
+      TLOG(TLVL_WARNING, "WFViewer") << "Warning in WFViewer: expected fragment with sequence ID " << expected_sequence_id << ", received one with sequence ID " << frag.sequenceID();
     }
     
     FragmentType fragtype = static_cast<FragmentType>( frag.type() );
@@ -251,7 +251,7 @@ void ots::WFViewer::analyze (art::Event const & e) {
 	auto val = drPtr->dataBegin();
 	double the_mean = calcmean(val->data);
 	std::cout << __COUT_HDR_FL__ << "DJN WFViewer: Putting datapoint " << the_mean << " into histogram" << std::endl;
-	mf::LogInfo("WFViewer") << "Putting datapoint " << the_mean << " into histogram";
+	TLOG(TLVL_INFO, "WFViewer") << "Putting datapoint " << the_mean << " into histogram";
 	//histograms_[ind]->Fill( static_cast<uint8_t>(val->data[0]) );
 	histograms_[ind]->Fill( the_mean);
       }
