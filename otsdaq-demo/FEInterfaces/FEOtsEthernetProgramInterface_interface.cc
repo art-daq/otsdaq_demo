@@ -402,11 +402,13 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	uint64_t 	recvQuadWord;
 
 	//send reset command to Ethernet block which will reset flash block
-	OtsUDPFirmwareCore::ethernetReset(sendBuffer);
+	OtsUDPFirmwareCore::softEthernetReset(sendBuffer);
+	OtsUDPHardware::write(sendBuffer);
+	OtsUDPFirmwareCore::clearEthernetReset(sendBuffer);
 	OtsUDPHardware::write(sendBuffer);
 
 	//sleep to allow reset to complete
-	sleep(2); //seconds
+	//sleep(2); //seconds
 
 	//setup address and flash write mode
 	{
