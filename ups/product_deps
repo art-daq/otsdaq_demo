@@ -21,7 +21,7 @@ product		 version	optional
 otsdaq              v2_02_00
 otsdaq_utilities    v2_02_00
 otsdaq_components   v2_02_00
-xdaq                v14_4_0b
+xdaq                v14_4_1a
 cetbuildtools       v7_02_01    -        only_for_build
 end_product_list
 
