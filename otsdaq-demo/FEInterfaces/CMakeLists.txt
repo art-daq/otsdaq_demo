@@ -9,10 +9,6 @@ include_directories(${CMAKE_BINARY_DIR}/artdaq)
 #
 #install_headers()
 #install_source()
-
- #simple_plugin(CFOFrontEndInterface "interface"
- # FECore
- #)
     
 #simple_plugin(myNewInterface "interface"
 #  DAQHardware
