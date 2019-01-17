@@ -30,8 +30,8 @@ public:
 	//void stop             				(void) override;
 	//bool running   		  				(void) override;
 
-	void getListOfProgramFiles			(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
-	void loadProgramFile				(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
+	void getListOfProgramFiles			(frontEndMacroConstArgs_t argsIn, frontEndMacroArgs_t argsOut);
+	void loadProgramFile				(frontEndMacroConstArgs_t argsIn, frontEndMacroArgs_t argsOut);
 
 	///////////////////////
 	//inherits these from Template interface
