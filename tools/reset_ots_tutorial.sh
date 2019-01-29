@@ -20,7 +20,7 @@
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_2'
+VERSION='v2_3'
 
 echo
 echo "  |"
@@ -35,11 +35,11 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutorial will default to '${TUTORIAL} ${VERSION}'"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t for example..."
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_3"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t NOTE: This script uses kdialog for prompts. If kdialog is not installed this script must be sourced to bypass kdialog prompts"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_3"
 
 
 #return  >/dev/null 2>&1 #return is used if script is sourced
@@ -195,7 +195,7 @@ if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
 	if [[ $? -eq 1 ]]; then #no
 	
 		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" --default "first_demo")
-		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" --default "v2_2")
+		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" "v2_2" --default "v2_3")
 		
 	fi
 	
