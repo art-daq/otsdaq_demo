@@ -47,7 +47,7 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& 
 			10 /*requiredUserPermissions*/);
 
 	//for testing FE Macro Functions
-	std::vector<frontEndMacroConstArg_t> argsIn;
+	std::vector<frontEndMacroArg_t> argsIn;
 	//	argsIn.push_back(frontEndMacroInArg_t("arg1","val1"));
 	//	argsIn.push_back(frontEndMacroInArg_t("arg2","val2"));
 	//	argsIn.push_back(frontEndMacroInArg_t("arg3","val3"));
