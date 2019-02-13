@@ -24,8 +24,9 @@ cet_make_exec(DemoInterfaceTestMain
 		$ENV{XDAQ_LIB}/libmimetic.so
 		$ENV{XDAQ_LIB}/libasyncresolv
 		$ENV{XDAQ_LIB}/libb2innub.so
+		${XDAQ_XERCES-C}
 		/lib64/libuuid.so.1
-
+		pthread
 )
 
 install_headers()
