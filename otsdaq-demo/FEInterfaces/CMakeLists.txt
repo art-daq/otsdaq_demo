@@ -35,9 +35,10 @@ simple_plugin(FEOtsEthernetProgramInterface "interface"
   ConfigurationInterface
   ConfigurationDataFormats
 #  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
-#  $ENV{XERCES_C_LIB}/libxerces-c.so
 #  ${CETLIB}
 #  ${CETLIB_EXCEPT}
 #	${MF_MESSAGELOGGER}
+	${XDAQ_XERCES-C}
+	pthread
   )
   
