@@ -12,15 +12,15 @@
 #		(underscores might more universal for web downloads than periods)
 #
 #  example run:
-#	./reset_ots_tutorial.sh --tutorial first_demo --version v2_2
+#	./reset_ots_tutorial.sh --tutorial first_demo --version v2_3
 #
 #	NOTE: if kdialog is not installed this script must be sourced to bypass kdialog prompts
-#		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_2
+#		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_3
 #
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_2'
+VERSION='v2_3'
 
 echo
 echo "  |"
@@ -35,11 +35,11 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutorial will default to '${TUTORIAL} ${VERSION}'"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t for example..."
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_3"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t NOTE: This script uses kdialog for prompts. If kdialog is not installed this script must be sourced to bypass kdialog prompts"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_2"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_3"
 
 
 #return  >/dev/null 2>&1 #return is used if script is sourced
@@ -94,7 +94,7 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* ]]; then #no
 
 	source setup_ots.sh
 
-	StartOTS.sh --killall
+	ots --killall
 	killall -9 ots_udp_hw_emulator
 	
 	#download and run get_tutorial_data script
@@ -111,8 +111,8 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* ]]; then #no
 	rm get_tutorial_database.sh
 	rm get_tutorial_data.sh
 
-	StartOTS.sh --wiz #just to test activate the saved groups  
-	StartOTS.sh  #launch normal mode and open firefox
+	ots --wiz #just to test activate the saved groups  
+	ots  #launch normal mode and open firefox
 	
 	#start hardware emulator on port 4000
 	ots_udp_hw_emulator 4000 &
@@ -184,7 +184,7 @@ if [[ $KDIALOG_ALWAYS_YES == 0 && $? -eq 1 ]];then #no
 	exit
 fi
 
-StartOTS.sh --killall
+ots --killall
 killall -9 ots_udp_hw_emulator
 
 #if no parameters and kdialog is working, check which tutorial the user wants
@@ -195,7 +195,7 @@ if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
 	if [[ $? -eq 1 ]]; then #no
 	
 		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" --default "first_demo")
-		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" --default "v2_2")
+		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" "v2_2" --default "v2_3")
 		
 	fi
 	
@@ -328,7 +328,7 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to
 dbusRef=`kdialog --progressbar "Starting tutorial and launching ots..." 7`
 qdbus $dbusRef Set "" value 1
 
-StartOTS.sh --wiz #just to test activate the saved groups  
+ots --wiz #just to test activate the saved groups  
 qdbus $dbusRef Set "" value 2
 
 sleep 3 #give time to activate configuration
@@ -345,7 +345,7 @@ qdbus $dbusRef Set "" value 6
 kdialog --yesno "Do you want this script to launch your web browser?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided NOT to launch web browser. Exiting script."
-	StartOTS.sh
+	ots
 	qdbus $dbusRef Set "" value 7
 	qdbus $dbusRef close
 	kdialog --msgbox "You decided NOT to launch web browser. Tutorial reset script complete."
@@ -353,7 +353,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 1 ]];then #no
 	exit
 fi
 
-StartOTS.sh --firefox #launch normal mode and open firefox
+ots --firefox #launch normal mode and open firefox
 qdbus $dbusRef Set "" value 7
 
 echo

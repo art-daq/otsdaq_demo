@@ -47,7 +47,7 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& 
 			10 /*requiredUserPermissions*/);
 
 	//for testing FE Macro Functions
-	std::vector<frontEndMacroInArg_t> argsIn;
+	std::vector<frontEndMacroArg_t> argsIn;
 	//	argsIn.push_back(frontEndMacroInArg_t("arg1","val1"));
 	//	argsIn.push_back(frontEndMacroInArg_t("arg2","val2"));
 	//	argsIn.push_back(frontEndMacroInArg_t("arg3","val3"));
@@ -61,7 +61,7 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& 
 
 
 	std::vector<std::string> returnStrings;
-	std::vector<frontEndMacroOutArg_t> argsOut;
+	std::vector<frontEndMacroArg_t> argsOut;
 
 	std::string outputArgs = "listOfProgramFiles";//"oarg1,oarg2,";
 	{
@@ -72,7 +72,7 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(const std::string& 
 			__COUT__ << "argName " << argName << std::endl;
 
 			returnStrings.push_back(std::string("test"));
-			argsOut.push_back(FEVInterface::frontEndMacroOutArg_t(
+			argsOut.push_back(FEVInterface::frontEndMacroArg_t(
 					argName,
 					returnStrings[returnStrings.size()-1]));
 			//
@@ -249,8 +249,8 @@ void FEOtsEthernetProgramInterface::configure(void)
 //		listOfProgramFiles = comma-separated list of programmable file names
 //
 // Note: path is from environment variable OTS_FIRMWARE_PROGRAM_FILE_PATH
-void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroInArgs_t argsIn,
-		frontEndMacroOutArgs_t argsOut)
+void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroConstArgs_t argsIn,
+		frontEndMacroArgs_t argsOut)
 {
 	std::string dirpath = PROGRAM_FILE_PATH;
 	DIR *pDIR;
@@ -302,7 +302,7 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroInArgs_t 
 		__COUT__ << "Failed to access directory contents!" << std::endl;
 	}
 
-	auto &returnString = FEVInterface::getFEMacroOutputArgument(argsOut,"listOfProgramFiles");
+	auto &returnString = getFEMacroArgument(argsOut, "listOfProgramFiles");
 	returnString = "";
 	for(const auto &name:listOfProgramFiles)
 	{
@@ -318,7 +318,7 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroInArgs_t 
 //		programFile = filename of programmable file
 //	1 args out
 //		listOfProgramFiles = comma-separated list of programmable file names
-void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut)
+void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroConstArgs_t argsIn, frontEndMacroArgs_t argsOut)
 {
 	//Steps:
 	//	- open file
@@ -328,7 +328,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	//remove special characters
 	{
 		bool prevWasDot = false;
-		std::string sourceStr = getFEMacroInputArgument(argsIn,"programFile");
+		std::string sourceStr = getFEMacroConstArgument(argsIn,"programFile");
 		for(const auto& c : sourceStr)
 		{
 			if(c == '.')
@@ -357,7 +357,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	if (!bitstream) {
 		__SS__ << "Failed to read bitsream";
 		__COUT_ERR__ << "\n" << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 	//keep as placeholder for potentially handling mcs files (in addition to bin files)
@@ -402,11 +402,13 @@ void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroInArgs_t argsIn
 	uint64_t 	recvQuadWord;
 
 	//send reset command to Ethernet block which will reset flash block
-	OtsUDPFirmwareCore::ethernetReset(sendBuffer);
+	OtsUDPFirmwareCore::softEthernetReset(sendBuffer);
+	OtsUDPHardware::write(sendBuffer);
+	OtsUDPFirmwareCore::clearEthernetReset(sendBuffer);
 	OtsUDPHardware::write(sendBuffer);
 
 	//sleep to allow reset to complete
-	sleep(2); //seconds
+	//sleep(2); //seconds
 
 	//setup address and flash write mode
 	{

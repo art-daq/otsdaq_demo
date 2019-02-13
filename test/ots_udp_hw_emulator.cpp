@@ -272,21 +272,21 @@ int main(int argc, char** argv)
 					{
 					case 0x1001:
 						memcpy((void *)&buff[handlerIndex + TX_DATA_OFFSET],(void *)&data_gen_cnt,8);
-						__COUT__ << std::hex << ":::" << "Read data count: " <<  data_gen_cnt << endl;
+						__COUT__ << std::hex << ":::" << "Read data count: 0x" <<  data_gen_cnt << endl;
 						break;
 					case 0x1002:
 						memcpy((void *)&buff[handlerIndex + TX_DATA_OFFSET],(void *)&data_gen_rate,8);
-						__COUT__ << std::hex << ":::" << "Read data rate: " <<  data_gen_rate << endl;
+						__COUT__ << std::hex << ":::" << "Read data rate: 0x" <<  data_gen_rate << endl;
 						break;
 					case 0x1003:
 						memset((void *)&buff[handlerIndex + TX_DATA_OFFSET+1],0,7);
 						memcpy((void *)&buff[handlerIndex + TX_DATA_OFFSET],(void *)&led_register,1);
-						__COUT__ << std::hex << ":::" << "Read LED register: " <<  (unsigned int)led_register << endl;
+						__COUT__ << std::hex << ":::" << "Read LED register: 0x" <<  (unsigned int)led_register << endl;
 						break;
 					case 0x0000000100000009:
 						memset((void *)&buff[handlerIndex + TX_DATA_OFFSET+1],0,7);
 						memcpy((void *)&buff[handlerIndex + TX_DATA_OFFSET],(void *)&dataEnabled,1);
-						__COUT__ << std::hex << ":::" << "Read data enable: " <<  dataEnabled << endl;
+						__COUT__ << std::hex << ":::" << "Read data enable: 0x" <<  dataEnabled << endl;
 						break;
 					default:
 						__COUT__ << std::hex << ":::" << "Unknown read address received." << endl;
@@ -313,16 +313,16 @@ int main(int argc, char** argv)
 					{
 					case 0x1001:
 						memcpy((void *)&data_gen_cnt,(void *)&buff[handlerIndex + RX_DATA_OFFSET],8);
-						__COUT__ << std::hex << ":::" << "Write data count: " << data_gen_cnt << endl;
+						__COUT__ << std::hex << ":::" << "Write data count: 0x" << data_gen_cnt << endl;
 						count = 0; //reset count
 						break;
 					case 0x1002:
 						memcpy((void *)&data_gen_rate,(void *)&buff[handlerIndex + RX_DATA_OFFSET],8);
-						__COUT__ << std::hex << ":::" << "Write data rate: " << data_gen_rate << endl;
+						__COUT__ << std::hex << ":::" << "Write data rate: 0x" << data_gen_rate << endl;
 						break;
 					case 0x1003:
 						memcpy((void *)&led_register,(void *)&buff[handlerIndex + RX_DATA_OFFSET],1);
-						__COUT__ << std::hex << ":::" << "Write LED register: " << (unsigned int)led_register << endl;
+						__COUT__ << std::hex << ":::" << "Write LED register: 0x" << (unsigned int)led_register << endl;
 						//show "LEDs"
 						__COUT__ << "\n\n";
 						for(int l=0;l<8;++l)
@@ -369,7 +369,7 @@ int main(int argc, char** argv)
 					break;
 					case 0x0000000100000009:
 						memcpy((void *)&dataEnabled,(void *)&buff[handlerIndex + RX_DATA_OFFSET],1);
-						__COUT__ << std::hex << ":::" << "Write data enable: " <<  (int)dataEnabled << endl;
+						__COUT__ << std::hex << ":::" << "Write data enable: 0x" <<  (int)dataEnabled << endl;
 						count = 0; //reset count
 						break;
 					default:
