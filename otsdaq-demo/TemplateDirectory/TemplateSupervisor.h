@@ -6,36 +6,44 @@
 #include <xdaq/Application.h>
 #include <xgi/Method.h>
 
-#include <xoap/MessageFactory.h>
 #include <xoap/MessageReference.h>
-#include <xoap/Method.h>
-#include <xoap/SOAPBody.h>
+#include <xoap/MessageFactory.h>
 #include <xoap/SOAPEnvelope.h>
+#include <xoap/SOAPBody.h>
 #include <xoap/domutils.h>
+#include <xoap/Method.h>
+
 
 #include <cgicc/HTMLClasses.h>
-#include <cgicc/HTMLDoctype.h>
 #include <cgicc/HTTPCookie.h>
+#include <cgicc/HTMLDoctype.h>
 #include <cgicc/HTTPHeader.h>
 
-#include <map>
 #include <string>
+#include <map>
 
-namespace ots {
+namespace ots
+{
 
-class TemplateSupervisor : public xdaq::Application, public SOAPMessenger {
- public:
-  XDAQ_INSTANTIATOR();
 
-  TemplateSupervisor(xdaq::ApplicationStub* s);
-  virtual ~TemplateSupervisor(void);
-  void init(void);
-  void destroy(void);
-  void Default(xgi::Input* in, xgi::Output* out);
+class TemplateSupervisor: public xdaq::Application, public SOAPMessenger
+{
 
- private:
+public:
+
+    XDAQ_INSTANTIATOR();
+
+    TemplateSupervisor            (xdaq::ApplicationStub * s) ;
+    virtual ~TemplateSupervisor   (void);
+    void init                  (void);
+    void destroy               (void);
+    void Default               (xgi::Input* in, xgi::Output* out) ;
+
+
+private:
+
 };
 
-}  // namespace ots
+}
 
 #endif

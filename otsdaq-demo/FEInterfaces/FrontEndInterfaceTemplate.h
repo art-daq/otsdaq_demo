@@ -1,37 +1,40 @@
 #ifndef _ots_FrontEndInterfaceTemplate_h_
 #define _ots_FrontEndInterfaceTemplate_h_
 
-#include <map>
-#include <string>
 #include "otsdaq/DetectorWriter/FrontEndVirtualInterface.h"
+#include <string>
+#include <map>
 
-namespace ots {
+namespace ots
+{
 
 class FrontEndHardwareTemplate;
 class FrontEndFirmwareTemplate;
 
-class FrontEndInterfaceTemplate : public FEVInterface {
- public:
-  FrontEndInterfaceTemplate(std::string name);
+class FrontEndInterfaceTemplate: public FEVInterface
+{
 
-  virtual ~FrontEndInterfaceTemplate(void);
+public:
+	FrontEndInterfaceTemplate (std::string name);
 
-  void configure(void);
-  void halt(void);
-  void pause(void);
-  void resume(void);
-  void start(std::string runNumber);
-  void stop(void);
-  bool running(void);
+	virtual ~FrontEndInterfaceTemplate(void);
 
-  int universalRead(char* address, char* readValue) override;
-  void universalWrite(char* address, char* writeValue) override;
+	void configure        (void);
+	void halt             (void);
+	void pause            (void);
+	void resume           (void);
+	void start            (std::string runNumber);
+	void stop             (void);
+    bool running   		  (void);
 
- protected:
-  FrontEndHardwareTemplate* theFrontEndHardware_;
-  FrontEndFirmwareTemplate* theFrontEndFirmware_;
+    int  universalRead	  (char* address, char* readValue) 	override;
+    void universalWrite	  (char* address, char* writeValue) override;
+
+protected:
+	FrontEndHardwareTemplate* theFrontEndHardware_;
+	FrontEndFirmwareTemplate* theFrontEndFirmware_;
 };
 
-}  // namespace ots
+}
 
 #endif

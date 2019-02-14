@@ -5,35 +5,36 @@
 
 #include <string>
 
-namespace ots {
+namespace ots
+{
 
-class myNewInterface : public FEOtsUDPTemplateInterface {
- public:
-  // myNewInterface     (unsigned int name=0, std::string daqHardwareType="daqHardwareType",	std::string
-  // firmwareType="firmwareType", const FEInterfaceConfigurationBase* configuration=0);
-  myNewInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree,
-                 const std::string& interfaceConfigurationPath);
-  virtual ~myNewInterface(void);
+class myNewInterface : public FEOtsUDPTemplateInterface
+{
 
-  void configure(void);
-  void halt(void);
-  void pause(void);
-  void resume(void);
-  void start(std::string runNumber) override;
-  void stop(void);
-  bool running(void);
+public:
+	//myNewInterface     (unsigned int name=0, std::string daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const FEInterfaceConfigurationBase* configuration=0);
+	myNewInterface     		(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
+	virtual ~myNewInterface	(void);
 
-  int universalRead(char* address, char* readValue) override;
-  void universalWrite(char* address, char* writeValue) override;
+	void configure        	(void);
+	void halt             	(void);
+	void pause            	(void);
+	void resume           	(void);
+	void start            	(std::string runNumber) override;
+	void stop             	(void);
+	bool running   		  	(void);
 
-  // void configureFEW     (void);
-  // void configureDetector	(const DACStream& theDACStream);
+	int universalRead	  	(char* address, char* readValue) override;
+	void universalWrite	  	(char* address, char* writeValue) override;
 
-  void testFunction(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
+	//void configureFEW     (void);
+	//void configureDetector	(const DACStream& theDACStream);
 
- private:
+	void testFunction		(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
+
+private:
 };
 
-}  // namespace ots
+}
 
 #endif
