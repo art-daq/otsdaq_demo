@@ -1,8 +1,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "../../../otsdaq/otsdaq-core/TableCore/TableGroupKey.h"
 #include "otsdaq-components/FEInterfaces/FEOtsUDPTemplateInterface.h"
-#include "otsdaq-core/ConfigurationDataFormats/ConfigurationGroupKey.h"
 #include "otsdaq-core/ConfigurationInterface/ConfigurationInterface.h"
 #include "otsdaq-core/ConfigurationInterface/ConfigurationManager.h"
 /*
@@ -13,49 +13,49 @@
 */
 using namespace ots;
 
-int main (int argc, char** argv)
+int main(int argc, char** argv)
 {
-	//Variables
+	// Variables
 	const int          supervisorInstance_    = 1;
 	const unsigned int configurationKeyValue_ = 1;
 
-	ConfigurationManager* theConfigurationManager_ = new ConfigurationManager ();
+	ConfigurationManager* theConfigurationManager_ = new ConfigurationManager();
 
 	std::string XDAQContextConfigurationName_ = "XDAQContextConfiguration";
 	std::string supervisorContextUID_         = "mainContext";
 	std::string supervisorApplicationUID_     = "FESupervisor";
 	std::string interfaceUID_                 = "ExampleInterface0";
-	std::string supervisorConfigurationPath_  = "/" + supervisorContextUID_ +
-	                                           "/LinkToApplicationConfiguration/" +
-	                                           supervisorApplicationUID_ +
-	                                           "/LinkToSupervisorConfiguration";
-	const ConfigurationTree theXDAQContextConfigTree_ = theConfigurationManager_->getNode (XDAQContextConfigurationName_);
+	std::string supervisorConfigurationPath_ =
+	    "/" + supervisorContextUID_ + "/LinkToApplicationConfiguration/" +
+	    supervisorApplicationUID_ + "/LinkToSupervisorConfiguration";
+	const ConfigurationTree theXDAQContextConfigTree_ =
+	    theConfigurationManager_->getNode(XDAQContextConfigurationName_);
 
-	std::string                                   configurationGroupName = "defaultConfig";
-	std::pair<std::string, ConfigurationGroupKey> theGroup (configurationGroupName, ConfigurationGroupKey (configurationKeyValue_));
+	std::string                           configurationGroupName = "defaultConfig";
+	std::pair<std::string, TableGroupKey> theGroup(configurationGroupName,
+	                                               TableGroupKey(configurationKeyValue_));
 
-	theConfigurationManager_->loadConfigurationGroup (theGroup.first, theGroup.second, true);
+	theConfigurationManager_->loadConfigurationGroup(
+	    theGroup.first, theGroup.second, true);
 
-	FEOtsUDPTemplateInterface* theInterface_ = new FEOtsUDPTemplateInterface (
+	FEOtsUDPTemplateInterface* theInterface_ = new FEOtsUDPTemplateInterface(
 	    interfaceUID_,
 	    theXDAQContextConfigTree_,
-	    supervisorConfigurationPath_ +
-	        "/LinkToFEInterfaceTable/" +
-	        interfaceUID_ +
+	    supervisorConfigurationPath_ + "/LinkToFEInterfaceTable/" + interfaceUID_ +
 	        "/LinkToFETypeConfiguration");
 	std::cout << "Done with new" << std::endl;
 	// Test interface class methods here //
-	theInterface_->configure ();
-	theInterface_->start (std::string (argv[1]));
-	unsigned int second  = 1000;  //x1ms
+	theInterface_->configure();
+	theInterface_->start(std::string(argv[1]));
+	unsigned int second  = 1000;  // x1ms
 	unsigned int time    = 60 * 60 * second;
 	unsigned int counter = 0;
-	while (counter++ < time)
+	while(counter++ < time)
 	{
-		theInterface_->running ();  //There is a 1ms sleep inside the running
-		                            //std::cout << counter << std::endl;
+		theInterface_->running();  // There is a 1ms sleep inside the running
+		                           // std::cout << counter << std::endl;
 	}
-	theInterface_->stop ();
+	theInterface_->stop();
 
 	return 0;
 }

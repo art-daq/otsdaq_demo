@@ -13,11 +13,11 @@ namespace ots
 class DemoDQMHistos
 {
   public:
-	DemoDQMHistos (void);
-	virtual ~DemoDQMHistos (void);
-	void book (TFile* rootFile);
-	void fill (std::string& buffer, std::map<std::string, std::string> header);
-	void load (std::string fileName);
+	DemoDQMHistos(void);
+	virtual ~DemoDQMHistos(void);
+	void book(TFile* rootFile);
+	void fill(std::string& buffer, std::map<std::string, std::string> header);
+	void load(std::string fileName);
 
   protected:
 	TH1I* sequenceNumbers_;

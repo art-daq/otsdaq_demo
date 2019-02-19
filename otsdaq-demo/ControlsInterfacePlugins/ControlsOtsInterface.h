@@ -11,18 +11,20 @@ using namespace ots;
 class ControlsOtsInterface : public ControlsVInterface
 {
   public:
-	ControlsOtsInterface (const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& controlsConfigurationPath);
-	~ControlsOtsInterface ();
+	ControlsOtsInterface(const std::string&       interfaceUID,
+	                     const ConfigurationTree& theXDAQContextConfigTree,
+	                     const std::string&       controlsConfigurationPath);
+	~ControlsOtsInterface();
 
-	void initialize ();
-	void destroy ();
+	void initialize();
+	void destroy();
 
-	std::string                getList (std::string format);
-	void                       subscribe (std::string Name);
-	void                       subscribeJSON (std::string List);
-	void                       unsubscribe (std::string Name);
-	std::array<std::string, 4> getCurrentValue (std::string Name);
-	std::array<std::string, 9> getSettings (std::string Name);
+	std::string                getList(std::string format);
+	void                       subscribe(std::string Name);
+	void                       subscribeJSON(std::string List);
+	void                       unsubscribe(std::string Name);
+	std::array<std::string, 4> getCurrentValue(std::string Name);
+	std::array<std::string, 9> getSettings(std::string Name);
 };
 
 //}

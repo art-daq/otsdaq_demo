@@ -16,13 +16,13 @@ enum FragmentType : artdaq::Fragment::type_t
 };
 
 // Safety check.
-static_assert (artdaq::Fragment::isUserFragmentType (FragmentType::INVALID - 1),
-               "Too many user-defined fragments!");
+static_assert(artdaq::Fragment::isUserFragmentType(FragmentType::INVALID - 1),
+              "Too many user-defined fragments!");
 }
 
 using detail::FragmentType;
 
-FragmentType toFragmentType (std::string t_string);
-std::string  fragmentTypeToString (FragmentType val);
+FragmentType toFragmentType(std::string t_string);
+std::string  fragmentTypeToString(FragmentType val);
 }
 #endif /* artdaq_ots_core_Overlays_FragmentType_hh */

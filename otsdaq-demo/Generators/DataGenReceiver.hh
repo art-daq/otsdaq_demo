@@ -27,25 +27,26 @@
 
 namespace ots
 {
-class DataGenReceiver : public ots::DataConsumer, public artdaq::CommandableFragmentGenerator
+class DataGenReceiver : public ots::DataConsumer,
+                        public artdaq::CommandableFragmentGenerator
 {
   public:
-	explicit DataGenReceiver (fhicl::ParameterSet const& ps);
+	explicit DataGenReceiver(fhicl::ParameterSet const& ps);
 
-	bool getNext_ (artdaq::FragmentPtrs& output) override;
+	bool getNext_(artdaq::FragmentPtrs& output) override;
 
-	void startProcessingData (std::string runNumber) { ; }
-	void stopProcessingData (void) { ; }
-	void resumeProcessingData (void) { ; }
-	void pauseProcessingData (void) { ; }
+	void startProcessingData(std::string runNumber) { ; }
+	void stopProcessingData(void) { ; }
+	void resumeProcessingData(void) { ; }
+	void pauseProcessingData(void) { ; }
 
-	void         start () override;
-	virtual void stop () override;
-	virtual void stopNoMutex () override;
+	void         start() override;
+	virtual void stop() override;
+	virtual void stopNoMutex() override;
 
   private:
-	bool        workLoopThread (toolbox::task::WorkLoop* workLoop) { return false; }
-	void        ProcessData_ (artdaq::FragmentPtrs& frags);
+	bool        workLoopThread(toolbox::task::WorkLoop* workLoop) { return false; }
+	void        ProcessData_(artdaq::FragmentPtrs& frags);
 	std::string buffer_;
 
 	// FHiCL-configurable variables. Note that the C++ variable names

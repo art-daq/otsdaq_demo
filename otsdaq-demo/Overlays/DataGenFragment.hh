@@ -14,7 +14,7 @@ namespace ots
 class DataGenFragment;
 
 // Let the "<<" operator dump the DataGenFragment's data to stdout
-std::ostream &operator<< (std::ostream &, DataGenFragment const &);
+std::ostream& operator<<(std::ostream&, DataGenFragment const&);
 }
 
 class ots::DataGenFragment
@@ -39,7 +39,8 @@ class ots::DataGenFragment
 		static size_t const size_words = 1ull;  // Units of Metadata::data_t
 	};
 
-	static_assert (sizeof (Metadata) == Metadata::size_words * sizeof (Metadata::data_t), "DataGenFragment::Metadata size changed");
+	static_assert(sizeof(Metadata) == Metadata::size_words * sizeof(Metadata::data_t),
+	              "DataGenFragment::Metadata size changed");
 
 	// The "Header" struct contains "metadata" specific to the fragment
 	// which is not hardware-related
@@ -47,8 +48,8 @@ class ots::DataGenFragment
 	struct Header
 	{
 		typedef uint32_t data_t;
-		//data_t type;
-		//data_t sequence;
+		// data_t type;
+		// data_t sequence;
 
 		data_t data_bytes;
 		data_t board_id;
@@ -62,7 +63,8 @@ class ots::DataGenFragment
 		static size_t const size_words = 8ul;  // Units of Header::data_t
 	};
 
-	static_assert (sizeof (Header) == Header::size_words * sizeof (Header::data_t), "DataGenFragment::Header size changed");
+	static_assert(sizeof(Header) == Header::size_words * sizeof(Header::data_t),
+	              "DataGenFragment::Header size changed");
 
 	struct DataBlob
 	{
@@ -72,25 +74,24 @@ class ots::DataGenFragment
 	// The constructor simply sets its const private member "artdaq_Fragment_"
 	// to refer to the artdaq::Fragment object
 
-	DataGenFragment (artdaq::Fragment const &f)
-	    : artdaq_Fragment_ (f) {}
+	DataGenFragment(artdaq::Fragment const& f) : artdaq_Fragment_(f) {}
 
 	// const getter functions for the data in the header
 
 	// Start of the data, returned as a pointer
-	DataBlob const *dataBegin () const
+	DataBlob const* dataBegin() const
 	{
-		return reinterpret_cast<DataBlob const *> (header_ () + 1);
-		//return reinterpret_cast<DataBlob const *>(header_());
+		return reinterpret_cast<DataBlob const*>(header_() + 1);
+		// return reinterpret_cast<DataBlob const *>(header_());
 	}
 	// 0 - type
 	// 1 - seq
 	// 2-9 - data
 
 	// End of the data, returned as a pointer
-	DataBlob const *dataEnd () const
+	DataBlob const* dataEnd() const
 	{
-		return dataBegin () + (artdaq_Fragment_.dataSize () / sizeof (DataBlob));
+		return dataBegin() + (artdaq_Fragment_.dataSize() / sizeof(DataBlob));
 	}
 
   protected:
@@ -98,13 +99,14 @@ class ots::DataGenFragment
 	// data (i.e., where the DataGenFragment::Header object begins) and
 	// casts it as a pointer to DataGenFragment::Header
 
-	Header const *header_ () const
+	Header const* header_() const
 	{
-		return reinterpret_cast<DataGenFragment::Header const *> (artdaq_Fragment_.dataBeginBytes ());
+		return reinterpret_cast<DataGenFragment::Header const*>(
+		    artdaq_Fragment_.dataBeginBytes());
 	}
 
   private:
-	artdaq::Fragment const &artdaq_Fragment_;
+	artdaq::Fragment const& artdaq_Fragment_;
 };
 
 #endif /* artdaq_ots_core_Overlays_DataGenFragment_hh */

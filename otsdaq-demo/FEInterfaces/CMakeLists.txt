@@ -17,7 +17,7 @@ include_directories(${CMAKE_BINARY_DIR}/artdaq)
 #  MessageFacility
 #  NetworkUtilities
 #  ConfigurationInterface
-#  ConfigurationDataFormats
+#  TableCore
 #  $ENV{XERCES_C_LIB}/libxerces-c.so
 #  ${CETLIB}
 #  ${CETLIB_EXCEPT}
@@ -33,7 +33,7 @@ simple_plugin(FEOtsEthernetProgramInterface "interface"
    Macros
   NetworkUtilities
   ConfigurationInterface
-  ConfigurationDataFormats
+  TableCore
 #  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
 #  ${CETLIB}
 #  ${CETLIB_EXCEPT}

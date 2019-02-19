@@ -12,30 +12,37 @@
 
 namespace ots
 {
-class FEOtsEthernetProgramInterface : public FEOtsUDPTemplateInterface  //public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+class FEOtsEthernetProgramInterface
+    : public FEOtsUDPTemplateInterface  // public FEVInterface, public OtsUDPHardware,
+                                        // public OtsUDPFirmwareDataGen
 {
   public:
-	//FEOtsEthernetProgramInterface     (unsigned int name=0, std::string daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const FEInterfaceConfigurationBase* configuration=0);
-	FEOtsEthernetProgramInterface (const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
-	virtual ~FEOtsEthernetProgramInterface (void);
+	// FEOtsEthernetProgramInterface     (unsigned int name=0, std::string
+	// daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const
+	// FEInterfaceTableBase* configuration=0);
+	FEOtsEthernetProgramInterface(const std::string&       interfaceUID,
+	                              const ConfigurationTree& theXDAQContextConfigTree,
+	                              const std::string&       interfaceConfigurationPath);
+	virtual ~FEOtsEthernetProgramInterface(void);
 
-	void configure (void) override;
-	//void halt             				(void) override;
-	//void pause            				(void) override;
-	//void resume           				(void) override;
-	//void start            				(std::string runNumber) override;
-	//void stop             				(void) override;
-	//bool running   		  				(void) override;
+	void configure(void) override;
+	// void halt             				(void) override;
+	// void pause            				(void) override;
+	// void resume           				(void) override;
+	// void start            				(std::string runNumber) override;
+	// void stop             				(void) override;
+	// bool running   		  				(void) override;
 
-	void getListOfProgramFiles (frontEndMacroConstArgs_t argsIn, frontEndMacroArgs_t argsOut);
-	void loadProgramFile (frontEndMacroConstArgs_t argsIn, frontEndMacroArgs_t argsOut);
+	void getListOfProgramFiles(frontEndMacroConstArgs_t argsIn,
+	                           frontEndMacroArgs_t      argsOut);
+	void loadProgramFile(frontEndMacroConstArgs_t argsIn, frontEndMacroArgs_t argsOut);
 
 	///////////////////////
-	//inherits these from Template interface
+	// inherits these from Template interface
 	//
 	//	virtual int universalRead	  	(char* address, char* readValue) override;
 	//	virtual void universalWrite	  	(char* address, char* writeValue) override;
-	//private:
+	// private:
 	//	void runSequenceOfCommands(const std::string &treeLinkName);
 };
 }

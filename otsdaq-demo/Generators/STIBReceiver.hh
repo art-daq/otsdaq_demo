@@ -25,10 +25,10 @@ namespace ots
 class STIBReceiver : public ots::UDPReceiver
 {
   public:
-	explicit STIBReceiver (fhicl::ParameterSet const& ps);
+	explicit STIBReceiver(fhicl::ParameterSet const& ps);
 
   private:
-	void ProcessData_ (artdaq::FragmentPtrs& frags) override;
+	void ProcessData_(artdaq::FragmentPtrs& frags) override;
 };
 }
 

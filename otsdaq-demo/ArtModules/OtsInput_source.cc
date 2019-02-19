@@ -10,4 +10,4 @@ namespace ots
 typedef art::Source<detail::RawEventQueueReader> OtsInput;
 }
 
-DEFINE_ART_INPUT_SOURCE (ots::OtsInput)
+DEFINE_ART_INPUT_SOURCE(ots::OtsInput)
