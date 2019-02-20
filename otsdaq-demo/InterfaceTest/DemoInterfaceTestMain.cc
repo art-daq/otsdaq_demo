@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
 	ConfigurationManager* theConfigurationManager_ = new ConfigurationManager();
 
-	std::string XDAQContextConfigurationName_ = "XDAQContextTable";
+	std::string XDAQContextTableName_ = "XDAQContextTable";
 	std::string supervisorContextUID_         = "mainContext";
 	std::string supervisorApplicationUID_     = "FESupervisor";
 	std::string interfaceUID_                 = "ExampleInterface0";
@@ -29,13 +29,13 @@ int main(int argc, char** argv)
 	    "/" + supervisorContextUID_ + "/LinkToApplicationConfiguration/" +
 	    supervisorApplicationUID_ + "/LinkToSupervisorConfiguration";
 	const ConfigurationTree theXDAQContextConfigTree_ =
-	    theConfigurationManager_->getNode(XDAQContextConfigurationName_);
+	    theConfigurationManager_->getNode(XDAQContextTableName_);
 
 	std::string                           configurationGroupName = "defaultConfig";
 	std::pair<std::string, TableGroupKey> theGroup(configurationGroupName,
 	                                               TableGroupKey(configurationKeyValue_));
 
-	theConfigurationManager_->loadConfigurationGroup(
+	theConfigurationManager_->loadTableGroup(
 	    theGroup.first, theGroup.second, true);
 
 	FEOtsUDPTemplateInterface* theInterface_ = new FEOtsUDPTemplateInterface(
