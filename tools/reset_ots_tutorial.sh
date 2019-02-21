@@ -49,13 +49,13 @@ echo
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting parameters..."
 echo
 
-TUTORIALS_STRING="first_demo nim_plus iterator"
+TUTORIALS_STRING="first_demo artdaq nim_plus iterator"
 VERSIONS_STRING="v2_1 v2_2 v2_3"
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
 elif [[ "$1"  == "--list" ]]; then
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Listing recommend parameter values..."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t --list found. Listing recommended parameter values..."
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tables=${TUTORIALS_STRING}"
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions=${VERSIONS_STRING}"
 	exit
