@@ -49,10 +49,16 @@ echo
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting parameters..."
 echo
 
-
+TUTORIALS_STRING="first_demo nim_plus iterator"
+VERSIONS_STRING="v2_1 v2_2 v2_3"
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
+elif [[ "$1"  == "--list" && "x$2" != "x" ]]; then
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Listing recommend parameter values..."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tables=${TUTORIALS_STRING}"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions=${VERSIONS_STRING}"
+	exit
 elif [[ "x$1" != "x" ]]; then
 
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Illegal parameters.. See above for usage."
@@ -195,7 +201,7 @@ if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
 	if [[ $? -eq 1 ]]; then #no
 	
 		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" --default "first_demo")
-		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" "v2_2" --default "v2_3")
+		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" "v2_3" --default "v2_3")
 		
 	fi
 	
