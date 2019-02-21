@@ -1,10 +1,10 @@
 #include <fstream>
 #include <iostream>
 
-#include "otsdaq-core/TableCore/TableGroupKey.h"
 #include "otsdaq-components/FEInterfaces/FEOtsUDPTemplateInterface.h"
 #include "otsdaq-core/ConfigurationInterface/ConfigurationInterface.h"
 #include "otsdaq-core/ConfigurationInterface/ConfigurationManager.h"
+#include "otsdaq-core/TableCore/TableGroupKey.h"
 /*
 
 #include "otsdaq-components/FEInterfaces/FEWOtsUDPFSSRInterface.h"
@@ -21,10 +21,10 @@ int main(int argc, char** argv)
 
 	ConfigurationManager* theConfigurationManager_ = new ConfigurationManager();
 
-	std::string XDAQContextTableName_ = "XDAQContextTable";
-	std::string supervisorContextUID_         = "mainContext";
-	std::string supervisorApplicationUID_     = "FESupervisor";
-	std::string interfaceUID_                 = "ExampleInterface0";
+	std::string XDAQContextTableName_     = "XDAQContextTable";
+	std::string supervisorContextUID_     = "mainContext";
+	std::string supervisorApplicationUID_ = "FESupervisor";
+	std::string interfaceUID_             = "ExampleInterface0";
 	std::string supervisorConfigurationPath_ =
 	    "/" + supervisorContextUID_ + "/LinkToApplicationConfiguration/" +
 	    supervisorApplicationUID_ + "/LinkToSupervisorConfiguration";
@@ -35,8 +35,7 @@ int main(int argc, char** argv)
 	std::pair<std::string, TableGroupKey> theGroup(configurationGroupName,
 	                                               TableGroupKey(configurationKeyValue_));
 
-	theConfigurationManager_->loadTableGroup(
-	    theGroup.first, theGroup.second, true);
+	theConfigurationManager_->loadTableGroup(theGroup.first, theGroup.second, true);
 
 	FEOtsUDPTemplateInterface* theInterface_ = new FEOtsUDPTemplateInterface(
 	    interfaceUID_,
