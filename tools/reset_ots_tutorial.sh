@@ -84,7 +84,7 @@ unalias kdialog >/dev/null 2>&1
 KDIALOG_TEST="$(which kdialog 2>&1)"
 #echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
 		
-if [[ "$KDIALOG_TEST" == *"no kdialog"* ]]; then #no
+if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	#instead of e.g. /usr/bin/kdialog
 	# only works if the script was sourced!
 
