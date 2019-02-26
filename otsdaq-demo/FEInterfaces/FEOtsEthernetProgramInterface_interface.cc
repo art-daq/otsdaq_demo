@@ -87,7 +87,7 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(
 	auto mapOfFEMacroIt = mapOfFEMacroFunctions_.find("getListOfProgramFiles");
 	if(mapOfFEMacroIt != mapOfFEMacroFunctions_.end())
 	{
-		(this->*(mapOfFEMacroIt->second.macroFunction_))(argsIn, argsOut);
+		(this->*(mapOfFEMacroIt->second.macroFunction_))(mapOfFEMacroIt->second, argsIn, argsOut);
 		__COUT__ << "Made it " << std::endl;
 		for(auto& arg : argsOut)
 			__COUT__ << arg.first << ": " << arg.second << std::endl;
@@ -253,8 +253,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 //		listOfProgramFiles = comma-separated list of programmable file names
 //
 // Note: path is from environment variable OTS_FIRMWARE_PROGRAM_FILE_PATH
-void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroConstArgs_t argsIn,
-                                                          frontEndMacroArgs_t argsOut)
+void FEOtsEthernetProgramInterface::getListOfProgramFiles(__ARGS__)
 {
 	std::string           dirpath = PROGRAM_FILE_PATH;
 	DIR*                  pDIR;
@@ -325,8 +324,7 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(frontEndMacroConstArgs
 //		programFile = filename of programmable file
 //	1 args out
 //		listOfProgramFiles = comma-separated list of programmable file names
-void FEOtsEthernetProgramInterface::loadProgramFile(frontEndMacroConstArgs_t argsIn,
-                                                    frontEndMacroArgs_t      argsOut)
+void FEOtsEthernetProgramInterface::loadProgramFile(__ARGS__)
 {
 	// Steps:
 	//	- open file

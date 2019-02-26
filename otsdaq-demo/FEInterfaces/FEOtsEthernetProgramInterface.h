@@ -33,9 +33,8 @@ class FEOtsEthernetProgramInterface
 	// void stop             				(void) override;
 	// bool running   		  				(void) override;
 
-	void getListOfProgramFiles(frontEndMacroConstArgs_t argsIn,
-	                           frontEndMacroArgs_t      argsOut);
-	void loadProgramFile(frontEndMacroConstArgs_t argsIn, frontEndMacroArgs_t argsOut);
+	void getListOfProgramFiles(__ARGS__);
+	void loadProgramFile(__ARGS__);
 
 	///////////////////////
 	// inherits these from Template interface
