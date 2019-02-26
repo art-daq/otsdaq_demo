@@ -12,15 +12,15 @@
 #		(underscores might more universal for web downloads than periods)
 #
 #  example run:
-#	./reset_ots_tutorial.sh --tutorial first_demo --version v2_3
+#	./reset_ots_tutorial.sh --tutorial first_demo --version v2_4
 #
 #	NOTE: if kdialog is not installed this script must be sourced to bypass kdialog prompts
-#		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_3
+#		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_4
 #
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_3'
+VERSION='v2_4'
 
 echo
 echo "  |"
@@ -49,12 +49,12 @@ echo
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting parameters..."
 echo
 
-TUTORIALS_STRING="first_demo artdaq nim_plus iterator"
-VERSIONS_STRING="v2_1 v2_2 v2_3"
+TUTORIALS_STRING="first_demo artdaq nim_plus iterator mu2e_roc"
+VERSIONS_STRING="v2_1 v2_2 v2_3 v2_4"
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
-elif [[ "$1"  == "--list" ]]; then
+elif [[ "$1"  == "--list" || "$1"  == "--help" ]]; then
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t --list found. Listing recommended parameter values..."
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tables=${TUTORIALS_STRING}"
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions=${VERSIONS_STRING}"
