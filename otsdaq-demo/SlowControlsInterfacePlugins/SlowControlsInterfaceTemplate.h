@@ -1,20 +1,21 @@
-#ifndef _ots_ControlsOtsInterface_h
-#define _ots_ControlsOtsInterface_h
+#ifndef _ots_SlowControlsInterfaceTemplate_h
+#define _ots_SlowControlsInterfaceTemplate_h
 
 #include <array>
 #include <string>
-#include "otsdaq-core/ControlsCore/ControlsVInterface.h"
+
+#include "otsdaq-core/SlowControlsCore/SlowControlsVInterface.h"
 #include "otsdaq-core/NetworkUtilities/ReceiverSocket.h"  // Make sure this is always first because <sys/types.h> (defined in Socket.h) must be first
 using namespace ots;
 //{
 
-class ControlsOtsInterface : public ControlsVInterface
+class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 {
   public:
-	ControlsOtsInterface(const std::string&       interfaceUID,
+	SlowControlsInterfaceTemplate(const std::string&       interfaceUID,
 	                     const ConfigurationTree& theXDAQContextConfigTree,
 	                     const std::string&       controlsConfigurationPath);
-	~ControlsOtsInterface();
+	~SlowControlsInterfaceTemplate();
 
 	void initialize();
 	void destroy();

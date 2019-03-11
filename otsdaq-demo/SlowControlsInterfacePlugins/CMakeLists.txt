@@ -26,10 +26,10 @@
 #	 $ENV{XERCES_C_LIB}/libxerces-c.so
 #  )
 
-simple_plugin(ControlsOtsInterface "controls"	
-    	ControlsCore
-	${CETLIB}
-	Configurable
+simple_plugin(SlowControlsInterfaceTemplate "controls"	
+    	SlowControlsCore
+		${CETLIB}
+		Configurable
         ConfigurationInterface
   )
 
