@@ -37,8 +37,9 @@ simple_plugin(FEOtsEthernetProgramInterface "interface"
 #  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
 #  ${CETLIB}
 #  ${CETLIB_EXCEPT}
-#	${MF_MESSAGELOGGER}
+	${MF_MESSAGELOGGER}
 	${XDAQ_XERCES-C}
+	${Boost_SYSTEM_LIBRARY}
 	pthread
   )
   

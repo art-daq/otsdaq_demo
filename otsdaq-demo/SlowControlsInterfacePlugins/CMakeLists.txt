@@ -31,6 +31,7 @@ simple_plugin(SlowControlsInterfaceTemplate "controls"
 		${CETLIB}
 		Configurable
         ConfigurationInterface
+		TableCore
   )
 
 install_headers()

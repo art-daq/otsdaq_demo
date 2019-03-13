@@ -25,6 +25,8 @@ cet_make_exec(DemoInterfaceTestMain
 		$ENV{XDAQ_LIB}/libasyncresolv
 		$ENV{XDAQ_LIB}/libb2innub.so
 		${XDAQ_XERCES-C}
+		${MF_MESSAGELOGGER}
+		${Boost_SYSTEM_LIBRARY}
 		/lib64/libuuid.so.1
 		pthread
 )
