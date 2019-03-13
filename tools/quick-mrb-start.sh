@@ -283,6 +283,7 @@ cd $Base
 	#unalias because the original VM aliased for users
 	unalias kx >/dev/null 2>&1
 	unalias StartOTS.sh >/dev/null 2>&1
+	unalias ots >/dev/null 2>&1
 	
 	PRODUCTS_SAVE=\${PRODUCTS:+\${PRODUCTS}}${PRODUCTS_SET:+\:${PRODUCTS_SET}}
 	source $Base/products/setup
@@ -319,12 +320,12 @@ cd $Base
 		echo
 		
         alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
-        alias kx='StartOTS.sh -k'
+        alias kx='ots -k'
        
         echo
-        echo -e "setup [${LINENO}]  \t Now use 'StartOTS.sh --wiz' to configure otsdaq"
-        echo -e "setup [${LINENO}]  \t  	Then use 'StartOTS.sh' to start otsdaq"
-        echo -e "setup [${LINENO}]  \t  	Or use 'StartOTS.sh --help' for more options"
+        echo -e "setup [${LINENO}]  \t Now use 'ots --wiz' to configure otsdaq"
+        echo -e "setup [${LINENO}]  \t  	Then use 'ots' to start otsdaq"
+        echo -e "setup [${LINENO}]  \t  	Or use 'ots --help' for more options"
         echo
         echo -e "setup [${LINENO}]  \t     use 'kx' to kill otsdaq processes"
 		echo
@@ -359,7 +360,7 @@ export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabase
 #... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
 #download get_tutorial_database script
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate
 
 #change permissions so the script is executable
 chmod 755 get_tutorial_database.sh
