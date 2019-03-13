@@ -12,15 +12,15 @@
 #		(underscores might more universal for web downloads than periods)
 #
 #  example run:
-#	./reset_ots_tutorial.sh --tutorial first_demo --version v2_3
+#	./reset_ots_tutorial.sh --tutorial first_demo --version v2_4
 #
 #	NOTE: if kdialog is not installed this script must be sourced to bypass kdialog prompts
-#		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_3
+#		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_4
 #
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_3'
+VERSION='v2_4'
 
 echo
 echo "  |"
@@ -49,10 +49,16 @@ echo
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting parameters..."
 echo
 
-
+TUTORIALS_STRING="first_demo artdaq nim_plus iterator mu2e_roc"
+VERSIONS_STRING="v2_1 v2_2 v2_3 v2_4"
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
+elif [[ "$1"  == "--list" || "$1"  == "--help" ]]; then
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t --list found. Listing recommended parameter values..."
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tables=${TUTORIALS_STRING}"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions=${VERSIONS_STRING}"
+	exit
 elif [[ "x$1" != "x" ]]; then
 
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Illegal parameters.. See above for usage."
@@ -78,7 +84,7 @@ unalias kdialog >/dev/null 2>&1
 KDIALOG_TEST="$(which kdialog 2>&1)"
 #echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
 		
-if [[ "$KDIALOG_TEST" == *"no kdialog"* ]]; then #no
+if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	#instead of e.g. /usr/bin/kdialog
 	# only works if the script was sourced!
 
@@ -195,7 +201,7 @@ if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
 	if [[ $? -eq 1 ]]; then #no
 	
 		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" --default "first_demo")
-		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" "v2_2" --default "v2_3")
+		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" "v2_3" --default "v2_3")
 		
 	fi
 	
