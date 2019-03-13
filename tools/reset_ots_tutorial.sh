@@ -104,12 +104,12 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	killall -9 ots_udp_hw_emulator
 	
 	#download and run get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 	chmod 755 get_tutorial_data.sh
 	./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
 		
 	#download and run get_tutorial_database script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh	
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate	
 	chmod 755 get_tutorial_database.sh
 	./get_tutorial_database.sh --tutorial ${TUTORIAL} --version ${VERSION}
 	
@@ -240,7 +240,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 	
 	#download get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 	qdbus $dbusRef Set "" value 2
 	
 	#change permissions so the script is executable
@@ -262,7 +262,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 	
 	#download get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate
 	qdbus $dbusRef Set "" value 4
 	
 	#change permissions so the script is executable
@@ -300,7 +300,7 @@ if [[ "$TUTORIAL"  == "nim_plus" ]]; then
 
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Starting the ${TUTORIAL} tutorial extra steps..."
 	mv install_ots_repo.sh install_ots_repo.sh.bk
-	wget https://cdcvs.fnal.gov/redmine/projects/prepmodernization/repository/revisions/develop/raw/tools/install_ots_repo.sh -P ./
+	wget https://cdcvs.fnal.gov/redmine/projects/prepmodernization/repository/revisions/develop/raw/tools/install_ots_repo.sh -P ./ --no-check-certificate
 	source install_ots_repo.sh #install prep modernization repo and table definitions
 	rm -rf install_ots_repo.sh
 	mv install_ots_repo.sh.bk install_ots_repo.sh
