@@ -113,7 +113,7 @@ function detectAndPull() {
 	local packageInstalled=`ups list -aK+ $packageName $packageVersion ${packageUPSString-}|grep -c "$packageName"`
 	if [ $packageInstalled -eq 0 ]; then
 		local packagePath="$packageName/$packageVersion/$packageName-$packageDotVersion-${packageOs}${packageQualifiers-}.tar.bz2"
-		wget http://scisoft.fnal.gov/scisoft/packages/$packagePath >/dev/null 2>&1
+		wget http://scisoft.fnal.gov/scisoft/packages/$packagePath --no-check-certificate >/dev/null 2>&1 
 		local packageFile=$( echo $packagePath | awk 'BEGIN { FS="/" } { print $NF }' )
 
 		if [[ ! -e $packageFile ]]; then
@@ -194,14 +194,14 @@ if [ -z "${tag:-}" ]; then
   notag=1;
 fi
 if [[ -e product_deps ]]; then mv product_deps product_deps.save; fi
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps --no-check-certificate
 demo_version=`grep "parent otsdaq_demo" $Base/download/product_deps|awk '{print $3}'`
 if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
   tag=$demo_version
 
   # 06-Mar-2017, KAB: re-fetch the product_deps file based on the tag
   mv product_deps product_deps.orig
-  wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps
+  wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps --no-check-certificate
   demo_version=`grep "parent otsdaq_demo" $Base/download/product_deps|awk '{print $3}'`
   tag=$demo_version
 fi
@@ -226,7 +226,7 @@ else
 	build_type="prof"
 fi
 
-wget http://scisoft.fnal.gov/scisoft/bundles/tools/pullProducts
+wget http://scisoft.fnal.gov/scisoft/bundles/tools/pullProducts --no-check-certificate
 chmod +x pullProducts
 ./pullProducts $Base/products ${os} otsdaq-${otsdaq_version} ${squalifier}-${equalifier} ${build_type}
     if [ $? -ne 0 ]; then
@@ -346,7 +346,7 @@ export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
 #... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
 #download get_tutorial_data script
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 
 #change permissions so the script is executable
 chmod 755 get_tutorial_data.sh
@@ -376,7 +376,7 @@ echo -e "UpdateOTS.sh [${LINENO}]  \t updating tutorial launch scripts..."
 rm get_tutorial_data.sh &>/dev/null 2>&1 #hide output
 rm get_tutorial_database.sh &>/dev/null 2>&1 #hide output
 rm reset_ots_tutorial.sh &>/dev/null 2>&1 #hide output
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh	
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate	
 chmod 755 reset_ots_tutorial.sh
 
 
