@@ -75,7 +75,7 @@ if [ "$OTS_VERSION_STRING" == "starting_version_for_v2_of_VM" ]; then
 	echo 
 	echo "wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip"
 	echo
-	wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip
+	wget otsdaq.fnal.gov/downloads/tutorial_Data_v2.zip --no-check-certificate
 	echo
 	echo "Unzipping tutorial user data.."
 	echo 

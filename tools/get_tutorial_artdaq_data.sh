@@ -64,7 +64,7 @@ echo "Downloading tutorial user data.."
 echo 
 echo "wget otsdaq.fnal.gov/downloads/tutorial_artdaq_Data.zip"
 echo
-wget otsdaq.fnal.gov/downloads/tutorial_artdaq_Data.zip
+wget otsdaq.fnal.gov/downloads/tutorial_artdaq_Data.zip  --no-check-certificate
 echo
 echo "Unzipping tutorial user data.."
 echo 

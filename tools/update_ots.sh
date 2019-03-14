@@ -30,7 +30,7 @@ echo
 echo "*****************************************************"
 echo "Downloading latest version of update script.."
 echo
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/update_ots_donotrun.sh -O update_ots_donotrun.sh
+wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/update_ots_donotrun.sh -O update_ots_donotrun.sh --no-check-certificate
 echo
 echo "running the script..."
 echo
