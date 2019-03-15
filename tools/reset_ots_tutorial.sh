@@ -49,15 +49,15 @@ echo
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting parameters..."
 echo
 
-TUTORIALS_STRING="first_demo artdaq nim_plus iterator mu2e_roc"
-VERSIONS_STRING="v2_1 v2_2 v2_3 v2_4"
+TUTORIALS_STRING="first_demo artdaq nim_plus iterator mu2e_roc mu2e_dcs"
+VERSIONS_STRING="v2_1 v2_2 v2_3"
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
 elif [[ "$1"  == "--list" || "$1"  == "--help" ]]; then
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t --list found. Listing recommended parameter values..."
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tables=${TUTORIALS_STRING}"
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions=${VERSIONS_STRING}"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tables= ${TUTORIALS_STRING}"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions= ${VERSIONS_STRING}"
 	exit
 elif [[ "x$1" != "x" ]]; then
 
@@ -200,7 +200,7 @@ if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
 	kdialog --yesno "Do you want to proceed with the default tutorial, '${TUTORIAL} ${VERSION}?'\n\n(if not, you will be prompted for tutorial name and version)"
 	if [[ $? -eq 1 ]]; then #no
 	
-		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" --default "first_demo")
+		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" "artdaq" --default "first_demo")
 		VERSION=$(kdialog --combobox "Please enter the desired tutorial version:" "v2_1" "v2_2" "v2_3" --default "v2_3")
 		
 	fi
