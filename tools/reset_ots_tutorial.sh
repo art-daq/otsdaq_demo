@@ -56,8 +56,8 @@ if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
 elif [[ "$1"  == "--list" || "$1"  == "--help" ]]; then
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t --list found. Listing recommended parameter values..."
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tables= ${TUTORIALS_STRING}"
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions= ${VERSIONS_STRING}"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Tutorials = ${TUTORIALS_STRING}"
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t Versions  = ${VERSIONS_STRING}"
 	exit
 elif [[ "x$1" != "x" ]]; then
 
