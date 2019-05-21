@@ -11,7 +11,7 @@ using namespace ots;
 #undef __MF_SUBJECT__
 #define __MF_SUBJECT__ "FE-FEOtsEthernetProgramInterface"
 
-#define PROGRAM_FILE_PATH std::string(getenv("OTS_FIRMWARE_PROGRAM_FILE_PATH")) + "/"
+#define PROGRAM_FILE_PATH std::string(__ENV__("OTS_FIRMWARE_PROGRAM_FILE_PATH")) + "/"
 
 /////////////////////////////////=======================================
 // ADDRESS SPACE
