@@ -110,7 +110,7 @@ int main(int argc, char** argv)
 	         << std::endl;
 
 	std::string    streamToIP;
-	unsigned short streamToPort;
+	uint32_t streamToPort;
 
 	int                     sockfd;
 	int                     sendSockfd = 0;

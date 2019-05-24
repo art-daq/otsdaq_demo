@@ -2,7 +2,7 @@
 
 //#include "art/Utilities/Exception.h"
 #include "artdaq-core/Utilities/SimpleLookupPolicy.h"
-#include "artdaq/Application/GeneratorMacros.hh"
+#include "artdaq/Generators/GeneratorMacros.hh"
 #include "cetlib/exception.h"
 #include "fhiclcpp/ParameterSet.h"
 #include "otsdaq-demo/Overlays/DataGenFragmentWriter.hh"

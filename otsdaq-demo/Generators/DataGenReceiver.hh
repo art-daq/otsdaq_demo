@@ -5,7 +5,7 @@
 
 // -Append a "_" to every private member function and variable
 
-#include "artdaq/Application/CommandableFragmentGenerator.hh"
+#include "artdaq/Generators/CommandableFragmentGenerator.hh"
 
 #include <chrono>
 
