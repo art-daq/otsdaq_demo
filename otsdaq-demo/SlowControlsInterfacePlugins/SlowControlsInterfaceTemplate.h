@@ -12,7 +12,9 @@ using namespace ots;
 class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 {
   public:
-	SlowControlsInterfaceTemplate(const std::string&       interfaceUID,
+	SlowControlsInterfaceTemplate(
+			     const std::string&       pluginType,	
+			     const std::string&       interfaceUID,
 	                     const ConfigurationTree& theXDAQContextConfigTree,
 	                     const std::string&       controlsConfigurationPath);
 	~SlowControlsInterfaceTemplate();
