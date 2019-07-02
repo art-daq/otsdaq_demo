@@ -36,7 +36,8 @@ void SlowControlsInterfaceTemplate::subscribeJSON(std::string List) {}
 
 void SlowControlsInterfaceTemplate::unsubscribe(std::string Name) {}
 
-std::array<std::string, 4> SlowControlsInterfaceTemplate::getCurrentValue(std::string Name)
+std::array<std::string, 4> SlowControlsInterfaceTemplate::getCurrentValue(
+    std::string Name)
 {
 	return {"a", "b", "c", "d"};
 }

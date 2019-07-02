@@ -87,7 +87,8 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(
 	auto mapOfFEMacroIt = mapOfFEMacroFunctions_.find("getListOfProgramFiles");
 	if(mapOfFEMacroIt != mapOfFEMacroFunctions_.end())
 	{
-		(this->*(mapOfFEMacroIt->second.macroFunction_))(mapOfFEMacroIt->second, argsIn, argsOut);
+		(this->*(mapOfFEMacroIt->second.macroFunction_))(
+		    mapOfFEMacroIt->second, argsIn, argsOut);
 		__COUT__ << "Made it " << std::endl;
 		for(auto& arg : argsOut)
 			__COUT__ << arg.first << ": " << arg.second << std::endl;

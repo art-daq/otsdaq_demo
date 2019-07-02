@@ -109,8 +109,8 @@ int main(int argc, char** argv)
 	         << "\n\nUsing emulatorPort=" << emulatorPort << "\n"
 	         << std::endl;
 
-	std::string    streamToIP;
-	uint32_t streamToPort;
+	std::string streamToIP;
+	uint32_t    streamToPort;
 
 	int                     sockfd;
 	int                     sendSockfd = 0;
