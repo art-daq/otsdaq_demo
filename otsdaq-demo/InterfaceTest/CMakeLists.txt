@@ -24,7 +24,6 @@ cet_make_exec(DemoInterfaceTestMain
 		$ENV{XDAQ_LIB}/libmimetic.so
 		$ENV{XDAQ_LIB}/libasyncresolv
 		$ENV{XDAQ_LIB}/libb2innub.so
-        $ENV{ARTDAQ_DATABASE_LIB}/libbsoncxx.so
 		${XDAQ_XERCES-C}
 		${MF_MESSAGELOGGER}
 		${Boost_SYSTEM_LIBRARY}
