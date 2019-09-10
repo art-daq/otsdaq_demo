@@ -12,7 +12,7 @@
 #include "artdaq-core/Data/Fragments.hh"
 #include "fhiclcpp/fwd.h"
 //#include "artdaq-ots/Generators/UDPReceiver.hh"
-#include "otsdaq-core/DataManager/DataConsumer.h"
+#include "otsdaq/DataManager/DataConsumer.h"
 
 #include <arpa/inet.h>
 #include <netinet/in.h>

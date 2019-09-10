@@ -4,8 +4,8 @@
 #include <array>
 #include <string>
 
-#include "otsdaq-core/NetworkUtilities/ReceiverSocket.h"  // Make sure this is always first because <sys/types.h> (defined in Socket.h) must be first
-#include "otsdaq-core/SlowControlsCore/SlowControlsVInterface.h"
+#include "otsdaq/NetworkUtilities/ReceiverSocket.h"  // Make sure this is always first because <sys/types.h> (defined in Socket.h) must be first
+#include "otsdaq/SlowControlsCore/SlowControlsVInterface.h"
 using namespace ots;
 //{
 
