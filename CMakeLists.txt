@@ -66,7 +66,7 @@ find_ups_boost( v1_50_0 filesystem
 
 
 # macros for art_dictionary and simple_plugin
-include(ArtDictionary)
+#include(ArtDictionary)
 include(ArtMake)
 include(BuildPlugins)
 include(CetTest)
