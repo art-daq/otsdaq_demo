@@ -10,7 +10,7 @@
 #include "otsdaq-demo/Overlays/DataGenFragment.hh"
 #include "otsdaq-demo/Overlays/FragmentType.hh"
 
-#include "cetlib/exception.h"
+#include "cetlib_except/exception.h"
 
 #include "TAxis.h"
 #include "TCanvas.h"
