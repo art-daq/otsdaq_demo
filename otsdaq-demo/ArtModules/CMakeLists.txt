@@ -12,7 +12,7 @@ simple_plugin(WFViewer "module"
   rt
 )
 
-simple_plugin(OtsInput "source"
+simple_plugin(OtsDemoInput "source"
   otsdaq-demo_Overlays
   artdaq-core_Core
   artdaq-core_Utilities

@@ -30,7 +30,7 @@ namespace ots
  * \brief DemoInput is an art::Source using the detail::RawEventQueueReader class
  */
 typedef art::Source<artdaq::detail::SharedMemoryReader<ots::makeFragmentTypeMap>>
-    OtsInput;
+    OtsDemoInput;
 }  // namespace demo
 
-DEFINE_ART_INPUT_SOURCE(ots::OtsInput)
+DEFINE_ART_INPUT_SOURCE(ots::OtsDemoInput)
