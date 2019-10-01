@@ -32,6 +32,7 @@ simple_plugin(SlowControlsInterfaceTemplate "controls"
 		Configurable
         ConfigurationInterface
 		TableCore
+		${MF_MESSAGELOGGER}
   )
 
 install_headers()
