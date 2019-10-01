@@ -1,9 +1,10 @@
-#include "otsdaq-core/Macros/SlowControlsPluginMacros.h"
+#include "otsdaq/Macros/SlowControlsPluginMacros.h"
 #include "otsdaq-demo/SlowControlsInterfacePlugins/SlowControlsInterfaceTemplate.h"
 
 using namespace ots;
 
 SlowControlsInterfaceTemplate::SlowControlsInterfaceTemplate(
+    const std::string&       pluginType,
     const std::string&       interfaceUID,
     const ConfigurationTree& theXDAQContextConfigTree,
     const std::string&       controlsConfigurationPath)
@@ -13,7 +14,7 @@ SlowControlsInterfaceTemplate::SlowControlsInterfaceTemplate(
     // int>())
     // ,
     : SlowControlsVInterface(
-          interfaceUID, theXDAQContextConfigTree, controlsConfigurationPath)
+          pluginType, interfaceUID, theXDAQContextConfigTree, controlsConfigurationPath)
 {
 }
 
@@ -35,7 +36,8 @@ void SlowControlsInterfaceTemplate::subscribeJSON(std::string List) {}
 
 void SlowControlsInterfaceTemplate::unsubscribe(std::string Name) {}
 
-std::array<std::string, 4> SlowControlsInterfaceTemplate::getCurrentValue(std::string Name)
+std::array<std::string, 4> SlowControlsInterfaceTemplate::getCurrentValue(
+    std::string Name)
 {
 	return {"a", "b", "c", "d"};
 }

@@ -1,32 +1,6 @@
-art_make( BASENAME_ONLY
- LIBRARY_NAME otsdaq-demo_ArtModules
- SUBDIRS detail
-  NO_PLUGINS
-  DICT_DICTIONARIES
-  ${ART_PERSISTENCY_PROVENANCE}
-  ${CANVAS_PERSISTENCY_PROVENANCE}
- LIB_LIBRARIES 
- otsdaq-demo_Overlays 
- artdaq_ArtModules
-  art_Framework_Core
-  art_Framework_IO_Sources
-  art_Framework_Principal
-  canvas_Persistency_Common
-  art_Persistency_Provenance
-  canvas_Persistency_Provenance
- canvas_Utilities
-  MF_MessageLogger
-  ${ROOT_CINTEX}
-  ${ROOT_RIO}
-  ${ROOT_CORE}
-  ${ROOT_NET}
-  ${ROOT_REFLEX}
-  cetlib
-)
-
-
 simple_plugin(WFViewer "module" 
 	otsdaq-demo_Overlays 
+  ${ROOT_CORE}
 	${ROOT_GPAD}
 	${ROOT_HIST} 
 	${ROOT_GUI} 
@@ -34,10 +8,17 @@ simple_plugin(WFViewer "module"
 	MessageFacility
 	${MF_MESSAGELOGGER}
 	${MF_UTILITIES}
+  artdaq-core_Utilities
+  rt
 )
 
-simple_plugin(OtsInput "source"
-  otsdaq-demo_ArtModules
+simple_plugin(OtsDemoInput "source"
+  otsdaq-demo_Overlays
+  artdaq-core_Core
+  artdaq-core_Utilities
+  rt
+  artdaq_DAQdata
+  artdaq-utilities_Plugins
   artdaq_ArtModules
   art_Framework_Core
   art_Framework_IO_Sources
@@ -45,5 +26,6 @@ simple_plugin(OtsInput "source"
   art_Persistency_Provenance
   art_Utilities
   MF_MessageLogger
+  ${CETLIB_EXCEPT}
 )
 

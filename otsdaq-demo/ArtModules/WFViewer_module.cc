@@ -10,7 +10,7 @@
 #include "otsdaq-demo/Overlays/DataGenFragment.hh"
 #include "otsdaq-demo/Overlays/FragmentType.hh"
 
-#include "cetlib/exception.h"
+#include "cetlib_except/exception.h"
 
 #include "TAxis.h"
 #include "TCanvas.h"
@@ -20,8 +20,8 @@
 #include "TRootCanvas.h"
 #include "TStyle.h"
 
-#include "otsdaq-core/Macros/CoutMacros.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq/Macros/CoutMacros.h"
+#include "otsdaq/MessageFacility/MessageFacility.h"
 
 #include <algorithm>
 #include <functional>

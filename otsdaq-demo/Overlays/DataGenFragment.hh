@@ -2,7 +2,7 @@
 #define artdaq_ots_Overlays_DataGenFragment_hh
 
 #include "artdaq-core/Data/Fragment.hh"
-#include "cetlib/exception.h"
+#include "cetlib_except/exception.h"
 
 #include <ostream>
 #include <vector>

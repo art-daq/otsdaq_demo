@@ -1,9 +1,9 @@
 #include <dirent.h> /*DIR and dirent*/
 #include <iostream>
 #include <set>
-#include "otsdaq-core/Macros/CoutMacros.h"
-#include "otsdaq-core/Macros/InterfacePluginMacros.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq/Macros/CoutMacros.h"
+#include "otsdaq/Macros/InterfacePluginMacros.h"
+#include "otsdaq/MessageFacility/MessageFacility.h"
 #include "otsdaq-demo/FEInterfaces/FEOtsEthernetProgramInterface.h"
 
 using namespace ots;
@@ -87,7 +87,8 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(
 	auto mapOfFEMacroIt = mapOfFEMacroFunctions_.find("getListOfProgramFiles");
 	if(mapOfFEMacroIt != mapOfFEMacroFunctions_.end())
 	{
-		(this->*(mapOfFEMacroIt->second.macroFunction_))(mapOfFEMacroIt->second, argsIn, argsOut);
+		(this->*(mapOfFEMacroIt->second.macroFunction_))(
+		    mapOfFEMacroIt->second, argsIn, argsOut);
 		__COUT__ << "Made it " << std::endl;
 		for(auto& arg : argsOut)
 			__COUT__ << arg.first << ": " << arg.second << std::endl;
