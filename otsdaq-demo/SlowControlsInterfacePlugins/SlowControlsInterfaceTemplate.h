@@ -6,9 +6,10 @@
 
 #include "otsdaq/NetworkUtilities/ReceiverSocket.h"  // Make sure this is always first because <sys/types.h> (defined in Socket.h) must be first
 #include "otsdaq/SlowControlsCore/SlowControlsVInterface.h"
-using namespace ots;
-//{
 
+namespace ots
+{
+// clang-format off
 class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 {
   public:
@@ -21,14 +22,15 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 	void initialize();
 	void destroy();
 
-	std::string                getList(std::string format);
-	void                       subscribe(std::string Name);
-	void                       subscribeJSON(std::string List);
-	void                       unsubscribe(std::string Name);
-	std::array<std::string, 4> getCurrentValue(std::string Name);
-	std::array<std::string, 9> getSettings(std::string Name);
+	std::string                					getList(std::string format);
+	void                       					subscribe(std::string Name);
+	void                       					subscribeJSON(std::string List);
+	void                       					unsubscribe(std::string Name);
+	std::array<std::string, 4> 					getCurrentValue(std::string Name);
+	std::array<std::string, 9>					getSettings(std::string Name);
+	std::array<std::array<std::string, 5>, 10> 	getPVHistory(std::string Name);
 };
-
-//}
+// clang-format on
+}
 
 #endif
