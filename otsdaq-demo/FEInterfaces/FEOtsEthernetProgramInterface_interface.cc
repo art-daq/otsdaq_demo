@@ -1,10 +1,10 @@
 #include <dirent.h> /*DIR and dirent*/
 #include <iostream>
 #include <set>
+#include "otsdaq-demo/FEInterfaces/FEOtsEthernetProgramInterface.h"
 #include "otsdaq/Macros/CoutMacros.h"
 #include "otsdaq/Macros/InterfacePluginMacros.h"
 #include "otsdaq/MessageFacility/MessageFacility.h"
-#include "otsdaq-demo/FEInterfaces/FEOtsEthernetProgramInterface.h"
 
 using namespace ots;
 
