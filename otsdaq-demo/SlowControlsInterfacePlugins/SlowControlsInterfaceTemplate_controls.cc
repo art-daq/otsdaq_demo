@@ -47,19 +47,19 @@ std::array<std::string, 9> SlowControlsInterfaceTemplate::getSettings(std::strin
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
 }
 
-std::array<std::array<std::string, 5>, 10> SlowControlsInterfaceTemplate::getPVHistory(
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getPVHistory(
     std::string Name)
 {
-	return {std::array<std::string, 5>({"a", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"b", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"c", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"d", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"e", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"f", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"g", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"h", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"i", "b", "c", "d", "e"}),
-	        std::array<std::string, 5>({"j", "b", "c", "d", "e"})};
+	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"b", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"c", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"d", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"e", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"f", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"g", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"h", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"i", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"j", "b", "c", "d", "e"})};
 }
 
 DEFINE_OTS_SLOW_CONTROLS(SlowControlsInterfaceTemplate)

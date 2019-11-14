@@ -28,7 +28,7 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 	void                       					unsubscribe(std::string Name);
 	std::array<std::string, 4> 					getCurrentValue(std::string Name);
 	std::array<std::string, 9>					getSettings(std::string Name);
-	std::array<std::array<std::string, 5>, 10> 	getPVHistory(std::string Name);
+	std::vector<std::vector<std::string>> 		getPVHistory(std::string Name);
 };
 // clang-format on
 }
