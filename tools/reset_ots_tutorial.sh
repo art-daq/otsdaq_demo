@@ -20,7 +20,7 @@
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_4'
+VERSION='v2_5'
 
 echo
 echo "  |"
@@ -35,11 +35,11 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t note: tutorial will default to '${TUTORIAL} ${VERSION}'"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t for example..."
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_4"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo --version v2_5"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t NOTE: This script uses kdialog for prompts. If kdialog is not installed this script must be sourced to bypass kdialog prompts"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_4"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_5"
 
 
 #return  >/dev/null 2>&1 #return is used if script is sourced
@@ -50,7 +50,7 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting para
 echo
 
 TUTORIALS_STRING="first_demo artdaq nim_plus iterator mu2e_roc mu2e_dcs"
-VERSIONS_STRING="v2_1 v2_2 v2_3 v2_4"
+VERSIONS_STRING="v2_1 v2_2 v2_3 v2_4 v2_5"
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
