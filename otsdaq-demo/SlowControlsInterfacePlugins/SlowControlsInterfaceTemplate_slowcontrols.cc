@@ -26,7 +26,7 @@ void SlowControlsInterfaceTemplate::destroy() {}
 
 std::vector<std::string /*Name*/> SlowControlsInterfaceTemplate::getChannelList()
 {
-	return {"a","b"};
+	return {"a", "b"};
 }
 
 std::string SlowControlsInterfaceTemplate::getList(std::string format)
@@ -77,6 +77,5 @@ bool SlowControlsInterfaceTemplate::running(void)
 	else
 		return true;
 }
-
 
 DEFINE_OTS_SLOW_CONTROLS(SlowControlsInterfaceTemplate)
