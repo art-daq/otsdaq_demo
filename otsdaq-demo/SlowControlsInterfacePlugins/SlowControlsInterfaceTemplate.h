@@ -4,11 +4,11 @@
 #include <array>
 #include <string>
 
-#include "otsdaq/NetworkUtilities/ReceiverSocket.h"  // Make sure this is always first because <sys/types.h> (defined in Socket.h) must be first
 #include "otsdaq/SlowControlsCore/SlowControlsVInterface.h"
-using namespace ots;
-//{
 
+namespace ots
+{
+// clang-format off
 class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 {
   public:
@@ -21,14 +21,19 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 	void initialize();
 	void destroy();
 
-	std::string                getList(std::string format);
-	void                       subscribe(std::string Name);
-	void                       subscribeJSON(std::string List);
-	void                       unsubscribe(std::string Name);
-	std::array<std::string, 4> getCurrentValue(std::string Name);
-	std::array<std::string, 9> getSettings(std::string Name);
-};
+    std::vector<std::string /*Name*/> 			getChannelList();
+	std::string                					getList(std::string format);
+	void                       					subscribe(std::string Name);
+	void                       					subscribeJSON(std::string List);
+	void                       					unsubscribe(std::string Name);
+	std::array<std::string, 4> 					getCurrentValue(std::string Name);
+	std::array<std::string, 9>					getSettings(std::string Name);
+	std::vector<std::vector<std::string>> 		getChannelHistory(std::string Name);
 
-//}
+	virtual bool 								running(void) override; //This is a workloop/thread, by default do nothing and end thread during running (Note: return true would repeat call)
+
+};
+// clang-format on
+}
 
 #endif

@@ -18,7 +18,7 @@
 #include_directories($ENV{EPICS_BASE}/include/compiler/gcc)
 #include_directories($ENV{EPICS_BASE}/include/lib/linux-x86_64)
 #include_directories($ENV{XERCES_C_INC})
-#simple_plugin(EpicsInterface "monitor"	
+#simple_plugin(EpicsInterface "slowcontrols"	
 #	 ${EPICS_CA}
 #	 ${EPICS_COM}
 #	 ${XDAQ_BASIC_LIB_LIST}	 
@@ -26,13 +26,12 @@
 #	 $ENV{XERCES_C_LIB}/libxerces-c.so
 #  )
 
-simple_plugin(SlowControlsInterfaceTemplate "controls"	
-    	SlowControlsCore
-		${CETLIB}
-		Configurable
-        ConfigurationInterface
-		TableCore
-		${MF_MESSAGELOGGER}
+simple_plugin(SlowControlsInterfaceTemplate "slowcontrols"	
+	SlowControlsCore   
+	Configurable
+	TableCore
+	ConfigurationInterface
+	${MF_MESSAGELOGGER}    	
   )
 
 install_headers()

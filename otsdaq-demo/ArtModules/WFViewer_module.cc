@@ -5,7 +5,7 @@
 #include "art/Framework/Principal/Run.h"
 #include "canvas/Utilities/InputTag.h"
 
-#include "artdaq-core/Data/Fragments.hh"
+#include "artdaq-core/Data/Fragment.hh"
 
 #include "otsdaq-demo/Overlays/DataGenFragment.hh"
 #include "otsdaq-demo/Overlays/FragmentType.hh"

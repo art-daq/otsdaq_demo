@@ -1,5 +1,5 @@
-#include "otsdaq/Macros/SlowControlsPluginMacros.h"
 #include "otsdaq-demo/SlowControlsInterfacePlugins/SlowControlsInterfaceTemplate.h"
+#include "otsdaq/Macros/SlowControlsPluginMacros.h"
 
 using namespace ots;
 
@@ -24,6 +24,11 @@ void SlowControlsInterfaceTemplate::initialize() {}
 
 void SlowControlsInterfaceTemplate::destroy() {}
 
+std::vector<std::string /*Name*/> SlowControlsInterfaceTemplate::getChannelList()
+{
+	return {"a", "b"};
+}
+
 std::string SlowControlsInterfaceTemplate::getList(std::string format)
 {
 	//__COUT__ << theXDAQContextConfigTree.getNode(controlsConfigurationPath).getValue <<
@@ -45,6 +50,32 @@ std::array<std::string, 4> SlowControlsInterfaceTemplate::getCurrentValue(
 std::array<std::string, 9> SlowControlsInterfaceTemplate::getSettings(std::string Name)
 {
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
+}
+
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getChannelHistory(
+    std::string Name)
+{
+	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"b", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"c", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"d", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"e", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"f", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"g", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"h", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"i", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"j", "b", "c", "d", "e"})};
+}
+
+bool SlowControlsInterfaceTemplate::running(void)
+{
+	if(1 /*error??*/)
+	{
+		__SS__ << "Had an error!" << __E__;
+		__SS_THROW__;
+	}
+	else
+		return true;
 }
 
 DEFINE_OTS_SLOW_CONTROLS(SlowControlsInterfaceTemplate)
