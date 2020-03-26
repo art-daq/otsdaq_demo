@@ -29,6 +29,8 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 	std::array<std::string, 4> 					getCurrentValue		(const std::string& Name);
 	std::array<std::string, 9>					getSettings			(const std::string& Name);
 	std::vector<std::vector<std::string>> 		getChannelHistory	(const std::string& Name);
+	std::vector<std::vector<std::string>>		getLastAlarms		(const std::string& pvName);
+	std::vector<std::vector<std::string>>		getAlarmsLog		(const std::string& pvName);
 
 	virtual bool 								running				(void) override; //This is a workloop/thread, by default do nothing and end thread during running (Note: return true would repeat call)
 
