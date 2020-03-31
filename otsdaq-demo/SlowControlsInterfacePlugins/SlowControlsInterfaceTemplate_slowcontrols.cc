@@ -69,14 +69,21 @@ std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getLastAlar
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
-}
+} //end getLastAlarms()
 
 //==============================================================================
 std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getAlarmsLog(const std::string& pvName)
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
-}
+} //end getAlarmsLog()
+
+//==============================================================================
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::checkAlarmNotifications()
+{
+	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
+} //end checkAlarmNotifications()
 
 //==============================================================================
 std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getChannelHistory(
