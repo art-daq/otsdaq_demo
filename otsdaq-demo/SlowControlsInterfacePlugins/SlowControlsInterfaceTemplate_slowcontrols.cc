@@ -3,6 +3,7 @@
 
 using namespace ots;
 
+//==============================================================================
 SlowControlsInterfaceTemplate::SlowControlsInterfaceTemplate(
     const std::string&       pluginType,
     const std::string&       interfaceUID,
@@ -18,42 +19,75 @@ SlowControlsInterfaceTemplate::SlowControlsInterfaceTemplate(
 {
 }
 
+//==============================================================================
 SlowControlsInterfaceTemplate::~SlowControlsInterfaceTemplate() { destroy(); }
 
+//==============================================================================
 void SlowControlsInterfaceTemplate::initialize() {}
 
+//==============================================================================
 void SlowControlsInterfaceTemplate::destroy() {}
 
+//==============================================================================
 std::vector<std::string /*Name*/> SlowControlsInterfaceTemplate::getChannelList()
 {
 	return {"a", "b"};
 }
 
-std::string SlowControlsInterfaceTemplate::getList(std::string format)
+//==============================================================================
+std::string SlowControlsInterfaceTemplate::getList(const std::string& format)
 {
 	//__COUT__ << theXDAQContextConfigTree.getNode(controlsConfigurationPath).getValue <<
 	// std::endl;
 	return (std::string) "list";
 }
-void SlowControlsInterfaceTemplate::subscribe(std::string Name) {}
 
-void SlowControlsInterfaceTemplate::subscribeJSON(std::string List) {}
+//==============================================================================
+void SlowControlsInterfaceTemplate::subscribe(const std::string& Name) {}
 
-void SlowControlsInterfaceTemplate::unsubscribe(std::string Name) {}
+//==============================================================================
+void SlowControlsInterfaceTemplate::subscribeJSON(const std::string& List) {}
 
+//==============================================================================
+void SlowControlsInterfaceTemplate::unsubscribe(const std::string& Name) {}
+
+//==============================================================================
 std::array<std::string, 4> SlowControlsInterfaceTemplate::getCurrentValue(
-    std::string Name)
+		const std::string& Name)
 {
 	return {"a", "b", "c", "d"};
 }
 
-std::array<std::string, 9> SlowControlsInterfaceTemplate::getSettings(std::string Name)
+//==============================================================================
+std::array<std::string, 9> SlowControlsInterfaceTemplate::getSettings(const std::string& Name)
 {
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
 }
 
+//==============================================================================
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getLastAlarms(const std::string& pvName)
+{
+	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
+} //end getLastAlarms()
+
+//==============================================================================
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getAlarmsLog(const std::string& pvName)
+{
+	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
+} //end getAlarmsLog()
+
+//==============================================================================
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::checkAlarmNotifications()
+{
+	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
+	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
+} //end checkAlarmNotifications()
+
+//==============================================================================
 std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getChannelHistory(
-    std::string Name)
+		const std::string& Name)
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"}),
@@ -67,6 +101,7 @@ std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getChannelH
 	        std::vector<std::string>({"j", "b", "c", "d", "e"})};
 }
 
+//==============================================================================
 bool SlowControlsInterfaceTemplate::running(void)
 {
 	if(1 /*error??*/)

@@ -21,3 +21,6 @@ checkinAll.log
 bin
 obj
 *.vcxproj*
+*.tmp
+*.bk
+*.tmp

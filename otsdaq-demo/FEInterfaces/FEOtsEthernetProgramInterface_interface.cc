@@ -29,7 +29,7 @@ using namespace ots;
 // end ADDRESS SPACE
 /////////////////////////////////=======================================
 
-//========================================================================================================================
+//==============================================================================
 FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(
     const std::string&       interfaceUID,
     const ConfigurationTree& theXDAQContextConfigTree,
@@ -95,10 +95,10 @@ FEOtsEthernetProgramInterface::FEOtsEthernetProgramInterface(
 	}
 }
 
-//========================================================================================================================
+//==============================================================================
 FEOtsEthernetProgramInterface::~FEOtsEthernetProgramInterface(void) {}
 
-//========================================================================================================================
+//==============================================================================
 void FEOtsEthernetProgramInterface::configure(void)
 {
 	FEOtsUDPTemplateInterface::configure();
@@ -148,34 +148,34 @@ void FEOtsEthernetProgramInterface::configure(void)
 	__COUT__ << "Done with configuring." << std::endl;
 }
 
-//========================================================================================================================
+//==============================================================================
 // void FEOtsEthernetProgramInterface::configureDetector(const DACStream& theDACStream)
 //{
 //	__COUT__ << "\tconfigureDetector" << std::endl;
 //}
 
-////========================================================================================================================
+////==============================================================================
 // void FEOtsEthernetProgramInterface::halt(void)
 //{
 //	__COUT__ << "\tHalt" << std::endl;
 //	stop();
 //}
 //
-////========================================================================================================================
+////==============================================================================
 // void FEOtsEthernetProgramInterface::pause(void)
 //{
 //	__COUT__ << "\tPause" << std::endl;
 //	stop();
 //}
 //
-////========================================================================================================================
+////==============================================================================
 // void FEOtsEthernetProgramInterface::resume(void)
 //{
 //	__COUT__ << "\tResume" << std::endl;
 //	start("");
 //}
 //
-////========================================================================================================================
+////==============================================================================
 // void FEOtsEthernetProgramInterface::start(std::string )//runNumber)
 //{
 //	__COUT__ << "\tStart" << std::endl;
@@ -187,7 +187,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 //	OtsUDPHardware::write(OtsUDPFirmwareCore::startBurst());
 //}
 //
-////========================================================================================================================
+////==============================================================================
 // void FEOtsEthernetProgramInterface::stop(void)
 //{
 //	__COUT__ << "\tStop" << std::endl;
@@ -199,7 +199,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 //	OtsUDPHardware::write(OtsUDPFirmwareCore::stopBurst());
 //}
 //
-////========================================================================================================================
+////==============================================================================
 // bool FEOtsEthernetProgramInterface::running(void)
 //{
 //	__COUT__ << "\running" << std::endl;
@@ -247,7 +247,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 //	return false;
 //}
 
-//========================================================================================================================
+//==============================================================================
 // getListOfProgramFiles
 //	0 args in
 //	1 args out
@@ -319,7 +319,7 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(__ARGS__)
 	}
 }
 
-//========================================================================================================================
+//==============================================================================
 // loadProgramFile
 //	1 args in
 //		programFile = filename of programmable file

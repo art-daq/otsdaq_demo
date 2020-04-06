@@ -16,21 +16,25 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 	                              const std::string&       interfaceUID,
 	                              const ConfigurationTree& theXDAQContextConfigTree,
 	                              const std::string&       controlsConfigurationPath);
-	~SlowControlsInterfaceTemplate();
+	~SlowControlsInterfaceTemplate(void);
 
 	void initialize();
 	void destroy();
 
-    std::vector<std::string /*Name*/> 			getChannelList();
-	std::string                					getList(std::string format);
-	void                       					subscribe(std::string Name);
-	void                       					subscribeJSON(std::string List);
-	void                       					unsubscribe(std::string Name);
-	std::array<std::string, 4> 					getCurrentValue(std::string Name);
-	std::array<std::string, 9>					getSettings(std::string Name);
-	std::vector<std::vector<std::string>> 		getChannelHistory(std::string Name);
+    std::vector<std::string /*Name*/> 			getChannelList		(void);
+	std::string                					getList				(const std::string& format);
+	void                       					subscribe			(const std::string& Name);
+	void                       					subscribeJSON		(const std::string& List);
+	void                       					unsubscribe			(const std::string& Name);
+	std::array<std::string, 4> 					getCurrentValue		(const std::string& Name);
+	std::array<std::string, 9>					getSettings			(const std::string& Name);
+	std::vector<std::vector<std::string>> 		getChannelHistory	(const std::string& Name);
 
-	virtual bool 								running(void) override; //This is a workloop/thread, by default do nothing and end thread during running (Note: return true would repeat call)
+	std::vector<std::vector<std::string>>		getLastAlarms		(const std::string& pvName);
+	std::vector<std::vector<std::string>>		getAlarmsLog		(const std::string& pvName);
+	std::vector<std::vector<std::string>>		checkAlarmNotifications	(void);
+
+	virtual bool 								running				(void) override; //This is a workloop/thread, by default do nothing and end thread during running (Note: return true would repeat call)
 
 };
 // clang-format on

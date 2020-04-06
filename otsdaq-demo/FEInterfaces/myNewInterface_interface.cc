@@ -10,7 +10,7 @@ using namespace ots;
 #undef __MF_SUBJECT__
 #define __MF_SUBJECT__ "FE-myNewInterface"
 
-//========================================================================================================================
+//==============================================================================
 myNewInterface::myNewInterface(const std::string&       interfaceUID,
                                const ConfigurationTree& theXDAQContextConfigTree,
                                const std::string&       interfaceConfigurationPath)
@@ -85,10 +85,10 @@ myNewInterface::myNewInterface(const std::string&       interfaceUID,
 	// &myNewInterface::testFunction;
 }
 
-//========================================================================================================================
+//==============================================================================
 myNewInterface::~myNewInterface(void) {}
 
-//========================================================================================================================
+//==============================================================================
 void myNewInterface::testFunction(__ARGS__)
 {
 	__COUT__ << "in...\n"
@@ -121,7 +121,7 @@ void myNewInterface::testFunction(__ARGS__)
 		argsOut[i].second = argsOut[i].first + "-NewValue";
 }
 
-//========================================================================================================================
+//==============================================================================
 void myNewInterface::configure(void)
 {
 	__COUT__ << "configure" << std::endl;
@@ -183,48 +183,48 @@ void myNewInterface::configure(void)
 	__COUT__ << "Done with configuring." << std::endl;
 }
 
-//========================================================================================================================
+//==============================================================================
 // void myNewInterface::configureDetector(const DACStream& theDACStream)
 //{
 //	__COUT__ << "\tconfigureDetector" << std::endl;
 //}
 
-//========================================================================================================================
+//==============================================================================
 void myNewInterface::halt(void)
 {
 	__COUT__ << "\tHalt" << std::endl;
 	stop();
 }
 
-//========================================================================================================================
+//==============================================================================
 void myNewInterface::pause(void)
 {
 	__COUT__ << "\tPause" << std::endl;
 	stop();
 }
 
-//========================================================================================================================
+//==============================================================================
 void myNewInterface::resume(void)
 {
 	__COUT__ << "\tResume" << std::endl;
 	start("");
 }
 
-//========================================================================================================================
+//==============================================================================
 void myNewInterface::start(std::string)  // runNumber)
 {
 	__COUT__ << "\tStart" << std::endl;
 	OtsUDPHardware::write(OtsUDPFirmware::startBurst());
 }
 
-//========================================================================================================================
+//==============================================================================
 void myNewInterface::stop(void)
 {
 	__COUT__ << "\tStop" << std::endl;
 	OtsUDPHardware::write(OtsUDPFirmware::stopBurst());
 }
 
-//========================================================================================================================
+//==============================================================================
 bool myNewInterface::running(void)
 {
 	__COUT__ << "\running" << std::endl;
@@ -271,7 +271,7 @@ bool myNewInterface::running(void)
 	return false;
 }
 
-//========================================================================================================================
+//==============================================================================
 // NOTE: buffer for address must be at least size universalAddressSize_
 // NOTE: buffer for returnValue must be max UDP size to handle return possibility
 int ots::myNewInterface::universalRead(char* address, char* returnValue)
@@ -297,7 +297,7 @@ int ots::myNewInterface::universalRead(char* address, char* returnValue)
 	return 0;
 }
 
-//========================================================================================================================
+//==============================================================================
 // NOTE: buffer for address must be at least size universalAddressSize_
 // NOTE: buffer for writeValue must be at least size universalDataSize_
 void ots::myNewInterface::universalWrite(char* address, char* writeValue)
