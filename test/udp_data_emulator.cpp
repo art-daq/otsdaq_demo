@@ -31,8 +31,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-using namespace std;
-
 //#define ZED_IP   "192.168.133.6"    // the ZED IP users will be connecting to
 //#define ZED_IP             "192.168.133.5"    // the ZED IP users will be connecting to
 #define COMMUNICATION_PORT "2035"  // the port on ZedBoard for communicating with XDAQ
@@ -54,17 +52,17 @@ void* get_in_addr(struct sockaddr* sa)
 }
 
 //========================================================================================================================
-int makeSocket(const char* ip, const char* port, struct addrinfo*& addressInfo)
+int makeSocket(const char* ip, const char* port, struct addrinfo*& /*addressInfo*/)
 {
 	int                     socketId = 0;
 	struct addrinfo         hints, *servinfo, *p;
-	int                     sendSockfd = 0;
+	//int                     sendSockfd = 0;
 	int                     rv;
-	int                     numbytes;
-	struct sockaddr_storage their_addr;
-	char                    buff[MAXBUFLEN];
-	socklen_t               addr_len;
-	char                    s[INET6_ADDRSTRLEN];
+	//int                     numbytes;
+	//struct sockaddr_storage their_addr;
+	//char                    buff[MAXBUFLEN];
+	//socklen_t               addr_len;
+	//char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	//    hints.ai_family   = AF_UNSPEC; // set to AF_INET to force IPv4
@@ -194,12 +192,11 @@ int main(void)
 
 	// sendSockfd = makeSocket(string("localhost").c_str(),myport,p);
 
-	struct addrinfo hints, *servinfo, *p;
+	struct addrinfo /*hints,*//* *servinfo,*/ *p;
 
 	int                communicationSocket = makeSocket(0, COMMUNICATION_PORT, p);
-	int                streamingSocket     = makeSocket(0, STREAMING_PORT, p);
-	struct sockaddr_in streamingReceiver =
-	    setupSocketAddress(DESTINATION_IP, DESTINATION_PORT);
+	//int                streamingSocket     = makeSocket(0, STREAMING_PORT, p);
+	//struct sockaddr_in streamingReceiver =	    setupSocketAddress(DESTINATION_IP, DESTINATION_PORT);
 	struct sockaddr_in messageSender;
 
 	std::string communicationBuffer;
@@ -208,17 +205,17 @@ int main(void)
 	////////////// ready to go //////////////
 	//////////////////////////////////////////////////////////////////////
 
-	cout << "Waiting for DAQ communication..." << endl;
+	std::cout << "Waiting for DAQ communication..." << std::endl;
 	bool           triggered = false;
 	const unsigned ndata     = 2 * 64;
 	unsigned       count     = 0;
 	while(1)
 	{
-		// cout << time(NULL)%60 << endl;
+		// std::cout << time(NULL)%60 << std::endl;
 		if(receive(communicationSocket, messageSender, communicationBuffer) >= 0)
 		{
-			cout << "Message received!!!" << endl;
-			cout << communicationBuffer << endl;
+			std::cout << "Message received!!!" << std::endl;
+			std::cout << communicationBuffer << std::endl;
 
 			if(communicationBuffer == "START")
 			{
@@ -226,7 +223,7 @@ int main(void)
 			}
 			else if(communicationBuffer == "STOP")
 			{
-				cout << 4 * 66 * count << endl;
+				std::cout << 4 * 66 * count << std::endl;
 				triggered = false;
 				count     = 0;
 			}
@@ -240,7 +237,7 @@ int main(void)
 			simdata[2]   = 0xFFFFFFFF;
 			simdata[3]   = 0xFFFFFFFF;
 			simdata[4]   = 0xFFFFFFFF;
-			unsigned i_0 = 0x21;
+		//	unsigned i_0 = 0x21;
 			for(unsigned i = 0; i < ndata; i++)
 			{
 				unsigned noise = rand() & 0x00FF00FF;

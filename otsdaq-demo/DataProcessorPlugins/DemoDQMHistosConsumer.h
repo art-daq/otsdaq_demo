@@ -25,7 +25,7 @@ class DemoDQMHistosConsumer : public DQMHistosConsumerBase, public Configurable
 	void stopProcessingData(void) override;
 
   private:
-	bool workLoopThread(toolbox::task::WorkLoop* workLoop);
+	bool workLoopThread(toolbox::task::WorkLoop* workLoop) override;
 	void fastRead(void);
 	void slowRead(void);
 

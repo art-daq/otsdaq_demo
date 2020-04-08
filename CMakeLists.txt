@@ -33,7 +33,7 @@ include(FindUpsXdaq)
 cet_set_compiler_flags(DIAGS VIGILANT
  WERROR
  NO_UNDEFINED
- EXTRA_FLAGS -pedantic -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-ignored-qualifiers -Wno-unused-variable
+ EXTRA_FLAGS -pedantic -D_LIBCPP_ENABLE_CXX17_REMOVED_FEATURES=1
  )
 
 #string(TOUPPER ${CMAKE_BUILD_TYPE} BTYPE_UC )

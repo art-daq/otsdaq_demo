@@ -436,11 +436,11 @@ void FEOtsEthernetProgramInterface::loadProgramFile(__ARGS__)
 
 	// now actually send bitstream data
 	const size_t page_size    = 512;
-	const size_t MAX_TCP_SIZE = 5000;
+	//const size_t MAX_TCP_SIZE = 5000;
 
 	char          page_data[page_size];
-	unsigned char next_page_recv_buff[MAX_TCP_SIZE];
-	int           next_page_recv_len;
+	//unsigned char next_page_recv_buff[MAX_TCP_SIZE];
+	//int           next_page_recv_len;
 	int           page = 0;
 
 	// int num_page_ready_returns = 0;

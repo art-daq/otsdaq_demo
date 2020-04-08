@@ -15,8 +15,12 @@ using namespace ots;
 
 int main(int argc, char** argv)
 {
+	if (argc < 1) {
+		std::cout << "Usage: " << std::string(argv[0]) << " <run number>" << std::endl;
+		return 1;
+	}
 	// Variables
-	const int          supervisorInstance_    = 1;
+	//const int          supervisorInstance_    = 1;
 	const unsigned int configurationKeyValue_ = 1;
 
 	ConfigurationManager* theConfigurationManager_ = new ConfigurationManager();

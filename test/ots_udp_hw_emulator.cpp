@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <iomanip>
+#include <sstream>
 #include <iostream>
 
 // take only file name
@@ -33,13 +34,12 @@
 
 // use this for normal printouts
 #define __PRINTF__ printf
-#define __COUT__ cout << __FILENAME__ << std::dec << " [" << __LINE__ << "]\t"
+#define __COUT__ std::cout << __FILENAME__ << std::dec << " [" << __LINE__ << "]\t"
 
 // and use this to suppress
 //#define __PRINTF__ if(0) printf
 //#define __COUT__  if(0) cout
 
-using namespace std;
 
 #define MAXBUFLEN 1492
 #define EMULATOR_PORT "4950"  // Can be also passed as first argument
@@ -60,10 +60,10 @@ int makeSocket(const char* ip, int port, struct addrinfo*& p)
 	int                     sockfd;
 	struct addrinfo         hints, *servinfo;
 	int                     rv;
-	int                     numberOfBytes;
-	struct sockaddr_storage their_addr;
-	socklen_t               addr_len;
-	char                    s[INET6_ADDRSTRLEN];
+	//int                     numberOfBytes;
+	//struct sockaddr_storage their_addr;
+	//socklen_t               addr_len;
+	//char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family   = AF_UNSPEC;
@@ -286,7 +286,7 @@ int main(int argc, char** argv)
 					memcpy((void*)&addr, (void*)&buff[handlerIndex + RX_ADDR_OFFSET], 8);
 
 					__COUT__ << std::hex << ":::"
-					         << "Read address: 0x" << hex << addr;
+					         << "Read address: 0x" << std::hex << addr;
 					__PRINTF__(" 0x%16.16lX \n", addr);
 
 					// setup response packet based on address
@@ -301,14 +301,14 @@ int main(int argc, char** argv)
 						       (void*)&data_gen_cnt,
 						       8);
 						__COUT__ << std::hex << ":::"
-						         << "Read data count: 0x" << data_gen_cnt << endl;
+						         << "Read data count: 0x" << data_gen_cnt << std::endl;
 						break;
 					case 0x1002:
 						memcpy((void*)&buff[handlerIndex + TX_DATA_OFFSET],
 						       (void*)&data_gen_rate,
 						       8);
 						__COUT__ << std::hex << ":::"
-						         << "Read data rate: 0x" << data_gen_rate << endl;
+						         << "Read data rate: 0x" << data_gen_rate << std::endl;
 						break;
 					case 0x1003:
 						memset((void*)&buff[handlerIndex + TX_DATA_OFFSET + 1], 0, 7);
@@ -317,7 +317,7 @@ int main(int argc, char** argv)
 						       1);
 						__COUT__ << std::hex << ":::"
 						         << "Read LED register: 0x" << (unsigned int)led_register
-						         << endl;
+						         << std::endl;
 						break;
 					case 0x0000000100000009:
 						memset((void*)&buff[handlerIndex + TX_DATA_OFFSET + 1], 0, 7);
@@ -325,11 +325,11 @@ int main(int argc, char** argv)
 						       (void*)&dataEnabled,
 						       1);
 						__COUT__ << std::hex << ":::"
-						         << "Read data enable: 0x" << dataEnabled << endl;
+						         << "Read data enable: 0x" << dataEnabled << std::endl;
 						break;
 					default:
 						__COUT__ << std::hex << ":::"
-						         << "Unknown read address received." << endl;
+						         << "Unknown read address received." << std::endl;
 					}
 
 					packetSz = TX_DATA_OFFSET + 8;  // only response with 1 QW
@@ -366,7 +366,7 @@ int main(int argc, char** argv)
 						       (void*)&buff[handlerIndex + RX_DATA_OFFSET],
 						       8);
 						__COUT__ << std::hex << ":::"
-						         << "Write data count: 0x" << data_gen_cnt << endl;
+						         << "Write data count: 0x" << data_gen_cnt << std::endl;
 						count = 0;  // reset count
 						break;
 					case 0x1002:
@@ -374,7 +374,7 @@ int main(int argc, char** argv)
 						       (void*)&buff[handlerIndex + RX_DATA_OFFSET],
 						       8);
 						__COUT__ << std::hex << ":::"
-						         << "Write data rate: 0x" << data_gen_rate << endl;
+						         << "Write data rate: 0x" << data_gen_rate << std::endl;
 						break;
 					case 0x1003:
 						memcpy((void*)&led_register,
@@ -382,7 +382,7 @@ int main(int argc, char** argv)
 						       1);
 						__COUT__ << std::hex << ":::"
 						         << "Write LED register: 0x" << (unsigned int)led_register
-						         << endl;
+						         << std::endl;
 						// show "LEDs"
 						__COUT__ << "\n\n";
 						for(int l = 0; l < 8; ++l)
@@ -414,8 +414,8 @@ int main(int argc, char** argv)
 						       (void*)&buff[handlerIndex + RX_DATA_OFFSET],
 						       4);
 						__COUT__ << std::hex << ":::"
-						         << "Stream destination port: 0x" << streamToPort << dec
-						         << " " << streamToPort << endl;
+						         << "Stream destination port: 0x" << streamToPort << std::dec
+						         << " " << streamToPort << std::endl;
 
 						close(sendSockfd);
 						sendSockfd = 0;
@@ -424,24 +424,24 @@ int main(int argc, char** argv)
 						{
 							__COUT__ << "************************************************"
 							            "********"
-							         << endl;
+							         << std::endl;
 							__COUT__ << "************************************************"
 							            "********"
-							         << endl;
+							         << std::endl;
 							__COUT__ << std::hex << ":::"
 							         << "Streaming to ip: " << streamToIP << " port: 0x"
-							         << streamToPort << endl;
+							         << streamToPort << std::endl;
 							__COUT__ << "************************************************"
 							            "********"
-							         << endl;
+							         << std::endl;
 							__COUT__ << "************************************************"
 							            "********"
-							         << endl;
+							         << std::endl;
 						}
 						else
 							__COUT__ << std::hex << ":::"
 							         << "Failed to create streaming socket to ip: "
-							         << streamToIP << " port: 0x" << streamToPort << endl;
+							         << streamToIP << " port: 0x" << streamToPort << std::endl;
 					}
 
 					break;
@@ -450,12 +450,12 @@ int main(int argc, char** argv)
 						       (void*)&buff[handlerIndex + RX_DATA_OFFSET],
 						       1);
 						__COUT__ << std::hex << ":::"
-						         << "Write data enable: 0x" << (int)dataEnabled << endl;
+						         << "Write data enable: 0x" << (int)dataEnabled << std::endl;
 						count = 0;  // reset count
 						break;
 					default:
 						__COUT__ << std::hex << ":::"
-						         << "Unknown write address received." << endl;
+						         << "Unknown write address received." << std::endl;
 					}
 				}
 				else
@@ -533,7 +533,7 @@ int main(int argc, char** argv)
 			{
 				wasDataEnable = false;
 				__COUT__ << std::hex << ":::"
-				         << "Send Last in Burst at count:" << count << endl;
+				         << "Send Last in Burst at count:" << count << std::endl;
 				// send a packet
 				buff[0] = 3;           // type := burst last (3)
 				buff[1] = sequence++;  // 1-byte sequence id increments and wraps
@@ -557,7 +557,7 @@ int main(int argc, char** argv)
 				}
 				else
 					__COUT__ << std::hex << ":::"
-					         << "Send socket not defined." << endl;
+					         << "Send socket not defined." << std::endl;
 			}
 
 			++count;
