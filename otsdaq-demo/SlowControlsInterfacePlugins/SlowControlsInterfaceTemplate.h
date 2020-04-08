@@ -18,21 +18,21 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 	                              const std::string&       controlsConfigurationPath);
 	~SlowControlsInterfaceTemplate(void);
 
-	void initialize();
+	void initialize() override;
 	void destroy();
 
-    std::vector<std::string /*Name*/> 			getChannelList		(void);
-	std::string                					getList				(const std::string& format);
-	void                       					subscribe			(const std::string& Name);
-	void                       					subscribeJSON		(const std::string& List);
-	void                       					unsubscribe			(const std::string& Name);
-	std::array<std::string, 4> 					getCurrentValue		(const std::string& Name);
-	std::array<std::string, 9>					getSettings			(const std::string& Name);
-	std::vector<std::vector<std::string>> 		getChannelHistory	(const std::string& Name);
+    std::vector<std::string /*Name*/> 			getChannelList		(void) override;
+	std::string                					getList				(const std::string& format) override;
+	void                       					subscribe			(const std::string& Name)  override;
+	void                       					subscribeJSON		(const std::string& List) override;
+	void                       					unsubscribe			(const std::string& Name) override;
+	std::array<std::string, 4> 					getCurrentValue		(const std::string& Name) override;
+	std::array<std::string, 9>					getSettings			(const std::string& Name) override;
+	std::vector<std::vector<std::string>> 		getChannelHistory	(const std::string& Name) override;
 
-	std::vector<std::vector<std::string>>		getLastAlarms		(const std::string& pvName);
-	std::vector<std::vector<std::string>>		getAlarmsLog		(const std::string& pvName);
-	std::vector<std::vector<std::string>>		checkAlarmNotifications	(void);
+	std::vector<std::vector<std::string>>		getLastAlarms		(const std::string& pvName) override;
+	std::vector<std::vector<std::string>>		getAlarmsLog		(const std::string& pvName) override;
+	std::vector<std::vector<std::string>>		checkAlarmNotifications	(void) override;
 
 	virtual bool 								running				(void) override; //This is a workloop/thread, by default do nothing and end thread during running (Note: return true would repeat call)
 

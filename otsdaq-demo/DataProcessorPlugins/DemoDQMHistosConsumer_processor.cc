@@ -58,7 +58,7 @@ void DemoDQMHistosConsumer::stopProcessingData(void)
 }
 
 //==============================================================================
-bool DemoDQMHistosConsumer::workLoopThread(toolbox::task::WorkLoop* workLoop)
+bool DemoDQMHistosConsumer::workLoopThread(toolbox::task::WorkLoop* /*workLoop*/)
 {
 	//__COUT__ << DataProcessor::processorUID_ << " running, because workloop: " <<
 	//	WorkLoop::continueWorkLoop_ << std::endl;

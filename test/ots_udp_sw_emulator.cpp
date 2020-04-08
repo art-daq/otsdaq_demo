@@ -35,8 +35,6 @@
 #include <unistd.h>
 #include <iostream>
 
-using namespace std;
-
 #define HWPORT "4950"  // the port of the front end (hardware) target
 #define MAXBUFLEN 1492
 
@@ -51,15 +49,15 @@ void* get_in_addr(struct sockaddr* sa)
 	return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-int makeSocket(char* ip, int port)
+int makeSocket(char* ip, int /*port*/)
 {
 	int                     sockfd;
 	struct addrinfo         hints, *servinfo, *p;
 	int                     rv;
-	int                     numbytes;
-	struct sockaddr_storage their_addr;
-	socklen_t               addr_len;
-	char                    s[INET6_ADDRSTRLEN];
+	//int                     numbytes;
+	//struct sockaddr_storage their_addr;
+	//socklen_t               addr_len;
+	//char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family   = AF_UNSPEC;
@@ -151,15 +149,15 @@ int main(int argc, char* argv[])
 	char         buff[MAXBUFLEN];
 	unsigned int packetSz;
 	int          type = atoi(argv[2]);
-	cout << "sw: Line " << __LINE__ << ":::"
-	     << "Type of Test: " << type << endl;
+	std::cout << "sw: Line " << __LINE__ << ":::"
+	     << "Type of Test: " << type << std::endl;
 
 	uint64_t val = 0;
 	uint64_t addr;
 	bool     a    = 4;
-	string   test = "hehehel";
+	std::string   test = "hehehel";
 	if(a != test.size())
-		cout << endl;
+		std::cout << std::endl;
 
 	const unsigned int RX_ADDR_OFFSET = 2;
 	const unsigned int RX_DATA_OFFSET = 10;
@@ -241,8 +239,8 @@ int main(int argc, char* argv[])
 		printf("\n");
 
 		memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
-		cout << "sw: Line " << __LINE__ << ":::"
-		     << "Value read: " << hex << val << endl;
+		std::cout << "sw: Line " << __LINE__ << ":::"
+		     << "Value read: " << std::hex << val << std::endl;
 
 		break;
 	case 2:
@@ -286,12 +284,12 @@ int main(int argc, char* argv[])
 		// read data packets ///////////////////////////////////////////////////////////
 		{
 			int sz = val;  // get from read in TYPE 1
-			cout << "sw: Line " << __LINE__ << ":::"
-			     << "Number of packets expecting: " << sz << endl;
+			std::cout << "sw: Line " << __LINE__ << ":::"
+			     << "Number of packets expecting: " << sz << std::endl;
 			for(int i = 0; i < sz; ++i)
 			{
-				cout << "sw: Line " << __LINE__ << ":::"
-				     << "Waiting for data packet: " << i << endl;
+				std::cout << "sw: Line " << __LINE__ << ":::"
+				     << "Waiting for data packet: " << i << std::endl;
 
 				// read response
 				// ///////////////////////////////////////////////////////////
@@ -323,8 +321,8 @@ int main(int argc, char* argv[])
 				printf("\n");
 
 				memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
-				cout << "sw: Line " << __LINE__ << ":::"
-				     << "Value read: " << val << endl;
+				std::cout << "sw: Line " << __LINE__ << ":::"
+				     << "Value read: " << val << std::endl;
 			}
 		}
 
@@ -374,8 +372,8 @@ int main(int argc, char* argv[])
 		printf("\n");
 		break;
 	default:
-		cout << "sw: Line " << __LINE__ << ":::"
-		     << "INVALID Type of Test: " << type << endl;
+		std::cout << "sw: Line " << __LINE__ << ":::"
+		     << "INVALID Type of Test: " << type << std::endl;
 	}
 
 	close(sockfd);
