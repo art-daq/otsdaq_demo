@@ -473,6 +473,51 @@ int main(int argc, char** argv)
 				  
 
 				} //end WRITE handling ==================================================
+				else if(payloadBytes == 0 &&	
+					operation == 1<<0)  // query
+				{
+				   __COUT__ << "Query!" << std::endl;				  
+				   memcpy((void*)respbuff,(void*)&buff[handlerIndex],40);
+				  
+				   //respond with query object {
+				   // 8B ops mask, 
+				   // 8B element bytes (always 64b/8B from firmware)
+				   // 8B number of elements (number of sub-features?)
+				   
+				   //return query, read, set support
+				   my_htonll((1<<0)|(1<<1)|(1<<2),&respbuff[40 + payloadBytes]); //insert data QW
+				   payloadBytes += 8;
+				   //return quad word elements
+				   my_htonll(8,&respbuff[40 + payloadBytes]); //insert data QW
+				   payloadBytes += 8;
+				   //return 1 sub-feature 
+				   my_htonll(1,&respbuff[40 + payloadBytes]); //insert data QW
+				   payloadBytes += 8;
+				   
+				   my_htonll(payloadBytes,&respbuff[32]); //update payload bytes size				  
+				   packetSz = 40 + payloadBytes;  // update total respsone size in bytes
+
+				   if((numberOfSentBytes = sendto(sockfd,
+								  respbuff,
+								  packetSz,
+								  0,
+								  (struct sockaddr*)&their_addr,
+								  sizeof(struct sockaddr_storage))) == -1)
+				     {
+				       perror("hw: sendto");
+				       exit(1);
+				     }
+				   __PRINTF__("hw: sent %d bytes back\n",
+					      numberOfSentBytes);
+				   
+				   for(int i=0; i<numberOfSentBytes; i++)
+				     {
+				       if(i%8==0) __COUT__ << "\t" << i << " \t";
+				       __PRINTF__("%2.2X", (unsigned char)respbuff[i]);
+				       if(i%8==7) std::cout << std::endl;
+				     }
+				   
+				} //end QUERY handling =====================================================
 				else
 				  __COUT__ << ":::"
 					   << "ERROR: The formatting of the packet received is wrong! "
