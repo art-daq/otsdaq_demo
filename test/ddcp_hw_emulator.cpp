@@ -296,14 +296,14 @@ int main(int argc, char** argv)
 				uint64_t payloadBytes = numberOfBytes - 40;
 				
 
-				__COUT__ << "version = \t" << version << "\t 0x" << std::hex << version << std::dec << std::endl;
-				__COUT__ << "slot =    \t" << slot << "\t 0x" << std::hex << slot << std::dec <<std::endl;
-				__COUT__ << "feature = \t" << feature << "\t 0x" << std::hex << feature << std::dec <<std::endl;
-				__COUT__ << "operation = \t" << operation << "\t 0x" << std::hex << operation << std::dec <<std::endl;
-				__COUT__ << "status = \t" << status << "\t 0x" << std::hex << status << std::dec <<std::endl;
-				__COUT__ << "index = \t" << index << "\t 0x" << std::hex << index << std::dec <<std::endl;
-				__COUT__ << "count = \t" << count << "\t 0x" << std::hex << count << std::dec <<std::endl;
-				__COUT__ << "payloadBytes = \t" << payloadBytes << "\t 0x" << std::hex << payloadBytes << std::dec <<std::endl;
+				__COUT__ << "version      (16b) = \t" << version << "\t 0x" << std::hex << version << std::dec << std::endl;
+				__COUT__ << "slot         (16b) = \t" << slot << "\t 0x" << std::hex << slot << std::dec <<std::endl;
+				__COUT__ << "feature      (16b) = \t" << feature << "\t 0x" << std::hex << feature << std::dec <<std::endl;
+				__COUT__ << "operation    (16b) = \t" << operation << "\t 0x" << std::hex << operation << std::dec <<std::endl;
+				__COUT__ << "status       (16b) = \t" << status << "\t 0x" << std::hex << status << std::dec <<std::endl;
+				__COUT__ << "index        (64b) = \t" << index << "\t 0x" << std::hex << index << std::dec <<std::endl;
+				__COUT__ << "count        (64b) = \t" << count << "\t 0x" << std::hex << count << std::dec <<std::endl;
+				__COUT__ << "payloadBytes (64b) = \t" << payloadBytes << "\t 0x" << std::hex << payloadBytes << std::dec <<std::endl;
 
 				//handlerIndex += numberOfBytes;
 				//continue;
