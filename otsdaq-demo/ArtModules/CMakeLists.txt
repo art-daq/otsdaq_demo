@@ -11,11 +11,3 @@ simple_plugin(WFViewer "module"
   artdaq-core_Utilities
   rt
 )
-
-simple_plugin(OtsDemoArtdaqFragmentNamingService "service"
-artdaq_ArtModules_ArtdaqFragmentNamingService_service
-artdaq-core_Data
-otsdaq-demo_Overlays
-  art_Framework_Services_Registry
-  MF_MessageLogger
-  fhiclcpp)
