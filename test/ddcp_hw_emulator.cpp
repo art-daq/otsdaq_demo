@@ -103,7 +103,7 @@ uint64_t my_ntohll(char *buff)
 {
   uint64_t v = 0;
   for(unsigned int i=0;i<8;++i)
-    v |= (unsigned char)buff[7-i];
+    v |= (unsigned char)buff[7-i] << (i*8);
   return v;
 } //end my_ntohll()
 
@@ -294,7 +294,8 @@ int main(int argc, char** argv)
 				uint64_t index = my_ntohll(&(buff[handlerIndex + 16]));
 				uint64_t count = my_ntohll(&(buff[handlerIndex + 24]));
 				uint64_t payloadBytes = numberOfBytes - 40;
-				
+
+				uint64_t responsePacketCount = 0;  
 
 				__COUT__ << "version      (16b) = \t" << version << "\t 0x" << std::hex << version << std::dec << std::endl;
 				__COUT__ << "slot         (16b) = \t" << slot << "\t 0x" << std::hex << slot << std::dec <<std::endl;
@@ -353,16 +354,67 @@ int main(int argc, char** argv)
 					  break;
 					default:
 					  rdata = addr + i;
+					 
 					  __COUT__ << std::hex << ":::" << addr
-						   << " -- Unknown read address received." << std::endl;
+						   << " -- Unknown read address received for count " << std::dec << i << std::endl;
 					}
+				      
+				      if(40 + payloadBytes + 8 > MAXBUFLEN)
+					{
+					  //send partial response packet
+					  
+					  					      
+					  my_htonll(payloadBytes,&respbuff[32]); //update EXPECTED payload bytes size
+					  my_htonll(payloadBytes/8,&respbuff[24]); //update count bytes size				  				  
+					  my_htonll(index,&respbuff[16]); //update index				  				  
+					  packetSz = 40 + payloadBytes;  // update total respsone size in bytes
+					  
 
+					  if((numberOfSentBytes = sendto(sockfd,
+									 respbuff,
+									 packetSz,
+									 0,
+									 (struct sockaddr*)&their_addr,
+									 sizeof(struct sockaddr_storage))) == -1)
+					    {
+					      perror("hw: sendto");
+					      exit(1);
+					    }
+					  __PRINTF__("hw: Resp packet #%d index=%d sent %d bytes back\n",
+						     responsePacketCount,index,
+						     numberOfSentBytes);
+
+					  
+					  for(int b=0; b<numberOfSentBytes; b++)
+					    {
+					      if(b%8==0) __COUT__ << "\t" << b << " \t";
+					      __PRINTF__("%2.2X", (unsigned char)respbuff[b]);
+					      if(b%8==7) std::cout << std::endl;
+					    }
+
+					  index += payloadBytes/8;					  
+					  payloadBytes = 0;
+
+					  ++responsePacketCount;
+					  //usleep(3000000);
+					}
+				      
+				      my_htonll(rdata,&respbuff[40 + payloadBytes]); //insert data QW
 				      payloadBytes += 8;
-				      my_htonll(rdata,&respbuff[40 + i*8]); //insert data QW
 				    } //end read count loop
 
-				  my_htonll(payloadBytes,&respbuff[32]); //update payload bytes size				  
+
+				  my_htonll(payloadBytes,&respbuff[32]); //update EXPECTED payload bytes size
+				  my_htonll(payloadBytes/8,&respbuff[24]); //update count bytes size				  				  
+				  my_htonll(index,&respbuff[16]); //update index				  				  
+
+				      //my_htonll(count*8,&respbuff[32]); //update EXPECTED payload bytes size				  
 				  packetSz = 40 + payloadBytes;  // update total respsone size in bytes
+				      
+				      
+				  				  
+				  //my_htonll(payloadBytes,&respbuff[32]); //update payload bytes size				  
+				  //packetSz = 40 + payloadBytes;  // update total respsone size in bytes
 
 				  if((numberOfSentBytes = sendto(sockfd,
 								 respbuff,
@@ -374,7 +426,8 @@ int main(int argc, char** argv)
 				      perror("hw: sendto");
 				      exit(1);
 				    }
-				  __PRINTF__("hw: sent %d bytes back\n",
+				  __PRINTF__("hw: Resp packet #%d index=%d sent %d bytes back\n",
+					     responsePacketCount,index,
 					     numberOfSentBytes);
 
 				  for(int i=0; i<numberOfSentBytes; i++)
