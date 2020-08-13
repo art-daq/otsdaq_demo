@@ -41,7 +41,7 @@
 //#define __COUT__  if(0) cout
 
 
-#define MAXBUFLEN 1492
+#define MAXBUFLEN 1500 //1492
 #define EMULATOR_PORT "65000"  // Can be also passed as first argument
 
 // get sockaddr, IPv4 or IPv6:
@@ -224,6 +224,122 @@ int main(int argc, char** argv)
 	int handlerIndex;
 	int totalNumberOfBytes;
 
+
+	if(emulatorPort != EMULATOR_PORT)
+	  {
+	    __COUT__ << "DDCP Client Port... so initiating Interrupt Request" << std::endl;
+	    
+	    //create interrupt request packet
+	    my_htonll(0x0002000000000010,&respbuff[0]); //version (16b) | slot (16b) | feature (16b) | op (16b)
+	    my_htonll(0x0,&respbuff[8]);  //status (16b) | reserved
+	    my_htonll(0x0,&respbuff[16]); //index
+	    my_htonll(0x1,&respbuff[24]); //count
+	    my_htonll(0x4,&respbuff[32]); //payload size = 4B = 32b
+	    my_htonll(0x000A000500000000,&respbuff[40]); //interrupt source slot 16b | 11b X | source interrupt 5b 
+	    packetSz = 44;
+
+	    //create destination socket at localhost port 65000
+	    {
+	      uint32_t           ip = (127<<24) | 1; //localhost
+	      struct sockaddr_in socketAddress;
+	      ip = htonl(ip);
+	      memcpy((void*)&socketAddress.sin_addr, (void*)&ip, 4);
+	      streamToIP = inet_ntoa(socketAddress.sin_addr);
+	      __COUT__ << std::hex << ":::"
+		       << "Stream destination IP: " << streamToIP << std::endl;
+	      __COUT__ << streamToIP << std::endl;
+	    }
+
+	    //create destination port
+	    {
+	      // unsigned int myport;
+	      streamToPort = 65000;
+
+	      __COUT__ << std::hex << ":::"
+		       << "Stream destination port: 0x" << streamToPort << std::dec
+		       << " " << streamToPort << std::endl;
+	      
+	      close(sendSockfd);
+	      sendSockfd = 0;
+	      sendSockfd = makeSocket(streamToIP.c_str(), streamToPort, p);
+	      if(sendSockfd != -1)
+		{
+		  __COUT__ << "************************************************"
+		    "********"
+							         << std::endl;
+		  __COUT__ << "************************************************"
+		    "********"
+			   << std::endl;
+		  __COUT__ << std::hex << ":::"
+			   << "Streaming to ip: " << streamToIP << " port: 0x"
+			   << streamToPort << std::endl;
+		  __COUT__ << "************************************************"
+		    "********"
+			   << std::endl;
+		  __COUT__ << "************************************************"
+		    "********"
+			   << std::endl;
+		}
+	      else
+		__COUT__ << std::hex << ":::"
+			 << "Failed to create streaming socket to ip: "
+			 << streamToIP << " port: 0x" << streamToPort << std::endl;
+	    }
+
+	    if((numberOfSentBytes = sendto(sendSockfd,
+					   respbuff,
+					   packetSz,
+					   0,
+					   p->ai_addr, p->ai_addrlen)) == -1)
+	      {
+		perror("hw: sendto");
+		exit(1);
+	      }
+	    __PRINTF__("hw: Interrupt Req packet sent %d bytes back\n",
+		       numberOfSentBytes);
+	    
+	    for(int i=0; i<numberOfSentBytes; i++)
+	      {
+		if(i%8==0) __COUT__ << "\t" << i << " \t";
+		__PRINTF__("%2.2X", (unsigned char)respbuff[i]);
+		if(i%8==7) std::cout << std::endl;
+	      }
+	    std::cout << std::endl;
+	    __COUT__ << "Waiting for ack..." << std::endl;
+
+	    addr_len = sizeof their_addr;
+	    if((totalNumberOfBytes = recvfrom(sendSockfd,
+					      buff,
+					      MAXBUFLEN - 1,
+					      0,
+					      (struct sockaddr*)&their_addr,
+					      &addr_len)) == -1)
+	      {
+		perror("recvfrom");
+		exit(1);
+	      }
+	    
+	    __COUT__ << ":::"
+		     << "hw: got packet from "
+		     << inet_ntop(their_addr.ss_family,
+				  get_in_addr((struct sockaddr*)&their_addr),
+				  s,
+				  sizeof s)
+		     << std::endl;
+	    __COUT__ << ":::"
+		     << "hw: packet total is " << totalNumberOfBytes << " bytes long"
+		     << std::endl;
+	    __COUT__ << ":::" << "hw: packet contents \n";
+	    for(int i=0; i<totalNumberOfBytes; i++)
+	      {
+		if(i%8==0) __COUT__ << "\t" << i << " \t";
+		__PRINTF__("%2.2X", (unsigned char)buff[i]);
+		if(i%8==7) std::cout << std::endl;       	
+	      }	    
+	    std::cout << std::endl;
+	    
+	  } //end Interrupt Request handling
+
 	while(1)
 	{
 		usleep(3000);  // sleep 3ms to free up processor (downfall is less responsive, but
@@ -318,7 +434,7 @@ int main(int argc, char** argv)
 				  __COUT__ << "Read! " << std::endl;
 				  memcpy((void*)respbuff,(void*)&buff[handlerIndex],40);
 				  
-				  uint64_t addr = feature | (index << 16);
+				  uint64_t addr = (feature << 24) | index;
 				  uint64_t rdata = 0;
 				  payloadBytes = 0; //use to count
 				  
@@ -404,6 +520,7 @@ int main(int argc, char** argv)
 				    } //end read count loop
 
 
+				  //my_htonll(0xa00010002,&respbuff[0]); //update EXPECTED payload bytes size
 				  my_htonll(payloadBytes,&respbuff[32]); //update EXPECTED payload bytes size
 				  my_htonll(payloadBytes/8,&respbuff[24]); //update count bytes size				  				  
 				  my_htonll(index,&respbuff[16]); //update index				  				  
