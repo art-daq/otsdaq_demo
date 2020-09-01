@@ -49,7 +49,7 @@ echo
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Extracting parameters..."
 echo
 
-TUTORIALS_STRING="first_demo artdaq nim_plus iterator mu2e_roc mu2e_dcs"
+TUTORIALS_STRING="first_demo artdaq nim_plus iterator mu2e_roc mu2e_dcs slow_controls"
 VERSIONS_STRING="v2_1 v2_2 v2_3 v2_4 v2_5"
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
