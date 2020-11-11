@@ -15,12 +15,14 @@
 // descriptive error messages
 //
 // run with:
-//./sw.o localhost <type-of-test>
+//./sw.o localhost <type-of-test> <1 for debug>
 //   or
-//./sw.o ip.of.hw.o <type-of-test>
+//./sw.o ip.of.hw.o <type-of-test> <1 for debug>
 //
 // 1 is write and read test
 // 2 is data stream test
+//
+// 
 
 #include <arpa/inet.h>
 #include <errno.h>
@@ -109,9 +111,9 @@ int main(int argc, char* argv[])
 	socklen_t               addr_len;
 	char                    s[INET6_ADDRSTRLEN];
 
-	if(argc != 3)
+	if(argc != 4)
 	{
-		fprintf(stderr, "usage: sw hostname type-of-test\n");
+		fprintf(stderr, "usage: ./sw <hostname/ip> <type-of-test> <debug>\n");
 		exit(1);
 	}
 
@@ -152,8 +154,9 @@ int main(int argc, char* argv[])
 	char         buff[MAXBUFLEN];
 	unsigned int packetSz;
 	int          type = atoi(argv[2]);
+	bool         debug = atoi(argv[3]);
 	std::cout << "sw: Line " << __LINE__ << ":::"
-	     << "Type of Test: " << type << std::endl;
+		  << "Type of Test: " << type << " debug=" << debug << std::endl;
 
 	uint64_t val = 0;
 	uint64_t addr;
@@ -294,7 +297,7 @@ int main(int argc, char* argv[])
 	  addr    = 0x0000000000000000;
 	  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
 	  {
-	  int sz = 2000000/179 + 1;  // get from read in TYPE 1
+	  int sz = 2000000/179/2 + 1;  // /2 when 32-bit change, get from read in TYPE 1
 	  std::cout << "sw: Line " << __LINE__ << ":::"
 		    << "Number of packets expecting: " << sz << std::endl;
 
@@ -316,8 +319,10 @@ int main(int argc, char* argv[])
 		  
 			for(int i = 0; i < sz; ++i)
 			{
-			  //std::cout << "sw: Line " << __LINE__ << ":::"
-			  //		  << "Received " << qwords << " qwords. Waiting for data packet: " << i << std::endl;
+			  if(debug)
+			    std::cout << "sw: Line " << __LINE__ << ":::"
+				      << "Received " << qwords << " qwords. Waiting for data packet: " << 
+			      i << " of " << sz << std::endl;
 
 				// read response
 				// ///////////////////////////////////////////////////////////
