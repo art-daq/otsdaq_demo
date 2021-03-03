@@ -31,41 +31,26 @@ e20:s106:prof		e20:s106:prof		e20:s106:prof		e20:s106:prof		-std=c++17
 e20:s106:debug		e20:s106:debug		e20:s106:debug		e20:s106:debug		-std=c++17
 e19:s106:prof		e19:s106:prof		e19:s106:prof		e19:s106:prof		-std=c++17
 e19:s106:debug		e19:s106:debug		e19:s106:debug		e19:s106:debug		-std=c++17
-c7:s106:prof		c7:s106:prof		c7:s106:prof		c7:s106:prof		-std=c++17
-c7:s106:debug		c7:s106:debug		c7:s106:debug		c7:s106:debug		-std=c++17
 
 e20:s105:prof		e20:s105:prof		e20:s105:prof		e20:s105:prof		-std=c++17
 e20:s105:debug		e20:s105:debug		e20:s105:debug		e20:s105:debug		-std=c++17
 e19:s105:prof		e19:s105:prof		e19:s105:prof		e19:s105:prof		-std=c++17
 e19:s105:debug		e19:s105:debug		e19:s105:debug		e19:s105:debug		-std=c++17
-c7:s105:prof		c7:s105:prof		c7:s105:prof		c7:s105:prof		-std=c++17
-c7:s105:debug		c7:s105:debug		c7:s105:debug		c7:s105:debug		-std=c++17
 
 e20:s104:prof		e20:s104:prof		e20:s104:prof		e20:s104:prof		-std=c++17
 e20:s104:debug		e20:s104:debug		e20:s104:debug		e20:s104:debug		-std=c++17
 e19:s104:prof		e19:s104:prof		e19:s104:prof		e19:s104:prof		-std=c++17
 e19:s104:debug		e19:s104:debug		e19:s104:debug		e19:s104:debug		-std=c++17
-c7:s104:prof		c7:s104:prof		c7:s104:prof		c7:s104:prof		-std=c++17
-c7:s104:debug		c7:s104:debug		c7:s104:debug		c7:s104:debug		-std=c++17
 
 e19:s103:prof		e19:s103:prof		e19:s103:prof		e19:s103:prof		-std=c++17
 e19:s103:debug		e19:s103:debug		e19:s103:debug		e19:s103:debug		-std=c++17
 e19:s103:py2:prof	e19:s103:py2:prof	e19:s103:py2:prof	e19:s103:py2:prof	-std=c++17
 e19:s103:py2:debug	e19:s103:py2:debug	e19:s103:py2:debug	e19:s103:py2:debug	-std=c++17
-c7:s103:prof		c7:s103:prof		c7:s103:prof		c7:s103:prof		-std=c++17
-c7:s103:debug		c7:s103:debug		c7:s103:debug		c7:s103:debug		-std=c++17
-c7:s103:py2:prof	c7:s103:py2:prof	c7:s103:py2:prof	c7:s103:py2:prof	-std=c++17
-c7:s103:py2:debug	c7:s103:py2:debug	c7:s103:py2:debug	c7:s103:py2:debug	-std=c++17
 
 e19:s97:prof		e19:s97:prof		e19:s97:prof		e19:s97:prof		-std=c++17
 e19:s97:debug		e19:s97:debug		e19:s97:debug		e19:s97:debug		-std=c++17
 e19:s97:py2:prof	e19:s97:py2:prof	e19:s97:py2:prof	e19:s97:py2:prof	-std=c++17
 e19:s97:py2:debug	e19:s97:py2:debug	e19:s97:py2:debug	e19:s97:py2:debug	-std=c++17
-
-c7:s97:prof			c7:s97:prof			c7:s97:prof			c7:s97:prof			-std=c++17
-c7:s97:debug		c7:s97:debug		c7:s97:debug		c7:s97:debug		-std=c++17
-c7:s97:py2:prof		c7:s97:py2:prof		c7:s97:py2:prof		c7:s97:py2:prof		-std=c++17
-c7:s97:py2:debug	c7:s97:py2:debug	c7:s97:py2:debug	c7:s97:py2:debug	-std=c++17
 
 end_qualifier_list
 
