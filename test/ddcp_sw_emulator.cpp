@@ -153,17 +153,15 @@ int main(int argc, char* argv[])
 
 	char         buff[MAXBUFLEN];
 	unsigned int packetSz;
-	int          type = atoi(argv[2]);
-	bool         debug = atoi(argv[3]);
+	bool         debug = false;
 	std::cout << "sw: Line " << __LINE__ << ":::"
 		  << "Type of Test: " << type << " debug=" << debug << std::endl;
 
+	int          type = atoi(argv[2]);
+
+	uint64_t addr = 0;//stoul(argv[3],0,16);
+	sscanf(argv[3],"0x%llX",&addr);
 	uint64_t val = 0;
-	uint64_t addr;
-	bool     a    = 4;
-	std::string   test = "hehehel";
-	if(a != test.size())
-		std::cout << std::endl;
 
 	const unsigned int RX_ADDR_OFFSET = 2;
 	const unsigned int RX_DATA_OFFSET = 10;
@@ -171,82 +169,102 @@ int main(int argc, char* argv[])
 
 	switch(type)
 	{
-	case 1:
-		// write and read
+	case 1:		//write
+	case 10:	//long write
+		
+		sscanf(argv[4],"0x%llX",&val);
+		cout << "====== WRITE "
+			 << "| addr: 0x" <<
+				hex << setw(12) << addr << " %d " << dec << setw(10)<< addr << 
+				"  \t| write-val: 0x" <<
+				hex << setw(12) << val << " %d " << dec << setw(10) << val << endl;
 
 		// setup write packet ///////////////////////////////////////////////////////////
-		buff[0] = 1;       // write
-		buff[1] = 1;       // num of quadwords
-		addr    = 0x1001;  // data_gen_cnt
-		memcpy((void*)&buff[RX_ADDR_OFFSET], (void*)&addr, 8);
+		//Read of 2000000 16MB requst :
+		  //0004 000f 0100 0002 
+		  //0000 0000 0000 0000
+		  //0000 0000 0000 0000
+		  //0000 0000 001e 8480 
+		  //0000 0000 0000 0000    
+		  //Flipped byte order
+		  //0200 0001 0f00 0400
+		  //0000 0000 0000 0000
+		  //0000 0000 0000 0000 
+		  //8084 1e00 0000 0000
+		  //0000 0000 0000 0000
+	  
+		  packetSz = 0;
+		  addr    = 0x040000010f000400;
+		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
+		  addr    = 0x0000000000000000;
+		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
+		  addr    = 0x0000000000000000;
+		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
+		  addr    = 0x0100000000000000; //size //0x80841e0000000000;
+		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
+		  addr    = 0x0400000000000000; //payload is 4 bytes
+		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
+		  memcpy((void*)&buff[packetSz], (void*)&val, 4); packetSz += 4;
+		  {
+				int sz = 1;// 2000000/179/2 + 1;  // /2 when 32-bit change, get from read in TYPE 1
+				std::cout << "sw: Line " << __LINE__ << ":::"
+					<< "Number of packets expecting: " << sz << std::endl;
+				
+				unsigned long long qwords = 0;
+				if((numbytes = sendto(sockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) ==
+				   -1)
+				{
+					perror("sw: sendto");
+					exit(1);
+				}
+				
+				// read data packets ///////////////////////////////////////////////////////////
+			
+				  			  
+				for(int i = 0; i < sz; ++i)
+				{
+				  if(debug)
+					std::cout << "sw: Line " << __LINE__ << ":::"
+						  << "Received " << qwords << " qwords. Waiting for data packet: " << 
+					  i << " of " << sz << std::endl;
 
-		val = 4;
-		for(int i = 0; i < buff[1]; ++i, ++val)
-			memcpy((void*)&buff[RX_DATA_OFFSET + i * 8],
-			       (void*)&val,
-			       8);  // increment each time
-		packetSz = RX_DATA_OFFSET + buff[1] * 8;
+					// read response
+					// ///////////////////////////////////////////////////////////
+					if((numbytes = recvfrom(sockfd,
+											buff,
+											MAXBUFLEN - 1,
+											0,
+											(struct sockaddr*)&their_addr,
+											&addr_len)) == -1)
+					{
+						perror("recvfrom");
+						exit(1);
+					}
+					qwords += (numbytes-40)/8;
+					
+					continue;
+					printf("sw: got read response from %s\n",
+						   inet_ntop(their_addr.ss_family,
+									 get_in_addr((struct sockaddr*)&their_addr),
+									 s,
+									 sizeof s));
+					printf("sw: packet is %d bytes long\n", numbytes);
+					printf("recv packet contents: ");
 
-		if((numbytes = sendto(sockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) ==
-		   -1)
-		{
-			perror("sw: sendto");
-			exit(1);
-		}
-		printf("sw: sent %d bytes to %s\n", numbytes, argv[1]);
+					for(int i = 0; i < numbytes; ++i)
+					{
+						printf("%2.2X", (unsigned char)buff[i]);
+						if(i % 8 == 7)
+							printf("\n");
+					}
+					printf("\n");
 
-		buff[0] = 0;  // read request
-		              // ///////////////////////////////////////////////////////////
-		packetSz = RX_DATA_OFFSET;
-
-		if((numbytes = sendto(sockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) ==
-		   -1)
-		{
-			perror("sw: sendto");
-			exit(1);
-		}
-		printf("sw: sent %d bytes to %s\n", numbytes, argv[1]);
-		printf("sent packet contents: ");
-
-		for(int i = 0; i < numbytes; ++i)
-		{
-			printf("%2.2X", (unsigned char)buff[i]);
-			if(i % 8 == 7)
-				printf("\n");
-		}
-		printf("\n");
-
-		// read response ///////////////////////////////////////////////////////////
-		if((numbytes = recvfrom(sockfd,
-		                        buff,
-		                        MAXBUFLEN - 1,
-		                        0,
-		                        (struct sockaddr*)&their_addr,
-		                        &addr_len)) == -1)
-		{
-			perror("recvfrom");
-			exit(1);
-		}
-
-		printf("sw: got read response from %s\n",
-		       inet_ntop(their_addr.ss_family,
-		                 get_in_addr((struct sockaddr*)&their_addr),
-		                 s,
-		                 sizeof s));
-		printf("sw: packet is %d bytes long\n", numbytes);
-		printf("recv packet contents: ");
-
-		for(int i = 0; i < numbytes; ++i)
-		{
-			printf("%2.2X", (unsigned char)buff[i]);
-			if(i % 8 == 7)
-				printf("\n");
-		}
-		printf("\n");
-
-		memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
-		std::cout << "sw: Line " << __LINE__ << ":::"
-		     << "Value read: " << std::hex << val << std::endl;
+					memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
+					std::cout << "sw: Line " << __LINE__ << ":::"
+						 << "Value read: " << val << std::endl;
+				}
+				__COUT__ << "Got all " << sz << " packet(s)." << __E__;
+		  }
 
 		break;
 	case 2:

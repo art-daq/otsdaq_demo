@@ -24,7 +24,7 @@ def main(argv):
     buf+=chr(int(argv[2])&0xff)
     buf+="This is the ARTDAQ UDP test string. It contains exactly 109 characters, making for a total size of 111 bytes."
     s = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
-    s.sendto( buf, (node,int(port)) )
+    s.sendto( buf.encode('UTF-8'), (node,int(port)) )
     pass
 
 
