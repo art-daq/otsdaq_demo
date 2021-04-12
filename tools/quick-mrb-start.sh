@@ -235,7 +235,7 @@ chmod +x pullProducts
     fi
 rm -rf *.bz2 *.txt
 source $Base/products/setup
-setup mrb
+setup mrb v4_01_00
 setup git
 setup gitflow
 setup nodejs v4_5_0
