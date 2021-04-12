@@ -187,7 +187,7 @@ fi
 notag=0
 if [ -z "${tag:-}" ]; then 
   if [[ $opt_develop -eq 0 ]];then
-    tag=master
+    tag=stable
   else
     tag=develop
   fi
