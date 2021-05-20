@@ -1,5 +1,3 @@
-include_directories(${MPI_INCLUDE_PATH})
-include_directories(${CMAKE_BINARY_DIR}/artdaq)
   
 simple_plugin(FEOtsEthernetProgramInterface "interface"
 	otsdaq_components::otsdaq-components_FEInterfaces_FEOtsUDPTemplateInterface_interface
