@@ -11,9 +11,9 @@ simple_plugin(FEOtsEthernetProgramInterface "interface"
   otsdaq::ConfigurationInterface
   otsdaq::TableCore
 #  otsdaq-demo_FEInterfaces_FEOtsUDPTemplateInterface_interface
-#  ${CETLIB}
-#  ${CETLIB_EXCEPT}
-	${MF_MESSAGELOGGER}
+#  cetlib
+#  cetlib_except
+	MF_MessageLogger
 	${XDAQ_XERCES-C}
 	${Boost_SYSTEM_LIBRARY}
 	pthread
