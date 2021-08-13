@@ -187,7 +187,7 @@ fi
 notag=0
 if [ -z "${tag:-}" ]; then 
   if [[ $opt_develop -eq 0 ]];then
-    tag=master
+    tag=stable
   else
     tag=develop
   fi
@@ -205,8 +205,8 @@ if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
   demo_version=`grep "parent otsdaq_demo" $Base/download/product_deps|awk '{print $3}'`
   tag=$demo_version
 fi
-otsdaq_version=`grep "^otsdaq " $Base/download/product_deps | awk '{print $2}'`
-utilities_version=`grep "^otsdaq_utilities " $Base/download/product_deps | awk '{print $2}'`
+otsdaq_version=`grep "^otsdaq\s" $Base/download/product_deps | awk '{print $2}'`
+utilities_version=`grep "^otsdaq_utilities\s" $Base/download/product_deps | awk '{print $2}'`
 defaultQuals=`grep "defaultqual" $Base/download/product_deps|awk '{print $2}'`
 defaultE=`echo $defaultQuals|cut -f1 -d:`
 defaultS=`echo $defaultQuals|cut -f2 -d:`
@@ -235,7 +235,7 @@ chmod +x pullProducts
     fi
 rm -rf *.bz2 *.txt
 source $Base/products/setup
-setup mrb
+setup mrb v4_01_00
 setup git
 setup gitflow
 setup nodejs v4_5_0

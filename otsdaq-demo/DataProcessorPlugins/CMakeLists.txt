@@ -1,15 +1,7 @@
 simple_plugin(DemoDQMHistosConsumer "processor"
-    Configurable
 	DemoRootUtilities
-    RootUtilities
-    DataManager
-    WorkLoopManager
-#	MessageFacility
-	Macros
-    ConfigurationInterface
-    TableCore
-	${ROOT_BASIC_LIB_LIST}
-	${MF_MESSAGELOGGER}
+    otsdaq::RootUtilities
+    otsdaq::DataManager
   )
   
 install_headers()
