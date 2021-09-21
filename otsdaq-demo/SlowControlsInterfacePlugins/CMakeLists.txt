@@ -1,5 +1,5 @@
 
-simple_plugin(SlowControlsInterfaceTemplate "slowcontrols"	
+basic_plugin(SlowControlsInterfaceTemplate "slowcontrols"	
 	otsdaq::SlowControlsCore   
 	
   )

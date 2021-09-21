@@ -1,5 +1,5 @@
   
-simple_plugin(FEOtsEthernetProgramInterface "interface"
+basic_plugin(FEOtsEthernetProgramInterface "interface"
 	otsdaq_components::otsdaq-components_FEInterfaces_FEOtsUDPTemplateInterface_interface
   otsdaq_components::DAQHardware
   otsdaq::FECore
