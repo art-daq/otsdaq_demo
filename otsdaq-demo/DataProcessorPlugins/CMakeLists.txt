@@ -1,4 +1,4 @@
-simple_plugin(DemoDQMHistosConsumer "processor"
+basic_plugin(DemoDQMHistosConsumer "processor"
 	DemoRootUtilities
     otsdaq::RootUtilities
     otsdaq::DataManager
