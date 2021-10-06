@@ -113,7 +113,8 @@ function detectAndPull() {
 	local packageInstalled=`ups list -aK+ $packageName $packageVersion ${packageUPSString-}|grep -c "$packageName"`
 	if [ $packageInstalled -eq 0 ]; then
 		local packagePath="$packageName/$packageVersion/$packageName-$packageDotVersion-${packageOs}${packageQualifiers-}.tar.bz2"
-		wget http://scisoft.fnal.gov/scisoft/packages/$packagePath --no-check-certificate >/dev/null 2>&1 
+                echo INFO: about to wget $packageName-$packageDotVersion-${packageOs}${packageQualifiers-}
+		wget --load-cookies=$cookief http://scisoft.fnal.gov/scisoft/packages/$packagePath >/dev/null 2>&1
 		local packageFile=$( echo $packagePath | awk 'BEGIN { FS="/" } { print $NF }' )
 
 		if [[ ! -e $packageFile ]]; then
@@ -133,6 +134,130 @@ function detectAndPull() {
 	fi
 	cd $startDir
 }
+#
+# urlencode -- encode special characters for post/get arguments
+#
+urlencode() {
+   perl -pe 'chomp(); s{\W}{sprintf("%%%02x",ord($&))}ge;' "$@"
+}
+
+site=https://cdcvs.fnal.gov/redmine
+listf=/tmp/list_p$$
+cookief=/tmp/cookies_p$$
+rlverbose=${rlverbose:=false}
+trap 'rm -f /tmp/postdata$$ /tmp/at_p$$ $cookief $listf' EXIT
+#
+# login form
+#
+do_login() {
+     get_passwords
+     get_auth_token "${site}/login"
+     post_url  \
+       "${site}/login" \
+       "back_url=$site" \
+       "authenticity_token=$authenticity_token" \
+       "username=`echo $user | urlencode`" \
+       "password=`echo $pass | urlencode`" \
+       "login=Login »" 
+     if grep '>Sign in' $listf > /dev/null;then
+        echo "Login failed."
+        false
+     else
+        true
+     fi
+}
+get_passwords() {
+   case "x${user-}y${pass-}" in
+   xy)
+       if [ -r   ${REDMINE_AUTHDIR:-.}/.redmine_lib_passfile ];then 
+	   read -r user pass < ${REDMINE_AUTHDIR:-.}/.redmine_lib_passfile
+       else
+	   user=$USER
+           stty -echo
+	   printf "Services password for $user: "
+	   read pass
+           stty echo
+       fi;;
+    esac
+}
+get_auth_token() {
+    authenticity_token=`fetch_url "${1}" |
+                  tee /tmp/at_p$$ |
+                  grep 'name="authenticity_token"' |
+                  head -1 |
+                  sed -e 's/.*value="//' -e 's/".*//' | 
+                  urlencode `
+}
+
+#
+# fetch_url -- GET a url from a site, maintaining cookies, etc.
+#
+fetch_url() {
+     wget \
+        --no-check-certificate \
+	--load-cookies=${cookief} \
+        --referer="${lastpage-}" \
+	--save-cookies=${cookief} \
+	--keep-session-cookies \
+	-o ${debugout:-/dev/null} \
+	-O - \
+	"$1"  | ${debugfilter:-cat}
+     lastpage="$1"
+}
+
+#
+# post_url POST to a url maintaining cookies, etc.
+#    takes a url and multiple form data arguments
+#    which are joined with "&" signs
+#
+post_url() {
+     url="$1"
+     extra=""
+     if  [ "$url" == "-b" ];then
+         extra="--remote-encoding application/octet-stream"
+         shift
+         url=$1
+     fi
+     shift
+     the_data=""
+     sep=""
+     df=/tmp/postdata$$
+     :>$df
+     for d in "$@";do
+        printf "%s" "$sep$d" >> $df
+        sep="&"
+     done
+     wget -O $listf \
+        -o $listf.log \
+        --debug \
+        --verbose \
+        $extra \
+        --no-check-certificate \
+	--load-cookies=${cookief} \
+	--save-cookies=${cookief} \
+        --referer="${lastpage-}" \
+	--keep-session-cookies \
+        --post-file="$df"  $url
+     if grep '<div.*id=.errorExplanation' $listf > /dev/null;then
+        echo "Failed: error was:"
+        cat $listf | sed -e '1,/<div.*id=.errorExplanation/d' | sed -e '/<.div>/,$d'
+        return 1
+     fi
+     if grep '<div.*id=.flash_notice.*Success' $listf > /dev/null;then
+        $rlverbose && echo "Succeeded"
+        return 0
+     fi
+     # not sure if it worked... 
+     $rlverbose && echo "Unknown -- detagged output:"
+     $rlverbose && cat $listf | sed -e 's/<[^>]*>//g'
+     $rlverbose && echo "-----"
+     $rlverbose && cat $listf.log
+     $rlverbose && echo "-----"
+     return 0
+} # post_url
+
+do_login https://cdcvs.fnal.gov/redmine
+
 cd $Base/download
 
 # 28-Feb-2017, KAB: use central products areas, if available and not skipped
@@ -175,9 +300,9 @@ if [[ $opt_skip_extra_products -eq 0 ]]; then
   PRODUCTS_SET="${PRODUCTS:-}"
 fi
 
-echo "Cloning cetpkgsupport to determine current OS"
-git clone http://cdcvs.fnal.gov/projects/cetpkgsupport
-os=`./cetpkgsupport/bin/get-directory-name os`
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/cetpkgsupport/repository/revisions/master/raw/bin/get-directory-name
+chmod +x $Base/download/get-directory-name
+os=`$Base/download/get-directory-name os`
 
 if [[ "$os" == "u14" ]]; then
 	echo "-H Linux64bit+3.19-2.19" >../products/ups_OVERRIDE.`hostname`
@@ -194,15 +319,17 @@ if [ -z "${tag:-}" ]; then
   notag=1;
 fi
 if [[ -e product_deps ]]; then mv product_deps product_deps.save; fi
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps --no-check-certificate
-demo_version=`grep "parent otsdaq_demo" $Base/download/product_deps|awk '{print $3}'`
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/CMakeLists.txt
+demo_version=v`grep "project" $Base/download/CMakeLists.txt|grep -oE "VERSION [^)]*"|awk '{print $2}'|sed 's/\./_/g'`
 if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
   tag=$demo_version
 
   # 06-Mar-2017, KAB: re-fetch the product_deps file based on the tag
   mv product_deps product_deps.orig
-  wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps --no-check-certificate
-  demo_version=`grep "parent otsdaq_demo" $Base/download/product_deps|awk '{print $3}'`
+  wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/ups/product_deps
+  wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/$tag/raw/CMakeLists.txt
+  demo_version=v`grep "project" $Base/download/CMakeLists.txt|grep -oE "VERSION [^)]*"|awk '{print $2}'|sed 's/\./_/g'`
   tag=$demo_version
 fi
 otsdaq_version=`grep "^otsdaq\s" $Base/download/product_deps | awk '{print $2}'`
@@ -226,19 +353,24 @@ else
 	build_type="prof"
 fi
 
-wget http://scisoft.fnal.gov/scisoft/bundles/tools/pullProducts --no-check-certificate
+wget --load-cookies=$cookief http://scisoft.fnal.gov/scisoft/bundles/tools/pullProducts
 chmod +x pullProducts
 ./pullProducts $Base/products ${os} otsdaq-${otsdaq_version} ${squalifier}-${equalifier} ${build_type}
     if [ $? -ne 0 ]; then
 	echo "Error in pullProducts."
 	exit 1
     fi
+
+mrbversion=`grep mrb *_MANIFEST.txt|sort|tail -1|awk '{print $2}'`
 rm -rf *.bz2 *.txt
+export PRODUCTS=$PRODUCTS_SET
 source $Base/products/setup
-setup mrb v4_01_00
+PRODUCTS_SET=$PRODUCTS
+echo PRODUCTS after source products/setup: $PRODUCTS
+detectAndPull mrb noarch nq $mrbversion
+setup mrb $mrbversion
 setup git
 setup gitflow
-setup nodejs v4_5_0
 
 export MRB_PROJECT=otsdaq_demo
 cd $Base
@@ -268,7 +400,7 @@ mrb gitCheckout -t ${demo_version} -d otsdaq_demo http://cdcvs.fnal.gov/projects
 fi
 fi
 
-
+mrb uc
 
 
 cd $Base
@@ -289,11 +421,16 @@ cd $Base
 	source $Base/products/setup
         PRODUCTS=\${PRODUCTS:+\${PRODUCTS}}\${PRODUCTS_SAVE:+\:\${PRODUCTS_SAVE}}
         
-
-	setup mrb
-	setup git
+        
+unsetup git >/dev/null 2>&1
+if [ -z \$CET_SUBDIR ];then
+  unsetup cetpkgsupport >/dev/null 2>&1
+  unset CET_PLATINFO
+  setup cetpkgsupport
+fi
+	setup mrb $mrbversion
 	source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifier}_${build_type}/setup
-	source mrbSetEnv
+	mrbsetenv
 	echo -e "setup [${LINENO}]  \t Now your products path is PRODUCTS=\${PRODUCTS}"
 	echo
 
@@ -346,8 +483,11 @@ export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
 		
 #... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
+#download redmine_login script
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/redmine_login.sh -O redmine_login.sh --no-check-certificate
+
 #download get_tutorial_data script
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 
 #change permissions so the script is executable
 chmod 755 get_tutorial_data.sh
@@ -360,7 +500,7 @@ export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabase
 #... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
 #download get_tutorial_database script
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate
 
 #change permissions so the script is executable
 chmod 755 get_tutorial_database.sh
@@ -377,7 +517,7 @@ echo -e "UpdateOTS.sh [${LINENO}]  \t updating tutorial launch scripts..."
 rm get_tutorial_data.sh &>/dev/null 2>&1 #hide output
 rm get_tutorial_database.sh &>/dev/null 2>&1 #hide output
 rm reset_ots_tutorial.sh &>/dev/null 2>&1 #hide output
-wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate	
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate	
 chmod 755 reset_ots_tutorial.sh
 
 
@@ -391,7 +531,7 @@ chmod 755 reset_ots_tutorial.sh
 # Build artdaq_demo
 cd $MRB_BUILDDIR
 set +u
-source mrbSetEnv
+mrbsetenv
 set -u
 export CETPKG_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 mrb build    # VERBOSE=1

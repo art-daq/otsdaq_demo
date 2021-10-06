@@ -17,6 +17,9 @@ if ! [ -e setup_ots.sh ]; then
   exit 1
 fi
 
+# Login to redmine
+source redmine_login.sh
+
 Base=$PWD
 #commenting out unique filename generation
 # no need to keep more than one past log for standard users 
@@ -90,9 +93,9 @@ echo
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Downloading tutorial database.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip"
 echo
-wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
+wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Unzipping tutorial database.."
 echo 
