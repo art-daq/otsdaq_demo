@@ -70,8 +70,6 @@ if [[ "$3"  == "--version" && "x$4" != "x" ]]; then
 	VERSION="$4"
 fi
 
-# Login to redmine
-source redmine_login.sh
 
 #echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
 #echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
@@ -79,19 +77,23 @@ echo
 
 #determine if kdialog is functional 
 # if not alias to echo
-KDIALOG_ALWAYS_YES=0
+if [ "x$KDIALOG_ALWAYS_YES" == "x" ]; then
+	KDIALOG_ALWAYS_YES=0
+fi
 
 unalias kdialog >/dev/null 2>&1 
 KDIALOG_TEST="$(which kdialog 2>&1)"
-#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
-		
-if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"		
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t DISPLAY  \t= $DISPLAY"		
+
+if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	#instead of e.g. /usr/bin/kdialog
 	# only works if the script was sourced!
 
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, attempt to bypass with alias echo and KDIALOG_ALWAYS_YES"
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Note: kdialog bypass only works if reset_ots_tutorial.sh was sourced."
-		
+	
 	alias kdialog="echo"
 	which kdialog
 	KDIALOG_ALWAYS_YES=1
@@ -103,7 +105,12 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 
 	ots --killall
 	killall -9 ots_udp_hw_emulator
-	
+
+	# Login to redmine
+	source "${OTSDAQ_DIR}"/tools/redmine_login.sh
+
+	export SKIP_REDMINE_LOGIN=1 
+
 	#download and run get_tutorial_data script
 	wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 	chmod 755 get_tutorial_data.sh
@@ -114,6 +121,8 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	chmod 755 get_tutorial_database.sh
 	./get_tutorial_database.sh --tutorial ${TUTORIAL} --version ${VERSION}
 	
+	unset SKIP_REDMINE_LOGIN
+	exit
 	#clean up
 	rm get_tutorial_database.sh
 	rm get_tutorial_data.sh
@@ -128,6 +137,7 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	echo
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Tutorial reset script complete."
 	
+	unalias kdialog
 	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit  #exit is used if script is run ./reset...
 fi
@@ -165,6 +175,8 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Script log save
 source setup_ots.sh
 
 
+# Login to redmine
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh
 
 
 #Steps:

@@ -18,7 +18,7 @@ if ! [ -e setup_ots.sh ]; then
 fi
 
 # Login to redmine
-source redmine_login.sh
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh
 
 Base=$PWD
 #commenting out unique filename generation
