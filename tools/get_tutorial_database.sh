@@ -95,7 +95,7 @@ echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Downloading 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip"
 echo
-wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
+wget --load-cookies=$REDMINE_LOGIN_COOKIEF otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Unzipping tutorial database.."
 echo 
