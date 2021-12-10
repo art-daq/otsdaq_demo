@@ -101,7 +101,7 @@ echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Unzipping tu
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t unzip tutorial_${TUTORIAL}_${VERSION}_database.zip -d tmpd1234"
 unzip tutorial_${TUTORIAL}_${VERSION}_database.zip -d tmpd1234
-
+exit
 # bkup current database
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"

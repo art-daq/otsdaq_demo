@@ -112,9 +112,9 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLA
 	export SKIP_REDMINE_LOGIN=1 
 
 	#download and run get_tutorial_data script
-	wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
-	chmod 755 get_tutorial_data.sh
-	./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
+	# wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
+	# chmod 755 get_tutorial_data.sh
+	# ./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
 		
 	#download and run get_tutorial_database script
 	wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate	
