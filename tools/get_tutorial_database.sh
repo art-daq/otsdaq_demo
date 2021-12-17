@@ -18,7 +18,7 @@ if ! [ -e setup_ots.sh ]; then
 fi
 
 # Login to redmine
-source "${OTSDAQ_DIR}"/tools/redmine_login.sh
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh #otsweb_login
 
 Base=$PWD
 #commenting out unique filename generation
@@ -95,13 +95,15 @@ echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Downloading 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip"
 echo
-wget --load-cookies=$REDMINE_LOGIN_COOKIEF otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
+rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip*
+wget --load-cookies=$REDMINE_LOGIN_COOKIEF https://cdcvs.fnal.gov/redmine/attachments/66045/tutorial_first_demo_v2_5_database.zip
+# wget --load-cookies=$REDMINE_LOGIN_COOKIEF otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Unzipping tutorial database.."
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t unzip tutorial_${TUTORIAL}_${VERSION}_database.zip -d tmpd1234"
 unzip tutorial_${TUTORIAL}_${VERSION}_database.zip -d tmpd1234
-exit
+
 # bkup current database
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"

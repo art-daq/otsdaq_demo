@@ -108,13 +108,14 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLA
 
 	# Login to redmine
 	source "${OTSDAQ_DIR}"/tools/redmine_login.sh
+	# source "${OTSDAQ_DIR}"/tools/otsweb_login.sh #broken, never worked
 
 	export SKIP_REDMINE_LOGIN=1 
 
 	#download and run get_tutorial_data script
-	# wget --load-cookies=$REDMINE_LOGIN_COOKIEF https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
-	# chmod 755 get_tutorial_data.sh
-	# ./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
+	wget --load-cookies=$REDMINE_LOGIN_COOKIEF https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
+	chmod 755 get_tutorial_data.sh
+	./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
 		
 	#download and run get_tutorial_database script
 	wget --load-cookies=$REDMINE_LOGIN_COOKIEF https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate	
@@ -122,7 +123,8 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLA
 	./get_tutorial_database.sh --tutorial ${TUTORIAL} --version ${VERSION}
 	
 	unset SKIP_REDMINE_LOGIN
-	exit
+	# exit
+	
 	#clean up
 	rm get_tutorial_database.sh
 	rm get_tutorial_data.sh

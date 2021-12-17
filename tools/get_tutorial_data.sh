@@ -18,7 +18,7 @@ if ! [ -e setup_ots.sh ]; then
 fi
 
 # Login to redmine
-source "${OTSDAQ_DIR}"/tools/redmine_login.sh
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh #otsweb_login
 
 Base=$PWD
 #commenting out unique filename generation
@@ -96,7 +96,9 @@ echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Downloading tuto
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip"
 echo
-wget --load-cookies=$REDMINE_LOGIN_COOKIEF otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
+tutorial_${TUTORIAL}_${VERSION}_Data.zip*
+wget --load-cookies=$REDMINE_LOGIN_COOKIEF https://cdcvs.fnal.gov/redmine/attachments/66046/tutorial_first_demo_v2_5_Data.zip
+# wget --load-cookies=$REDMINE_LOGIN_COOKIEF otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Unzipping tutorial user data.."
 echo 
