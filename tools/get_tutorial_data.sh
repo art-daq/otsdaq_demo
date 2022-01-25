@@ -27,8 +27,8 @@ Base=$PWD
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 #exec  > >(tee "$Base/log/$alloutput_file")
 mkdir "$Base/script_log"  &>/dev/null #hide output
-rm "$Base/script_log/$(basename $0).script"
-rm "$Base/script_log/$(basename $0)_stderr.script"
+rm "$Base/script_log/$(basename $0).script" >/dev/null 2>&1
+rm "$Base/script_log/$(basename $0)_stderr.script" >/dev/null 2>&1
 exec  > >(tee "$Base/script_log/$(basename $0).script")
 #exec 2> >(tee "$Base/script_log/$stderr_file")
 exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
@@ -96,7 +96,10 @@ echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Downloading tuto
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip"
 echo
-wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
+
+#FIXME -- for now, every tutorial gets same Data (until security to zip files can be resolved)
+wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/attachments/66046/tutorial_first_demo_v2_5_Data.zip -O tutorial_${TUTORIAL}_${VERSION}_Data.zip --no-check-certificate
+# wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Unzipping tutorial user data.."
 echo 
