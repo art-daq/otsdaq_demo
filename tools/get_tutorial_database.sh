@@ -18,7 +18,7 @@ if ! [ -e setup_ots.sh ]; then
 fi
 
 # Login to redmine
-source redmine_login.sh
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh #otsweb_login
 
 Base=$PWD
 #commenting out unique filename generation
@@ -97,8 +97,10 @@ echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget --load-
 echo
 
 #FIXME -- for now, every tutorial gets same database (until security to zip files can be resolved)
-wget --load-cookies=$cookief https://cdcvs.fnal.gov/redmine/attachments/66045/tutorial_first_demo_v2_5_database.zip -O tutorial_${TUTORIAL}_${VERSION}_database.zip --no-check-certificate
+rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip 
+wget --load-cookies=$REDMINE_LOGIN_COOKIEF https://cdcvs.fnal.gov/redmine/attachments/66045/tutorial_first_demo_v2_5_database.zip -O tutorial_${TUTORIAL}_${VERSION}_database.zip --no-check-certificate
 # wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
+
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Unzipping tutorial database.."
 echo 
