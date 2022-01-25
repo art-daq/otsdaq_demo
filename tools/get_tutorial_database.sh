@@ -18,7 +18,7 @@ if ! [ -e setup_ots.sh ]; then
 fi
 
 # Login to redmine
-source "${OTSDAQ_DIR}"/tools/redmine_login.sh #otsweb_login
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh
 
 Base=$PWD
 #commenting out unique filename generation
@@ -33,7 +33,7 @@ exec  > >(tee "$Base/script_log/$(basename $0).script")
 #exec 2> >(tee "$Base/script_log/$stderr_file")
 exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
 
-#setup defaul parameters
+#setup default parameters
 TUTORIAL='first_demo'
 VERSION='v2_2'
 
@@ -93,13 +93,16 @@ echo
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Downloading tutorial database.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget --load-cookies=$REDMINE_LOGIN_COOKIEF otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip"
 echo
 
 #FIXME -- for now, every tutorial gets same database (until security to zip files can be resolved)
-rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip 
-wget --load-cookies=$REDMINE_LOGIN_COOKIEF https://cdcvs.fnal.gov/redmine/attachments/66045/tutorial_first_demo_v2_5_database.zip -O tutorial_${TUTORIAL}_${VERSION}_database.zip --no-check-certificate
+rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip* # * helps root delete
+#NOTE!! must add "download" to link
+wget https://cdcvs.fnal.gov/redmine/attachments/download/66045/tutorial_first_demo_v2_5_database.zip
+	-O tutorial_${TUTORIAL}_${VERSION}_database.zip
 # wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
+
 
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Unzipping tutorial database.."
@@ -141,7 +144,7 @@ echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Cleaning up 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t rm -rf tmpd1234; rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip"
 echo
-rm -rf tmpd1234; rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip
+rm -rf tmpd1234; #rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip
 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"
