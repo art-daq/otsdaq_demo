@@ -49,6 +49,7 @@ echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t TUTORIAL \t= $TU
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t VERSION  \t= $VERSION"
 echo		
 
+shopt -s expand_aliases #allows for aliases in non-interactive mode (which apparently is critical depending on the temperment of the terminal)
 source setup_ots.sh
 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t ********************************************************************************"
@@ -97,9 +98,13 @@ echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t wget --load-
 echo
 
 #FIXME -- for now, every tutorial gets same database (until security to zip files can be resolved)
-rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip* # * helps root delete
+rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip* >/dev/null 2>&1 # * helps root delete
 #NOTE!! must add "download" to link
-wget https://cdcvs.fnal.gov/redmine/attachments/download/66045/tutorial_first_demo_v2_5_database.zip
+wget https://cdcvs.fnal.gov/redmine/attachments/download/66045/tutorial_first_demo_v2_5_database.zip \
+    --no-check-certificate \
+	--load-cookies=${REDMINE_LOGIN_COOKIEF} \
+	--save-cookies=${REDMINE_LOGIN_COOKIEF} \
+	--keep-session-cookies \
 	-O tutorial_${TUTORIAL}_${VERSION}_database.zip
 # wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_database.zip
 
@@ -144,7 +149,7 @@ echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t Cleaning up 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t rm -rf tmpd1234; rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip"
 echo
-rm -rf tmpd1234; #rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip
+rm -rf tmpd1234; rm -rf tutorial_${TUTORIAL}_${VERSION}_database.zip
 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_database.sh [${LINENO}]  \t *****************************************************"

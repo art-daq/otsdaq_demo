@@ -50,7 +50,7 @@ echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t TUTORIAL \t= $TU
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t VERSION  \t= $VERSION"
 echo		
 
-
+shopt -s expand_aliases #allows for aliases in non-interactive mode (which apparently is critical depending on the temperment of the terminal)
 source setup_ots.sh
 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t ********************************************************************************"
@@ -98,14 +98,14 @@ echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget --load-cook
 echo
 
 #FIXME -- for now, every tutorial gets same Data (until security to zip files can be resolved)
-rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip* # * helps root delete
+rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip* >/dev/null 2>&1 # * helps root delete
 #NOTE!! must add "download" to link
 wget https://cdcvs.fnal.gov/redmine/attachments/download/66046/tutorial_first_demo_v2_5_Data.zip  \
     --no-check-certificate \
 	--load-cookies=${REDMINE_LOGIN_COOKIEF} \
 	--save-cookies=${REDMINE_LOGIN_COOKIEF} \
 	--keep-session-cookies \
-	-O tutorial_${TUTORIAL}_${VERSION}_Data.zip --no-check-certificate
+	-O tutorial_${TUTORIAL}_${VERSION}_Data.zip
 # wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
 
 
