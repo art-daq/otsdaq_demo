@@ -17,6 +17,9 @@ if ! [ -e setup_ots.sh ]; then
   exit 1
 fi
 
+# Login to redmine	
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh	
+
 Base=$PWD
 #commenting out unique filename generation
 # no need to keep more than one past log for standard users 
@@ -24,14 +27,14 @@ Base=$PWD
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 #exec  > >(tee "$Base/log/$alloutput_file")
 mkdir "$Base/script_log"  &>/dev/null #hide output
-rm "$Base/script_log/$(basename $0).script"
-rm "$Base/script_log/$(basename $0)_stderr.script"
+rm "$Base/script_log/$(basename $0).script" >/dev/null 2>&1
+rm "$Base/script_log/$(basename $0)_stderr.script" >/dev/null 2>&1
 exec  > >(tee "$Base/script_log/$(basename $0).script")
 #exec 2> >(tee "$Base/script_log/$stderr_file")
 exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
 
 
-#setup defaul parameters
+#setup default parameters
 TUTORIAL='first_demo'
 VERSION='v2_2'
 
@@ -47,7 +50,7 @@ echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t TUTORIAL \t= $TU
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t VERSION  \t= $VERSION"
 echo		
 
-
+shopt -s expand_aliases #allows for aliases in non-interactive mode (which apparently is critical depending on the temperment of the terminal)
 source setup_ots.sh
 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t ********************************************************************************"
@@ -91,9 +94,21 @@ echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Downloading tutorial user data.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip"
 echo
-wget otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
+
+#FIXME -- for now, every tutorial gets same Data (until security to zip files can be resolved)
+rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip* >/dev/null 2>&1 # * helps root delete
+#NOTE!! must add "download" to link
+wget https://cdcvs.fnal.gov/redmine/attachments/download/66046/tutorial_first_demo_v2_5_Data.zip  \
+    --no-check-certificate \
+	--load-cookies=${REDMINE_LOGIN_COOKIEF} \
+	--save-cookies=${REDMINE_LOGIN_COOKIEF} \
+	--keep-session-cookies \
+	-O tutorial_${TUTORIAL}_${VERSION}_Data.zip
+# wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
+
+
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Unzipping tutorial user data.."
 echo 

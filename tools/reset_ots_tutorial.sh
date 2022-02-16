@@ -17,6 +17,7 @@
 #	NOTE: if kdialog is not installed this script must be sourced to bypass kdialog prompts
 #		e.g. source reset_ots_tutorial.sh --tutorial first_demo --version v2_4
 #
+# export KDIALOG_ALWAYS_YES=1	 # to force yes answer and no kdialog popups
 
 #setup default parameters
 TUTORIAL='first_demo'
@@ -71,54 +72,117 @@ if [[ "$3"  == "--version" && "x$4" != "x" ]]; then
 fi
 
 
+if ! [ -e setup_ots.sh ]; then
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t You must run this script from an OTSDAQ installation directory with a setup_ots.sh script!"
+	return  >/dev/null 2>&1 #return is used if script is sourced
+	exit  #exit is used if script is run ./reset...
+fi
+	
+shopt -s expand_aliases #allows for aliases in non-interactive mode (which apparently is critical depending on the temperment of the terminal)
+source setup_ots.sh
 
-#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
-#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
+# Login to redmine
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Redmine login required to gain access to tutorial downloads, please enter credentials." 
+source "${OTSDAQ_DIR}"/tools/redmine_login.sh
+
+
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t VERSION  \t= $VERSION"
 echo		
 
 #determine if kdialog is functional 
 # if not alias to echo
-KDIALOG_ALWAYS_YES=0
+
 
 unalias kdialog >/dev/null 2>&1 
 KDIALOG_TEST="$(which kdialog 2>&1)"
-#echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
-		
-if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
-	#instead of e.g. /usr/bin/kdialog
-	# only works if the script was sourced!
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"		
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t DISPLAY  \t= $DISPLAY"		
 
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, attempt to bypass with alias echo and KDIALOG_ALWAYS_YES"
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Note: kdialog bypass only works if reset_ots_tutorial.sh was sourced."
-		
+if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
+	#instead of e.g. /usr/bin/kdialog
+	# note: auto recognition only works if the script was sourced!
+
 	alias kdialog="echo"
 	which kdialog
 	KDIALOG_ALWAYS_YES=1
 	
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is not functional, bypassing user prompts"	
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is disabled, bypassing user prompts"	
 	echo
 
-	source setup_ots.sh
+
+	Base=$PWD
+
+	#commenting out unique filename generation
+	# no need to keep more than one past log for standard users 
+	#alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
+	#stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
+	mkdir "$Base/script_log"  &>/dev/null #hide output
+	SCRIPTNAME='reset_ots_tutorial'
+
+	rm "$Base/script_log/${SCRIPTNAME}.script" >/dev/null 2>&1
+	rm "$Base/script_log/${SCRIPTNAME}_stderr.script" >/dev/null 2>&1
+	exec  > >(tee "$Base/script_log/${SCRIPTNAME}.script")
+	exec 2> >(tee "$Base/script_log/${SCRIPTNAME}_stderr.script")
+
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Script log saved here $Base/script_log/${SCRIPTNAME}.script and $Base/script_log/${SCRIPTNAME}_stderr.script"
 
 	ots --killall
 	killall -9 ots_udp_hw_emulator
-	
+
 	#download and run get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
+	rm -rf get_tutorial_data.sh >/dev/null 2>&1
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh \
+		--no-check-certificate \
+		--load-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--save-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--keep-session-cookies \
+		-O get_tutorial_data.sh
 	chmod 755 get_tutorial_data.sh
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Getting tutorial Data..."
 	./get_tutorial_data.sh --tutorial ${TUTORIAL} --version ${VERSION}
 		
 	#download and run get_tutorial_database script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate	
+	rm -rf get_tutorial_database.sh >/dev/null 2>&1
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh \
+		--no-check-certificate \
+		--load-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--save-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--keep-session-cookies \
+		-O get_tutorial_database.sh
 	chmod 755 get_tutorial_database.sh
-	./get_tutorial_database.sh --tutorial ${TUTORIAL} --version ${VERSION}
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Getting tutorial database..."
+	./get_tutorial_database.sh --tutorial ${TUTORIAL} --version ${VERSION}	
+	
+	unset SKIP_REDMINE_LOGIN >/dev/null 2>&1
 	
 	#clean up
 	rm get_tutorial_database.sh
 	rm get_tutorial_data.sh
 
+
+	#usually skip tutorial launch is run during quick_ots_install.sh
+	if [ $SKIP_TUTORIAL_LAUNCH == 1 ]; then
+		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Skipping tutorial launch flag is set..."
+
+		#seems to help on clean install
+		source setup_ots.sh  >/dev/null 2>&1
+		UpdateOTS.sh --tables >/dev/null 2>&1
+		mb
+		ots --wiz #just to test activate the saved groups 
+		ots -k 
+
+		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Tutorial reset script complete."
+		unalias kdialog
+		return  >/dev/null 2>&1 #return is used if script is sourced
+		exit  #exit is used if script is run ./reset...
+	fi
+
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Launching tutorial..."
+
 	ots --wiz #just to test activate the saved groups  
-	ots  #launch normal mode and open firefox
+	ots  #launch normal mode (and open firefox)
 	
 	#start hardware emulator on port 4000
 	ots_udp_hw_emulator 4000 &
@@ -126,9 +190,13 @@ if [[ "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	echo
 	echo
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Tutorial reset script complete."
-	
+
+	rm -f /tmp/postdata$$ /tmp/at_p$$ $REDMINE_LOGIN_COOKIEF $REDMINE_LOGIN_LISTF*; unset SKIP_REDMINE_LOGIN
+	unalias kdialog
 	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit  #exit is used if script is run ./reset...
+else
+	KDIALOG_ALWAYS_YES=0
 fi
 
 #for testing KDIALOG ALWAYS
@@ -142,6 +210,7 @@ if ! [ -e setup_ots.sh ]; then
   exit  #exit is used if script is run ./reset...
 fi
 
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Using kdialog for tutorial reset."
 
 Base=$PWD
 
@@ -160,10 +229,6 @@ exec  > >(tee "$Base/script_log/${SCRIPTNAME}.script")
 exec 2> >(tee "$Base/script_log/${SCRIPTNAME}_stderr.script")
 
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Script log saved here $Base/script_log/${SCRIPTNAME}.script and $Base/script_log/${SCRIPTNAME}_stderr.script"
-
-source setup_ots.sh
-
-
 
 
 #Steps:
@@ -237,10 +302,15 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 		exit
 	fi
 		
-	#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
-	
 	#download get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
+	rm -rf get_tutorial_data.sh >/dev/null 2>&1
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh \
+		--no-check-certificate \
+		--load-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--save-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--keep-session-cookies \
+		-O get_tutorial_data.sh
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Getting tutorial Data..."
 	qdbus $dbusRef Set "" value 2
 	
 	#change permissions so the script is executable
@@ -259,10 +329,14 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 		exit
 	fi
 			
-	#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
-	
-	#download get_tutorial_data script
-	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate
+	#download get_tutorial_database script
+	rm -rf get_tutorial_database.sh >/dev/null 2>&1
+	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh \
+		--no-check-certificate \
+		--load-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--save-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--keep-session-cookies \
+		-O get_tutorial_database.sh
 	qdbus $dbusRef Set "" value 4
 	
 	#change permissions so the script is executable
@@ -299,11 +373,16 @@ fi
 if [[ "$TUTORIAL"  == "nim_plus" ]]; then
 
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Starting the ${TUTORIAL} tutorial extra steps..."
-	mv install_ots_repo.sh install_ots_repo.sh.bk
-	wget https://cdcvs.fnal.gov/redmine/projects/prepmodernization/repository/revisions/develop/raw/tools/install_ots_repo.sh -P ./ --no-check-certificate
+	mv install_ots_repo.sh install_ots_repo.sh.bk >/dev/null 2>&1
+	wget https://cdcvs.fnal.gov/redmine/projects/prepmodernization/repository/revisions/develop/raw/tools/install_ots_repo.sh \
+		--no-check-certificate \
+		--load-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--save-cookies=${REDMINE_LOGIN_COOKIEF} \
+		--keep-session-cookies \
+		-O install_ots_repo.sh
 	source install_ots_repo.sh #install prep modernization repo and table definitions
 	rm -rf install_ots_repo.sh
-	mv install_ots_repo.sh.bk install_ots_repo.sh
+	mv install_ots_repo.sh.bk install_ots_repo.sh  >/dev/null 2>&1
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Done with the ${TUTORIAL} tutorial extra steps."
 	
 else
@@ -365,6 +444,8 @@ qdbus $dbusRef Set "" value 7
 echo
 echo
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Tutorial reset script complete."
+
+rm -f /tmp/postdata$$ /tmp/at_p$$ $REDMINE_LOGIN_COOKIEF $REDMINE_LOGIN_LISTF*; unset SKIP_REDMINE_LOGIN
 
 qdbus $dbusRef close
 
