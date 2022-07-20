@@ -1,4 +1,4 @@
-cet_script(
+cet_script( ALWAYS_COPY
     #quick-start.sh
     #installArtDaqOts.sh
     #StartOTS.sh

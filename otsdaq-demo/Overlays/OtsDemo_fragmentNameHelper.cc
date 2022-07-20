@@ -1,5 +1,5 @@
 #include "otsdaq-demo/Overlays/FragmentType.hh"
-#include "artdaq-core/Data/FragmentNameHelper.hh"
+#include "artdaq-core/Plugins/FragmentNameHelper.hh"
 
 #include "TRACE/tracemf.h"
 #define TRACE_NAME "OtsDemoFragmentNameHelper"
@@ -11,7 +11,7 @@ namespace ots
  * This implementation uses artdaq-demo's SystemTypeMap and directly assigns names based
  * on it
  */
-class OtsDemoFragmentNameHelper : public artdaq::ArtdaqFragmentNameHelper
+class OtsDemoFragmentNameHelper : public artdaq::FragmentNameHelper
 {
   public:
 	/**
@@ -36,7 +36,7 @@ class OtsDemoFragmentNameHelper : public artdaq::ArtdaqFragmentNameHelper
 OtsDemoFragmentNameHelper::OtsDemoFragmentNameHelper(
     std::string unidentified_instance_name,
     std::vector<std::pair<artdaq::Fragment::type_t, std::string>> extraTypes)
-    : ArtdaqFragmentNameHelper(unidentified_instance_name, extraTypes)
+    : FragmentNameHelper(unidentified_instance_name, extraTypes)
 {
 	TLOG(TLVL_DEBUG) << "OtsDemoFragmentNameHelper CONSTRUCTOR START";
 	SetBasicTypes(ots::makeFragmentTypeMap());

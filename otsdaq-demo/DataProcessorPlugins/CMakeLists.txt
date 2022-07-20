@@ -1,7 +1,8 @@
-basic_plugin(DemoDQMHistosConsumer "processor"
-	DemoRootUtilities
+
+include(otsdaq::dataProcessor)
+cet_build_plugin(DemoDQMHistosConsumer otsdaq::dataProcessor LIBRARIES REG
+	otsdaq_demo::DemoRootUtilities
     otsdaq::RootUtilities
-    otsdaq::DataManager
   )
   
 install_headers()
