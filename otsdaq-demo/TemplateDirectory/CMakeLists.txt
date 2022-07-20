@@ -1,6 +1,6 @@
-cet_make(LIBRARY_NAME TemplateDirectory
-		 LIBRARIES
-		 ${XDAQ_BASIC_LIB_LIST}
-		 SOAPUtilities
-	 MessageFacility
+cet_make_library(LIBRARY_NAME TemplateDirectory
+SOURCE TemplateSupervisor.cc
+		 LIBRARIES PRIVATE
+		 otsdaq::CoreSupervisors
+		 otsdaq_components::FEInterfaces
 )

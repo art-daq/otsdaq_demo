@@ -1,12 +1,11 @@
-art_make(LIBRARY_NAME otsdaq-demo_Overlays
-    EXCLUDE OtsDemo_fragmentNameHelper.cc
-       LIB_LIBRARIES
-       artdaq_core::artdaq-core_Data
+cet_make_library(LIBRARY_NAME Overlays
+SOURCE FragmentType.cc
+LIBRARIES PUBLIC
+artdaq_core::artdaq-core_Data
        )
+       
+include(ArtdaqCorePlugins)
+cet_build_plugin(OtsDemo artdaq::fragmentNameHelper LIBRARIES REG otsdaq_demo::Overlays)
 
-  basic_plugin(OtsDemo "fragmentNameHelper"
-  otsdaq-demo_Overlays
-  artdaq_core::artdaq-core_Data_Artdaq_fragmentNameHelper
-)
 install_headers()
 install_source()

@@ -1,6 +1,5 @@
-
-basic_plugin(SlowControlsInterfaceTemplate "slowcontrols"	
-	otsdaq::SlowControlsCore   
+include(otsdaq::slowControls)
+cet_build_plugin(SlowControlsInterfaceTemplate otsdaq::slowControls
 	
   )
 

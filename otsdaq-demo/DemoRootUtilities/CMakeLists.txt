@@ -1,6 +1,7 @@
-cet_make(LIBRARY_NAME DemoRootUtilities
-	      LIBRARIES
-	      ${ROOT_BASIC_LIB_LIST}
+cet_make_library(LIBRARY_NAME DemoRootUtilities
+SOURCE DemoDQMHistos.cc
+	      LIBRARIES PRIVATE
+		  ROOT::Gui
 )
 
 install_headers()
