@@ -48,9 +48,12 @@ function dl_scisoft {
         return
     fi
 
-    for tarfile in `scisoft $myprod $myver|egrep "slf?7"|grep -E "noarch|$myequal|x86_64\.tar"|grep -v $mybtype|grep -v sha`;do
+    upslist=`ups list -aK+ $myprod $myver|grep -v $mybtype|grep -E "NULL|$myequal"|wc -l`
+    if [ $upslist -eq 0 ];then
+      for tarfile in `scisoft $myprod $myver|egrep "slf?7"|grep -E "noarch|$myequal|x86_64\.tar"|grep -v $mybtype|grep -v sha`;do
         curl $tarfile|tar -jxf -
-    done
+      done
+    fi
 }
 
 ifs_save=$IFS
