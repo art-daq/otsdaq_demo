@@ -4,3 +4,6 @@ SOURCE TemplateSupervisor.cc
 		 otsdaq::CoreSupervisors
 		 otsdaq_components::FEInterfaces
 )
+
+install_headers()
+install_source()
