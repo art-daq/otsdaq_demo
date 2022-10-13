@@ -9,6 +9,9 @@ if ! [ -d ../srcs ];then
   exit 2
 fi
 
+export PRODUCTS=$PWD:/cvmfs/fermilab.opensciencegrid.org/products/artdaq
+source setups
+
 demo_version=v`grep "project" ../srcs/otsdaq_demo/CMakeLists.txt|grep -oE "VERSION [^)]*"|awk '{print $2}'|sed 's/\./_/g'`
 defaultQuals=`grep "defaultqual" ../srcs/otsdaq_demo/ups/product_deps|awk '{print $2}'`
 equalifier=`echo $defaultQuals|cut -f1 -d:`
