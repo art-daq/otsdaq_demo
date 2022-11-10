@@ -34,11 +34,11 @@
 
 namespace ots
 {
-class WFViewer : public art::EDAnalyzer
+class ODWFViewer : public art::EDAnalyzer
 {
   public:
-	explicit WFViewer(fhicl::ParameterSet const& p);
-	virtual ~WFViewer() = default;
+	explicit ODWFViewer(fhicl::ParameterSet const& p);
+	virtual ~ODWFViewer() = default;
 
 	void   analyze(art::Event const& e) override;
 	void   beginRun(art::Run const&) override;
@@ -66,7 +66,7 @@ class WFViewer : public art::EDAnalyzer
 };
 }
 
-ots::WFViewer::WFViewer(fhicl::ParameterSet const& ps)
+ots::ODWFViewer::ODWFViewer(fhicl::ParameterSet const& ps)
     : art::EDAnalyzer(ps)
     , prescale_(ps.get<int>("prescale"))
     , current_run_(0)
@@ -81,7 +81,7 @@ ots::WFViewer::WFViewer(fhicl::ParameterSet const& ps)
     , outputFileName_(ps.get<std::string>("fileName", "otsdaqdemo_onmon.root"))
     , writeOutput_(ps.get<bool>("write_to_file", false))
 {
-	__COUT__ << "WFViewer CONSTRUCTOR BEGIN!!!!" << std::endl;
+	__COUT__ << "ODWFViewer CONSTRUCTOR BEGIN!!!!" << std::endl;
 	prescale_ = 1;
 	if(num_x_plots_ == std::numeric_limits<std::size_t>::max() ||
 	   num_y_plots_ == std::numeric_limits<std::size_t>::max())
@@ -137,10 +137,10 @@ ots::WFViewer::WFViewer(fhicl::ParameterSet const& ps)
 	gStyle->SetMarkerStyle(22);
 	gStyle->SetMarkerColor(4);
 
-	std::cout << __COUT_HDR_FL__ << "WFViewer CONSTRUCTOR END" << std::endl;
+	std::cout << __COUT_HDR_FL__ << "ODWFViewer CONSTRUCTOR END" << std::endl;
 }
 
-double ots::WFViewer::calcmean(const float* data)
+double ots::ODWFViewer::calcmean(const float* data)
 {
 	int    ii;
 	double mean = 0;
@@ -152,11 +152,11 @@ double ots::WFViewer::calcmean(const float* data)
 		mean += data[ii];
 	}
 	mean /= 10;
-	std::cout << "WFViewer mean is " << mean << " data[0] is " << data[0]
+	std::cout << "ODWFViewer mean is " << mean << " data[0] is " << data[0]
 	          << " data[1] is " << data[1] << " 2=" << data[2] << " 3=" << data[3]
 	          << std::endl
 	          << std::endl;
-	std::cout << "WFViewer mean is " << mean << " data[15997] is " << data[15997]
+	std::cout << "ODWFViewer mean is " << mean << " data[15997] is " << data[15997]
 	          << " data[15998] is " << data[15998] << " 2=" << data[15999]
 	          << " 3=" << data[15999] << std::endl
 	          << std::endl;
@@ -166,9 +166,9 @@ double ots::WFViewer::calcmean(const float* data)
 	return mean;
 }
 
-void ots::WFViewer::analyze(art::Event const& e)
+void ots::ODWFViewer::analyze(art::Event const& e)
 {
-	std::cout << __COUT_HDR_FL__ << "WFViewer Analyzing event " << e.event() << std::endl;
+	std::cout << __COUT_HDR_FL__ << "ODWFViewer Analyzing event " << e.event() << std::endl;
 	static std::size_t evt_cntr = -1;
 	evt_cntr++;
 
@@ -190,7 +190,7 @@ void ots::WFViewer::analyze(art::Event const& e)
 		//      fragments.emplace_back( (*fragments_with_label)[i_l] );
 		//    }
 
-		// std::cout << __COUT_HDR_FL__ << "WFViewer: There are " <<
+		// std::cout << __COUT_HDR_FL__ << "ODWFViewer: There are " <<
 		// (*fragments_with_label).size() << " fragments in this event" << std::endl;
 
 		for(auto frag : *fragments_with_label)
@@ -219,7 +219,7 @@ void ots::WFViewer::analyze(art::Event const& e)
 	//  for (std::size_t i = 0; i < fragments.size(); ++i) {
 	for(const auto& frag : fragments)
 	{
-		// Pointers to the types of fragment overlays WFViewer can handle;
+		// Pointers to the types of fragment overlays ODWFViewer can handle;
 		// only one will be used per fragment, of course
 
 		std::unique_ptr<DataGenFragment> drPtr;
@@ -235,14 +235,14 @@ void ots::WFViewer::analyze(art::Event const& e)
 
 		if(expected_sequence_id != frag.sequenceID())
 		{
-			TLOG(TLVL_WARNING, "WFViewer")
-			    << "Warning in WFViewer: expected fragment with sequence ID "
+			TLOG(TLVL_WARNING, "ODWFViewer")
+			    << "Warning in ODWFViewer: expected fragment with sequence ID "
 			    << expected_sequence_id << ", received one with sequence ID "
 			    << frag.sequenceID();
 		}
 
 		FragmentType fragtype = static_cast<FragmentType>(frag.type());
-		// std::cout << __COUT_HDR_FL__ << "WFViewer: Fragment type is " << fragtype << "
+		// std::cout << __COUT_HDR_FL__ << "ODWFViewer: Fragment type is " << fragtype << "
 		// (DataGen=" << FragmentType::DataGen << ")" << std::endl;
 		// John F., 1/22/14 -- this should definitely be improved; I'm
 		// just using the max # of bits per ADC value for a given fragment
@@ -258,7 +258,7 @@ void ots::WFViewer::analyze(art::Event const& e)
 			drPtr.reset(new DataGenFragment(frag));
 			break;
 		default:
-			throw cet::exception("Error in WFViewer: unknown fragment type supplied: " +
+			throw cet::exception("Error in ODWFViewer: unknown fragment type supplied: " +
 			                     fragmentTypeToString(fragtype));
 		}
 
@@ -293,9 +293,9 @@ void ots::WFViewer::analyze(art::Event const& e)
 			{
 				auto   val      = drPtr->dataBegin();
 				double the_mean = calcmean(val->data);
-				std::cout << __COUT_HDR_FL__ << "DJN WFViewer: Putting datapoint "
+				std::cout << __COUT_HDR_FL__ << "DJN ODWFViewer: Putting datapoint "
 				          << the_mean << " into histogram" << std::endl;
-				TLOG(TLVL_INFO, "WFViewer")
+				TLOG(TLVL_INFO, "ODWFViewer")
 				    << "Putting datapoint " << the_mean << " into histogram";
 				// histograms_[ind]->Fill( static_cast<uint8_t>(val->data[0]) );
 				histograms_[ind]->Fill(the_mean);
@@ -303,7 +303,7 @@ void ots::WFViewer::analyze(art::Event const& e)
 			break;
 
 		default:
-			throw cet::exception("Error in WFViewer: unknown fragment type supplied: " +
+			throw cet::exception("Error in ODWFViewer: unknown fragment type supplied: " +
 			                     fragmentTypeToString(fragtype));
 		}
 
@@ -328,7 +328,7 @@ void ots::WFViewer::analyze(art::Event const& e)
 	}
 }
 
-void ots::WFViewer::beginRun(art::Run const& e)
+void ots::ODWFViewer::beginRun(art::Run const& e)
 {
 	if(e.run() == current_run_)
 		return;
@@ -363,4 +363,4 @@ void ots::WFViewer::beginRun(art::Run const& e)
 	}
 }
 
-DEFINE_ART_MODULE(ots::WFViewer)
+DEFINE_ART_MODULE(ots::ODWFViewer)
