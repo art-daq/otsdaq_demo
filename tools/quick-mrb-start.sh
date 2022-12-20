@@ -256,10 +256,11 @@ source $Base/localProducts_otsdaq_demo_${demo_version}_${equalifier}_${squalifie
 cd $MRB_SOURCE
 if [[ $opt_develop -eq 1 ]]; then
 if [ $opt_w -gt 0 ];then
-mrb gitCheckout git@github.com:art-daq/otsdaq_utilities.git
-mrb gitCheckout git@github.com:art-daq/otsdaq.git
-mrb gitCheckout git@github.com:art-daq/otsdaq_demo.git
-mrb gitCheckout git@github.com:art-daq/otsdaq_components.git
+git clone git@github.com:art-daq/otsdaq_utilities.git
+git clone git@github.com:art-daq/otsdaq.git
+git clone git@github.com:art-daq/otsdaq_demo.git
+git clone git@github.com:art-daq/otsdaq_components.git
+mrb uc
 else
 mrb gitCheckout https://github.com/art-daq/otsdaq_utilities
 mrb gitCheckout https://github.com/art-daq/otsdaq
