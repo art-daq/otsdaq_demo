@@ -14,9 +14,6 @@ if ! [ -e setup_ots.sh ]; then
   exit 1
 fi
 
-# Login to redmine	
-source "${OTSDAQ_DIR}"/tools/redmine_login.sh	
-
 Base=$PWD
 #commenting out unique filename generation
 # no need to keep more than one past log for standard users 
