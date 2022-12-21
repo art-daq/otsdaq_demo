@@ -79,6 +79,36 @@ do
 	UD_PATH="$UD_PATH/$UD_EL"
 done
 
+if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Error."
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Environment variable ARTDAQ_DATABASE_URI not setup!"
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t To setup, use 'export ARTDAQ_DATABASE_URI=filesystemdb://<path to database>'" 
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t            e.g. filesystemdb:///home/rrivera/databases/filesystemdb/test_db"
+	echo 
+	echo 
+	echo
+	exit    
+fi
+
+#Steps:
+# download tutorial database
+# bkup current database
+# move download database into position
+
+ADU_PATH=$(echo ${ARTDAQ_DATABASE_URI} | cut -d':' -f2)
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t artdaq database filesystem URI Path = ${ADU_PATH}"
+
+#attempt to mkdir for full path so that it exists to move the database to
+# assuming mkdir is non-destructive
+ADU_ARR=$(echo ${ADU_PATH} | tr '/' "\n")
+ADU_PATH=""
+for ADU_EL in ${ADU_ARR[@]}
+do
+	#echo $ADU_EL
+	#echo $ADU_PATH
+	mkdir $ADU_PATH &>/dev/null #hide output
+	ADU_PATH="$ADU_PATH/$ADU_EL"
+done
 
 # download tutorial user data
 echo 
