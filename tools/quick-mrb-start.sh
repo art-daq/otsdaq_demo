@@ -353,6 +353,9 @@ fi
 cd $Base
 #cp -a $MRB_SOURCE/otsdaq_demo/Data $MRB_SOURCE/otsdaq_demo/NoGitData
 
+export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
+#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
+
 #Take from tutorial data 
 export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
 		
@@ -368,26 +371,10 @@ chmod 755 get_tutorial_data.sh
 ./get_tutorial_data.sh
 
 
-export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
-#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
-
-#download get_tutorial_database script
-wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate
-
-#change permissions so the script is executable
-chmod 755 get_tutorial_database.sh
-
-#execute script
-./get_tutorial_database.sh
-
-
-
-
 #copy tutorial launching scripts
 echo
 echo -e "UpdateOTS.sh [${LINENO}]  \t updating tutorial launch scripts..."
 rm get_tutorial_data.sh &>/dev/null 2>&1 #hide output
-rm get_tutorial_database.sh &>/dev/null 2>&1 #hide output
 rm reset_ots_tutorial.sh &>/dev/null 2>&1 #hide output
 wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate	
 chmod 755 reset_ots_tutorial.sh
