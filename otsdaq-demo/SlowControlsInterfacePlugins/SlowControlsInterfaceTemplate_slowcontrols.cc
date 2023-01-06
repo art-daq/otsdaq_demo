@@ -53,41 +53,45 @@ void SlowControlsInterfaceTemplate::unsubscribe(const std::string& /*Name*/) {}
 
 //==============================================================================
 std::array<std::string, 4> SlowControlsInterfaceTemplate::getCurrentValue(
-		const std::string& /*Name*/)
+    const std::string& /*Name*/)
 {
 	return {"a", "b", "c", "d"};
 }
 
 //==============================================================================
-std::array<std::string, 9> SlowControlsInterfaceTemplate::getSettings(const std::string& /*Name*/)
+std::array<std::string, 9> SlowControlsInterfaceTemplate::getSettings(
+    const std::string& /*Name*/)
 {
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
 }
 
 //==============================================================================
-std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getLastAlarms(const std::string& /*pvName*/)
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getLastAlarms(
+    const std::string& /*pvName*/)
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
-} //end getLastAlarms()
+}  // end getLastAlarms()
 
 //==============================================================================
-std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getAlarmsLog(const std::string& /*pvName*/)
+std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getAlarmsLog(
+    const std::string& /*pvName*/)
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
-} //end getAlarmsLog()
+}  // end getAlarmsLog()
 
 //==============================================================================
-std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::checkAlarmNotifications()
+std::vector<std::vector<std::string>>
+SlowControlsInterfaceTemplate::checkAlarmNotifications()
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"})};
-} //end checkAlarmNotifications()
+}  // end checkAlarmNotifications()
 
 //==============================================================================
 std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getChannelHistory(
-		const std::string& /*Name*/)
+    const std::string& /*Name*/)
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"}),

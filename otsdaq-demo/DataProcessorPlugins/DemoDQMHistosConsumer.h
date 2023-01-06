@@ -41,6 +41,6 @@ class DemoDQMHistosConsumer : public DQMHistosConsumerBase, public Configurable
 	std::string    DQMFilePrefix_;
 	DemoDQMHistos* dqmHistos_;
 };
-}
+}  // namespace ots
 
 #endif

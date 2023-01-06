@@ -54,15 +54,15 @@ void* get_in_addr(struct sockaddr* sa)
 //========================================================================================================================
 int makeSocket(const char* ip, const char* port, struct addrinfo*& /*addressInfo*/)
 {
-	int                     socketId = 0;
-	struct addrinfo         hints, *servinfo, *p;
-	//int                     sendSockfd = 0;
-	int                     rv;
-	//int                     numbytes;
-	//struct sockaddr_storage their_addr;
-	//char                    buff[MAXBUFLEN];
-	//socklen_t               addr_len;
-	//char                    s[INET6_ADDRSTRLEN];
+	int             socketId = 0;
+	struct addrinfo hints, *servinfo, *p;
+	// int                     sendSockfd = 0;
+	int rv;
+	// int                     numbytes;
+	// struct sockaddr_storage their_addr;
+	// char                    buff[MAXBUFLEN];
+	// socklen_t               addr_len;
+	// char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	//    hints.ai_family   = AF_UNSPEC; // set to AF_INET to force IPv4
@@ -192,11 +192,12 @@ int main(void)
 
 	// sendSockfd = makeSocket(string("localhost").c_str(),myport,p);
 
-	struct addrinfo /*hints,*//* *servinfo,*/ *p;
+	struct addrinfo /*hints,*/ /* *servinfo,*/* p;
 
-	int                communicationSocket = makeSocket(0, COMMUNICATION_PORT, p);
-	//int                streamingSocket     = makeSocket(0, STREAMING_PORT, p);
-	//struct sockaddr_in streamingReceiver =	    setupSocketAddress(DESTINATION_IP, DESTINATION_PORT);
+	int communicationSocket = makeSocket(0, COMMUNICATION_PORT, p);
+	// int                streamingSocket     = makeSocket(0, STREAMING_PORT, p);
+	// struct sockaddr_in streamingReceiver =	    setupSocketAddress(DESTINATION_IP,
+	// DESTINATION_PORT);
 	struct sockaddr_in messageSender;
 
 	std::string communicationBuffer;
@@ -232,12 +233,12 @@ int main(void)
 		if(triggered)
 		{
 			unsigned simdata[ndata + 5];
-			simdata[0]   = 0xFFFFFFFF;
-			simdata[1]   = 0xFFFFFFFF;
-			simdata[2]   = 0xFFFFFFFF;
-			simdata[3]   = 0xFFFFFFFF;
-			simdata[4]   = 0xFFFFFFFF;
-		//	unsigned i_0 = 0x21;
+			simdata[0] = 0xFFFFFFFF;
+			simdata[1] = 0xFFFFFFFF;
+			simdata[2] = 0xFFFFFFFF;
+			simdata[3] = 0xFFFFFFFF;
+			simdata[4] = 0xFFFFFFFF;
+			//	unsigned i_0 = 0x21;
 			for(unsigned i = 0; i < ndata; i++)
 			{
 				unsigned noise = rand() & 0x00FF00FF;

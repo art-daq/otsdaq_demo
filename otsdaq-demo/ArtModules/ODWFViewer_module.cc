@@ -64,7 +64,7 @@ class ODWFViewer : public art::EDAnalyzer
 	TFile*                                                 fFile_;
 	bool                                                   writeOutput_;
 };
-}
+}  // namespace ots
 
 ots::ODWFViewer::ODWFViewer(fhicl::ParameterSet const& ps)
     : art::EDAnalyzer(ps)
@@ -168,7 +168,8 @@ double ots::ODWFViewer::calcmean(const float* data)
 
 void ots::ODWFViewer::analyze(art::Event const& e)
 {
-	std::cout << __COUT_HDR_FL__ << "ODWFViewer Analyzing event " << e.event() << std::endl;
+	std::cout << __COUT_HDR_FL__ << "ODWFViewer Analyzing event " << e.event()
+	          << std::endl;
 	static std::size_t evt_cntr = -1;
 	evt_cntr++;
 
@@ -242,15 +243,13 @@ void ots::ODWFViewer::analyze(art::Event const& e)
 		}
 
 		FragmentType fragtype = static_cast<FragmentType>(frag.type());
-		// std::cout << __COUT_HDR_FL__ << "ODWFViewer: Fragment type is " << fragtype << "
-		// (DataGen=" << FragmentType::DataGen << ")" << std::endl;
-		// John F., 1/22/14 -- this should definitely be improved; I'm
-		// just using the max # of bits per ADC value for a given fragment
-		// type as is currently defined for the V172x fragments (as
-		// opposed to the Toy fragment, which have this value in their
-		// metadata). Since it's not using external variables for this
-		// quantity, this would need to be edited should these values
-		// change.
+		// std::cout << __COUT_HDR_FL__ << "ODWFViewer: Fragment type is " << fragtype <<
+		// " (DataGen=" << FragmentType::DataGen << ")" << std::endl; John F., 1/22/14 --
+		// this should definitely be improved; I'm just using the max # of bits per ADC
+		// value for a given fragment type as is currently defined for the V172x fragments
+		// (as opposed to the Toy fragment, which have this value in their metadata).
+		// Since it's not using external variables for this quantity, this would need to
+		// be edited should these values change.
 
 		switch(fragtype)
 		{

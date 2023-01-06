@@ -1,5 +1,5 @@
-#include "otsdaq-demo/Overlays/FragmentType.hh"
 #include "artdaq-core/Plugins/FragmentNameHelper.hh"
+#include "otsdaq-demo/Overlays/FragmentType.hh"
 
 #include "TRACE/tracemf.h"
 #define TRACE_NAME "OtsDemoFragmentNameHelper"
@@ -27,10 +27,10 @@ class OtsDemoFragmentNameHelper : public artdaq::FragmentNameHelper
 	    std::vector<std::pair<artdaq::Fragment::type_t, std::string>> extraTypes);
 
   private:
-	OtsDemoFragmentNameHelper(OtsDemoFragmentNameHelper const&) = delete;
-	OtsDemoFragmentNameHelper(OtsDemoFragmentNameHelper&&)      = delete;
+	OtsDemoFragmentNameHelper(OtsDemoFragmentNameHelper const&)            = delete;
+	OtsDemoFragmentNameHelper(OtsDemoFragmentNameHelper&&)                 = delete;
 	OtsDemoFragmentNameHelper& operator=(OtsDemoFragmentNameHelper const&) = delete;
-	OtsDemoFragmentNameHelper& operator=(OtsDemoFragmentNameHelper&&) = delete;
+	OtsDemoFragmentNameHelper& operator=(OtsDemoFragmentNameHelper&&)      = delete;
 };
 
 OtsDemoFragmentNameHelper::OtsDemoFragmentNameHelper(

@@ -22,7 +22,7 @@
 // 1 is write and read test
 // 2 is data stream test
 //
-// 
+//
 
 #include <arpa/inet.h>
 #include <errno.h>
@@ -56,13 +56,13 @@ void* get_in_addr(struct sockaddr* sa)
 
 int makeSocket(char* ip, int /*port*/)
 {
-	int                     sockfd;
-	struct addrinfo         hints, *servinfo, *p;
-	int                     rv;
-	//int                     numbytes;
-	//struct sockaddr_storage their_addr;
-	//socklen_t               addr_len;
-	//char                    s[INET6_ADDRSTRLEN];
+	int             sockfd;
+	struct addrinfo hints, *servinfo, *p;
+	int             rv;
+	// int                     numbytes;
+	// struct sockaddr_storage their_addr;
+	// socklen_t               addr_len;
+	// char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family   = AF_UNSPEC;
@@ -155,12 +155,12 @@ int main(int argc, char* argv[])
 	unsigned int packetSz;
 	bool         debug = false;
 	std::cout << "sw: Line " << __LINE__ << ":::"
-		  << "Type of Test: " << type << " debug=" << debug << std::endl;
+	          << "Type of Test: " << type << " debug=" << debug << std::endl;
 
-	int          type = atoi(argv[2]);
+	int type = atoi(argv[2]);
 
-	uint64_t addr = 0;//stoul(argv[3],0,16);
-	sscanf(argv[3],"0x%llX",&addr);
+	uint64_t addr = 0;  // stoul(argv[3],0,16);
+	sscanf(argv[3], "0x%llX", &addr);
 	uint64_t val = 0;
 
 	const unsigned int RX_ADDR_OFFSET = 2;
@@ -169,178 +169,71 @@ int main(int argc, char* argv[])
 
 	switch(type)
 	{
-	case 1:		//write
-	case 10:	//long write
-		
-		sscanf(argv[4],"0x%llX",&val);
+	case 1:   // write
+	case 10:  // long write
+
+		sscanf(argv[4], "0x%llX", &val);
 		cout << "====== WRITE "
-			 << "| addr: 0x" <<
-				hex << setw(12) << addr << " %d " << dec << setw(10)<< addr << 
-				"  \t| write-val: 0x" <<
-				hex << setw(12) << val << " %d " << dec << setw(10) << val << endl;
+		     << "| addr: 0x" << hex << setw(12) << addr << " %d " << dec << setw(10)
+		     << addr << "  \t| write-val: 0x" << hex << setw(12) << val << " %d " << dec
+		     << setw(10) << val << endl;
 
 		// setup write packet ///////////////////////////////////////////////////////////
-		//Read of 2000000 16MB requst :
-		  //0004 000f 0100 0002 
-		  //0000 0000 0000 0000
-		  //0000 0000 0000 0000
-		  //0000 0000 001e 8480 
-		  //0000 0000 0000 0000    
-		  //Flipped byte order
-		  //0200 0001 0f00 0400
-		  //0000 0000 0000 0000
-		  //0000 0000 0000 0000 
-		  //8084 1e00 0000 0000
-		  //0000 0000 0000 0000
-	  
-		  packetSz = 0;
-		  addr    = 0x040000010f000400;
-		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-		  addr    = 0x0000000000000000;
-		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-		  addr    = 0x0000000000000000;
-		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-		  addr    = 0x0100000000000000; //size //0x80841e0000000000;
-		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-		  addr    = 0x0400000000000000; //payload is 4 bytes
-		  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-		  memcpy((void*)&buff[packetSz], (void*)&val, 4); packetSz += 4;
-		  {
-				int sz = 1;// 2000000/179/2 + 1;  // /2 when 32-bit change, get from read in TYPE 1
-				std::cout << "sw: Line " << __LINE__ << ":::"
-					<< "Number of packets expecting: " << sz << std::endl;
-				
-				unsigned long long qwords = 0;
-				if((numbytes = sendto(sockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) ==
-				   -1)
-				{
-					perror("sw: sendto");
-					exit(1);
-				}
-				
-				// read data packets ///////////////////////////////////////////////////////////
-			
-				  			  
-				for(int i = 0; i < sz; ++i)
-				{
-				  if(debug)
-					std::cout << "sw: Line " << __LINE__ << ":::"
-						  << "Received " << qwords << " qwords. Waiting for data packet: " << 
-					  i << " of " << sz << std::endl;
+		// Read of 2000000 16MB requst :
+		// 0004 000f 0100 0002
+		// 0000 0000 0000 0000
+		// 0000 0000 0000 0000
+		// 0000 0000 001e 8480
+		// 0000 0000 0000 0000
+		// Flipped byte order
+		// 0200 0001 0f00 0400
+		// 0000 0000 0000 0000
+		// 0000 0000 0000 0000
+		// 8084 1e00 0000 0000
+		// 0000 0000 0000 0000
 
-					// read response
-					// ///////////////////////////////////////////////////////////
-					if((numbytes = recvfrom(sockfd,
-											buff,
-											MAXBUFLEN - 1,
-											0,
-											(struct sockaddr*)&their_addr,
-											&addr_len)) == -1)
-					{
-						perror("recvfrom");
-						exit(1);
-					}
-					qwords += (numbytes-40)/8;
-					
-					continue;
-					printf("sw: got read response from %s\n",
-						   inet_ntop(their_addr.ss_family,
-									 get_in_addr((struct sockaddr*)&their_addr),
-									 s,
-									 sizeof s));
-					printf("sw: packet is %d bytes long\n", numbytes);
-					printf("recv packet contents: ");
-
-					for(int i = 0; i < numbytes; ++i)
-					{
-						printf("%2.2X", (unsigned char)buff[i]);
-						if(i % 8 == 7)
-							printf("\n");
-					}
-					printf("\n");
-
-					memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
-					std::cout << "sw: Line " << __LINE__ << ":::"
-						 << "Value read: " << val << std::endl;
-				}
-				__COUT__ << "Got all " << sz << " packet(s)." << __E__;
-		  }
-
-		break;
-	case 2:
-		// burst data read test
-
-	        //set socket huge
-	  {
-	    unsigned int defaultSocketReceiveSize_ = 0x10000; //in bytes
-	    unsigned int socketReceiveBufferSize = 1<<26; //in bytes
-	    
-	    __COUT__ << "Setting socket receive buffer size = " << socketReceiveBufferSize << " 0x" << std::hex << socketReceiveBufferSize << std::dec << __E__;
-	    if(setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, (char*)&socketReceiveBufferSize, sizeof(socketReceiveBufferSize)) < 0)
-	      {
-                __COUT__ << "Failed to set socket receive size to " << socketReceiveBufferSize << ". Attempting to revert to default." << std::endl;
-		
-                socketReceiveBufferSize = defaultSocketReceiveSize_;
-		
-                __COUT__ << "Setting socket receive buffer size = " << socketReceiveBufferSize << " 0x" << std::hex << socketReceiveBufferSize << std::dec << __E__;
-                if(setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, (char*)&socketReceiveBufferSize, sizeof(socketReceiveBufferSize)) < 0)
-		  {
-		    __COUT__ << "Failed to set socket receive size to " << socketReceiveBufferSize << ". Attempting to revert to default." << std::endl;
-		  }
-	      }
-	  }
-	  //Read of 2000000 16MB requst :
-	  //0004 000f 0100 0002 
-	  //0000 0000 0000 0000
-	  //0000 0000 0000 0000
-	  //0000 0000 001e 8480 
-	  //0000 0000 0000 0000    
-	  //Flipped byte order
-	  //0200 0001 0f00 0400
-	  //0000 0000 0000 0000
-	  //0000 0000 0000 0000 
-	  //8084 1e00 0000 0000
-	  //0000 0000 0000 0000
-		// setup read packet ///////////////////////////////////////////////////////////
-	  
-	  packetSz = 0;
-	  addr    = 0x020000010f000400;
-	  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-	  addr    = 0x0000000000000000;
-	  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-	  addr    = 0x0000000000000000;
-	  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-	  addr    = 0x80841e0000000000;
-	  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-	  addr    = 0x0000000000000000;
-	  memcpy((void*)&buff[packetSz], (void*)&addr, 8); packetSz += 8;
-	  {
-	  int sz = 2000000/179/2 + 1;  // /2 when 32-bit change, get from read in TYPE 1
-	  std::cout << "sw: Line " << __LINE__ << ":::"
-		    << "Number of packets expecting: " << sz << std::endl;
-
-	  unsigned long long qwords = 0;
-		if((numbytes = sendto(sockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) ==
-		   -1)
+		packetSz = 0;
+		addr     = 0x040000010f000400;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x0000000000000000;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x0000000000000000;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x0100000000000000;  // size //0x80841e0000000000;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x0400000000000000;  // payload is 4 bytes
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		memcpy((void*)&buff[packetSz], (void*)&val, 4);
+		packetSz += 4;
 		{
-			perror("sw: sendto");
-			exit(1);
-		}
-		//printf("sw: sent %d bytes to %s\n", numbytes, argv[1]);
+			int sz = 1;  // 2000000/179/2 + 1;  // /2 when 32-bit change, get from read in
+			             // TYPE 1
+			std::cout << "sw: Line " << __LINE__ << ":::"
+			          << "Number of packets expecting: " << sz << std::endl;
 
+			unsigned long long qwords = 0;
+			if((numbytes =
+			        sendto(sockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) == -1)
+			{
+				perror("sw: sendto");
+				exit(1);
+			}
 
-		// read data packets ///////////////////////////////////////////////////////////
-	
-		  
+			// read data packets
+			// ///////////////////////////////////////////////////////////
 
-
-		  
 			for(int i = 0; i < sz; ++i)
 			{
-			  if(debug)
-			    std::cout << "sw: Line " << __LINE__ << ":::"
-				      << "Received " << qwords << " qwords. Waiting for data packet: " << 
-			      i << " of " << sz << std::endl;
+				if(debug)
+					std::cout << "sw: Line " << __LINE__ << ":::"
+					          << "Received " << qwords
+					          << " qwords. Waiting for data packet: " << i << " of " << sz
+					          << std::endl;
 
 				// read response
 				// ///////////////////////////////////////////////////////////
@@ -354,8 +247,8 @@ int main(int argc, char* argv[])
 					perror("recvfrom");
 					exit(1);
 				}
-				qwords += (numbytes-40)/8;
-				
+				qwords += (numbytes - 40) / 8;
+
 				continue;
 				printf("sw: got read response from %s\n",
 				       inet_ntop(their_addr.ss_family,
@@ -375,16 +268,147 @@ int main(int argc, char* argv[])
 
 				memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
 				std::cout << "sw: Line " << __LINE__ << ":::"
-				     << "Value read: " << val << std::endl;
+				          << "Value read: " << val << std::endl;
 			}
 			__COUT__ << "Got all " << sz << " packet(s)." << __E__;
 		}
 
+		break;
+	case 2:
+		// burst data read test
+
+		// set socket huge
+		{
+			unsigned int defaultSocketReceiveSize_ = 0x10000;  // in bytes
+			unsigned int socketReceiveBufferSize   = 1 << 26;  // in bytes
+
+			__COUT__ << "Setting socket receive buffer size = " << socketReceiveBufferSize
+			         << " 0x" << std::hex << socketReceiveBufferSize << std::dec << __E__;
+			if(setsockopt(sockfd,
+			              SOL_SOCKET,
+			              SO_RCVBUF,
+			              (char*)&socketReceiveBufferSize,
+			              sizeof(socketReceiveBufferSize)) < 0)
+			{
+				__COUT__ << "Failed to set socket receive size to "
+				         << socketReceiveBufferSize
+				         << ". Attempting to revert to default." << std::endl;
+
+				socketReceiveBufferSize = defaultSocketReceiveSize_;
+
+				__COUT__ << "Setting socket receive buffer size = "
+				         << socketReceiveBufferSize << " 0x" << std::hex
+				         << socketReceiveBufferSize << std::dec << __E__;
+				if(setsockopt(sockfd,
+				              SOL_SOCKET,
+				              SO_RCVBUF,
+				              (char*)&socketReceiveBufferSize,
+				              sizeof(socketReceiveBufferSize)) < 0)
+				{
+					__COUT__ << "Failed to set socket receive size to "
+					         << socketReceiveBufferSize
+					         << ". Attempting to revert to default." << std::endl;
+				}
+			}
+		}
+		// Read of 2000000 16MB requst :
+		// 0004 000f 0100 0002
+		// 0000 0000 0000 0000
+		// 0000 0000 0000 0000
+		// 0000 0000 001e 8480
+		// 0000 0000 0000 0000
+		// Flipped byte order
+		// 0200 0001 0f00 0400
+		// 0000 0000 0000 0000
+		// 0000 0000 0000 0000
+		// 8084 1e00 0000 0000
+		// 0000 0000 0000 0000
+		//  setup read packet ///////////////////////////////////////////////////////////
+
+		packetSz = 0;
+		addr     = 0x020000010f000400;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x0000000000000000;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x0000000000000000;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x80841e0000000000;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		addr = 0x0000000000000000;
+		memcpy((void*)&buff[packetSz], (void*)&addr, 8);
+		packetSz += 8;
+		{
+			int sz =
+			    2000000 / 179 / 2 + 1;  // /2 when 32-bit change, get from read in TYPE 1
+			std::cout << "sw: Line " << __LINE__ << ":::"
+			          << "Number of packets expecting: " << sz << std::endl;
+
+			unsigned long long qwords = 0;
+			if((numbytes =
+			        sendto(sockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) == -1)
+			{
+				perror("sw: sendto");
+				exit(1);
+			}
+			// printf("sw: sent %d bytes to %s\n", numbytes, argv[1]);
+
+			// read data packets
+			// ///////////////////////////////////////////////////////////
+
+			for(int i = 0; i < sz; ++i)
+			{
+				if(debug)
+					std::cout << "sw: Line " << __LINE__ << ":::"
+					          << "Received " << qwords
+					          << " qwords. Waiting for data packet: " << i << " of " << sz
+					          << std::endl;
+
+				// read response
+				// ///////////////////////////////////////////////////////////
+				if((numbytes = recvfrom(sockfd,
+				                        buff,
+				                        MAXBUFLEN - 1,
+				                        0,
+				                        (struct sockaddr*)&their_addr,
+				                        &addr_len)) == -1)
+				{
+					perror("recvfrom");
+					exit(1);
+				}
+				qwords += (numbytes - 40) / 8;
+
+				continue;
+				printf("sw: got read response from %s\n",
+				       inet_ntop(their_addr.ss_family,
+				                 get_in_addr((struct sockaddr*)&their_addr),
+				                 s,
+				                 sizeof s));
+				printf("sw: packet is %d bytes long\n", numbytes);
+				printf("recv packet contents: ");
+
+				for(int i = 0; i < numbytes; ++i)
+				{
+					printf("%2.2X", (unsigned char)buff[i]);
+					if(i % 8 == 7)
+						printf("\n");
+				}
+				printf("\n");
+
+				memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
+				std::cout << "sw: Line " << __LINE__ << ":::"
+				          << "Value read: " << val << std::endl;
+			}
+			__COUT__ << "Got all " << sz << " packet(s)." << __E__;
+		}
 
 		break;
 	default:
 		std::cout << "sw: Line " << __LINE__ << ":::"
-		     << "INVALID Type of Test: " << type << std::endl;
+		          << "INVALID Type of Test: " << type << std::endl;
 	}
 
 	close(sockfd);
