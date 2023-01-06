@@ -545,7 +545,7 @@ int main(int argc, char** argv)
 					          &respbuff[32]);  // update EXPECTED payload bytes size
 					my_htonll(payloadBytes / 8, &respbuff[24]);  // update count bytes
 					                                             // size
-					my_htonll(index, &respbuff[16]);  // update index
+					my_htonll(index, &respbuff[16]);             // update index
 
 					// my_htonll(count*8,&respbuff[32]); //update EXPECTED payload bytes
 					// size
