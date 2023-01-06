@@ -36,6 +36,6 @@ class TemplateSupervisor : public xdaq::Application, public SOAPMessenger
 
   private:
 };
-}
+}  // namespace ots
 
 #endif

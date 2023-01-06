@@ -15,7 +15,7 @@ class DataGenFragment;
 
 // Let the "<<" operator dump the DataGenFragment's data to stdout
 std::ostream& operator<<(std::ostream&, DataGenFragment const&);
-}
+}  // namespace ots
 
 class ots::DataGenFragment
 {

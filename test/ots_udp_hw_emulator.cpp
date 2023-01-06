@@ -26,8 +26,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <iomanip>
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
 // take only file name
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
@@ -39,7 +39,6 @@
 // and use this to suppress
 //#define __PRINTF__ if(0) printf
 //#define __COUT__  if(0) cout
-
 
 #define MAXBUFLEN 1492
 #define EMULATOR_PORT "4950"  // Can be also passed as first argument
@@ -57,13 +56,13 @@ void* get_in_addr(struct sockaddr* sa)
 
 int makeSocket(const char* ip, int port, struct addrinfo*& p)
 {
-	int                     sockfd;
-	struct addrinfo         hints, *servinfo;
-	int                     rv;
-	//int                     numberOfBytes;
-	//struct sockaddr_storage their_addr;
-	//socklen_t               addr_len;
-	//char                    s[INET6_ADDRSTRLEN];
+	int             sockfd;
+	struct addrinfo hints, *servinfo;
+	int             rv;
+	// int                     numberOfBytes;
+	// struct sockaddr_storage their_addr;
+	// socklen_t               addr_len;
+	// char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family   = AF_UNSPEC;
@@ -389,8 +388,7 @@ int main(int argc, char** argv)
 							__COUT__ << ((led_register & (1 << (7 - l))) ? '*' : '-');
 						__COUT__ << "\n\n";
 						break;
-					case 0x0000000100000006:
-					{
+					case 0x0000000100000006: {
 						uint32_t           ip;
 						struct sockaddr_in socketAddress;
 						memcpy(
@@ -407,15 +405,14 @@ int main(int argc, char** argv)
 						__COUT__ << std::hex << ":::"
 						         << "Destination MAC address ignored!" << std::endl;
 						break;
-					case 0x0000000100000008:
-					{
+					case 0x0000000100000008: {
 						// unsigned int myport;
 						memcpy((void*)&streamToPort,
 						       (void*)&buff[handlerIndex + RX_DATA_OFFSET],
 						       4);
 						__COUT__ << std::hex << ":::"
-						         << "Stream destination port: 0x" << streamToPort << std::dec
-						         << " " << streamToPort << std::endl;
+						         << "Stream destination port: 0x" << streamToPort
+						         << std::dec << " " << streamToPort << std::endl;
 
 						close(sendSockfd);
 						sendSockfd = 0;
@@ -441,7 +438,8 @@ int main(int argc, char** argv)
 						else
 							__COUT__ << std::hex << ":::"
 							         << "Failed to create streaming socket to ip: "
-							         << streamToIP << " port: 0x" << streamToPort << std::endl;
+							         << streamToIP << " port: 0x" << streamToPort
+							         << std::endl;
 					}
 
 					break;
@@ -450,7 +448,8 @@ int main(int argc, char** argv)
 						       (void*)&buff[handlerIndex + RX_DATA_OFFSET],
 						       1);
 						__COUT__ << std::hex << ":::"
-						         << "Write data enable: 0x" << (int)dataEnabled << std::endl;
+						         << "Write data enable: 0x" << (int)dataEnabled
+						         << std::endl;
 						count = 0;  // reset count
 						break;
 					default:

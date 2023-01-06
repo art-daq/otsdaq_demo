@@ -64,7 +64,7 @@ class WFViewer : public art::EDAnalyzer
 	TFile*                                                 fFile_;
 	bool                                                   writeOutput_;
 };
-}
+}  // namespace ots
 
 ots::WFViewer::WFViewer(fhicl::ParameterSet const& ps)
     : art::EDAnalyzer(ps)

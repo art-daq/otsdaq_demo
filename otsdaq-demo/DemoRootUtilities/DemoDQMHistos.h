@@ -23,6 +23,6 @@ class DemoDQMHistos
 	TH1I* sequenceNumbers_;
 	TH1I* dataNumbers_;
 };
-}
+}  // namespace ots
 
 #endif

@@ -26,8 +26,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <iomanip>
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
 // take only file name
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
@@ -40,8 +40,7 @@
 //#define __PRINTF__ if(0) printf
 //#define __COUT__  if(0) cout
 
-
-#define MAXBUFLEN 1500 //1492
+#define MAXBUFLEN 1500         // 1492
 #define EMULATOR_PORT "65000"  // Can be also passed as first argument
 
 // get sockaddr, IPv4 or IPv6:
@@ -53,17 +52,17 @@ void* get_in_addr(struct sockaddr* sa)
 	}
 
 	return &(((struct sockaddr_in6*)sa)->sin6_addr);
-} //end get_in_addr()
+}  // end get_in_addr()
 
 int makeSocket(const char* ip, int port, struct addrinfo*& p)
 {
-	int                     sockfd;
-	struct addrinfo         hints, *servinfo;
-	int                     rv;
-	//int                     numberOfBytes;
-	//struct sockaddr_storage their_addr;
-	//socklen_t               addr_len;
-	//char                    s[INET6_ADDRSTRLEN];
+	int             sockfd;
+	struct addrinfo hints, *servinfo;
+	int             rv;
+	// int                     numberOfBytes;
+	// struct sockaddr_storage their_addr;
+	// socklen_t               addr_len;
+	// char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family   = AF_UNSPEC;
@@ -97,22 +96,22 @@ int makeSocket(const char* ip, int port, struct addrinfo*& p)
 	freeaddrinfo(servinfo);
 
 	return sockfd;
-} //end makeSocket()
+}  // end makeSocket()
 
-uint64_t my_ntohll(char *buff)
+uint64_t my_ntohll(char* buff)
 {
-  uint64_t v = 0;
-  for(unsigned int i=0;i<8;++i)
-    v |= (unsigned char)buff[7-i] << (i*8);
-  return v;
-} //end my_ntohll()
+	uint64_t v = 0;
+	for(unsigned int i = 0; i < 8; ++i)
+		v |= (unsigned char)buff[7 - i] << (i * 8);
+	return v;
+}  // end my_ntohll()
 
-void my_htonll(uint64_t v, char *buff)
+void my_htonll(uint64_t v, char* buff)
 {
-  for(unsigned int i=0;i<8;++i)
-    buff[7-i] = v>>(i*8);
-  
-} //end my_htonll()
+	for(unsigned int i = 0; i < 8; ++i)
+		buff[7 - i] = v >> (i * 8);
+
+}  // end my_htonll()
 
 int main(int argc, char** argv)
 {
@@ -197,7 +196,7 @@ int main(int argc, char** argv)
 
 	__COUT__ << addressSpaceSS.str() << "\n\n";
 
-	// hardware "registers"	
+	// hardware "registers"
 	uint64_t data_gen_cnt  = 0;
 	uint64_t data_gen_rate = 100;  // number of loops to wait
 	uint8_t  led_register  = 0;
@@ -224,121 +223,124 @@ int main(int argc, char** argv)
 	int handlerIndex;
 	int totalNumberOfBytes;
 
-
 	if(emulatorPort != EMULATOR_PORT)
-	  {
-	    __COUT__ << "DDCP Client Port... so initiating Interrupt Request" << std::endl;
-	    
-	    //create interrupt request packet
-	    my_htonll(0x0002000000000010,&respbuff[0]); //version (16b) | slot (16b) | feature (16b) | op (16b)
-	    my_htonll(0x0,&respbuff[8]);  //status (16b) | reserved
-	    my_htonll(0x0,&respbuff[16]); //index
-	    my_htonll(0x1,&respbuff[24]); //count
-	    my_htonll(0x4,&respbuff[32]); //payload size = 4B = 32b
-	    my_htonll(0x000A000500000000,&respbuff[40]); //interrupt source slot 16b | 11b X | source interrupt 5b 
-	    packetSz = 44;
+	{
+		__COUT__ << "DDCP Client Port... so initiating Interrupt Request" << std::endl;
 
-	    //create destination socket at localhost port 65000
-	    {
-	      uint32_t           ip = (127<<24) | 1; //localhost
-	      struct sockaddr_in socketAddress;
-	      ip = htonl(ip);
-	      memcpy((void*)&socketAddress.sin_addr, (void*)&ip, 4);
-	      streamToIP = inet_ntoa(socketAddress.sin_addr);
-	      __COUT__ << std::hex << ":::"
-		       << "Stream destination IP: " << streamToIP << std::endl;
-	      __COUT__ << streamToIP << std::endl;
-	    }
+		// create interrupt request packet
+		my_htonll(0x0002000000000010,
+		          &respbuff[0]);  // version (16b) | slot (16b) | feature (16b) | op (16b)
+		my_htonll(0x0, &respbuff[8]);   // status (16b) | reserved
+		my_htonll(0x0, &respbuff[16]);  // index
+		my_htonll(0x1, &respbuff[24]);  // count
+		my_htonll(0x4, &respbuff[32]);  // payload size = 4B = 32b
+		my_htonll(
+		    0x000A000500000000,
+		    &respbuff[40]);  // interrupt source slot 16b | 11b X | source interrupt 5b
+		packetSz = 44;
 
-	    //create destination port
-	    {
-	      // unsigned int myport;
-	      streamToPort = 65000;
-
-	      __COUT__ << std::hex << ":::"
-		       << "Stream destination port: 0x" << streamToPort << std::dec
-		       << " " << streamToPort << std::endl;
-	      
-	      close(sendSockfd);
-	      sendSockfd = 0;
-	      sendSockfd = makeSocket(streamToIP.c_str(), streamToPort, p);
-	      if(sendSockfd != -1)
+		// create destination socket at localhost port 65000
 		{
-		  __COUT__ << "************************************************"
-		    "********"
-							         << std::endl;
-		  __COUT__ << "************************************************"
-		    "********"
-			   << std::endl;
-		  __COUT__ << std::hex << ":::"
-			   << "Streaming to ip: " << streamToIP << " port: 0x"
-			   << streamToPort << std::endl;
-		  __COUT__ << "************************************************"
-		    "********"
-			   << std::endl;
-		  __COUT__ << "************************************************"
-		    "********"
-			   << std::endl;
+			uint32_t           ip = (127 << 24) | 1;  // localhost
+			struct sockaddr_in socketAddress;
+			ip = htonl(ip);
+			memcpy((void*)&socketAddress.sin_addr, (void*)&ip, 4);
+			streamToIP = inet_ntoa(socketAddress.sin_addr);
+			__COUT__ << std::hex << ":::"
+			         << "Stream destination IP: " << streamToIP << std::endl;
+			__COUT__ << streamToIP << std::endl;
 		}
-	      else
-		__COUT__ << std::hex << ":::"
-			 << "Failed to create streaming socket to ip: "
-			 << streamToIP << " port: 0x" << streamToPort << std::endl;
-	    }
 
-	    if((numberOfSentBytes = sendto(sendSockfd,
-					   respbuff,
-					   packetSz,
-					   0,
-					   p->ai_addr, p->ai_addrlen)) == -1)
-	      {
-		perror("hw: sendto");
-		exit(1);
-	      }
-	    __PRINTF__("hw: Interrupt Req packet sent %d bytes back\n",
-		       numberOfSentBytes);
-	    
-	    for(int i=0; i<numberOfSentBytes; i++)
-	      {
-		if(i%8==0) __COUT__ << "\t" << i << " \t";
-		__PRINTF__("%2.2X", (unsigned char)respbuff[i]);
-		if(i%8==7) std::cout << std::endl;
-	      }
-	    std::cout << std::endl;
-	    __COUT__ << "Waiting for ack..." << std::endl;
+		// create destination port
+		{
+			// unsigned int myport;
+			streamToPort = 65000;
 
-	    addr_len = sizeof their_addr;
-	    if((totalNumberOfBytes = recvfrom(sendSockfd,
-					      buff,
-					      MAXBUFLEN - 1,
-					      0,
-					      (struct sockaddr*)&their_addr,
-					      &addr_len)) == -1)
-	      {
-		perror("recvfrom");
-		exit(1);
-	      }
-	    
-	    __COUT__ << ":::"
-		     << "hw: got packet from "
-		     << inet_ntop(their_addr.ss_family,
-				  get_in_addr((struct sockaddr*)&their_addr),
-				  s,
-				  sizeof s)
-		     << std::endl;
-	    __COUT__ << ":::"
-		     << "hw: packet total is " << totalNumberOfBytes << " bytes long"
-		     << std::endl;
-	    __COUT__ << ":::" << "hw: packet contents \n";
-	    for(int i=0; i<totalNumberOfBytes; i++)
-	      {
-		if(i%8==0) __COUT__ << "\t" << i << " \t";
-		__PRINTF__("%2.2X", (unsigned char)buff[i]);
-		if(i%8==7) std::cout << std::endl;       	
-	      }	    
-	    std::cout << std::endl;
-	    
-	  } //end Interrupt Request handling
+			__COUT__ << std::hex << ":::"
+			         << "Stream destination port: 0x" << streamToPort << std::dec << " "
+			         << streamToPort << std::endl;
+
+			close(sendSockfd);
+			sendSockfd = 0;
+			sendSockfd = makeSocket(streamToIP.c_str(), streamToPort, p);
+			if(sendSockfd != -1)
+			{
+				__COUT__ << "************************************************"
+				            "********"
+				         << std::endl;
+				__COUT__ << "************************************************"
+				            "********"
+				         << std::endl;
+				__COUT__ << std::hex << ":::"
+				         << "Streaming to ip: " << streamToIP << " port: 0x"
+				         << streamToPort << std::endl;
+				__COUT__ << "************************************************"
+				            "********"
+				         << std::endl;
+				__COUT__ << "************************************************"
+				            "********"
+				         << std::endl;
+			}
+			else
+				__COUT__ << std::hex << ":::"
+				         << "Failed to create streaming socket to ip: " << streamToIP
+				         << " port: 0x" << streamToPort << std::endl;
+		}
+
+		if((numberOfSentBytes = sendto(
+		        sendSockfd, respbuff, packetSz, 0, p->ai_addr, p->ai_addrlen)) == -1)
+		{
+			perror("hw: sendto");
+			exit(1);
+		}
+		__PRINTF__("hw: Interrupt Req packet sent %d bytes back\n", numberOfSentBytes);
+
+		for(int i = 0; i < numberOfSentBytes; i++)
+		{
+			if(i % 8 == 0)
+				__COUT__ << "\t" << i << " \t";
+			__PRINTF__("%2.2X", (unsigned char)respbuff[i]);
+			if(i % 8 == 7)
+				std::cout << std::endl;
+		}
+		std::cout << std::endl;
+		__COUT__ << "Waiting for ack..." << std::endl;
+
+		addr_len = sizeof their_addr;
+		if((totalNumberOfBytes = recvfrom(sendSockfd,
+		                                  buff,
+		                                  MAXBUFLEN - 1,
+		                                  0,
+		                                  (struct sockaddr*)&their_addr,
+		                                  &addr_len)) == -1)
+		{
+			perror("recvfrom");
+			exit(1);
+		}
+
+		__COUT__ << ":::"
+		         << "hw: got packet from "
+		         << inet_ntop(their_addr.ss_family,
+		                      get_in_addr((struct sockaddr*)&their_addr),
+		                      s,
+		                      sizeof s)
+		         << std::endl;
+		__COUT__ << ":::"
+		         << "hw: packet total is " << totalNumberOfBytes << " bytes long"
+		         << std::endl;
+		__COUT__ << ":::"
+		         << "hw: packet contents \n";
+		for(int i = 0; i < totalNumberOfBytes; i++)
+		{
+			if(i % 8 == 0)
+				__COUT__ << "\t" << i << " \t";
+			__PRINTF__("%2.2X", (unsigned char)buff[i]);
+			if(i % 8 == 7)
+				std::cout << std::endl;
+		}
+		std::cout << std::endl;
+
+	}  // end Interrupt Request handling
 
 	while(1)
 	{
@@ -376,24 +378,26 @@ int main(int argc, char** argv)
 			__COUT__ << ":::"
 			         << "hw: packet total is " << totalNumberOfBytes << " bytes long"
 			         << std::endl;
-			__COUT__ << ":::" << "hw: packet contents \n";
-			for(int i=0; i<totalNumberOfBytes; i++)
-			  {
-			    if(i%8==0) __COUT__ << "\t" << i << " \t";
-			    __PRINTF__("%2.2X", (unsigned char)buff[i]);
-			    if(i%8==7) std::cout << std::endl;
+			__COUT__ << ":::"
+			         << "hw: packet contents \n";
+			for(int i = 0; i < totalNumberOfBytes; i++)
+			{
+				if(i % 8 == 0)
+					__COUT__ << "\t" << i << " \t";
+				__PRINTF__("%2.2X", (unsigned char)buff[i]);
+				if(i % 8 == 7)
+					std::cout << std::endl;
 
-			//				//__COUT__ << std::hex << std::setw(2) << (int)(unsigned
-			// char)buff[i] << std::dec;
-			  }
+				//				//__COUT__ << std::hex << std::setw(2) << (int)(unsigned
+				// char)buff[i] << std::dec;
+			}
 
 			// treat as stacked packets
 			handlerIndex = 0;
 
-
-			//while another packet, handle
+			// while another packet, handle
 			while(handlerIndex + 40 <= totalNumberOfBytes &&
-			      (numberOfBytes =  40 + my_ntohll(&buff[handlerIndex + 32])) && 
+			      (numberOfBytes = 40 + my_ntohll(&buff[handlerIndex + 32])) &&
 			      handlerIndex + numberOfBytes <= totalNumberOfBytes)
 			{
 				__COUT__ << ":::"
@@ -401,302 +405,329 @@ int main(int argc, char** argv)
 				__COUT__ << ":::"
 				         << "hw: packet is " << numberOfBytes << " bytes long"
 				         << std::endl;
-				
-				uint16_t version = ntohs(*((uint16_t *)&(buff[handlerIndex + 0])));
-				uint16_t slot = ntohs(*((uint16_t *)&(buff[handlerIndex + 2])));
-				uint16_t feature = ntohs(*((uint16_t *)&(buff[handlerIndex + 4])));
-				uint16_t operation = ntohs(*((uint16_t *)&(buff[handlerIndex + 6])));
-				int16_t status = ntohs(*((uint16_t *)&(buff[handlerIndex + 8])));
-				uint64_t index = my_ntohll(&(buff[handlerIndex + 16]));
-				uint64_t count = my_ntohll(&(buff[handlerIndex + 24]));
+
+				uint16_t version      = ntohs(*((uint16_t*)&(buff[handlerIndex + 0])));
+				uint16_t slot         = ntohs(*((uint16_t*)&(buff[handlerIndex + 2])));
+				uint16_t feature      = ntohs(*((uint16_t*)&(buff[handlerIndex + 4])));
+				uint16_t operation    = ntohs(*((uint16_t*)&(buff[handlerIndex + 6])));
+				int16_t  status       = ntohs(*((uint16_t*)&(buff[handlerIndex + 8])));
+				uint64_t index        = my_ntohll(&(buff[handlerIndex + 16]));
+				uint64_t count        = my_ntohll(&(buff[handlerIndex + 24]));
 				uint64_t payloadBytes = numberOfBytes - 40;
 
-				uint64_t responsePacketCount = 0;  
+				uint64_t responsePacketCount = 0;
 
-				__COUT__ << "version      (16b) = \t" << version << "\t 0x" << std::hex << version << std::dec << std::endl;
-				__COUT__ << "slot         (16b) = \t" << slot << "\t 0x" << std::hex << slot << std::dec <<std::endl;
-				__COUT__ << "feature      (16b) = \t" << feature << "\t 0x" << std::hex << feature << std::dec <<std::endl;
-				__COUT__ << "operation    (16b) = \t" << operation << "\t 0x" << std::hex << operation << std::dec <<std::endl;
-				__COUT__ << "status       (16b) = \t" << status << "\t 0x" << std::hex << status << std::dec <<std::endl;
-				__COUT__ << "index        (64b) = \t" << index << "\t 0x" << std::hex << index << std::dec <<std::endl;
-				__COUT__ << "count        (64b) = \t" << count << "\t 0x" << std::hex << count << std::dec <<std::endl;
-				__COUT__ << "payloadBytes (64b) = \t" << payloadBytes << "\t 0x" << std::hex << payloadBytes << std::dec <<std::endl;
+				__COUT__ << "version      (16b) = \t" << version << "\t 0x" << std::hex
+				         << version << std::dec << std::endl;
+				__COUT__ << "slot         (16b) = \t" << slot << "\t 0x" << std::hex
+				         << slot << std::dec << std::endl;
+				__COUT__ << "feature      (16b) = \t" << feature << "\t 0x" << std::hex
+				         << feature << std::dec << std::endl;
+				__COUT__ << "operation    (16b) = \t" << operation << "\t 0x" << std::hex
+				         << operation << std::dec << std::endl;
+				__COUT__ << "status       (16b) = \t" << status << "\t 0x" << std::hex
+				         << status << std::dec << std::endl;
+				__COUT__ << "index        (64b) = \t" << index << "\t 0x" << std::hex
+				         << index << std::dec << std::endl;
+				__COUT__ << "count        (64b) = \t" << count << "\t 0x" << std::hex
+				         << count << std::dec << std::endl;
+				__COUT__ << "payloadBytes (64b) = \t" << payloadBytes << "\t 0x"
+				         << std::hex << payloadBytes << std::dec << std::endl;
 
-				//handlerIndex += numberOfBytes;
-				//continue;
-							
-				
+				// handlerIndex += numberOfBytes;
+				// continue;
+
 				// handle packet
 				if(payloadBytes == 0 &&  // size is valid (type, size, 8-byte address)
-				   operation == 2)  // read
+				   operation == 2)       // read
 				{
-				  
-				  __COUT__ << "Read! " << std::endl;
-				  memcpy((void*)respbuff,(void*)&buff[handlerIndex],40);
-				  
-				  uint64_t addr = (feature << 24) | index;
-				  uint64_t rdata = 0;
-				  payloadBytes = 0; //use to count
-				  
-				  //read location for each count
-				  for(uint64_t i = 0; i < count; ++i)
-				    {
-				      switch(addr)  // define address space
+					__COUT__ << "Read! " << std::endl;
+					memcpy((void*)respbuff, (void*)&buff[handlerIndex], 40);
+
+					uint64_t addr  = (feature << 24) | index;
+					uint64_t rdata = 0;
+					payloadBytes   = 0;  // use to count
+
+					// read location for each count
+					for(uint64_t i = 0; i < count; ++i)
 					{
-					case 0x1001:
-					  rdata = data_gen_cnt;
+						switch(addr)  // define address space
+						{
+						case 0x1001:
+							rdata = data_gen_cnt;
 
-					  __COUT__ << std::hex << ":::"
-						   << "Read data count: 0x" << data_gen_cnt << std::endl;
-					  break;
-					case 0x1002:
-					  rdata = data_gen_rate;
-					  
-					  __COUT__ << std::hex << ":::"
-						   << "Read data rate: 0x" << data_gen_rate << std::endl;
-					  break;
-					case 0x1003:
-					  rdata = led_register;
-					  
-					  __COUT__ << std::hex << ":::"
-						   << "Read LED register: 0x" << (unsigned int)led_register
-						   << std::endl;
-					  break;
-					case 0x0000000100000009:
-					  rdata = dataEnabled;
-					  
-					  __COUT__ << std::hex << ":::"
-						   << "Read data enable: 0x" << dataEnabled << std::endl;
-					  break;
-					default:
-					  rdata = addr + i;
-					 
-					  __COUT__ << std::hex << ":::" << addr
-						   << " -- Unknown read address received for count " << std::dec << i << std::endl;
-					}
-				      
-				      if(40 + payloadBytes + 8 > MAXBUFLEN)
+							__COUT__ << std::hex << ":::"
+							         << "Read data count: 0x" << data_gen_cnt
+							         << std::endl;
+							break;
+						case 0x1002:
+							rdata = data_gen_rate;
+
+							__COUT__ << std::hex << ":::"
+							         << "Read data rate: 0x" << data_gen_rate
+							         << std::endl;
+							break;
+						case 0x1003:
+							rdata = led_register;
+
+							__COUT__ << std::hex << ":::"
+							         << "Read LED register: 0x"
+							         << (unsigned int)led_register << std::endl;
+							break;
+						case 0x0000000100000009:
+							rdata = dataEnabled;
+
+							__COUT__ << std::hex << ":::"
+							         << "Read data enable: 0x" << dataEnabled
+							         << std::endl;
+							break;
+						default:
+							rdata = addr + i;
+
+							__COUT__ << std::hex << ":::" << addr
+							         << " -- Unknown read address received for count "
+							         << std::dec << i << std::endl;
+						}
+
+						if(40 + payloadBytes + 8 > MAXBUFLEN)
+						{
+							// send partial response packet
+
+							my_htonll(
+							    payloadBytes,
+							    &respbuff[32]);  // update EXPECTED payload bytes size
+							my_htonll(payloadBytes / 8,
+							          &respbuff[24]);         // update count bytes size
+							my_htonll(index, &respbuff[16]);  // update index
+							packetSz =
+							    40 + payloadBytes;  // update total respsone size in bytes
+
+							if((numberOfSentBytes =
+							        sendto(sockfd,
+							               respbuff,
+							               packetSz,
+							               0,
+							               (struct sockaddr*)&their_addr,
+							               sizeof(struct sockaddr_storage))) == -1)
+							{
+								perror("hw: sendto");
+								exit(1);
+							}
+							__PRINTF__(
+							    "hw: Resp packet #%d index=%d sent %d bytes back\n",
+							    responsePacketCount,
+							    index,
+							    numberOfSentBytes);
+
+							for(int b = 0; b < numberOfSentBytes; b++)
+							{
+								if(b % 8 == 0)
+									__COUT__ << "\t" << b << " \t";
+								__PRINTF__("%2.2X", (unsigned char)respbuff[b]);
+								if(b % 8 == 7)
+									std::cout << std::endl;
+							}
+
+							index += payloadBytes / 8;
+							payloadBytes = 0;
+
+							++responsePacketCount;
+							// usleep(3000000);
+						}
+
+						my_htonll(rdata, &respbuff[40 + payloadBytes]);  // insert data QW
+						payloadBytes += 8;
+					}  // end read count loop
+
+					// my_htonll(0xa00010002,&respbuff[0]); //update EXPECTED payload
+					// bytes size
+					my_htonll(payloadBytes,
+					          &respbuff[32]);  // update EXPECTED payload bytes size
+					my_htonll(payloadBytes / 8, &respbuff[24]);  // update count bytes
+					                                             // size
+					my_htonll(index, &respbuff[16]);             // update index
+
+					// my_htonll(count*8,&respbuff[32]); //update EXPECTED payload bytes
+					// size
+					packetSz = 40 + payloadBytes;  // update total respsone size in bytes
+
+					// my_htonll(payloadBytes,&respbuff[32]); //update payload bytes size
+					// packetSz = 40 + payloadBytes;  // update total respsone size in
+					// bytes
+
+					if((numberOfSentBytes = sendto(sockfd,
+					                               respbuff,
+					                               packetSz,
+					                               0,
+					                               (struct sockaddr*)&their_addr,
+					                               sizeof(struct sockaddr_storage))) ==
+					   -1)
 					{
-					  //send partial response packet
-					  
-					  					      
-					  my_htonll(payloadBytes,&respbuff[32]); //update EXPECTED payload bytes size
-					  my_htonll(payloadBytes/8,&respbuff[24]); //update count bytes size				  				  
-					  my_htonll(index,&respbuff[16]); //update index				  				  
-					  packetSz = 40 + payloadBytes;  // update total respsone size in bytes
-					  
-
-					  if((numberOfSentBytes = sendto(sockfd,
-									 respbuff,
-									 packetSz,
-									 0,
-									 (struct sockaddr*)&their_addr,
-									 sizeof(struct sockaddr_storage))) == -1)
-					    {
-					      perror("hw: sendto");
-					      exit(1);
-					    }
-					  __PRINTF__("hw: Resp packet #%d index=%d sent %d bytes back\n",
-						     responsePacketCount,index,
-						     numberOfSentBytes);
-
-					  
-					  for(int b=0; b<numberOfSentBytes; b++)
-					    {
-					      if(b%8==0) __COUT__ << "\t" << b << " \t";
-					      __PRINTF__("%2.2X", (unsigned char)respbuff[b]);
-					      if(b%8==7) std::cout << std::endl;
-					    }
-
-					  index += payloadBytes/8;					  
-					  payloadBytes = 0;
-
-					  ++responsePacketCount;
-					  //usleep(3000000);
+						perror("hw: sendto");
+						exit(1);
 					}
-				      
-				      my_htonll(rdata,&respbuff[40 + payloadBytes]); //insert data QW
-				      payloadBytes += 8;
-				    } //end read count loop
+					__PRINTF__("hw: Resp packet #%d index=%d sent %d bytes back\n",
+					           responsePacketCount,
+					           index,
+					           numberOfSentBytes);
 
+					for(int i = 0; i < numberOfSentBytes; i++)
+					{
+						if(i % 8 == 0)
+							__COUT__ << "\t" << i << " \t";
+						__PRINTF__("%2.2X", (unsigned char)respbuff[i]);
+						if(i % 8 == 7)
+							std::cout << std::endl;
+					}
 
-				  //my_htonll(0xa00010002,&respbuff[0]); //update EXPECTED payload bytes size
-				  my_htonll(payloadBytes,&respbuff[32]); //update EXPECTED payload bytes size
-				  my_htonll(payloadBytes/8,&respbuff[24]); //update count bytes size				  				  
-				  my_htonll(index,&respbuff[16]); //update index				  				  
-
-				      //my_htonll(count*8,&respbuff[32]); //update EXPECTED payload bytes size				  
-				  packetSz = 40 + payloadBytes;  // update total respsone size in bytes
-				      
-				      
-				  				  
-				  //my_htonll(payloadBytes,&respbuff[32]); //update payload bytes size				  
-				  //packetSz = 40 + payloadBytes;  // update total respsone size in bytes
-
-				  if((numberOfSentBytes = sendto(sockfd,
-								 respbuff,
-								 packetSz,
-								 0,
-								 (struct sockaddr*)&their_addr,
-								 sizeof(struct sockaddr_storage))) == -1)
-				    {
-				      perror("hw: sendto");
-				      exit(1);
-				    }
-				  __PRINTF__("hw: Resp packet #%d index=%d sent %d bytes back\n",
-					     responsePacketCount,index,
-					     numberOfSentBytes);
-
-				  for(int i=0; i<numberOfSentBytes; i++)
-				    {
-				      if(i%8==0) __COUT__ << "\t" << i << " \t";
-				      __PRINTF__("%2.2X", (unsigned char)respbuff[i]);
-				      if(i%8==7) std::cout << std::endl;
-				    }
-
-				} //end READ handling =====================================================
-				else if(payloadBytes%8 == 0 &&	
-					count == payloadBytes/8 &&
-					operation == 4)  // write
+				}  // end READ handling
+				   // =====================================================
+				else if(payloadBytes % 8 == 0 && count == payloadBytes / 8 &&
+				        operation == 4)  // write
 				{
+					__COUT__ << "Write!" << std::endl;
+					memcpy((void*)respbuff, (void*)&buff[handlerIndex], 40);
 
-				  
-				  __COUT__ << "Write!" << std::endl;				  
-				  memcpy((void*)respbuff,(void*)&buff[handlerIndex],40);
+					uint64_t addr = feature | (index << 16);
+					uint64_t wdata;
 
-				  uint64_t addr = feature | (index << 16);
-				  uint64_t wdata; 
-
-				  //write location for each count
-				  for(uint64_t i = 0; i < count; ++i)
-				    {
-				      wdata = my_ntohll(&buff[handlerIndex + 40 + i*8]);
-				      __COUT__ << ":::"
-					       << "Count #" << i 
-					       << "Write data = " << wdata << "\t 0x" << std::hex << wdata << std::endl;
-
-				      switch(addr)  // define address space
+					// write location for each count
+					for(uint64_t i = 0; i < count; ++i)
 					{
-					case 0x1001:
+						wdata = my_ntohll(&buff[handlerIndex + 40 + i * 8]);
+						__COUT__ << ":::"
+						         << "Count #" << i << "Write data = " << wdata << "\t 0x"
+						         << std::hex << wdata << std::endl;
 
-					  data_gen_cnt = wdata;
-					  __COUT__ << std::hex << ":::"
-						   << "Write data count: 0x" << data_gen_cnt << std::endl;
-					  count = 0;  // reset count
-					  break;
-					case 0x1002:
-					  data_gen_rate = wdata;
+						switch(addr)  // define address space
+						{
+						case 0x1001:
 
-					  __COUT__ << std::hex << ":::"
-						   << "Write data rate: 0x" << data_gen_rate << std::endl;
-					  break;
-					case 0x1003:
-					  led_register = wdata;
-					  
-					  __COUT__ << std::hex << ":::"
-						   << "Write LED register: 0x" << (unsigned int)led_register
-						   << std::endl;
-					  // show "LEDs"
-					  __COUT__ << "\n\n";
-					  for(int l = 0; l < 8; ++l)
-					    __COUT__ << ((led_register & (1 << (7 - l))) ? '*' : '-');
-					  __COUT__ << "\n\n";
-					  break;
-					
-					  
-					case 0x0000000100000009:
-					  dataEnabled = wdata;
+							data_gen_cnt = wdata;
+							__COUT__ << std::hex << ":::"
+							         << "Write data count: 0x" << data_gen_cnt
+							         << std::endl;
+							count = 0;  // reset count
+							break;
+						case 0x1002:
+							data_gen_rate = wdata;
 
-					  __COUT__ << std::hex << ":::"
-						   << "Write data enable: 0x" << (int)dataEnabled << std::endl;
-					  count = 0;  // reset count
-					  break;
-					default:
-					  __COUT__ << std::hex << "::: 0x" << addr
-						   << " -- Unknown write address received." << std::endl;
+							__COUT__ << std::hex << ":::"
+							         << "Write data rate: 0x" << data_gen_rate
+							         << std::endl;
+							break;
+						case 0x1003:
+							led_register = wdata;
+
+							__COUT__ << std::hex << ":::"
+							         << "Write LED register: 0x"
+							         << (unsigned int)led_register << std::endl;
+							// show "LEDs"
+							__COUT__ << "\n\n";
+							for(int l = 0; l < 8; ++l)
+								__COUT__ << ((led_register & (1 << (7 - l))) ? '*' : '-');
+							__COUT__ << "\n\n";
+							break;
+
+						case 0x0000000100000009:
+							dataEnabled = wdata;
+
+							__COUT__ << std::hex << ":::"
+							         << "Write data enable: 0x" << (int)dataEnabled
+							         << std::endl;
+							count = 0;  // reset count
+							break;
+						default:
+							__COUT__ << std::hex << "::: 0x" << addr
+							         << " -- Unknown write address received."
+							         << std::endl;
+						}
+					}  // end write count loop
+
+					// now send ack packet
+					my_htonll(0, &respbuff[32]);
+					packetSz = 40;
+
+					if((numberOfSentBytes = sendto(sockfd,
+					                               respbuff,
+					                               packetSz,
+					                               0,
+					                               (struct sockaddr*)&their_addr,
+					                               sizeof(struct sockaddr_storage))) ==
+					   -1)
+					{
+						perror("hw: sendto");
+						exit(1);
 					}
-				    } //end write count loop
+					__PRINTF__("hw: sent %d bytes back\n", numberOfSentBytes);
 
-				  //now send ack packet
-				  my_htonll(0,&respbuff[32]);
-				  packetSz = 40;
-				  
-				  if((numberOfSentBytes = sendto(sockfd,
-								 respbuff,
-								 packetSz,
-								 0,
-								 (struct sockaddr*)&their_addr,
-								 sizeof(struct sockaddr_storage))) == -1)
-				    {
-				      perror("hw: sendto");
-				      exit(1);
-				    }
-				  __PRINTF__("hw: sent %d bytes back\n",
-					     numberOfSentBytes);
-				  
-				  for(int i=0; i<numberOfSentBytes; i++)
-				    {
-				      if(i%8==0) __COUT__ << "\t" << i << " \t";
-				      __PRINTF__("%2.2X", (unsigned char)respbuff[i]);
-				      if(i%8==7) std::cout << std::endl;
-				    }
-				  
+					for(int i = 0; i < numberOfSentBytes; i++)
+					{
+						if(i % 8 == 0)
+							__COUT__ << "\t" << i << " \t";
+						__PRINTF__("%2.2X", (unsigned char)respbuff[i]);
+						if(i % 8 == 7)
+							std::cout << std::endl;
+					}
 
-				} //end WRITE handling ==================================================
-				else if(payloadBytes == 0 &&	
-					operation == 1<<0)  // query
+				}  // end WRITE handling
+				   // ==================================================
+				else if(payloadBytes == 0 && operation == 1 << 0)  // query
 				{
-				   __COUT__ << "Query!" << std::endl;				  
-				   memcpy((void*)respbuff,(void*)&buff[handlerIndex],40);
-				  
-				   //respond with query object {
-				   // 8B ops mask, 
-				   // 8B element bytes (always 64b/8B from firmware)
-				   // 8B number of elements (number of sub-features?)
-				   
-				   //return query, read, set support
-				   my_htonll((1<<0)|(1<<1)|(1<<2),&respbuff[40 + payloadBytes]); //insert data QW
-				   payloadBytes += 8;
-				   //return quad word elements
-				   my_htonll(8,&respbuff[40 + payloadBytes]); //insert data QW
-				   payloadBytes += 8;
-				   //return 1 sub-feature 
-				   my_htonll(1,&respbuff[40 + payloadBytes]); //insert data QW
-				   payloadBytes += 8;
-				   
-				   my_htonll(payloadBytes,&respbuff[32]); //update payload bytes size				  
-				   packetSz = 40 + payloadBytes;  // update total respsone size in bytes
+					__COUT__ << "Query!" << std::endl;
+					memcpy((void*)respbuff, (void*)&buff[handlerIndex], 40);
 
-				   if((numberOfSentBytes = sendto(sockfd,
-								  respbuff,
-								  packetSz,
-								  0,
-								  (struct sockaddr*)&their_addr,
-								  sizeof(struct sockaddr_storage))) == -1)
-				     {
-				       perror("hw: sendto");
-				       exit(1);
-				     }
-				   __PRINTF__("hw: sent %d bytes back\n",
-					      numberOfSentBytes);
-				   
-				   for(int i=0; i<numberOfSentBytes; i++)
-				     {
-				       if(i%8==0) __COUT__ << "\t" << i << " \t";
-				       __PRINTF__("%2.2X", (unsigned char)respbuff[i]);
-				       if(i%8==7) std::cout << std::endl;
-				     }
-				   
-				} //end QUERY handling =====================================================
+					// respond with query object {
+					//  8B ops mask,
+					//  8B element bytes (always 64b/8B from firmware)
+					//  8B number of elements (number of sub-features?)
+
+					// return query, read, set support
+					my_htonll((1 << 0) | (1 << 1) | (1 << 2),
+					          &respbuff[40 + payloadBytes]);  // insert data QW
+					payloadBytes += 8;
+					// return quad word elements
+					my_htonll(8, &respbuff[40 + payloadBytes]);  // insert data QW
+					payloadBytes += 8;
+					// return 1 sub-feature
+					my_htonll(1, &respbuff[40 + payloadBytes]);  // insert data QW
+					payloadBytes += 8;
+
+					my_htonll(payloadBytes, &respbuff[32]);  // update payload bytes size
+					packetSz = 40 + payloadBytes;  // update total respsone size in bytes
+
+					if((numberOfSentBytes = sendto(sockfd,
+					                               respbuff,
+					                               packetSz,
+					                               0,
+					                               (struct sockaddr*)&their_addr,
+					                               sizeof(struct sockaddr_storage))) ==
+					   -1)
+					{
+						perror("hw: sendto");
+						exit(1);
+					}
+					__PRINTF__("hw: sent %d bytes back\n", numberOfSentBytes);
+
+					for(int i = 0; i < numberOfSentBytes; i++)
+					{
+						if(i % 8 == 0)
+							__COUT__ << "\t" << i << " \t";
+						__PRINTF__("%2.2X", (unsigned char)respbuff[i]);
+						if(i % 8 == 7)
+							std::cout << std::endl;
+					}
+
+				}  // end QUERY handling
+				   // =====================================================
 				else
-				  __COUT__ << ":::"
-					   << "ERROR: The formatting of the packet received is wrong! "
-					   << "Number of bytes: "
-					   << numberOfBytes << " Operation " << operation
-					   << std::endl;
+					__COUT__ << ":::"
+					         << "ERROR: The formatting of the packet received is wrong! "
+					         << "Number of bytes: " << numberOfBytes << " Operation "
+					         << operation << std::endl;
 
 				handlerIndex += numberOfBytes;
-			} //end sub-packet operation loop
+			}  // end sub-packet operation loop
 
 			__COUT__ << std::hex << ":::"
 			         << "\n\n"

@@ -44,6 +44,6 @@ class FEOtsEthernetProgramInterface
 	// private:
 	//	void runSequenceOfCommands(const std::string &treeLinkName);
 };
-}
+}  // namespace ots
 
 #endif

@@ -51,13 +51,13 @@ void* get_in_addr(struct sockaddr* sa)
 
 int makeSocket(char* ip, int /*port*/)
 {
-	int                     sockfd;
-	struct addrinfo         hints, *servinfo, *p;
-	int                     rv;
-	//int                     numbytes;
-	//struct sockaddr_storage their_addr;
-	//socklen_t               addr_len;
-	//char                    s[INET6_ADDRSTRLEN];
+	int             sockfd;
+	struct addrinfo hints, *servinfo, *p;
+	int             rv;
+	// int                     numbytes;
+	// struct sockaddr_storage their_addr;
+	// socklen_t               addr_len;
+	// char                    s[INET6_ADDRSTRLEN];
 
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family   = AF_UNSPEC;
@@ -150,12 +150,12 @@ int main(int argc, char* argv[])
 	unsigned int packetSz;
 	int          type = atoi(argv[2]);
 	std::cout << "sw: Line " << __LINE__ << ":::"
-	     << "Type of Test: " << type << std::endl;
+	          << "Type of Test: " << type << std::endl;
 
-	uint64_t val = 0;
-	uint64_t addr;
-	bool     a    = 4;
-	std::string   test = "hehehel";
+	uint64_t    val = 0;
+	uint64_t    addr;
+	bool        a    = 4;
+	std::string test = "hehehel";
 	if(a != test.size())
 		std::cout << std::endl;
 
@@ -240,7 +240,7 @@ int main(int argc, char* argv[])
 
 		memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
 		std::cout << "sw: Line " << __LINE__ << ":::"
-		     << "Value read: " << std::hex << val << std::endl;
+		          << "Value read: " << std::hex << val << std::endl;
 
 		break;
 	case 2:
@@ -285,11 +285,11 @@ int main(int argc, char* argv[])
 		{
 			int sz = val;  // get from read in TYPE 1
 			std::cout << "sw: Line " << __LINE__ << ":::"
-			     << "Number of packets expecting: " << sz << std::endl;
+			          << "Number of packets expecting: " << sz << std::endl;
 			for(int i = 0; i < sz; ++i)
 			{
 				std::cout << "sw: Line " << __LINE__ << ":::"
-				     << "Waiting for data packet: " << i << std::endl;
+				          << "Waiting for data packet: " << i << std::endl;
 
 				// read response
 				// ///////////////////////////////////////////////////////////
@@ -322,7 +322,7 @@ int main(int argc, char* argv[])
 
 				memcpy((void*)&val, (void*)&buff[TX_DATA_OFFSET], 8);
 				std::cout << "sw: Line " << __LINE__ << ":::"
-				     << "Value read: " << val << std::endl;
+				          << "Value read: " << val << std::endl;
 			}
 		}
 
@@ -373,7 +373,7 @@ int main(int argc, char* argv[])
 		break;
 	default:
 		std::cout << "sw: Line " << __LINE__ << ":::"
-		     << "INVALID Type of Test: " << type << std::endl;
+		          << "INVALID Type of Test: " << type << std::endl;
 	}
 
 	close(sockfd);
