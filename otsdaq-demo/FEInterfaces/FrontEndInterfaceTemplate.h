@@ -32,6 +32,6 @@ class FrontEndInterfaceTemplate : public FEVInterface
 	FrontEndHardwareTemplate* theFrontEndHardware_;
 	FrontEndFirmwareTemplate* theFrontEndFirmware_;
 };
-}
+}  // namespace ots
 
 #endif

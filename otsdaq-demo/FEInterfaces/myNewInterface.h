@@ -36,6 +36,6 @@ class myNewInterface : public FEOtsUDPTemplateInterface
 
   private:
 };
-}
+}  // namespace ots
 
 #endif

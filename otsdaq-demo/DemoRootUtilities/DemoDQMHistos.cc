@@ -28,7 +28,8 @@ void DemoDQMHistos::book(TFile* rootFile)
 }
 
 //==============================================================================
-void DemoDQMHistos::fill(std::string& buffer, std::map<std::string, std::string> /*header*/)
+void DemoDQMHistos::fill(std::string& buffer,
+                         std::map<std::string, std::string> /*header*/)
 {
 	std::stringstream  ss;
 	unsigned long long dataQW = *((unsigned long long*)&((buffer)[2]));

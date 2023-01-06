@@ -38,6 +38,6 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 
 };
 // clang-format on
-}
+}  // namespace ots
 
 #endif
