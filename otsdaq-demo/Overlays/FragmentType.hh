@@ -20,7 +20,7 @@ enum FragmentType : artdaq::Fragment::type_t
 // Safety check.
 static_assert(artdaq::Fragment::isUserFragmentType(FragmentType::INVALID - 1),
               "Too many user-defined fragments!");
-}
+}  // namespace detail
 
 using detail::FragmentType;
 
@@ -43,5 +43,5 @@ std::string fragmentTypeToString(FragmentType val);
  * \return A list of all Fragment types defined by this package, in the format that RawInput expects
  */
 std::map<artdaq::Fragment::type_t, std::string> makeFragmentTypeMap();
-}
+}  // namespace ots
 #endif /* artdaq_ots_core_Overlays_FragmentType_hh */
