@@ -1,24 +1,18 @@
 #!/bin/bash
 
-# usage: --tutorial <tutorial name> --version <version string>
+# usage: --tutorial <tutorial name>
 #
 #   tutorial 
 #		e.g. ${TUTORIAL} or artdaq
-#   version 
-#		usually looks like v2_2 to represent v2.2 release, for example 
-#		(underscores might more universal for web downloads than periods)
 #
 #  example run:
-#	./get_tutorial_data.sh --tutorial first_demo --version v2_2
+#	./get_tutorial_data.sh --tutorial first_demo
 #
 
 if ! [ -e setup_ots.sh ]; then
   kdialog --sorry "You must run this script from an OTSDAQ installation directory!"
   exit 1
 fi
-
-# Login to redmine	
-source "${OTSDAQ_DIR}"/tools/redmine_login.sh	
 
 Base=$PWD
 #commenting out unique filename generation
@@ -36,18 +30,12 @@ exec 2> >(tee "$Base/script_log/$(basename $0)_stderr.script")
 
 #setup default parameters
 TUTORIAL='first_demo'
-VERSION='v2_2'
 
 if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 	TUTORIAL="$2"
 fi
 
-if [[ "$3"  == "--version" && "x$4" != "x" ]]; then
-	VERSION="$4"
-fi
-
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t VERSION  \t= $VERSION"
 echo		
 
 shopt -s expand_aliases #allows for aliases in non-interactive mode (which apparently is critical depending on the temperment of the terminal)
@@ -88,58 +76,64 @@ do
 	UD_PATH="$UD_PATH/$UD_EL"
 done
 
+if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Error."
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Environment variable ARTDAQ_DATABASE_URI not setup!"
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t To setup, use 'export ARTDAQ_DATABASE_URI=filesystemdb://<path to database>'" 
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t            e.g. filesystemdb:///home/rrivera/databases/filesystemdb/test_db"
+	echo 
+	echo 
+	echo
+	exit    
+fi
+
+#Steps:
+# download tutorial database
+# bkup current database
+# move download database into position
+
+ADU_PATH=$(echo ${ARTDAQ_DATABASE_URI} | cut -d':' -f2)
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t artdaq database filesystem URI Path = ${ADU_PATH}"
+
+#attempt to mkdir for full path so that it exists to move the database to
+# assuming mkdir is non-destructive
+ADU_ARR=$(echo ${ADU_PATH} | tr '/' "\n")
+ADU_PATH=""
+for ADU_EL in ${ADU_ARR[@]}
+do
+	#echo $ADU_EL
+	#echo $ADU_PATH
+	mkdir $ADU_PATH &>/dev/null #hide output
+	ADU_PATH="$ADU_PATH/$ADU_EL"
+done
 
 # download tutorial user data
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Downloading tutorial user data.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t git clone https://github.com/art-daq/otsdaq_demo_data -b ${TUTORIAL}"
 echo
 
-#FIXME -- for now, every tutorial gets same Data (until security to zip files can be resolved)
-rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip* >/dev/null 2>&1 # * helps root delete
-#NOTE!! must add "download" to link
-wget https://cdcvs.fnal.gov/redmine/attachments/download/66046/tutorial_first_demo_v2_5_Data.zip  \
-    --no-check-certificate \
-	--load-cookies=${REDMINE_LOGIN_COOKIEF} \
-	--save-cookies=${REDMINE_LOGIN_COOKIEF} \
-	--keep-session-cookies \
-	-O tutorial_${TUTORIAL}_${VERSION}_Data.zip
-# wget --load-cookies=$cookief otsdaq.fnal.gov/downloads/tutorial_${TUTORIAL}_${VERSION}_Data.zip
-
-
-echo
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Unzipping tutorial user data.."
-echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t unzip tutorial_${TUTORIAL}_${VERSION}_Data.zip -d tmp01234"
-unzip tutorial_${TUTORIAL}_${VERSION}_Data.zip -d tmp01234
+git clone https://github.com/art-daq/otsdaq_demo_data.git -b ${TUTORIAL}
 
 # bkup current user data
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Backing up current user data.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv ${USER_DATA} ${USER_DATA}.bak"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv ${USER_DATA} ${USER_DATA}.bak`date +%y%m%d`"
 echo
-rm -rf ${USER_DATA}.bak
-mv ${USER_DATA} ${USER_DATA}.bak
+mv ${USER_DATA} ${USER_DATA}.bak`date +%y%m%d`
 
 # move download user data into position
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Installing tutorial data as user data.."
 echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv tmp01234/NoGitData ${USER_DATA}"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/Data ${USER_DATA}"
 echo
-mv tmp01234/NoGitData ${USER_DATA}
-
-echo
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Cleaning up downloads.."
-echo 
-echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t rm -rf tmp01234; rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip"
-echo
-rm -rf tmp01234; rm -rf tutorial_${TUTORIAL}_${VERSION}_Data.zip
+mv otsdaq_demo_data/Data ${USER_DATA}
 
 echo 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
@@ -147,5 +141,47 @@ echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t otsdaq tutorial Data installed!"
 echo
 echo
+
+# bkup current database
+echo 
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Backing up current database.."
+echo 
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv ${ADU_PATH} ${ADU_PATH}.bak`date +%y%m%d`"
+echo
+mv ${ADU_PATH} ${ADU_PATH}.bak`date +%y%m%d`
+
+# move download user data into position
+echo 
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Installing tutorial database as database.."
+echo 
+
+#hard to be sure of depth of table folders, so check
+if [ -d otsdaq_demo_data/databases/XDAQContextTable ]; then
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/databases ${ADU_PATH}"
+	mv otsdaq_demo_data/databases ${ADU_PATH}
+elif [ -d otsdaq_demo_data/databases/filesystemdb/XDAQContextTable ]; then
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/databases/filesystemdb ${ADU_PATH}"
+	mv otsdaq_demo_data/databases/filesystemdb ${ADU_PATH}
+else
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/databases/filesystemdb/test_db ${ADU_PATH}"	
+	mv otsdaq_demo_data/databases/filesystemdb/test_db ${ADU_PATH}
+fi
+
+echo 
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
+echo 
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t otsdaq tutorial database installed!"
+echo
+echo
+
+echo
+echo
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Cleaning up downloads.."
+echo 
+echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t rm -rf otsdaq_demo_data"
+echo
+rm -rf otsdaq_demo_data
 
 exit
