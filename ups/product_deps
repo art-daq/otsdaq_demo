@@ -47,8 +47,6 @@ c14:s122:debug		c14:s122:debug		c14:s122:debug		c14:s122:debug		-std=c++17
 
 c7:s118:prof		c7:s118:prof		c7:s118:prof		c7:s118:prof		-std=c++17
 c7:s118:debug		c7:s118:debug		c7:s118:debug		c7:s118:debug		-std=c++17
-c14:s118:prof		c14:s118:prof		c14:s118:prof		c14:s118:prof		-std=c++17
-c14:s118:debug		c14:s118:debug		c14:s118:debug		c14:s118:debug		-std=c++17
 
 c7:s112:prof		c7:s112:prof		c7:s112:prof		c7:s112:prof		-std=c++17
 c7:s112:debug		c7:s112:debug		c7:s112:debug		c7:s112:debug		-std=c++17
