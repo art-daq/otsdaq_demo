@@ -91,7 +91,7 @@ SlowControlsInterfaceTemplate::checkAlarmNotifications()
 
 //==============================================================================
 std::vector<std::vector<std::string>> SlowControlsInterfaceTemplate::getChannelHistory(
-    const std::string& /*Name*/)
+    const std::string& /*Name*/, int /*startTime*/, int /*endTime*/)
 {
 	return {std::vector<std::string>({"a", "b", "c", "d", "e"}),
 	        std::vector<std::string>({"b", "b", "c", "d", "e"}),
