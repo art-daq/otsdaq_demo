@@ -1,24 +1,26 @@
 #!/bin/bash
 
+srcsdir=${1:-../srcs}
+
 if ! [ -d ups ];then
   echo "This script should be run from a products directory"
   exit 1
 fi
-if ! [ -d ../srcs ];then
+if ! [ -d $srcsdir ];then
   echo "srcs Directory not found!"
   exit 2
 fi
 
 source setups
 
-demo_version=v`grep "project" ../srcs/otsdaq_demo/CMakeLists.txt|grep -oE "VERSION [^)]*"|awk '{print $2}'|sed 's/\./_/g'`
-defaultQuals=`grep "defaultqual" ../srcs/otsdaq_demo/ups/product_deps|awk '{print $2}'`
+demo_version=v`grep "project" $srcsdir/otsdaq_demo/CMakeLists.txt|grep -oE "VERSION [^)]*"|awk '{print $2}'|sed 's/\./_/g'`
+defaultQuals=`grep "defaultqual" $srcsdir/otsdaq_demo/ups/product_deps|awk '{print $2}'`
 equalifier=`echo $defaultQuals|cut -f1 -d:`
 squalifier=`echo $defaultQuals|cut -f2 -d:`
 build_type_exclude=debug
 squal_regex=s1[1-9][^`echo ${squalifier:0-1}`]
 
-product_list=`grep -E 'v[0-9]*_[0-9]*' ../srcs/*/ups/product_deps|cut -d: -f2|grep -v artdaq|grep -v otsdaq|grep -v TRACE|grep -vE '^ *#'|grep -v $squal_regex|awk '{print $1, $2}'|sort|uniq`
+product_list=`grep -E 'v[0-9]*_[0-9]*' $srcsdir/*/ups/product_deps|cut -d: -f2|grep -v artdaq|grep -v otsdaq|grep -v TRACE|grep -vE '^ *#'|grep -v $squal_regex|awk '{print $1, $2}'|sort|uniq`
 
 function scisoft {   # $1 is package or "" for pkg list
     test $1 = '-m' && { shift; do_m=1; } || do_m=0
