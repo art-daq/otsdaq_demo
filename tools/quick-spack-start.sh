@@ -190,6 +190,7 @@ spack compiler find
 
 spack env create ots
 spack env activate ots
+ln -s $spackdir/var/spack/environments/ots srcs
 
 spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier}
 
