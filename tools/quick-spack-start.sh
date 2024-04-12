@@ -194,6 +194,14 @@ ln -s $spackdir/var/spack/environments/ots srcs
 
 spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier}
 
+
+if [[ ${opt_develop:-0} -eq 1 ]];then
+	for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
+    	    spack add $pkg@${demo_version}
+	    spack develop $pkg@${demo_version}
+	done
+fi
+
 	cat >setup_ots.sh <<-EOF
 echo # This script is intended to be sourced.
 
