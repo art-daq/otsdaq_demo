@@ -104,6 +104,8 @@ if [ -z "${tag:-}" ]; then
   tag=develop;
   notag=1;
 fi
+
+rm CMakeLists.txt*
 wget https://raw.githubusercontent.com/art-daq/otsdaq/$tag/CMakeLists.txt
 demo_version=v`grep "project" $Base/CMakeLists.txt|grep -oE "VERSION [^)]*"|awk '{print $2}'|sed 's/\./_/g'`
 echo "ots Version is $demo_version"
@@ -117,8 +119,8 @@ if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
   tag=$demo_version
 fi
 
-defaultS="130"
-defaultAD="31300"
+defaultS="132"
+defaultAD="31301"
 
 if [ -n "${squalifier-}" ]; then
 	squalifier="${squalifier}"
@@ -186,19 +188,23 @@ for upstream in ${upstreams[@]}; do
 done
 
 cd $Base
+
+spack install gcc@13.1.0
+spack load gcc@13.1.0
 spack compiler find
 
 spack env create ots
 spack env activate ots
 ln -s $spackdir/var/spack/environments/ots srcs
 
-spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier}
+spack add cetlib@3.19.00%gcc@13.1.0 cxxstd=20 # Workaround until fnal_art is updated
+spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} %gcc@13.1.0
 
 
 if [[ ${opt_develop:-0} -eq 1 ]];then
 	for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
-    	    spack add $pkg@${demo_version}
-	    spack develop $pkg@${demo_version}
+    	    spack add $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
+	    spack develop $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
 	done
 fi
 
@@ -284,7 +290,7 @@ chmod 755 reset_ots_tutorial.sh
 ########################################
 ########################################	
 	
-spack concretize && spack install
+spack concretize --force && spack install -j 32
 
 installStatus=$?
 
