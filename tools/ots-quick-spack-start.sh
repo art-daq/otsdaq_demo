@@ -189,7 +189,8 @@ done
 
 cd $Base
 
-spack install gcc@13.1.0
+BUILD_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
+spack install -j $BUILD_J gcc@13.1.0
 spack load gcc@13.1.0
 spack compiler find
 
@@ -289,7 +290,8 @@ chmod 755 reset_ots_tutorial.sh
 ########################################
 ########################################	
 	
-spack concretize --force && spack install -j 32
+
+spack concretize --force && spack install -j $BUILD_J
 
 installStatus=$?
 
