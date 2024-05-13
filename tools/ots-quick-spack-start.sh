@@ -197,7 +197,6 @@ spack env create ots
 spack env activate ots
 ln -s $spackdir/var/spack/environments/ots srcs
 
-spack add cetlib@3.19.00%gcc@13.1.0 cxxstd=20 # Workaround until fnal_art is updated
 spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} %gcc@13.1.0
 
 
