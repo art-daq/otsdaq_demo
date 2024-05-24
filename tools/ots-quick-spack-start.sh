@@ -5,8 +5,8 @@
 git_status=`git status 2>/dev/null`
 git_sts=$?
 if [ $git_sts -eq 0 ];then
-	echo "This script is designed to be run in a fresh install directory!"
-	exit 1
+    echo "This script is designed to be run in a fresh install directory!"
+    exit 1
 fi
 
 starttime=`date`
@@ -19,9 +19,9 @@ env_opts_var=`basename $0 | sed 's/\.sh$//' | tr 'a-z-' 'A-Z_'`_OPTS
 USAGE="\
    usage: `basename $0` [options] [demo_root]
 examples: `basename $0` .
-		  `basename $0` --run-ots
-		  `basename $0` --debug
-		  `basename $0` --tag v2_08_04
+          `basename $0` --run-ots
+          `basename $0` --debug
+          `basename $0` --tag v2_08_04
 If the \"demo_root\" optional parameter is not supplied, the user will be
 prompted for this location.
 --run-ots     runs otsdaq
@@ -49,38 +49,38 @@ op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
 args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0
 while [ -n "${1-}" ];do
-	if expr "x${1-}" : 'x-' >/dev/null;then
-		op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
-		leq=`expr "x$op" : 'x-[^=]*\(=\)'` lev=`expr "x$op" : 'x-[^=]*=\(.*\)'`
-		test -n "$leq"&&eval "set -- \"\$lev\" \"\$@\""&&op=`expr "x$op" : 'x\([^=]*\)'`
-		case "$op" in
-			\?*|h*)     eval $op1chr; do_help=1;;
-			v*)         eval $op1chr; opt_v=`expr $opt_v + 1`;;
-			x*)         eval $op1chr; set -x;;
-			a*)         eval $op1arg; aqualifier=$1; shift;;
-			s*)         eval $op1arg; squalifier=$1; shift;;
-			w*)         eval $op1chr; opt_w=`expr $opt_w + 1`;;
-			-debug)     opt_debug=--debug;;
+    if expr "x${1-}" : 'x-' >/dev/null;then
+        op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
+        leq=`expr "x$op" : 'x-[^=]*\(=\)'` lev=`expr "x$op" : 'x-[^=]*=\(.*\)'`
+        test -n "$leq"&&eval "set -- \"\$lev\" \"\$@\""&&op=`expr "x$op" : 'x\([^=]*\)'`
+        case "$op" in
+            \?*|h*)     eval $op1chr; do_help=1;;
+            v*)         eval $op1chr; opt_v=`expr $opt_v + 1`;;
+            x*)         eval $op1chr; set -x;;
+            a*)         eval $op1arg; aqualifier=$1; shift;;
+            s*)         eval $op1arg; squalifier=$1; shift;;
+            w*)         eval $op1chr; opt_w=`expr $opt_w + 1`;;
+            -debug)     opt_debug=--debug;;
             -run-ots)  opt_run_ots=--run-ots;;
-			-develop) opt_develop=1;;
-			-tag)       eval $reqarg; tag=$1; shift;;
-			-spackdir)  eval $op1arg; spackdir=$1; shift;;
-			-no-extra-products)  opt_skip_extra_products=1;;
-			-no-pull)   opt_no_pull=1;;
-			-upstream)  eval $op1arg; upstreams+=($1); shift;;
-			*)          echo "Unknown option -$op"; do_help=1;;
-		esac
-	else
-		aa=`echo "$1" | sed -e"s/'/'\"'\"'/g"` args="$args '$aa'"; shift
-	fi
+            -develop) opt_develop=1;;
+            -tag)       eval $reqarg; tag=$1; shift;;
+            -spackdir)  eval $op1arg; spackdir=$1; shift;;
+            -no-extra-products)  opt_skip_extra_products=1;;
+            -no-pull)   opt_no_pull=1;;
+            -upstream)  eval $op1arg; upstreams+=($1); shift;;
+            *)          echo "Unknown option -$op"; do_help=1;;
+        esac
+    else
+        aa=`echo "$1" | sed -e"s/'/'\"'\"'/g"` args="$args '$aa'"; shift
+    fi
 done
 eval "set -- $args \"\$@\""; unset args aa
 
 test -n "${do_help-}" -o $# -ge 2 && echo "$USAGE" && exit
 
 if [[ -n "${tag:-}" ]] && [[ $opt_develop -eq 1 ]]; then 
-	echo "The \"--tag\" and \"--develop\" options are incompatible - please specify only one."
-	exit
+    echo "The \"--tag\" and \"--develop\" options are incompatible - please specify only one."
+    exit
 fi
 
 if [ "x$SPACK_ROOT" == "x$spackdir" ]; then
@@ -123,40 +123,52 @@ defaultS="132"
 defaultAD="31301"
 
 if [ -n "${squalifier-}" ]; then
-	squalifier="${squalifier}"
+    squalifier="${squalifier}"
 else
-	squalifier="${defaultS}"
+    squalifier="${defaultS}"
 fi
 if [ -n "${aqualifier-}" ]; then
-	aqualifier="${aqualifier}"
+    aqualifier="${aqualifier}"
 else
-	aqualifier="${defaultAD}"
+    aqualifier="${defaultAD}"
 fi
 compiler_info="" # Maybe do e- and c- qualifiers?
 
 if ! [ -d $spackdir ];then
-	$(
+    $(
     cd ${spackdir%/spack}
     git clone https://github.com/FNALssi/spack.git -b fnal-develop
         )
+else
+    cd $spackdir && git pull && cd $Base
 fi
 
 export SPACK_DISABLE_LOCAL_CONFIG=true
 source $spackdir/share/spack/setup-env.sh
 
-git clone https://github.com/FNALssi/fermi-spack-tools.git
+if ! [ -d fermi-spack-tools ]; then
+    git clone https://github.com/FNALssi/fermi-spack-tools.git
+else
+    cd fermi-spack-tools && git pull && cd ..
+fi
 ./fermi-spack-tools/bin/make_packages_yaml $spackdir
 
 repo_found=`spack repo list|grep -c fnal_art`
 if [ $repo_found -eq 0 ]; then
-    cd $spackdir/var/spack/repos
+    mkdir spack-repos && cd spack-repos
     git clone https://github.com/FNALssi/fnal_art.git
     spack repo add ./fnal_art
     git clone https://github.com/marcmengel/scd_recipes.git
     spack repo add ./scd_recipes
     git clone https://github.com/art-daq/artdaq-spack.git
     spack repo add ./artdaq-spack
-
+    cd $Base
+else
+    for dir in `spack repo list|awk '{print $2}'`;do
+        cd $dir
+        git pull
+    done
+    cd $Base
 fi
 
 
@@ -174,12 +186,12 @@ for upstream in ${upstreams[@]}; do
     upstreamdir=`dirname $upstreamdir`
     
     if ! [ -d $upstreamdir/.spack-db ]; then
-	   echo "No Spack instance found at $upstream!"
-	   continue
+       echo "No Spack instance found at $upstream!"
+       continue
     fi
 
     if ! [ -f $spackdir/etc/spack/upstreams.yaml ]; then
-	    echo "upstreams:" > $spackdir/etc/spack/upstreams.yaml
+        echo "upstreams:" > $spackdir/etc/spack/upstreams.yaml
     fi
 
     echo "  upstream${upstream//\//-}:" >>$spackdir/etc/spack/upstreams.yaml
@@ -194,27 +206,29 @@ spack install -j $BUILD_J gcc@13.1.0
 spack load gcc@13.1.0
 spack compiler find
 
-spack env create ots
-spack env activate ots
-ln -s $spackdir/var/spack/environments/ots srcs
+spack env create ots-${demo_verison}
+spack env activate ots-${demo_verison}
+ln -s ${spackdir}/var/spack/environments/artdaq-${demo_version}
 
 spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} %gcc@13.1.0
 
 
 if [[ ${opt_develop:-0} -eq 1 ]];then
-	for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
-    	    spack add $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
-	    spack develop $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
-	done
+    for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
+            spack add $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
+        spack develop $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
+    done
+    cd $Base
+    rm srcs && ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
 fi
 
-	cat >setup_ots.sh <<-EOF
+    cat >setup_ots.sh <<-EOF
 echo # This script is intended to be sourced.
 
 sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the bash shell before running ots.'; exit; }" || exit
 export SPACK_DISABLE_LOCAL_CONFIG=true
 source $spackdir/share/spack/setup-env.sh
-spack env activate ots
+spack env activate ots-${demo_version}
 
 export TRACE_NAME=TRACE
 
@@ -264,7 +278,7 @@ rm -rf otsdaq_demo
 export USER_DATA="$Base/Data"
 export ARTDAQ_DATABASE_URI="filesystemdb://$Base/databases/filesystemdb/test_db"
 
-		
+        
 #download get_tutorial_data script
 wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 
@@ -289,7 +303,7 @@ chmod 755 reset_ots_tutorial.sh
 ## END Setup USER_DATA and databases
 ########################################
 ########################################	
-	
+    
 
 spack concretize --force && spack install -j $BUILD_J
 
@@ -298,12 +312,12 @@ installStatus=$?
 if [ $installStatus -eq 0 ]; then
     echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://github.com/art-daq/otsdaq/wiki"
     echo	
-	echo "In the future, when you open a new terminal, just use 'source setup_ots.sh' to setup your ots installation."
-	echo
+    echo "In the future, when you open a new terminal, just use 'source setup_ots.sh' to setup your ots installation."
+    echo
 else
     echo "BUILD ERROR!!! SOMETHING IS VERY WRONG!!!"
     echo
-	echo
+    echo
 fi
 
 endtime=`date`
