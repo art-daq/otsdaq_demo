@@ -213,7 +213,7 @@ spack env create ots-${demo_version}
 spack env activate ots-${demo_version}
 ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
 
-spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} %gcc@13.1.0
+spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} %gcc@13.1.0 +demo
 
 
 if [[ ${opt_develop:-0} -eq 1 ]];then
