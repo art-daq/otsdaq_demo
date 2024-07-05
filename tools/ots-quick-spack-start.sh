@@ -36,6 +36,7 @@ prompted for this location.
 -w            Check out repositories read/write
 --no-extra-products  Skip the automatic use of central product areas, such as CVMFS
 --upstream    Use <dir> as a Spack upstream (repeatable)
+--padding     Set directory padding to 255, for relocatability
 "
 
 # Process script arguments and options
@@ -47,7 +48,7 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0
 while [ -n "${1-}" ];do
     if expr "x${1-}" : 'x-' >/dev/null;then
         op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
@@ -68,6 +69,7 @@ while [ -n "${1-}" ];do
             -no-extra-products)  opt_skip_extra_products=1;;
             -no-pull)   opt_no_pull=1;;
             -upstream)  eval $op1arg; upstreams+=($1); shift;;
+	    -padding)   opt_padding=1;;
             *)          echo "Unknown option -$op"; do_help=1;;
         esac
     else
@@ -151,6 +153,7 @@ if ! [ -d fermi-spack-tools ]; then
 else
     cd fermi-spack-tools && git pull && cd ..
 fi
+sed -i '/perl/d' fermi-spack-tools/templates/packagelist # Remove Perl for now
 ./fermi-spack-tools/bin/make_packages_yaml $spackdir almalinux9
 
 repo_found=`spack repo list|grep -c fnal_art`
@@ -173,14 +176,16 @@ fi
 
 
 spack config --scope=site update  --yes-to-all config
-spack config --scope=site add config:install_tree:padded_length:255
+if [ $opt_padding -eq 1 ];then
+  spack config --scope=site add config:install_tree:padded_length:255
+fi
 
-spack mirror add --scope site scisoft-binaries  https://scisoft.fnal.gov/scisoft/spack-mirror/spack-binary-cache-plain
-spack buildcache update-index -k scisoft-binaries
-spack mirror add --scope site scisoft-compilers https://scisoft.fnal.gov/scisoft/spack-mirror/spack-compiler-cache-plain
-spack buildcache update-index -k scisoft-compilers
-spack -k buildcache keys --install --trust --force
-spack reindex
+#spack mirror add --scope site scisoft-binaries  https://scisoft.fnal.gov/scisoft/spack-mirror/spack-binary-cache-plain
+#spack buildcache update-index -k scisoft-binaries
+#spack mirror add --scope site scisoft-compilers https://scisoft.fnal.gov/scisoft/spack-mirror/spack-compiler-cache-plain
+#spack buildcache update-index -k scisoft-compilers
+#spack -k buildcache keys --install --trust --force
+#spack reindex
 
 for upstream in ${upstreams[@]}; do
     upstreamdir=`find $upstream -type d -name .spack-db`
@@ -240,7 +245,7 @@ source $spackdir/share/spack/setup-env.sh
 spack env activate ots-${demo_version}
 
 k5user=`klist|grep "Default principal"|cut -d: -f2|sed 's/@.*//;s/ //'`
-export TRACE_FILE=/tmp/trace_buffer_$USER.$k5user
+export TRACE_FILE=/tmp/trace_buffer_\$USER.\$k5user
 
 export OTS_MAIN_PORT=2015
 
