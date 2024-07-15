@@ -246,7 +246,7 @@ export SPACK_DISABLE_LOCAL_CONFIG=true
 source $spackdir/share/spack/setup-env.sh
 spack env activate ots-${demo_version}
 
-k5user=`klist|grep "Default principal"|cut -d: -f2|sed 's/@.*//;s/ //'`
+k5user=\`klist|grep "Default principal"|cut -d: -f2|sed 's/@.*//;s/ //'\`
 export TRACE_FILE=/tmp/trace_buffer_\$USER.\$k5user
 
 export OTS_MAIN_PORT=2015
