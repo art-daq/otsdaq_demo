@@ -44,6 +44,7 @@ eval env_opts=\${$env_opts_var-} # can be args too
 
 spackdir="${SPACK_ROOT:-$Base/spack}"
 upstreams=()
+installStatus=0
 eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
@@ -214,6 +215,7 @@ BUILD_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 spack load gcc@13.1.0 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
   spack install -j $BUILD_J gcc@13.1.0
+  installStatus=$?
   spack load gcc@13.1.0
 fi
 spack compiler find
@@ -339,3 +341,5 @@ endtime=`date`
 
 echo "Build start time: $starttime"
 echo "Build end time:   $endtime"
+
+exit $installStatus
