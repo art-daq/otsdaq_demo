@@ -37,6 +37,7 @@ prompted for this location.
 --no-extra-products  Skip the automatic use of central product areas, such as CVMFS
 --upstream    Use <dir> as a Spack upstream (repeatable)
 --padding     Set directory padding to 255, for relocatability
+--no-kmod     Build TRACE without kernel modules
 "
 
 # Process script arguments and options
@@ -49,7 +50,7 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0
 while [ -n "${1-}" ];do
     if expr "x${1-}" : 'x-' >/dev/null;then
         op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
@@ -71,6 +72,7 @@ while [ -n "${1-}" ];do
             -no-pull)   opt_no_pull=1;;
             -upstream)  eval $op1arg; upstreams+=($1); shift;;
 	    -padding)   opt_padding=1;;
+            -no-kmod)   opt_no_kmod=1;;
             *)          echo "Unknown option -$op"; do_help=1;;
         esac
     else
@@ -226,6 +228,10 @@ ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
 # OTS always wants to re-make the srcs link
 rm srcs >/dev/null 2>&1
 ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
+
+if [ $opt_no_kmod -eq 1 ];then
+    spack add trace~kmod
+fi
 
 spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} %gcc@13.1.0 +demo
 
