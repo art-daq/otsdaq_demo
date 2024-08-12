@@ -37,6 +37,8 @@ prompted for this location.
 --no-extra-products  Skip the automatic use of central product areas, such as CVMFS
 --upstream    Use <dir> as a Spack upstream (repeatable)
 --padding     Set directory padding to 255, for relocatability
+--arch        Set architechture for build (ex. linux-almalinux9-x86_64_v3)
+--no-kmod     Do not build TRACE kernel module (for Docker builds)
 "
 
 # Process script arguments and options
@@ -48,7 +50,7 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0
 while [ -n "${1-}" ];do
     if expr "x${1-}" : 'x-' >/dev/null;then
         op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
@@ -69,7 +71,9 @@ while [ -n "${1-}" ];do
             -no-extra-products)  opt_skip_extra_products=1;;
             -no-pull)   opt_no_pull=1;;
             -upstream)  eval $op1arg; upstreams+=($1); shift;;
-	    -padding)   opt_padding=1;;
+            -padding)   opt_padding=1;;
+            -arch)      eval $op1arg; arch=$1; shift;;
+            -no-kmod)   opt_no_kmod=1;;
             *)          echo "Unknown option -$op"; do_help=1;;
         esac
     else
@@ -135,6 +139,11 @@ else
     aqualifier="${defaultAD}"
 fi
 compiler_info="" # Maybe do e- and c- qualifiers?
+
+arch_opt=""
+if [ "x$arch" != "x" ]; then
+   arch_opt="arch=$arch"
+fi
 
 if ! [ -d $spackdir ];then
     $(
@@ -213,7 +222,7 @@ cd $Base
 BUILD_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 spack load gcc@13.1.0 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-  spack install -j $BUILD_J gcc@13.1.0
+  spack install -j $BUILD_J $arch_opt gcc@13.1.0
   spack load gcc@13.1.0
 fi
 spack compiler find
@@ -225,13 +234,17 @@ ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
 rm srcs >/dev/null 2>&1
 ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
 
-spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} %gcc@13.1.0 +demo
+if [ $opt_no_kmod -eq 1 ];then
+    spack add trace~kmod
+fi
+
+spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} $arch_opt %gcc@13.1.0 +demo
 
 
 if [[ ${opt_develop:-0} -eq 1 ]];then
     for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
-            spack add $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
-        spack develop $pkg@${demo_version} %gcc@13.1.0 cxxstd=20
+            spack add $pkg@${demo_version} $arch_opt %gcc@13.1.0 cxxstd=20
+        spack develop $pkg@${demo_version} $arch_opt %gcc@13.1.0 cxxstd=20
     done
     cd $Base
 fi
