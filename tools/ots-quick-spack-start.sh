@@ -163,6 +163,12 @@ if ! [ -d fermi-spack-tools ]; then
 else
     cd fermi-spack-tools && git pull && cd ..
 fi
+if ! [ -d spack-mpd ]; then
+    git clone https://github.com/eflumerf/spack-mpd.git
+else
+    cd spack-mpd && git pull && cd ..
+fi
+
 sed -i '/perl/d' fermi-spack-tools/templates/packagelist # Remove Perl for now
 ./fermi-spack-tools/bin/make_packages_yaml $spackdir almalinux9
 
@@ -186,7 +192,8 @@ fi
 
 
 spack config --scope=site update  --yes-to-all config
-spack config --scope=site add config:flags:keep_werror:all
+#spack config --scope=site add config:flags:keep_werror:all # Not needed when using spack-mpd
+spack config --scope=site add "config:extensions:- $Base/spack-mpd"
 if [ $opt_padding -eq 1 ];then
   spack config --scope=site add config:install_tree:padded_length:255
 fi
@@ -242,12 +249,33 @@ if [ $opt_no_kmod -eq 1 ];then
 fi
 
 spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} $arch_opt %gcc@13.1.0 +demo
+env_to_activate="ots-${demo_version}"
 
+
+function checkout_package()
+{
+	pkg=$1
+	if ! [ -d $pkg ]; then
+		if [ $opt_w -eq 0 ];then
+			git clone https://github.com/art-daq/$pkg.git
+	    else
+			git clone git@github.com:art-daq/$pkg.git
+		fi
+	else
+		cd $pkg
+		git pull
+		cd ..
+	fi
+}
 
 if [[ ${opt_develop:-0} -eq 1 ]];then
+    env_to_activate="ots-develop"
+    cd $Base
+    rm srcs
+    mkdir srcs
+    cd srcs
     for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
-            spack add $pkg@${demo_version} $arch_opt %gcc@13.1.0 cxxstd=20
-        spack develop $pkg@${demo_version} $arch_opt %gcc@13.1.0 cxxstd=20
+        checkout_package $pkg
     done
     cd $Base
 fi
@@ -262,7 +290,7 @@ source $spackdir/share/spack/setup-env.sh
 spack load gcc@13.1.0
 spack compiler find
 
-spack env activate ots-${demo_version}
+spack env activate ${env_to_activate}
 
 k5user=\`klist|grep "Default principal"|cut -d: -f2|sed 's/@.*//;s/ //'\`
 export TRACE_FILE=/tmp/trace_buffer_\$USER.\$k5user
@@ -341,6 +369,17 @@ chmod 755 reset_ots_tutorial.sh
     
 
 spack concretize --force && spack install -j $BUILD_J
+if [[ ${opt_develop:-0} -eq 1 ]];then
+	spack env deactivate
+	spack mpd init -r site -u $Base/spack-repos/mpd
+	spack mpd new-project --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 --force -y
+	spack install cetmodules@3.26.00 # Needed for now
+	spack env activate ots-develop
+	spack add cetmodules@3.26.00
+	spack concretize --force
+	spack mpd build
+	installStatus=$?
+fi
 
 installStatus=$?
 
