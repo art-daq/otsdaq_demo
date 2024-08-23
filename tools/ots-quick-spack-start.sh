@@ -377,6 +377,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	spack env activate ots-develop
 	spack add cetmodules@3.26.00
 	spack concretize --force
+	spack install
 	spack mpd build
 	installStatus=$?
 fi
