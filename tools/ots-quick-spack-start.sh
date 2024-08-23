@@ -241,8 +241,10 @@ spack env create ots-${demo_version}
 spack env activate ots-${demo_version}
 ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
 # OTS always wants to re-make the srcs link
-rm srcs >/dev/null 2>&1
-ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
+if ! [ -d srcs ];then
+  rm srcs >/dev/null 2>&1
+  ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
+fi
 
 if [ $opt_no_kmod -eq 1 ];then
     spack add trace~kmod
