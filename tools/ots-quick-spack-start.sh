@@ -241,8 +241,10 @@ spack env create ots-${demo_version}
 spack env activate ots-${demo_version}
 ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
 # OTS always wants to re-make the srcs link
-rm srcs >/dev/null 2>&1
-ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
+if ! [ -d srcs ];then
+  rm srcs >/dev/null 2>&1
+  ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
+fi
 
 if [ $opt_no_kmod -eq 1 ];then
     spack add trace~kmod
@@ -287,7 +289,7 @@ sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the
 export SPACK_DISABLE_LOCAL_CONFIG=true
 source $spackdir/share/spack/setup-env.sh
 
-spack load gcc@13.1.0
+spack load --first gcc@13.1.0
 spack compiler find
 
 spack env activate ${env_to_activate}
