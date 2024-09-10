@@ -291,6 +291,10 @@ spack load gcc@13.1.0
 spack compiler find
 
 spack env activate ${env_to_activate}
+if [ -d $Base/local/install ]; then
+  export PATH=$Base/local/install/bin:$PATH
+  export LD_LIBRARY_PATH=$Base/local/install/lib:$LD_LIBRARY_PATH
+fi
 
 k5user=\`klist|grep "Default principal"|cut -d: -f2|sed 's/@.*//;s/ //'\`
 export TRACE_FILE=/tmp/trace_buffer_\$USER.\$k5user
@@ -300,7 +304,7 @@ export OTS_MAIN_PORT=2015
 export USER_DATA="$Base/Data"
 export ARTDAQ_DATABASE_URI="filesystemdb://$Base/databases/filesystemdb/test_db"
 export OTSDAQ_DATA="$Base/Data/OutputData"
-export OTS_SOURCE=$SPACK_ENV
+export OTS_SOURCE=$Base/srcs
 
 echo -e "setup [${LINENO}]  \t Now your user data path is USER_DATA \t\t = \${USER_DATA}"
 echo -e "setup [${LINENO}]  \t Now your database path is ARTDAQ_DATABASE_URI \t = \${ARTDAQ_DATABASE_URI}"
@@ -378,7 +382,9 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	spack add cetmodules@3.26.00
 	spack concretize --force
 	spack install
-	spack mpd build
+	spack mpd build -G Ninja
+    cd $Base/build
+    ninja install
 	installStatus=$?
 fi
 
