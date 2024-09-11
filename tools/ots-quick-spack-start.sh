@@ -404,6 +404,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     cd $Base/build
     ninja install
 	installStatus=$?
+    cd $Base
 fi
 
 installStatus=$?
