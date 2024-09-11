@@ -308,20 +308,36 @@ export ARTDAQ_DATABASE_URI="filesystemdb://$Base/databases/filesystemdb/test_db"
 export OTSDAQ_DATA="$Base/Data/OutputData"
 export OTS_SOURCE=$Base/srcs
 
-echo -e "setup [${LINENO}]  \t Now your user data path is USER_DATA \t\t = \${USER_DATA}"
-echo -e "setup [${LINENO}]  \t Now your database path is ARTDAQ_DATABASE_URI \t = \${ARTDAQ_DATABASE_URI}"
-echo -e "setup [${LINENO}]  \t Now your output data path is OTSDAQ_DATA \t = \${OTSDAQ_DATA}"
+echo -e "setup_ots.sh:\${LINENO} |  \t  Now your user data path is USER_DATA \t\t = \${USER_DATA}"
+echo -e "setup_ots.sh:\${LINENO} |  \t  Now your database path is ARTDAQ_DATABASE_URI \t = \${ARTDAQ_DATABASE_URI}"
+echo -e "setup_ots.sh:\${LINENO} |  \t  Now your output data path is OTSDAQ_DATA \t = \${OTSDAQ_DATA}"
 echo
 
-alias kx='ots -k'
+#make the number of build threads dependent on the number of cores on the machine:
+export CETPKG_J=\$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
+
+alias  kx='ots -k'
+alias  mb='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -G Ninja -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
+alias  ml='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -G Ninja -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g | tee m.txt; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"; less m.txt'
+alias  mz='date; start_time=\$(date +%s); spack concretize --force; spack mpd build -G Ninja --clean -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
+
 
 echo
-echo -e "setup [${LINENO}]  \t Now use 'ots --wiz' to configure otsdaq"
-echo -e "setup [${LINENO}]  \t  	Then use 'ots' to start otsdaq"
-echo -e "setup [${LINENO}]  \t  	Or use 'ots --help' for more options"
+echo -e "setup_ots.sh:\${LINENO} |  \t  Now use 'ots --wiz' to configure otsdaq"
+echo -e "setup_ots.sh:\${LINENO} |  \t   	Then use 'ots' to start otsdaq"
+echo -e "setup_ots.sh:\${LINENO} |  \t   	Or use 'ots --help' for more options"
 echo
-echo -e "setup [${LINENO}]  \t     use 'kx' to kill otsdaq processes"
+echo -e "setup_ots.sh:\${LINENO} |  \t      use 'kx' to kill otsdaq processes"
 echo
+
+echo -e "setup_ots.sh:\${LINENO} |  \t  "
+echo -e "setup_ots.sh:\${LINENO} |  \t      setup_ots.sh creates some compiling aliases for you:"
+echo -e "setup_ots.sh:\${LINENO} |  \t     ---------------"
+echo -e "setup_ots.sh:\${LINENO} |  \t            mb                             ### for incremental build"
+echo -e "setup_ots.sh:\${LINENO} |  \t            mz                             ### for clean build"
+echo -e "setup_ots.sh:\${LINENO} |  \t     ---------------"
+echo -e "setup_ots.sh:\${LINENO} |  \t  "
+echo -e "setup_ots.sh:\${LINENO} |  \t  "
 
 EOF
 #
