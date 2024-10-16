@@ -127,7 +127,7 @@ if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
 fi
 
 defaultS="132"
-defaultAD="31301"
+defaultAD="31401"
 
 if [ -n "${squalifier-}" ]; then
     squalifier="${squalifier}"
