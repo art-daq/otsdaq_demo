@@ -162,8 +162,11 @@ else
     cd $spackdir && git pull && cd $Base
 fi
 
+cat >setup-env.sh <<-EOF
 export SPACK_DISABLE_LOCAL_CONFIG=true
 source $spackdir/share/spack/setup-env.sh
+EOF
+source setup-env.sh
 
 if ! [ -d fermi-spack-tools ]; then
     git clone https://github.com/FNALssi/fermi-spack-tools.git
@@ -417,6 +420,11 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	installStatus=$?
     cd $Base
 fi
+
+if [ $opt_padding -eq 1 ];then
+    rm -rf ${spackdir}/opt/spack/.spack-db
+fi
+
 
 installStatus=$?
 
