@@ -216,8 +216,9 @@ fi
 #spack reindex
 
 for upstream in ${upstreams[@]}; do
-    for upstreamdir in `find $upstream -type d -name .spack-db 2>/dev/null`; do
+    for upstreamdir in `find $upstream -type d -wholename .spack-db/index.json 2>/dev/null`; do
     
+        upstreamdir=`dirname $upstreamdir`
         upstreamdir=`dirname $upstreamdir`
         upstreamname=`echo $upstreamdir|sed 's|/__spack[^/]*||g;s|/spack/opt/spack||g'`
     
@@ -238,6 +239,8 @@ for upstream in ${upstreams[@]}; do
     done
 
 done
+
+spack reindex
 
 cd $Base
 
@@ -420,11 +423,6 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	installStatus=$?
     cd $Base
 fi
-
-if [ $opt_padding -eq 1 ];then
-    rm -rf ${spackdir}/opt/spack/.spack-db
-fi
-
 
 installStatus=$?
 
