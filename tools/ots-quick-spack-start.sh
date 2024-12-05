@@ -224,11 +224,14 @@ fi
 #spack -k buildcache keys --install --trust --force
 #spack reindex
 
+concrete_include_cmd=
+
 for upstream in ${upstreams[@]}; do
-    for upstreamdir in `find $upstream -type f -wholename */.spack-db/index.json 2>/dev/null`; do
-    
+    for upstreamdir in `find $upstream -type f -wholename '*/.spack-db/index.json' 2>/dev/null`; do
+        echo "Getting real directory for upstream database $upstreamdir"
         upstreamdir=`dirname $upstreamdir`
         upstreamdir=`dirname $upstreamdir`
+        upstreamdir=`realpath $upstreamdir`
         upstreamname=`echo $upstreamdir|sed 's|/__spack[^/]*||g;s|/spack/opt/spack||g'`
     
         if ! [ -d $upstreamdir/.spack-db ]; then
@@ -246,7 +249,16 @@ for upstream in ${upstreams[@]}; do
             echo "    install_tree: $upstreamdir" >>$spackdir/etc/spack/upstreams.yaml
         fi
     done
-
+    
+    for envdir in `find $upstream -type d -wholename '*/var/spack/environments' 2>/dev/null`; do
+        echo "Looking for art-suite or artdaq environments in $envdir"
+        for environment in $envdir/art-* $envdir/artdaq-*;do
+            if ! [ -d $environment ]; then continue; fi
+            environment_dir=`realpath $environment`
+            echo "Adding environment $environment_dir to include-concrete list"
+            concrete_include_cmd="$concrete_include_cmd --include-concrete $environment_dir"
+        done
+    done
 done
 
 spack reindex
@@ -262,7 +274,7 @@ if [ $? -ne 0 ]; then
 fi
 spack compiler find
 
-spack env create $view_opt ots-${demo_version}
+spack env create ${concrete_include_cmd} $view_opt ots-${demo_version}
 spack env activate ots-${demo_version}
 ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
 # OTS always wants to re-make the srcs link
