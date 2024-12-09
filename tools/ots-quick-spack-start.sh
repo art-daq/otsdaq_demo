@@ -252,7 +252,8 @@ for upstream in ${upstreams[@]}; do
     
     for envdir in `find $upstream -type d -wholename '*/var/spack/environments' 2>/dev/null`; do
         echo "Looking for art-suite or artdaq environments in $envdir"
-        for environment in $envdir/art-* $envdir/artdaq-*;do
+        #for environment in $envdir/art-* $envdir/artdaq-*;do
+        for environment in $envdir/artdaq-*;do
             if ! [ -d $environment ]; then continue; fi
             environment_dir=`realpath $environment`
             echo "Adding environment $environment_dir to include-concrete list"
