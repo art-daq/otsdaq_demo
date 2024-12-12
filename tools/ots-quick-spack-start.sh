@@ -448,8 +448,8 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	spack env deactivate
 	# spack mpd init # Upstream
     spack mpd init -r site -u $Base/spack-repos/mpd # Fork
-	# spack mpd new-project --force -y --name artdaq-develop -E artdaq-${demo_version} cxxstd=20 %gcc@13.1.0 generator=ninja # Upstream
-	spack mpd new-project --force -y --name artdaq-develop -E artdaq-${demo_version} cxxstd=20 %gcc@13.1.0 # Fork
+	# spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 generator=ninja # Upstream
+	spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 # Fork
 	spack install cetmodules@3.26.00 # Needed for now
 	spack env activate ots-develop
 	spack add cetmodules@3.26.00
