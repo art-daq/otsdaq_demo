@@ -95,6 +95,7 @@ fi
 if [ "x$SPACK_ROOT" == "x$spackdir" ]; then
   echo "Using pre-existing Spack installation $SPACK_ROOT.\nIf this is not correct, hit Ctrl-C and run 'unset SPACK_ROOT'."
   sleep 5
+  spack env deactivate
 fi
 
 # JCF, 1/16/15
@@ -174,7 +175,8 @@ else
     cd fermi-spack-tools && git pull && cd ..
 fi
 if ! [ -d spack-mpd ]; then
-    git clone https://github.com/FNALssi/spack-mpd.git
+    # git clone https://github.com/FNALssi/spack-mpd.git # Upstream
+    git clone https://github.com/eflumerf/spack-mpd.git # Fork
 else
     cd spack-mpd && git pull && cd ..
 fi
@@ -209,20 +211,11 @@ else
     cd $Base
 fi
 
-
-spack config --scope=site update  --yes-to-all config
-#spack config --scope=site add config:flags:keep_werror:all # Not needed when using spack-mpd
 spack config --scope=site add "config:extensions:- $Base/spack-mpd"
+
 if [ $opt_padding -eq 1 ];then
   spack config --scope=site add config:install_tree:padded_length:255
 fi
-
-#spack mirror add --scope site scisoft-binaries  https://scisoft.fnal.gov/scisoft/spack-mirror/spack-binary-cache-plain
-#spack buildcache update-index -k scisoft-binaries
-#spack mirror add --scope site scisoft-compilers https://scisoft.fnal.gov/scisoft/spack-mirror/spack-compiler-cache-plain
-#spack buildcache update-index -k scisoft-compilers
-#spack -k buildcache keys --install --trust --force
-#spack reindex
 
 concrete_include_cmd=
 
@@ -268,7 +261,7 @@ cd $Base
 BUILD_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 spack load --first gcc@13.1.0 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-  spack install -j $BUILD_J $arch_opt gcc@13.1.0
+  spack install -j $BUILD_J gcc@13.1.0 ${arch_opt} +binutils
   installStatus=$?
   spack load gcc@13.1.0
 fi
@@ -277,6 +270,7 @@ spack compiler find
 spack env create ${concrete_include_cmd} $view_opt ots-${demo_version}
 spack env activate ots-${demo_version}
 ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
+
 # OTS always wants to re-make the srcs link
 if ! [ -d srcs ];then
   rm srcs >/dev/null 2>&1
@@ -287,7 +281,7 @@ if [ $opt_no_kmod -eq 1 ];then
     spack add trace~kmod
 fi
 
-spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} $arch_opt %gcc@13.1.0 +demo
+spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} ${arch_opt} %gcc@13.1.0 +demo
 env_to_activate="ots-${demo_version}"
 
 
@@ -371,9 +365,14 @@ echo
 export CETPKG_J=\$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 
 alias  kx='ots -k'
-alias  mb='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
-alias  ml='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g | tee m.txt; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"; less m.txt'
-alias  mz='date; start_time=\$(date +%s); spack concretize --force; spack mpd build --clean -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
+# When using upstream spack-mpd
+#alias  mb='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
+#alias  ml='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g | tee m.txt; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"; less m.txt'
+#alias  mz='date; start_time=\$(date +%s); spack concretize --force; spack mpd build --clean -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
+# When using the fork of spack-mpd
+alias  mb='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -G Ninja -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
+alias  ml='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -G Ninja -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g | tee m.txt; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"; less m.txt'
+alias  mz='date; start_time=\$(date +%s); spack concretize --force; spack mpd build -G Ninja --clean -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
 
 
 echo
@@ -447,14 +446,17 @@ chmod 755 reset_ots_tutorial.sh
 spack concretize --force && spack install -j $BUILD_J
 if [[ ${opt_develop:-0} -eq 1 ]];then
 	spack env deactivate
-	spack mpd init
-	spack mpd new-project --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 --force -y generator=ninja
+	# spack mpd init # Upstream
+    spack mpd init -r site -u $Base/spack-repos/mpd # Fork
+	# spack mpd new-project --force -y --name artdaq-develop -E artdaq-${demo_version} cxxstd=20 %gcc@13.1.0 generator=ninja # Upstream
+	spack mpd new-project --force -y --name artdaq-develop -E artdaq-${demo_version} cxxstd=20 %gcc@13.1.0 # Fork
 	spack install cetmodules@3.26.00 # Needed for now
 	spack env activate ots-develop
 	spack add cetmodules@3.26.00
 	spack concretize --force
 	spack install
-	spack mpd build
+	# spack mpd build # Upstream
+    spack mpd build -G Ninja # Fork
     cd $Base/build
     ninja install
 	installStatus=$?
