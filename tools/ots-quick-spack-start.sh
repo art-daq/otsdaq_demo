@@ -129,18 +129,14 @@ if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
   tag=$demo_version
 fi
 
-defaultS="0"
-defaultAD="0"
+svariant=""
+avariant=""
 
 if [ -n "${squalifier-}" ]; then
-    squalifier="${squalifier}"
-else
-    squalifier="${defaultS}"
+    svariant="s=${squalifier}"
 fi
 if [ -n "${aqualifier-}" ]; then
-    aqualifier="${aqualifier}"
-else
-    aqualifier="${defaultAD}"
+    avariant="artdaq=${aqualifier}"
 fi
 compiler_info="" # Maybe do e- and c- qualifiers?
 
@@ -281,7 +277,7 @@ if [ $opt_no_kmod -eq 1 ];then
     spack add trace~kmod
 fi
 
-spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} ${arch_opt} %gcc@13.1.0 +demo
+spack add otsdaq-suite@${demo_version}${compiler_info} ${svariant} ${avariant} ${arch_opt} %gcc@13.1.0 +demo
 env_to_activate="ots-${demo_version}"
 
 
