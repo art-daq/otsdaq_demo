@@ -129,8 +129,8 @@ if [[ $notag -eq 1 ]] && [[ $opt_develop -eq 0 ]]; then
   tag=$demo_version
 fi
 
-defaultS="132"
-defaultAD="31401"
+defaultS="0"
+defaultAD="0"
 
 if [ -n "${squalifier-}" ]; then
     squalifier="${squalifier}"
