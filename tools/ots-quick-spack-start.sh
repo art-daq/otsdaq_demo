@@ -246,7 +246,7 @@ for upstream in ${upstreams[@]}; do
     for envdir in `find $upstream -type d -wholename '*/var/spack/environments' 2>/dev/null`; do
         echo "Looking for otsdaq environments in $envdir"
 
-        environment=`ls -td otsdaq-*|head -1`
+        environment="ots-${demo_version}"
         if ! [ -d $environment ]; then continue; fi
         environment_dir=`realpath $environment`
         echo "Adding environment $environment_dir to include-concrete list"
