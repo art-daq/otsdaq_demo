@@ -1,7 +1,7 @@
 
 include(otsdaq::dataProcessor)
 cet_build_plugin(DemoDQMHistosConsumer otsdaq::dataProcessor LIBRARIES REG
-	otsdaq_demo::DemoRootUtilities
+	otsdaq-demo::DemoRootUtilities
     otsdaq::RootUtilities
   )
   
