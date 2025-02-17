@@ -14,19 +14,19 @@ using namespace ots;
 #define PROGRAM_FILE_PATH std::string(__ENV__("OTS_FIRMWARE_PROGRAM_FILE_PATH")) + "/"
 
 /////////////////////////////////=======================================
-// ADDRESS SPACE
-//	http://otsdaq.fnal.gov/docs/oei_address_space.html
-// field size (bits)
+/// ADDRESS SPACE
+///	http://otsdaq.fnal.gov/docs/oei_address_space.html
+/// field size (bits)
 #define UDP_CORE_BLOCK_ADDRESS ((uint64_t)(0x2) << 32)
 #define FLASH_COMMAND_BASE 0
-// 0 -- START_FLASH_COMMAND_TRIGGER
-// 1 -- FLASH_BASE_ADDRESS
-// 2 -- FLASH_DATA_SIZE
-// 3 -- FLASH_WRITE_MODE
+/// 0 -- START_FLASH_COMMAND_TRIGGER
+/// 1 -- FLASH_BASE_ADDRESS
+/// 2 -- FLASH_DATA_SIZE
+/// 3 -- FLASH_WRITE_MODE
 #define FLASH_WRITE_DATA 4
 #define FLASH_WRITE_STATUS 9
 
-// end ADDRESS SPACE
+/// end ADDRESS SPACE
 /////////////////////////////////=======================================
 
 //==============================================================================
@@ -149,34 +149,34 @@ void FEOtsEthernetProgramInterface::configure(void)
 }
 
 //==============================================================================
-// void FEOtsEthernetProgramInterface::configureDetector(const DACStream& theDACStream)
+/// void FEOtsEthernetProgramInterface::configureDetector(const DACStream& theDACStream)
 //{
 //	__COUT__ << "\tconfigureDetector" << std::endl;
 //}
 
 ////==============================================================================
-// void FEOtsEthernetProgramInterface::halt(void)
+/// void FEOtsEthernetProgramInterface::halt(void)
 //{
 //	__COUT__ << "\tHalt" << std::endl;
 //	stop();
 //}
 //
 ////==============================================================================
-// void FEOtsEthernetProgramInterface::pause(void)
+/// void FEOtsEthernetProgramInterface::pause(void)
 //{
 //	__COUT__ << "\tPause" << std::endl;
 //	stop();
 //}
 //
 ////==============================================================================
-// void FEOtsEthernetProgramInterface::resume(void)
+/// void FEOtsEthernetProgramInterface::resume(void)
 //{
 //	__COUT__ << "\tResume" << std::endl;
 //	start("");
 //}
 //
 ////==============================================================================
-// void FEOtsEthernetProgramInterface::start(std::string )//runNumber)
+/// void FEOtsEthernetProgramInterface::start(std::string )//runNumber)
 //{
 //	__COUT__ << "\tStart" << std::endl;
 //
@@ -188,7 +188,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 //}
 //
 ////==============================================================================
-// void FEOtsEthernetProgramInterface::stop(void)
+/// void FEOtsEthernetProgramInterface::stop(void)
 //{
 //	__COUT__ << "\tStop" << std::endl;
 //
@@ -200,7 +200,7 @@ void FEOtsEthernetProgramInterface::configure(void)
 //}
 //
 ////==============================================================================
-// bool FEOtsEthernetProgramInterface::running(void)
+/// bool FEOtsEthernetProgramInterface::running(void)
 //{
 //	__COUT__ << "\running" << std::endl;
 //
@@ -248,12 +248,12 @@ void FEOtsEthernetProgramInterface::configure(void)
 //}
 
 //==============================================================================
-// getListOfProgramFiles
-//	0 args in
-//	1 args out
-//		listOfProgramFiles = comma-separated list of programmable file names
-//
-// Note: path is from environment variable OTS_FIRMWARE_PROGRAM_FILE_PATH
+/// getListOfProgramFiles
+///	0 args in
+///	1 args out
+///		listOfProgramFiles = comma-separated list of programmable file names
+///
+/// Note: path is from environment variable OTS_FIRMWARE_PROGRAM_FILE_PATH
 void FEOtsEthernetProgramInterface::getListOfProgramFiles(__ARGS__)
 {
 	std::string           dirpath = PROGRAM_FILE_PATH;
@@ -320,11 +320,11 @@ void FEOtsEthernetProgramInterface::getListOfProgramFiles(__ARGS__)
 }
 
 //==============================================================================
-// loadProgramFile
-//	1 args in
-//		programFile = filename of programmable file
-//	1 args out
-//		listOfProgramFiles = comma-separated list of programmable file names
+/// loadProgramFile
+///	1 args in
+///		programFile = filename of programmable file
+///	1 args out
+///		listOfProgramFiles = comma-separated list of programmable file names
 void FEOtsEthernetProgramInterface::loadProgramFile(__ARGS__)
 {
 	// Steps:

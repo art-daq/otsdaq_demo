@@ -29,14 +29,14 @@ class DemoDQMHistosConsumer : public DQMHistosConsumerBase, public Configurable
 	void fastRead(void);
 	void slowRead(void);
 
-	// For fast read
+	/// For fast read
 	std::string*                        dataP_;
 	std::map<std::string, std::string>* headerP_;
-	// For slow read
+	/// For slow read
 	std::string                        data_;
 	std::map<std::string, std::string> header_;
 
-	bool           saveDQMFile_;  // yes or no
+	bool           saveDQMFile_;  ///< yes or no
 	std::string    DQMFilePath_;
 	std::string    DQMFilePrefix_;
 	DemoDQMHistos* dqmHistos_;
