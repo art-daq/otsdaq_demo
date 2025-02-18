@@ -10,9 +10,9 @@ namespace ots
 class myNewInterface : public FEOtsUDPTemplateInterface
 {
   public:
-	// myNewInterface     (unsigned int name=0, std::string
-	// daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const
-	// FEInterfaceTableBase* configuration=0);
+	/// myNewInterface     (unsigned int name=0, std::string
+	/// daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const
+	/// FEInterfaceTableBase* configuration=0);
 	myNewInterface(const std::string&       interfaceUID,
 	               const ConfigurationTree& theXDAQContextConfigTree,
 	               const std::string&       interfaceConfigurationPath);

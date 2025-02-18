@@ -13,13 +13,13 @@
 namespace ots
 {
 class FEOtsEthernetProgramInterface
-    : public FEOtsUDPTemplateInterface  // public FEVInterface, public OtsUDPHardware,
-                                        // public OtsUDPFirmwareDataGen
+    : public FEOtsUDPTemplateInterface  ///< public FEVInterface, public OtsUDPHardware,
+                                        ///< public OtsUDPFirmwareDataGen
 {
   public:
-	// FEOtsEthernetProgramInterface     (unsigned int name=0, std::string
-	// daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const
-	// FEInterfaceTableBase* configuration=0);
+	/// FEOtsEthernetProgramInterface     (unsigned int name=0, std::string
+	/// daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const
+	/// FEInterfaceTableBase* configuration=0);
 	FEOtsEthernetProgramInterface(const std::string&       interfaceUID,
 	                              const ConfigurationTree& theXDAQContextConfigTree,
 	                              const std::string&       interfaceConfigurationPath);
@@ -37,12 +37,12 @@ class FEOtsEthernetProgramInterface
 	void loadProgramFile(__ARGS__);
 
 	///////////////////////
-	// inherits these from Template interface
-	//
-	//	virtual int universalRead	  	(char* address, char* readValue) override;
-	//	virtual void universalWrite	  	(char* address, char* writeValue) override;
-	// private:
-	//	void runSequenceOfCommands(const std::string &treeLinkName);
+	/// inherits these from Template interface
+	///
+	///	virtual int universalRead	  	(char* address, char* readValue) override;
+	///	virtual void universalWrite	  	(char* address, char* writeValue) override;
+	/// private:
+	///	void runSequenceOfCommands(const std::string &treeLinkName);
 };
 }  // namespace ots
 

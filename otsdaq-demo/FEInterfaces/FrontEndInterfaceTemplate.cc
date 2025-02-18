@@ -58,12 +58,12 @@ bool FrontEndInterfaceTemplate::running(void)
 }
 
 //==============================================================================
-// universalRead
-//	Must implement this function for Macro Maker to work with this interface.
-//	When Macro Maker calls:
-//		- address will be a [universalAddressSize_] byte long char array
-//		- returnValue will be a [universalDataSize_] byte long char array
-//		- expects return value of 0 on success and negative numbers on failure
+/// universalRead
+///	Must implement this function for Macro Maker to work with this interface.
+///	When Macro Maker calls:
+///		- address will be a [universalAddressSize_] byte long char array
+///		- returnValue will be a [universalDataSize_] byte long char array
+///		- expects return value of 0 on success and negative numbers on failure
 int FrontEndInterfaceTemplate::universalRead(char* address, char* returnValue)
 {
 	// TODO - implement the read for this interface
@@ -71,11 +71,11 @@ int FrontEndInterfaceTemplate::universalRead(char* address, char* returnValue)
 }
 
 //==============================================================================
-// universalWrite
-//	Must implement this function for Macro Maker to work with this interface.
-//	When Macro Maker calls:
-//		- address will be a [universalAddressSize_] byte long char array
-//		- writeValue will be a [universalDataSize_] byte long char array
+/// universalWrite
+///	Must implement this function for Macro Maker to work with this interface.
+///	When Macro Maker calls:
+///		- address will be a [universalAddressSize_] byte long char array
+///		- writeValue will be a [universalDataSize_] byte long char array
 void FrontEndInterfaceTemplate::universalWrite(char* address, char* writeValue)
 {
 	// TODO - implement the write for this interface

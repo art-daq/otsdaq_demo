@@ -34,7 +34,7 @@ class SlowControlsInterfaceTemplate : public SlowControlsVInterface
 	std::vector<std::vector<std::string>>		getAlarmsLog		(const std::string& pvName) override;
 	std::vector<std::vector<std::string>>		checkAlarmNotifications	(void) override;
 
-	virtual bool 								running				(void) override; //This is a workloop/thread, by default do nothing and end thread during running (Note: return true would repeat call)
+	virtual bool 								running				(void) override; ///<This is a workloop/thread, by default do nothing and end thread during running (Note: return true would repeat call)
 
 };
 // clang-format on

@@ -184,7 +184,7 @@ void myNewInterface::configure(void)
 }
 
 //==============================================================================
-// void myNewInterface::configureDetector(const DACStream& theDACStream)
+/// void myNewInterface::configureDetector(const DACStream& theDACStream)
 //{
 //	__COUT__ << "\tconfigureDetector" << std::endl;
 //}
@@ -272,8 +272,8 @@ bool myNewInterface::running(void)
 }
 
 //==============================================================================
-// NOTE: buffer for address must be at least size universalAddressSize_
-// NOTE: buffer for returnValue must be max UDP size to handle return possibility
+/// NOTE: buffer for address must be at least size universalAddressSize_
+/// NOTE: buffer for returnValue must be max UDP size to handle return possibility
 int ots::myNewInterface::universalRead(char* address, char* returnValue)
 {
 	__COUT__ << "address size " << universalAddressSize_ << std::endl;
@@ -298,8 +298,8 @@ int ots::myNewInterface::universalRead(char* address, char* returnValue)
 }
 
 //==============================================================================
-// NOTE: buffer for address must be at least size universalAddressSize_
-// NOTE: buffer for writeValue must be at least size universalDataSize_
+/// NOTE: buffer for address must be at least size universalAddressSize_
+/// NOTE: buffer for writeValue must be at least size universalDataSize_
 void ots::myNewInterface::universalWrite(char* address, char* writeValue)
 {
 	__COUT__ << "address size " << universalAddressSize_ << std::endl;

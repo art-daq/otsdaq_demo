@@ -1,16 +1,16 @@
-// This is a simple emulator of a "data gen" front-end (hardware) interface
-// using the otsdaq UDP protocol.
-//
-// compile with:
-// g++ udp_data_emulator.cpp -o test.o
-//
-// if developing, consider appending -D_GLIBCXX_DEBUG to get more
-// descriptive error messages
-//
-// run with:
-//./hw.o
-//
-
+/// This is a simple emulator of a "data gen" front-end (hardware) interface
+/// using the otsdaq UDP protocol.
+///
+/// compile with:
+/// g++ udp_data_emulator.cpp -o test.o
+///
+/// if developing, consider appending -D_GLIBCXX_DEBUG to get more
+/// descriptive error messages
+///
+/// run with:
+///./hw.o
+///
+///
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,7 +40,7 @@
 #define MAXBUFLEN 1492
 
 //========================================================================================================================
-// get sockaddr, IPv4 or IPv6:
+/// get sockaddr, IPv4 or IPv6:
 void* get_in_addr(struct sockaddr* sa)
 {
 	if(sa->sa_family == AF_INET)

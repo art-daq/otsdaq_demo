@@ -1,27 +1,27 @@
-// ots_udp_sw_emulator.cpp
-//    by rrivera at fnal dot gov
-//	  created Feb 2016
-//
-// This is a simple emulator of a "data gen" front-end (hardware) interface
-// using the otsdaq UDP protocol.
-//
-// Protocol is specified
-// https://docs.google.com/document/d/1i3Z07n8Jq78NwgUFdjAv2sLGhH4rWjHeYEScAWBzSyw/edit?usp=sharing
-//
-// compile with:
-// g++ ots_udp_sw_emulator.cpp -o sw.o
-//
-// if developing, consider appending -D_GLIBCXX_DEBUG to get more
-// descriptive error messages
-//
-// run with:
-//./sw.o localhost <type-of-test>
-//   or
-//./sw.o ip.of.hw.o <type-of-test>
-//
-// 1 is write and read test
-// 2 is data stream test
-
+/// ots_udp_sw_emulator.cpp
+///    by rrivera at fnal dot gov
+///	  created Feb 2016
+///
+/// This is a simple emulator of a "data gen" front-end (hardware) interface
+/// using the otsdaq UDP protocol.
+///
+/// Protocol is specified
+/// https://docs.google.com/document/d/1i3Z07n8Jq78NwgUFdjAv2sLGhH4rWjHeYEScAWBzSyw/edit?usp=sharing
+///
+/// compile with:
+/// g++ ots_udp_sw_emulator.cpp -o sw.o
+///
+/// if developing, consider appending -D_GLIBCXX_DEBUG to get more
+/// descriptive error messages
+///
+/// run with:
+///./sw.o localhost <type-of-test>
+///   or
+///./sw.o ip.of.hw.o <type-of-test>
+///
+/// 1 is write and read test
+/// 2 is data stream test
+///
 #include <arpa/inet.h>
 #include <errno.h>
 #include <netdb.h>
@@ -38,7 +38,7 @@
 #define HWPORT "4950"  // the port of the front end (hardware) target
 #define MAXBUFLEN 1492
 
-// get sockaddr, IPv4 or IPv6:
+/// get sockaddr, IPv4 or IPv6:
 void* get_in_addr(struct sockaddr* sa)
 {
 	if(sa->sa_family == AF_INET)
