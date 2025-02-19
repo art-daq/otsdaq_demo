@@ -7,7 +7,7 @@ fi
 
 Base=$PWD
 #commenting out unique filename generation
-# no need to keep more than one past log for standard users 
+# no need to keep more than one past log for standard users
 #alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 #exec  > >(tee "$Base/log/$alloutput_file")
@@ -42,57 +42,57 @@ fi
 kdialog --yesno "Reset user data for 'First Demo' tutorial?"
 if [[ $? -eq 0 ]];then #yes
 	echo "User decided to reset to 'First Demo' tutorial data."
-	
+
 	dbusRef=`kdialog --progressbar "Installing 'First Demo' tutorial user data and database..." 5`
 	qdbus $dbusRef Set "" value 1
-	
+
 	########################################
 	########################################
 	## Setup USER_DATA and databases
 	########################################
 	########################################
-	
-	#Take from tutorial data 
+
+	#Take from tutorial data
 	export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
-		
+
 	#... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
-	
+
 	#download get_tutorial_data script
 	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 	qdbus $dbusRef Set "" value 2
-	
+
 	#change permissions so the script is executable
 	chmod 755 get_tutorial_data.sh
-	
+
 	#execute script
 	./get_tutorial_data.sh
 	qdbus $dbusRef Set "" value 3
-	
+
 	export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
 	#... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
-	
+
 	#download get_tutorial_data script
 	wget https://cdcvs.fnal.gov/redmine/projects/otsdaq/repository/demo/revisions/develop/raw/tools/get_tutorial_database.sh -O get_tutorial_database.sh --no-check-certificate
 	qdbus $dbusRef Set "" value 5
-	
+
 	#change permissions so the script is executable
 	chmod 755 get_tutorial_database.sh
-	
+
 	#execute script
 	./get_tutorial_database.sh
 	qdbus $dbusRef Set "" value 5
-	
+
 	########################################
 	########################################
 	## END Setup USER_DATA and databases
 	########################################
 	########################################
-	
+
 	qdbus $dbusRef close
 
     echo "Now your user data path is USER_DATA = ${USER_DATA}"
     echo "Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
-	
+
 	echo
 	echo
 	echo "reset script complete."

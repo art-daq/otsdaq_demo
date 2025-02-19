@@ -82,9 +82,9 @@ function rawEventDump
 
 unalias kx >/dev/null 2>&1
 function kx
-{	
+{
 	echo -e "setup[${LINENO}]: \t Executing ots kill-all..."
-	ots -k; 
+	ots -k;
 
     #now hard kill any processes that may be stuck and detached:
 
@@ -95,7 +95,7 @@ function kx
 	killall -9 dispatcher &>/dev/null 2>&1 #hide output
 	killall -9 routing_master &>/dev/null 2>&1 #hide output
 	ipcrm -a &>/dev/null 2>&1 #hide output #clean-up shared memory
-	
+
 	#kills self too:
 	killall -9 ots &>/dev/null 2>&1 #hide output
 	killall -9 xdaq.exe  &>/dev/null 2>&1 #hide output

@@ -2,7 +2,7 @@
 
 # usage: --tutorial <tutorial name>
 #
-#   tutorial 
+#   tutorial
 #		e.g. ${TUTORIAL} or artdaq
 #
 #  example run:
@@ -16,7 +16,7 @@ fi
 
 Base=$PWD
 #commenting out unique filename generation
-# no need to keep more than one past log for standard users 
+# no need to keep more than one past log for standard users
 #alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 #exec  > >(tee "$Base/log/$alloutput_file")
@@ -36,7 +36,7 @@ if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 fi
 
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
-echo		
+echo
 
 shopt -s expand_aliases #allows for aliases in non-interactive mode (which apparently is critical depending on the temperment of the terminal)
 source setup_ots.sh
@@ -51,11 +51,11 @@ if [ "x$USER_DATA" == "x" ]; then
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Error."
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Environment variable USER_DATA not setup!"
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t To setup, use 'export USER_DATA=<path to user data>'"
-	echo 
+	echo
 	echo
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t (If you do not have a user data folder copy '<path to ots source>/otsdaq-demo/Data' as your starting point.)"
 	echo
-	exit    
+	exit
 fi
 
 #Steps:
@@ -79,12 +79,12 @@ done
 if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Error."
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Environment variable ARTDAQ_DATABASE_URI not setup!"
-	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t To setup, use 'export ARTDAQ_DATABASE_URI=filesystemdb://<path to database>'" 
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t To setup, use 'export ARTDAQ_DATABASE_URI=filesystemdb://<path to database>'"
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t            e.g. filesystemdb:///home/rrivera/databases/filesystemdb/test_db"
-	echo 
-	echo 
 	echo
-	exit    
+	echo
+	echo
+	exit
 fi
 
 #Steps:
@@ -108,54 +108,54 @@ do
 done
 
 # download tutorial user data
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Downloading tutorial user data.."
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t git clone https://github.com/art-daq/otsdaq_demo_data -b ${TUTORIAL}"
 echo
 
 git clone https://github.com/art-daq/otsdaq_demo_data.git -b ${TUTORIAL}
 
 # bkup current user data
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Backing up current user data.."
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv ${USER_DATA} ${USER_DATA}.bak`date +%y%m%d`"
 echo
 mv ${USER_DATA} ${USER_DATA}.bak`date +%y%m%d`
 
 # move download user data into position
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Installing tutorial data as user data.."
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/Data ${USER_DATA}"
 echo
 mv otsdaq_demo_data/Data ${USER_DATA}
 
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t otsdaq tutorial Data installed!"
 echo
 echo
 
 # bkup current database
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Backing up current database.."
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv ${ADU_PATH} ${ADU_PATH}.bak`date +%y%m%d`"
 echo
 mv ${ADU_PATH} ${ADU_PATH}.bak`date +%y%m%d`
 
 # move download user data into position
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Installing tutorial database as database.."
-echo 
+echo
 
 #hard to be sure of depth of table folders, so check
 if [ -d otsdaq_demo_data/databases/XDAQContextTable ]; then
@@ -165,13 +165,13 @@ elif [ -d otsdaq_demo_data/databases/filesystemdb/XDAQContextTable ]; then
 	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/databases/filesystemdb ${ADU_PATH}"
 	mv otsdaq_demo_data/databases/filesystemdb ${ADU_PATH}
 else
-	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/databases/filesystemdb/test_db ${ADU_PATH}"	
+	echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t mv otsdaq_demo_data/databases/filesystemdb/test_db ${ADU_PATH}"
 	mv otsdaq_demo_data/databases/filesystemdb/test_db ${ADU_PATH}
 fi
 
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t *****************************************************"
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t otsdaq tutorial database installed!"
 echo
 echo
@@ -179,7 +179,7 @@ echo
 echo
 echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t Cleaning up downloads.."
-echo 
+echo
 echo -e `date +"%h%y %T"` "get_tutorial_data.sh [${LINENO}]  \t rm -rf otsdaq_demo_data"
 echo
 rm -rf otsdaq_demo_data

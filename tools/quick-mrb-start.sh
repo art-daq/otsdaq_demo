@@ -3,7 +3,7 @@
 # Downloads otsdaq_demo as an MRB-controlled repository
 
 unsetup_all >/dev/null 2>&1
-		
+
 git_status=`git status 2>/dev/null`
 git_sts=$?
 if [ $git_sts -eq 0 ];then
@@ -66,7 +66,7 @@ eval "set -- $args \"\$@\""; unset args aa
 
 test -n "${do_help-}" -o $# -ge 2 && echo "$USAGE" && exit
 
-if [[ -n "${tag:-}" ]] && [[ $opt_develop -eq 1 ]]; then 
+if [[ -n "${tag:-}" ]] && [[ $opt_develop -eq 1 ]]; then
     echo "The \"--tag\" and \"--develop\" options are incompatible - please specify only one."
     exit
 fi
@@ -186,7 +186,7 @@ fi
 
 # Get all the information we'll need to decide which exact flavor of the software to install
 notag=0
-if [ -z "${tag:-}" ]; then 
+if [ -z "${tag:-}" ]; then
   if [[ $opt_develop -eq 0 ]];then
     tag=stable
   else
@@ -213,7 +213,7 @@ utilities_version=`grep "^otsdaq_utilities\s" $Base/download/product_deps | awk 
 defaultQuals=`grep "defaultqual" $Base/download/product_deps|awk '{print $2}'`
 defaultE=`echo $defaultQuals|cut -f1 -d:`
 defaultS=`echo $defaultQuals|cut -f2 -d:`
-if [ -n "${equalifier-}" ]; then 
+if [ -n "${equalifier-}" ]; then
 	equalifier="e${equalifier}";
 else
 	equalifier=$defaultE
@@ -286,17 +286,17 @@ cd $Base
 
 	echo -e "setup [${LINENO}]  \t ======================================================"
 	echo -e "setup [${LINENO}]  \t Initially your products path was PRODUCTS=\${PRODUCTS}"
-	
+
 	#unalias because the original VM aliased for users
 	unalias kx >/dev/null 2>&1
 	unalias StartOTS.sh >/dev/null 2>&1
 	unalias ots >/dev/null 2>&1
-	
+
 	PRODUCTS_SAVE=\${PRODUCTS:+\${PRODUCTS}}${PRODUCTS_SET:+\:${PRODUCTS_SET}}
 	source $Base/products/setup
         PRODUCTS=\${PRODUCTS:+\${PRODUCTS}}\${PRODUCTS_SAVE:+\:\${PRODUCTS_SAVE}}
-        
-        
+
+
 unsetup git >/dev/null 2>&1
 if [ -z \$CET_SUBDIR ];then
   unsetup cetpkgsupport >/dev/null 2>&1
@@ -310,30 +310,30 @@ fi
 	echo
 
 		# Setup environment when building with MRB (As there's no setupARTDAQOTS file)
-		
+
 		  export OTSDAQ_DEMO_LIB=\${MRB_BUILDDIR}/otsdaq_demo/lib
 		  #export OTSDAQ_LIB=\${MRB_BUILDDIR}/otsdaq/lib
 		  #export OTSDAQ_UTILITIES_LIB=\${MRB_BUILDDIR}/otsdaq_utilities/lib
 		#Done with Setup environment when building with MRB (As there's no setupARTDAQOTS file)
-	
-	
+
+
         export CETPKG_INSTALL=$Base/products
 		export CETPKG_J=4
-		
+
 		export OTS_MAIN_PORT=2015
 
         export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
         export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
         export OTSDAQ_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData/OutputData"
-        		
+
         echo -e "setup [${LINENO}]  \t Now your user data path is USER_DATA \t\t = \${USER_DATA}"
         echo -e "setup [${LINENO}]  \t Now your database path is ARTDAQ_DATABASE_URI \t = \${ARTDAQ_DATABASE_URI}"
         echo -e "setup [${LINENO}]  \t Now your output data path is OTSDAQ_DATA \t = \${OTSDAQ_DATA}"
 		echo
-		
+
         alias rawEventDump="art -c $MRB_SOURCE/otsdaq/artdaq-ots/ArtModules/fcl/rawEventDump.fcl"
         alias kx='ots -k'
-       
+
         echo
         echo -e "setup [${LINENO}]  \t Now use 'ots --wiz' to configure otsdaq"
         echo -e "setup [${LINENO}]  \t  	Then use 'ots' to start otsdaq"
@@ -341,7 +341,7 @@ fi
         echo
         echo -e "setup [${LINENO}]  \t     use 'kx' to kill otsdaq processes"
 		echo
-  
+
 	EOF
     #
 
@@ -356,9 +356,9 @@ cd $Base
 export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
 #... you must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
-#Take from tutorial data 
+#Take from tutorial data
 export USER_DATA="$MRB_SOURCE/otsdaq_demo/NoGitData"
-		
+
 #... you must already have ots setup (i.e. $USER_DATA must point to the right place).. if you are using the virtual machine, this happens automatically when you start up the VM.
 
 #download get_tutorial_data script
@@ -376,7 +376,7 @@ echo
 echo -e "UpdateOTS.sh [${LINENO}]  \t updating tutorial launch scripts..."
 rm get_tutorial_data.sh &>/dev/null 2>&1 #hide output
 rm reset_ots_tutorial.sh &>/dev/null 2>&1 #hide output
-wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate	
+wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate
 chmod 755 reset_ots_tutorial.sh
 
 
@@ -384,22 +384,22 @@ chmod 755 reset_ots_tutorial.sh
 ########################################
 ## END Setup USER_DATA and databases
 ########################################
-########################################	
-	
-	
+########################################
+
+
 # Build artdaq_demo
 cd $MRB_BUILDDIR
 mrbsetenv
 export CETPKG_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 mrb build    # VERBOSE=1
 installStatus=$?
-		
+
 echo
 echo
 
 if [ $installStatus -eq 0 ]; then
     echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://github.com/art-daq/otsdaq/wiki"
-    echo	
+    echo
 	echo "In the future, when you open a new terminal, just use 'source setup_ots.sh' to setup your ots installation."
 	echo
 else

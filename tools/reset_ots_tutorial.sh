@@ -5,7 +5,7 @@
 #
 # usage: --tutorial <tutorial name>
 #
-#   tutorial 
+#   tutorial
 #		e.g. ${TUTORIAL} or artdaq
 #
 #  example run:
@@ -68,23 +68,23 @@ if ! [ -e setup_ots.sh ]; then
 	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit  #exit is used if script is run ./reset...
 fi
-	
+
 shopt -s expand_aliases #allows for aliases in non-interactive mode (which apparently is critical depending on the temperment of the terminal)
 source setup_ots.sh
 
 
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
-echo		
+echo
 
-#determine if kdialog is functional 
+#determine if kdialog is functional
 # if not alias to echo
 
 
-unalias kdialog >/dev/null 2>&1 
+unalias kdialog >/dev/null 2>&1
 KDIALOG_TEST="$(which kdialog 2>&1)"
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_TEST  \t= $KDIALOG_TEST"
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"		
-echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t DISPLAY  \t= $DISPLAY"		
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t KDIALOG_ALWAYS_YES  \t= $KDIALOG_ALWAYS_YES"
+echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t DISPLAY  \t= $DISPLAY"
 
 if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLAY" == "x" ]]; then #no
 	#instead of e.g. /usr/bin/kdialog
@@ -93,15 +93,15 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLA
 	alias kdialog="echo"
 	which kdialog
 	KDIALOG_ALWAYS_YES=1
-	
-	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is disabled, bypassing user prompts"	
+
+	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t kdialog is disabled, bypassing user prompts"
 	echo
 
 
 	Base=$PWD
 
 	#commenting out unique filename generation
-	# no need to keep more than one past log for standard users 
+	# no need to keep more than one past log for standard users
 	#alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
 	#stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 	mkdir "$Base/script_log"  &>/dev/null #hide output
@@ -125,7 +125,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLA
 	chmod 755 get_tutorial_data.sh
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Getting tutorial Data..."
 	./get_tutorial_data.sh --tutorial ${TUTORIAL}
-				
+
 	#clean up
 	rm get_tutorial_data.sh
 
@@ -138,8 +138,8 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLA
 		source setup_ots.sh  >/dev/null 2>&1
 		UpdateOTS.sh --tables >/dev/null 2>&1
 		mb
-		ots --wiz #just to test activate the saved groups 
-		ots -k 
+		ots --wiz #just to test activate the saved groups
+		ots -k
 
 		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Tutorial reset script complete."
 		unalias kdialog
@@ -149,9 +149,9 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPLA
 
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Launching tutorial..."
 
-	ots --wiz #just to test activate the saved groups  
+	ots --wiz #just to test activate the saved groups
 	ots  #launch normal mode (and open firefox)
-	
+
 	#start hardware emulator on port 4000
 	ots_udp_hw_emulator 4000 &
 
@@ -182,7 +182,7 @@ echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Using kdialog f
 Base=$PWD
 
 #commenting out unique filename generation
-# no need to keep more than one past log for standard users 
+# no need to keep more than one past log for standard users
 #alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 
@@ -228,18 +228,18 @@ killall -9 ots_udp_hw_emulator
 #if no parameters and kdialog is working, check which tutorial the user wants
 if [[ $KDIALOG_ALWAYS_YES == 0 && "x$1" == "x" ]]; then
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t No user parameters found, so checking which tutorial to run."
-	
+
 	kdialog --yesno "Do you want to proceed with the default tutorial, '${TUTORIAL}?'\n\n(if not, you will be prompted for tutorial name)"
 	if [[ $? -eq 1 ]]; then #no
-	
+
 		TUTORIAL=$(kdialog --combobox "Please select the desired tutorial name:" "first_demo" "nim_plus" "iterator" "artdaq" --default "first_demo")
-		
+
 	fi
-	
+
 fi
 
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t TUTORIAL \t= $TUTORIAL"
-echo		
+echo
 
 kdialog --yesno "Do you want to reset user data and database for the '${TUTORIAL}' otsdaq tutorial (i.e. setup your ots installation for the beginning of the tutorial)?"
 if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
@@ -247,26 +247,26 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 
 	dbusRef=`kdialog --progressbar "Installing '${TUTORIAL}' tutorial user data and database..." 5`
 	qdbus $dbusRef Set "" value 1
-	
+
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to reset to '${TUTORIAL}' tutorial data."
-	
+
 	########################################
 	########################################
 	## Setup USER_DATA and databases
 	########################################
 	########################################
-	
+
 	#Take from tutorial data
 
-	
-	if [ "x$USER_DATA" == "x" ]; then		
+
+	if [ "x$USER_DATA" == "x" ]; then
 		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 		kdialog --msgbox "Error! You must already have ots setup (i.e. $USER_DATA must point to the right place)... For example, export USER_DATA=$MRB_SOURCE/otsdaq_demo/NoGitData. Exiting script."
 
 		return  >/dev/null 2>&1 #return is used if script is sourced
 		exit
 	fi
-		
+
 	if [ "x$ARTDAQ_DATABASE_URI" == "x" ]; then
 		#export ARTDAQ_DATABASE_URI="filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db"
 		echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Error! You must already have ots setup (i.e. $ARTDAQ_DATABASE_URI must point to the right place)... For example, export USER_DATA=filesystemdb://$MRB_SOURCE/otsdaq_demo/NoGitDatabases/filesystemdb/test_db. Exiting script."
@@ -283,26 +283,26 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 		-O get_tutorial_data.sh
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Getting tutorial Data..."
 	qdbus $dbusRef Set "" value 2
-	
+
 	#change permissions so the script is executable
 	chmod 755 get_tutorial_data.sh
-	
+
 	#execute script
 	./get_tutorial_data.sh --tutorial ${TUTORIAL}
 	qdbus $dbusRef Set "" value 3
 
-	
+
 	########################################
 	########################################
 	## END Setup USER_DATA and databases
 	########################################
 	########################################
-	
+
 	qdbus $dbusRef close
-	
+
     echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Now your user data path is USER_DATA = ${USER_DATA}"
     echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
-	
+
 	#clean up
 	rm get_tutorial_data.sh
 fi
@@ -326,7 +326,7 @@ if [[ "$TUTORIAL"  == "nim_plus" ]]; then
 	rm -rf install_ots_repo.sh
 	mv install_ots_repo.sh.bk install_ots_repo.sh  >/dev/null 2>&1
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t Done with the ${TUTORIAL} tutorial extra steps."
-	
+
 else
 	echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t No extra steps needed for the ${TUTORIAL} tutorial."
 fi
@@ -348,14 +348,14 @@ fi
 
 #if script is sourced, stop here before running executables
 return  >/dev/null 2>&1 #return is used if script is sourced
-		
-		
+
+
 echo -e `date +"%h%y %T"` "reset_ots_tutorial.sh [${LINENO}]  \t User decided to start up the tutorial."
 
 dbusRef=`kdialog --progressbar "Starting tutorial and launching ots..." 7`
 qdbus $dbusRef Set "" value 1
 
-ots --wiz #just to test activate the saved groups  
+ots --wiz #just to test activate the saved groups
 qdbus $dbusRef Set "" value 2
 
 sleep 3 #give time to activate configuration
