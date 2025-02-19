@@ -412,4 +412,3 @@ endtime=`date`
 
 echo "Install start time: $starttime"
 echo "Install end time:   $endtime"
-

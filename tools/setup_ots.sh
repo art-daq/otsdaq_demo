@@ -120,6 +120,3 @@ echo -e "setup[${LINENO}]: \t         'mz' for clean build"
 echo -e "setup[${LINENO}]: \t         'mb' for incremental build"
 echo -e "setup[${LINENO}]: \t         'UpdateOTS.sh' for update options"
 echo
-
-
-

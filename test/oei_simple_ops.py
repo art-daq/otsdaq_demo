@@ -77,9 +77,8 @@ print thing.read(0x70000,4)
 
 thing.writef(0x80000000,[342,11,99,67,224,4535])
 
-# read 6 words from FIFO 
+# read 6 words from FIFO
 
 print thing.readf(0x80000000,6)
 
 thing.close()
-
