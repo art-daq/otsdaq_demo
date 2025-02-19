@@ -87,7 +87,7 @@ eval "set -- $args \"\$@\""; unset args aa
 
 test -n "${do_help-}" -o $# -ge 2 && echo "$USAGE" && exit
 
-if [[ -n "${tag:-}" ]] && [[ $opt_develop -eq 1 ]]; then 
+if [[ -n "${tag:-}" ]] && [[ $opt_develop -eq 1 ]]; then
     echo "The \"--tag\" and \"--develop\" options are incompatible - please specify only one."
     exit
 fi
@@ -110,7 +110,7 @@ exec 2> >(tee "$Base/qms-log/$stderr_file")
 
 # Get all the information we'll need to decide which exact flavor of the software to install
 notag=0
-if [ -z "${tag:-}" ]; then 
+if [ -z "${tag:-}" ]; then
   tag=develop;
   notag=1;
 fi
@@ -226,7 +226,7 @@ for upstream in ${upstreams[@]}; do
         upstreamdir=`dirname $upstreamdir`
         upstreamdir=`realpath $upstreamdir`
         upstreamname=`echo $upstreamdir|sed 's|/__spack[^/]*||g;s|/spack/opt/spack||g'`
-    
+
         if ! [ -d $upstreamdir/.spack-db ]; then
             echo "No Spack instance found at $upstream!"
             continue
@@ -235,14 +235,14 @@ for upstream in ${upstreams[@]}; do
         if ! [ -f $spackdir/etc/spack/upstreams.yaml ]; then
             echo "upstreams:" > $spackdir/etc/spack/upstreams.yaml
         fi
-    
+
         if [ `grep -c $upstreamdir $spackdir/etc/spack/upstreams.yaml` -eq 0 ]; then
             # Only add upstream if not already present
             echo "  upstream${upstreamname//\//-}:" >>$spackdir/etc/spack/upstreams.yaml
             echo "    install_tree: $upstreamdir" >>$spackdir/etc/spack/upstreams.yaml
         fi
     done
-    
+
     for envdir in `find $upstream -type d -wholename '*/var/spack/environments' 2>/dev/null`; do
         echo "Looking for otsdaq environments in $envdir"
 
@@ -250,7 +250,7 @@ for upstream in ${upstreams[@]}; do
         if ! [ -d $environment ]; then continue; fi
         environment_dir=`realpath $environment`
         echo "Adding environment $environment_dir to include-concrete list"
-        concrete_include_cmd="$concrete_include_cmd --include-concrete $environment_dir"        
+        concrete_include_cmd="$concrete_include_cmd --include-concrete $environment_dir"
     done
 done
 
@@ -332,13 +332,13 @@ if [ -d $Base/local/install ]; then
   export LD_LIBRARY_PATH=$Base/local/install/lib:\$LD_LIBRARY_PATH
   export CET_PLUGIN_PATH=$Base/local/install/lib:\$CET_PLUGIN_PATH
   export FHICL_FILE_PATH=$Base/local/install/fcl:$FHICL_FILE_PATH
-  
+
   export OTSDAQ_DIR=\${OTSDAQ_DIR:-\$SCRIPT_DIR/local/install} #only set if not set by spack, e.g. needed by UpdateOTS.sh
   export OTSDAQ_LIB=\${OTSDAQ_LIB:-\$SCRIPT_DIR/local/install/lib} #only set if not set by spack, e.g. needed by otsConfiguration_Wizard_CMake.xml, otsConfiguration_MacroMaker_CMake.xml
   export OTSDAQ_UTILITIES_LIB=\${OTSDAQ_UTILITIES_LIB:-\$SCRIPT_DIR/local/install/lib} #only set if not set by spack, needed by otsConfiguration_Wizard_CMake.xml, otsConfiguration_MacroMaker_CMake.xml
 
   # in ots-develop mode, set WebPath because OTSDAQ_UTILITIES_DIR is not setup
-  if [ -d \$SCRIPT_DIR/srcs/otsdaq-utilities/WebGUI ]; then 
+  if [ -d \$SCRIPT_DIR/srcs/otsdaq-utilities/WebGUI ]; then
       export OTSDAQ_WEB_PATH=\$SCRIPT_DIR/srcs/otsdaq-utilities/WebGUI
   else
       export OTSDAQ_WEB_PATH=\$OTSDAQ_UTILITIES_LIB/../WebGUI
@@ -408,7 +408,7 @@ git clone https://github.com/art-daq/otsdaq_demo -b develop
 if ! [ -d databases ]; then
     cp -a otsdaq_demo/NoGitDatabases databases
 fi
-if ! [ -d Data ];then 
+if ! [ -d Data ];then
     cp -a otsdaq_demo/NoGitData Data
 fi
 rm -rf otsdaq_demo
@@ -416,7 +416,7 @@ rm -rf otsdaq_demo
 export USER_DATA="$Base/Data"
 export ARTDAQ_DATABASE_URI="filesystemdb://$Base/databases/filesystemdb/test_db"
 
-        
+
 #download get_tutorial_data script
 wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/get_tutorial_data.sh -O get_tutorial_data.sh --no-check-certificate
 
@@ -432,7 +432,7 @@ echo
 echo -e "UpdateOTS.sh [${LINENO}]  \t updating tutorial launch scripts..."
 rm get_tutorial_data.sh &>/dev/null 2>&1 #hide output
 rm reset_ots_tutorial.sh &>/dev/null 2>&1 #hide output
-wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate	
+wget https://raw.githubusercontent.com/art-daq/otsdaq_demo/develop/tools/reset_ots_tutorial.sh -O reset_ots_tutorial.sh --no-check-certificate
 chmod 755 reset_ots_tutorial.sh
 
 
@@ -440,8 +440,8 @@ chmod 755 reset_ots_tutorial.sh
 ########################################
 ## END Setup USER_DATA and databases
 ########################################
-########################################	
-    
+########################################
+
 
 spack concretize --force && spack install -j $BUILD_J
 if [[ ${opt_develop:-0} -eq 1 ]];then
@@ -467,7 +467,7 @@ installStatus=$?
 
 if [ $installStatus -eq 0 ]; then
     echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://github.com/art-daq/otsdaq/wiki"
-    echo	
+    echo
     echo "In the future, when you open a new terminal, just use 'source setup_ots.sh' to setup your ots installation."
     echo
 else

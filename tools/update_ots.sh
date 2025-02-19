@@ -7,7 +7,7 @@ fi
 
 Base=$PWD
 #commenting out unique filename generation
-# no need to keep more than one past log for standard users 
+# no need to keep more than one past log for standard users
 #alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 #exec  > >(tee "$Base/log/$alloutput_file")
@@ -26,7 +26,7 @@ source setup_ots.sh
 #run the script
 
 # download tutorial database
-echo 
+echo
 echo "*****************************************************"
 echo "Downloading latest version of update script.."
 echo
@@ -35,7 +35,7 @@ echo
 echo "running the script..."
 echo
 echo
-	
+
 #change permissions so the script is executable
 chmod 755 update_ots_donotrun.sh
 

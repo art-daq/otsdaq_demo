@@ -1,20 +1,20 @@
-// ots_udp_hw_emulator.cpp
-//    by rrivera at fnal dot gov
-//	  created Feb 2016
-//
-// This is a simple emulator of a "data gen" front-end (hardware) interface
-// using the otsdaq UDP protocol.
-//
-// compile with:
-// g++ ots_udp_hw_emulator.cpp -o hw.o
-//
-// if developing, consider appending -D_GLIBCXX_DEBUG to get more
-// descriptive error messages
-//
-// run with:
-//./hw.o
-//
-
+/// ots_udp_hw_emulator.cpp
+///    by rrivera at fnal dot gov
+///	  created Feb 2016
+///
+/// This is a simple emulator of a "data gen" front-end (hardware) interface
+/// using the otsdaq UDP protocol.
+///
+/// compile with:
+/// g++ ots_udp_hw_emulator.cpp -o hw.o
+///
+/// if developing, consider appending -D_GLIBCXX_DEBUG to get more
+/// descriptive error messages
+///
+/// run with:
+///./hw.o
+///
+///
 #include <arpa/inet.h>
 #include <errno.h>
 #include <netdb.h>
@@ -29,21 +29,21 @@
 #include <iostream>
 #include <sstream>
 
-// take only file name
+/// take only file name
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
-// use this for normal printouts
+/// use this for normal printouts
 #define __PRINTF__ printf
 #define __COUT__ std::cout << __FILENAME__ << std::dec << " [" << __LINE__ << "]\t"
 
-// and use this to suppress
-//#define __PRINTF__ if(0) printf
-//#define __COUT__  if(0) cout
-
+/// and use this to suppress
+///#define __PRINTF__ if(0) printf
+///#define __COUT__  if(0) cout
+///
 #define MAXBUFLEN 1500         // 1492
 #define EMULATOR_PORT "65000"  // Can be also passed as first argument
 
-// get sockaddr, IPv4 or IPv6:
+/// get sockaddr, IPv4 or IPv6:
 void* get_in_addr(struct sockaddr* sa)
 {
 	if(sa->sa_family == AF_INET)
@@ -545,7 +545,7 @@ int main(int argc, char** argv)
 					          &respbuff[32]);  // update EXPECTED payload bytes size
 					my_htonll(payloadBytes / 8, &respbuff[24]);  // update count bytes
 					                                             // size
-					my_htonll(index, &respbuff[16]);  // update index
+					my_htonll(index, &respbuff[16]);             // update index
 
 					// my_htonll(count*8,&respbuff[32]); //update EXPECTED payload bytes
 					// size
