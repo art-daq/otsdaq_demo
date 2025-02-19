@@ -7,7 +7,7 @@ fi
 
 Base=$PWD
 #commenting out unique filename generation
-# no need to keep more than one past log for standard users 
+# no need to keep more than one past log for standard users
 #alloutput_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4".script"}' )
 #stderr_file=$( date | awk -v "SCRIPTNAME=$(basename $0)" '{print SCRIPTNAME"_"$1"_"$2"_"$3"_"$4"_stderr.script"}' )
 #exec  > >(tee "$Base/log/$alloutput_file")
@@ -50,7 +50,7 @@ elif [ "$repo" == "prep-dev" ]; then
   repoFullName="prepmodernization"
   repoInstallDir="otsdaq_prepmodernization"
   writeAccess=1
-else  
+else
   kdialog --sorry "Repository name $repo was not recognized. Please enter a valid repository name."
   exit
 fi
@@ -70,7 +70,7 @@ echo
 #run tools/ots_repo_install.sh
 
 # download tutorial database
-echo 
+echo
 echo "*****************************************************"
 echo "Running mrb install.."
 echo
@@ -100,5 +100,4 @@ chmod 755 ${MRB_SOURCE}/${repoInstallDir}/tools/install_ots_repo.sh
 echo
 echo
 echo "Complete!"
-kdialog --msgbox "$repo repository installation complete!"  
-
+kdialog --msgbox "$repo repository installation complete!"

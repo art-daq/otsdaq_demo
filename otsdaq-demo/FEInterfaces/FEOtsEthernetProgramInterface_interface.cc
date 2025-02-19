@@ -420,7 +420,7 @@ void FEOtsEthernetProgramInterface::loadProgramFile(__ARGS__)
 	{
 		std::vector<uint64_t> dataVec = {
 		    0,  // first (ie at addr 0) quadwrod all 0 because it is the start-command
-		        // trigger
+		    // trigger
 		    0,      // write address(second qwd)
 		    bSize,  // size
 		    3       // mode is erase then write
