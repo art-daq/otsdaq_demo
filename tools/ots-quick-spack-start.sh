@@ -274,6 +274,8 @@ fi
 
 if [ $opt_no_kmod -eq 1 ];then
     spack add trace~kmod
+else
+	spack add trace+kmod
 fi
 
 spack add otsdaq-suite@${demo_version}${compiler_info} s=${squalifier} artdaq=${aqualifier} ${arch_opt} %gcc@13.3.0 +demo
