@@ -443,6 +443,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	# spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 generator=ninja # Upstream
 	spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 # Fork
 	spack env activate ots-develop
+    spack add cetmodules@3.26.00
 	spack add canvas-root-io cxxstd=20 # Needed for now
 	spack concretize --force --deprecated
 	spack install
