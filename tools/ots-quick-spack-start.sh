@@ -27,6 +27,7 @@ prompted for this location.
 --run-ots     runs otsdaq
 --debug       perform a debug build
 --develop     Install the develop version of the software (may be unstable!)
+--dev-only    Do not install otsdaq-suite in a local environment (use with --upstream!)
 --tag         Install a specific tag of otsdaq
 --spackdir    Install Spack in this directory (or use existing installation)
 -a            Artdaq version number (e.g. 31300 for v3_13_00)
@@ -52,7 +53,7 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0; opt_dev_only=0
 while [ -n "${1-}" ];do
 	if expr "x${1-}" : 'x-' >/dev/null;then
 		op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
@@ -66,8 +67,9 @@ while [ -n "${1-}" ];do
 			s*)         eval $op1arg; squalifier=$1; shift;;
 			w*)         eval $op1chr; opt_w=`expr $opt_w + 1`;;
 			-debug)     opt_debug=--debug;;
-			-run-ots)  opt_run_ots=--run-ots;;
-			-develop) opt_develop=1;;
+			-run-ots)   opt_run_ots=--run-ots;;
+			-develop)   opt_develop=1;;
+			-dev-only)  opt_dev_only=1;;
 			-tag)       eval $reqarg; tag=$1; shift;;
 			-spackdir)  eval $op1arg; spackdir=$1; shift;;
 			-no-extra-products)  opt_skip_extra_products=1;;
@@ -257,25 +259,26 @@ if [ $? -ne 0 ]; then
 fi
 spack compiler find
 
-spack env create ${concrete_include_cmd} $view_opt ots-${demo_version}
-spack env activate ots-${demo_version}
-ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
+if [ ${opt_dev_only:-0} -eq 0 ];then
+	spack env create ${concrete_include_cmd} $view_opt ots-${demo_version}
+	spack env activate ots-${demo_version}
+	ln -s ${spackdir}/var/spack/environments/ots-${demo_version}
 
-# OTS always wants to re-make the srcs link
-if ! [ -d srcs ];then
-  rm srcs >/dev/null 2>&1
-  ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
+	# OTS always wants to re-make the srcs link
+	if ! [ -d srcs ];then
+		rm srcs >/dev/null 2>&1
+		ln -s $spackdir/var/spack/environments/ots-${demo_version} srcs
+	fi
+
+	if [ $opt_no_kmod -eq 1 ];then
+		spack add trace~kmod
+	else
+		spack add trace+kmod
+	fi
+
+	spack add otsdaq-suite@${demo_version} ${svariant} ${advariant} ${arch_opt} %gcc@13.1.0 +demo
+	env_to_activate="ots-${demo_version}"
 fi
-
-if [ $opt_no_kmod -eq 1 ];then
-	spack add trace~kmod
-else
-	spack add trace+kmod
-fi
-
-spack add otsdaq-suite@${demo_version} ${svariant} ${advariant} ${arch_opt} %gcc@13.1.0 +demo
-env_to_activate="ots-${demo_version}"
-
 
 function checkout_package()
 {
@@ -440,10 +443,15 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	spack env deactivate
 	# spack mpd init # Upstream
 	spack mpd init -r site -u $Base/spack-repos/mpd # Fork
-	# spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 generator=ninja # Upstream
-	spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 # Fork
+	if [ ${opt_dev_only:-0} -eq 0 ];then
+		# spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 generator=ninja # Upstream
+		spack mpd new-project --force -y --name ots-develop -E ots-${demo_version} cxxstd=20 %gcc@13.1.0 # Fork
+	else
+		# spack mpd new-project --force -y --name ots-develop cxxstd=20 %gcc@13.1.0 generator=ninja # Upstream
+		spack mpd new-project --force -y --name ots-develop cxxstd=20 %gcc@13.1.0 # Fork
+	fi
 	spack env activate ots-develop
-    spack add cetmodules@3.26.00
+	spack add cetmodules@3.26.00
 	spack add canvas-root-io cxxstd=20 # Needed for now
 	spack concretize --force --deprecated
 	spack install
