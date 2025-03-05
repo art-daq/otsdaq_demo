@@ -451,7 +451,6 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 		spack mpd new-project --force -y --name ots-develop cxxstd=20 %gcc@13.1.0 # Fork
 	fi
 	spack env activate ots-develop
-	spack add cetmodules@3.26.00
 	spack add canvas-root-io cxxstd=20 # Needed for now
 	spack concretize --force --deprecated
 	spack install
