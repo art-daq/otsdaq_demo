@@ -438,7 +438,10 @@ chmod 755 reset_ots_tutorial.sh
 ########################################
 
 
-spack concretize --force --deprecated && spack install -j $BUILD_J
+if [ ${opt_dev_only:-0} -eq 0 ];then
+    spack concretize --force --deprecated && spack install -j $BUILD_J
+    installStatus=$?
+fi
 if [[ ${opt_develop:-0} -eq 1 ]];then
 	spack env deactivate
 	# spack mpd init # Upstream
@@ -461,8 +464,6 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	installStatus=$?
 	cd $Base
 fi
-
-installStatus=$?
 
 if [ $installStatus -eq 0 ]; then
 	echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://github.com/art-daq/otsdaq/wiki"
