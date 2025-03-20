@@ -439,7 +439,7 @@ chmod 755 reset_ots_tutorial.sh
 
 
 if [ ${opt_dev_only:-0} -eq 0 ];then
-    spack concretize --force --deprecated && spack install -j $BUILD_J
+    spack concretize --force --deprecated && spack install --deprecated -j $BUILD_J
     installStatus=$?
 fi
 if [[ ${opt_develop:-0} -eq 1 ]];then
@@ -456,7 +456,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 	spack env activate ots-develop
 	spack add canvas-root-io cxxstd=20 # Needed for now
 	spack concretize --force --deprecated
-	spack install
+	spack install --deprecated
 	# spack mpd build # Upstream
 	spack mpd build -G Ninja # Fork
 	cd $Base/build
