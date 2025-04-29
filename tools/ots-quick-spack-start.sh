@@ -201,11 +201,9 @@ if [ $repo_found -eq 0 ]; then
 	spack repo add ./artdaq-spack
 	cd $Base
 else
-	echo "Repos previously added -- pull any updates"
-	for dir in `spack repo list|awk '{print $2}'`;do
-		cd $dir
-		git pull
-	done
+    cd fnal_art && git fetch -a && git checkout ddeec355456e3bca5e4a743ce5d4906fa74a51b6 ; cd ..
+    cd scd_recipes && git fetch -a && git checkout e9c8cc8af792008c3c85724cc8ae3ee0662233d6 ; cd ..
+    cd artdaq-spack && git fetch -a && git checkout ots-${demo_version}; cd ..
 	cd $Base
 fi
 
