@@ -166,7 +166,7 @@ source setup-env.sh
 if ! [ -d fermi-spack-tools ]; then
 	#git clone https://github.com/FNALssi/fermi-spack-tools.git # Upstream
 	#cd fermi-spack-tools && git checkout 965e0e73896328f8137c2bd53bad77a42b39e0bf; cd $Base
- 	git clone https://github.com/eflumerf/fermi-spack-tools.git # Fork
+	git clone https://github.com/eflumerf/fermi-spack-tools.git # Fork
 	cd fermi-spack-tools && git checkout StableWithCairoFix; cd $Base
 else
 	#cd fermi-spack-tools && git fetch -a && git checkout 965e0e73896328f8137c2bd53bad77a42b39e0bf ; cd $Base
