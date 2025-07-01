@@ -149,12 +149,11 @@ fi
 if ! [ -d $spackdir ];then
     $(
     cd ${spackdir%/spack}
-    git clone https://github.com/FNALssi/spack.git -b fnal-develop
-    cd $spackdir && git checkout e18ecaaa780b863b2104e2971d3320c97ebf3b65
+    git clone https://github.com/Mu2e/spack.git -b eflumerf/FixPerlPackageStash
         )
 else
     #cd $spackdir && git pull && cd $Base
-    cd $spackdir && git fetch -a && git checkout e18ecaaa780b863b2104e2971d3320c97ebf3b65 && cd $Base
+    cd $spackdir && git fetch -a && git checkout eflumerf/FixPerlPackageStash ; cd $Base
 fi
 
 cat >setup-env.sh <<-EOF
