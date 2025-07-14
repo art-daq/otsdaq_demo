@@ -165,7 +165,7 @@ source setup-env.sh
 if ! [ -d fermi-spack-tools ]; then
     #git clone https://github.com/FNALssi/fermi-spack-tools.git # Upstream
     #cd fermi-spack-tools && git checkout 965e0e73896328f8137c2bd53bad77a42b39e0bf; cd $Base
-    git clone https://github.com/eflumerf/fermi-spack-tools.git # Fork
+    git clone https://github.com/art-daq/fermi-spack-tools.git # Fork
     cd fermi-spack-tools && git checkout StableWithCairoFix; cd $Base
 else
     #cd fermi-spack-tools && git fetch -a && git checkout 965e0e73896328f8137c2bd53bad77a42b39e0bf ; cd $Base
@@ -173,7 +173,7 @@ else
 fi
 if ! [ -d spack-mpd ]; then
     # git clone https://github.com/FNALssi/spack-mpd.git # Upstream
-    git clone https://github.com/eflumerf/spack-mpd.git # Fork
+    git clone https://github.com/art-daq/spack-mpd.git # Fork
 else
     cd spack-mpd && git pull && cd ..
 fi
@@ -195,7 +195,7 @@ if [ $repo_found -eq 0 ]; then
     git clone https://github.com/FNALssi/fnal_art.git
     cd fnal_art && git checkout ddeec355456e3bca5e4a743ce5d4906fa74a51b6 ; cd ..
     spack repo add ./fnal_art
-    git clone https://github.com/marcmengel/scd_recipes.git
+    git clone https://github.com/fnal-fife/scd_recipes.git
     cd scd_recipes && git checkout e9c8cc8af792008c3c85724cc8ae3ee0662233d6 ; cd ..
     rm -rf scd_recipes/packages/perl-ipc-run3
     spack repo add ./scd_recipes
