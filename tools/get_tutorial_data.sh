@@ -157,7 +157,7 @@ echo -e "$(date +%d%h%y.%T) get_tutorial_data.sh [${LINENO}]  \t Backing up curr
 echo
 echo -e "$(date +%d%h%y.%T) get_tutorial_data.sh [${LINENO}]  \t mv ${ADU_PATH} ${ADU_PATH}.bak`date +%y%m%d%H%M%S`"
 echo
-mv ${ADU_PATH} ${ADU_PATH}.bak`date +%y%m%d%H%M%S` 
+mv ${ADU_PATH} ${ADU_PATH}.bak`date +%y%m%d%H%M%S`
 
 # move download user data into position
 echo

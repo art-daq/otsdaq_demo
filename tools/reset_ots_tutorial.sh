@@ -27,7 +27,7 @@ echo " _|_"
 echo " \ /"
 echo "  - "
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t ========================================================"
-echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t usage: --help" 
+echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t usage: --help"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t usage: --list # to list recommended tutorial names"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t usage: --tutorial <tutorial name>"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t"
@@ -133,7 +133,7 @@ if [[ "$KDIALOG_ALWAYS_YES" = 1 || "$KDIALOG_TEST" == *"no kdialog"* || "x$DISPL
 	#clean up
 	rm get_tutorial_data.sh
 
-	if [ "$exit_ret" != 0 ]; then 
+	if [ "$exit_ret" != 0 ]; then
 		echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t Exiting...  get_tutorial_data failed with non-zero return code."
 		unalias kdialog
 		return  >/dev/null 2>&1 #return is used if script is sourced
@@ -310,7 +310,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	########################################
 
 	qdbus $dbusRef close
-	
+
 
     echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t Now your user data path is USER_DATA = ${USER_DATA}"
     echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t Now your database path is ARTDAQ_DATABASE_URI = ${ARTDAQ_DATABASE_URI}"
