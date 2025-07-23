@@ -299,7 +299,7 @@ if [[ $KDIALOG_ALWAYS_YES == 1 || $? -eq 0 ]]; then #yes
 	#execute script
 	./get_tutorial_data.sh --tutorial ${TUTORIAL}
 	qdbus $dbusRef Set "" value 3
-	
+
 	#in case of minor table updates, update tables:
 	UpdateOTS.sh --tables >/dev/null 2>&1
 
