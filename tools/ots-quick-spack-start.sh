@@ -330,7 +330,7 @@ spack env activate ${env_to_activate}
 
 #handle using ots-develop local install area
 if [ -d \$SCRIPT_DIR/local/install ]; then
-    export PATH=\$SCRIPT_DIR/local/install/bin:$PATH
+    export PATH=\$SCRIPT_DIR/local/install/bin:\$PATH
     export LD_LIBRARY_PATH=\$SCRIPT_DIR/local/install/lib:\$SCRIPT_DIR/local/install/lib64:\$LD_LIBRARY_PATH
     export CET_PLUGIN_PATH=\$SCRIPT_DIR/local/install/lib:\$CET_PLUGIN_PATH
     export ROOT_INCLUDE_PATH=\$SCRIPT_DIR/local/install/include:\$ROOT_INCLUDE_PATH
