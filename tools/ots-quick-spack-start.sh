@@ -37,6 +37,7 @@ prompted for this location.
 -w            Check out repositories read/write
 --no-extra-products  Skip the automatic use of central product areas, such as CVMFS
 --upstream    Use <dir> as a Spack upstream (repeatable)
+--use-cvmfs   Use CVMFS artdaq areas if available
 --padding     Set directory padding to 255, for relocatability
 --no-view     Do not create Spack environment views
 --arch        Set architechture for build (ex. linux-almalinux9-x86_64_v3)
@@ -53,7 +54,7 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0; opt_dev_only=0
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0; opt_dev_only=0; opt_use_cvmfs=0;
 while [ -n "${1-}" ];do
     if expr "x${1-}" : 'x-' >/dev/null;then
         op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
@@ -79,6 +80,7 @@ while [ -n "${1-}" ];do
             -arch)      eval $op1arg; arch=$1; shift;;
             -no-kmod)   opt_no_kmod=1;;
             -no-view)   opt_no_view=1;;
+            -use-cvmfs)  opt_use_cvmfs=1;;
             *)          echo "Unknown option -$op"; do_help=1;;
         esac
     else
@@ -218,6 +220,14 @@ if [ $opt_padding -eq 1 ];then
 fi
 
 concrete_include_cmd=
+
+if [ $opt_use_cvmfs -eq 1 ] && [ -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas ]; then
+  art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas/art-suite-*|tail -1`
+  artdaq=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas/artdaq-*|tail -1`
+  ots=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas/ots-*|tail -1`
+
+  upstreams+=($ots $artdaq $art)
+fi
 
 for upstream in ${upstreams[@]}; do
     for upstreamdir in `find $upstream -type f -wholename '*/.spack-db/index.json' 2>/dev/null`; do
