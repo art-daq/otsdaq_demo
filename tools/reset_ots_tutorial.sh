@@ -1,7 +1,6 @@
 #!/bin/bash
 # reset_ots_tutorial.sh
-#	Launches the specified otsdaq tutorial. If no tutorial name is specified
-#	it will default to first_demo.
+#	Launches the specified otsdaq tutorial. If no tutorial name is specified it will default to first_demo.
 #
 # usage: --tutorial <tutorial name>
 #
@@ -11,7 +10,7 @@
 #  example run:
 #	./reset_ots_tutorial.sh --tutorial first_demo
 #
-#	NOTE: if kdialog is not installed this script must be sourced to bypass kdialog prompts
+#	NOTE: if kdialog is not installed, this script might work better sourced to bypass kdialog prompts
 #		e.g. source reset_ots_tutorial.sh --tutorial first_demo
 #
 # export KDIALOG_ALWAYS_YES=1	 # to force yes answer and no kdialog popups
@@ -31,14 +30,11 @@ echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t usage: --help"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t usage: --list # to list recommended tutorial names"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t usage: --tutorial <tutorial name>"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t"
-echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t note: tutorial will default to '${TUTORIAL}'"
+echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t note: If no name provided, tutorial will default to '${TUTORIAL}'"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t for example..."
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t\t ./reset_ots_tutorial.sh --tutorial first_demo"
 echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t"
-echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t"
-echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t NOTE: This script uses kdialog for prompts. If kdialog is not installed this script must be sourced to bypass kdialog prompts"
-echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t	e.g. source reset_ots_tutorial.sh --tutorial first_demo"
 
 
 #return  >/dev/null 2>&1 #return is used if script is sourced
@@ -55,6 +51,7 @@ if [[ "$1"  == "--tutorial" && "x$2" != "x" ]]; then
 elif [[ "$1"  == "--list" || "$1"  == "--help" ]]; then
 	echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t --list found. Listing recommended parameter values..."
 	echo -e "$(date +%d%h%y.%T) reset_ots_tutorial.sh:${LINENO}  \t\t Tutorials = ${TUTORIALS_STRING}"
+	return  >/dev/null 2>&1 #return is used if script is sourced
 	exit
 elif [[ "x$1" != "x" ]]; then
 
