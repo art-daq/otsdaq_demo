@@ -229,6 +229,10 @@ if [ $opt_use_cvmfs -eq 1 ] && [ -d /cvmfs/fermilab.opensciencegrid.org/products
   upstreams+=($ots $artdaq $art)
 fi
 
+# If updating upstreams, clear existing file first
+if [ ${#upstreams[@]} -gt 0 ]; then
+  rm $spackdir/etc/spack/upstreams.yaml
+fi
 for upstream in ${upstreams[@]}; do
     for upstreamdir in `find $upstream -type f -wholename '*/.spack-db/index.json' 2>/dev/null`; do
         echo "Getting real directory for upstream database $upstreamdir"
