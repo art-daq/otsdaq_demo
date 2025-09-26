@@ -181,10 +181,10 @@ int main(int argc, char** argv)
 	__COUT__ << addressSpaceSS.str() << "\n\n";
 
 	// hardware "registers"
-	uint64_t data_gen_cnt  = 0;
-	uint64_t data_gen_rate = 100;  // number of loops to wait
-	uint8_t  led_register  = 0;
-	uint8_t  dataEnabled   = 0;
+	uint64_t data_gen_cnt   = 0;
+	uint64_t data_gen_rate  = 100;  // number of loops to wait
+	uint8_t  led_register   = 0;
+	uint8_t  dataEnabled    = 0;
 	uint32_t streamToIP_reg = 0;
 
 	const unsigned int RX_ADDR_OFFSET = 2;
@@ -192,8 +192,8 @@ int main(int argc, char** argv)
 	const unsigned int TX_DATA_OFFSET = 2;
 
 	bool          wasDataEnabled = false;
-	bool          wasDataSent = false;
-	unsigned char sequence      = 0;
+	bool          wasDataSent    = false;
+	unsigned char sequence       = 0;
 	unsigned int  packetSz;
 
 	// for timeout/select
@@ -326,7 +326,8 @@ int main(int argc, char** argv)
 						       (void*)&streamToIP_reg,
 						       4);
 						__COUT__ << std::hex << ":::"
-						         << "Read Stream destination IP: " << streamToIP << std::endl;
+						         << "Read Stream destination IP: " << streamToIP
+						         << std::endl;
 						break;
 					case 0x0000000100000008:
 						memset((void*)&buff[handlerIndex + TX_DATA_OFFSET + 4], 0, 4);
@@ -334,8 +335,8 @@ int main(int argc, char** argv)
 						       (void*)&streamToPort,
 						       4);
 						__COUT__ << std::hex << ":::"
-						         << "Read Stream destination port: 0x" << streamToPort << " (" << std::dec << 
-								 	streamToPort << ")" << std::endl;
+						         << "Read Stream destination port: 0x" << streamToPort
+						         << " (" << std::dec << streamToPort << ")" << std::endl;
 						break;
 					case 0x0000000100000009:
 						memset((void*)&buff[handlerIndex + TX_DATA_OFFSET + 1], 0, 7);
@@ -411,12 +412,13 @@ int main(int argc, char** argv)
 						struct sockaddr_in socketAddress;
 						memcpy(
 						    (void*)&ip, (void*)&buff[handlerIndex + RX_DATA_OFFSET], 4);
-						streamToIP_reg = ip; //save for reads
-						ip = htonl(ip);
+						streamToIP_reg = ip;  //save for reads
+						ip             = htonl(ip);
 						memcpy((void*)&socketAddress.sin_addr, (void*)&ip, 4);
 						streamToIP = inet_ntoa(socketAddress.sin_addr);
 						__COUT__ << std::hex << ":::"
-						         << "Write Stream destination IP: " << streamToIP << std::endl;
+						         << "Write Stream destination IP: " << streamToIP
+						         << std::endl;
 						__COUT__ << streamToIP << std::endl;
 					}
 					break;
@@ -514,7 +516,7 @@ int main(int argc, char** argv)
 					// send a packet
 					buff[0] =
 					    wasDataSent ? 2 : 1;  // type := burst middle (2) or first (1)
-					buff[1] = sequence++;       // 1-byte sequence id increments and wraps
+					buff[1] = sequence++;     // 1-byte sequence id increments and wraps
 					memcpy((void*)&buff[TX_DATA_OFFSET],
 					       (void*)&count,
 					       8);  // make data counter
@@ -542,7 +544,7 @@ int main(int argc, char** argv)
 					           (unsigned char)buff[1]);
 
 					if(data_gen_cnt != (uint64_t)-1)
-						--data_gen_cnt;	
+						--data_gen_cnt;
 
 					wasDataSent = true;
 				}
