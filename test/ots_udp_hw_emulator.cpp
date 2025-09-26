@@ -34,7 +34,7 @@
 
 /// use this for normal printouts
 #define __PRINTF__ printf
-#define __COUT__ std::cout << __FILENAME__ << std::dec << " [" << __LINE__ << "]\t"
+#define __COUT__ std::cout << __FILENAME__ << std::dec << ":" << __LINE__ << "\t"
 
 /// and use this to suppress
 ///#define __PRINTF__ if(0) printf
@@ -109,7 +109,7 @@ int main(int argc, char** argv)
 	         << std::endl;
 
 	std::string streamToIP;
-	uint32_t    streamToPort;
+	uint32_t    streamToPort = 0;
 
 	int                     sockfd;
 	int                     sendSockfd = 0;
@@ -181,17 +181,19 @@ int main(int argc, char** argv)
 	__COUT__ << addressSpaceSS.str() << "\n\n";
 
 	// hardware "registers"
-	uint64_t data_gen_cnt  = 0;
-	uint64_t data_gen_rate = 100;  // number of loops to wait
-	uint8_t  led_register  = 0;
-	uint8_t  dataEnabled   = 0;
+	uint64_t data_gen_cnt   = 0;
+	uint64_t data_gen_rate  = 100;  // number of loops to wait
+	uint8_t  led_register   = 0;
+	uint8_t  dataEnabled    = 0;
+	uint32_t streamToIP_reg = 0;
 
 	const unsigned int RX_ADDR_OFFSET = 2;
 	const unsigned int RX_DATA_OFFSET = 10;
 	const unsigned int TX_DATA_OFFSET = 2;
 
-	bool          wasDataEnable = false;
-	unsigned char sequence      = 0;
+	bool          wasDataEnabled = false;
+	bool          wasDataSent    = false;
+	unsigned char sequence       = 0;
 	unsigned int  packetSz;
 
 	// for timeout/select
@@ -318,6 +320,24 @@ int main(int argc, char** argv)
 						         << "Read LED register: 0x" << (unsigned int)led_register
 						         << std::endl;
 						break;
+					case 0x0000000100000006:
+						memset((void*)&buff[handlerIndex + TX_DATA_OFFSET + 4], 0, 4);
+						memcpy((void*)&buff[handlerIndex + TX_DATA_OFFSET],
+						       (void*)&streamToIP_reg,
+						       4);
+						__COUT__ << std::hex << ":::"
+						         << "Read Stream destination IP: " << streamToIP
+						         << std::endl;
+						break;
+					case 0x0000000100000008:
+						memset((void*)&buff[handlerIndex + TX_DATA_OFFSET + 4], 0, 4);
+						memcpy((void*)&buff[handlerIndex + TX_DATA_OFFSET],
+						       (void*)&streamToPort,
+						       4);
+						__COUT__ << std::hex << ":::"
+						         << "Read Stream destination port: 0x" << streamToPort
+						         << " (" << std::dec << streamToPort << ")" << std::endl;
+						break;
 					case 0x0000000100000009:
 						memset((void*)&buff[handlerIndex + TX_DATA_OFFSET + 1], 0, 7);
 						memcpy((void*)&buff[handlerIndex + TX_DATA_OFFSET],
@@ -354,7 +374,6 @@ int main(int argc, char** argv)
 					uint64_t addr;
 					memcpy((void*)&addr, (void*)&buff[handlerIndex + RX_ADDR_OFFSET], 8);
 					__COUT__ << std::hex << ":::"
-					         << "hw: Line " << std::dec << __LINE__ << ":::"
 					         << "Write address: 0x" << std::hex << addr;
 					__PRINTF__(" 0x%16.16lX \n", addr);
 
@@ -393,11 +412,13 @@ int main(int argc, char** argv)
 						struct sockaddr_in socketAddress;
 						memcpy(
 						    (void*)&ip, (void*)&buff[handlerIndex + RX_DATA_OFFSET], 4);
-						ip = htonl(ip);
+						streamToIP_reg = ip;  //save for reads
+						ip             = htonl(ip);
 						memcpy((void*)&socketAddress.sin_addr, (void*)&ip, 4);
 						streamToIP = inet_ntoa(socketAddress.sin_addr);
 						__COUT__ << std::hex << ":::"
-						         << "Stream destination IP: " << streamToIP << std::endl;
+						         << "Write Stream destination IP: " << streamToIP
+						         << std::endl;
 						__COUT__ << streamToIP << std::endl;
 					}
 					break;
@@ -411,8 +432,8 @@ int main(int argc, char** argv)
 						       (void*)&buff[handlerIndex + RX_DATA_OFFSET],
 						       4);
 						__COUT__ << std::hex << ":::"
-						         << "Stream destination port: 0x" << streamToPort
-						         << std::dec << " " << streamToPort << std::endl;
+						         << "Write Stream destination port: 0x" << streamToPort
+						         << std::dec << " (" << streamToPort << ")" << std::endl;
 
 						close(sendSockfd);
 						sendSockfd = 0;
@@ -488,14 +509,14 @@ int main(int argc, char** argv)
 				{
 					// if(count%0x100000 == 0)
 					__COUT__ << std::hex << ":::"
-					         << "Count: " << count << " rate: " << data_gen_rate
-					         << " packet-counter: " << data_gen_cnt << std::endl;
+					         << "Count: 0x" << count << " rate: 0x" << data_gen_rate
+					         << " packet-counter: 0x" << data_gen_cnt << std::endl;
 					__COUT__ << std::hex << ":::"
-					         << "Send Burst at count:" << count << std::endl;
+					         << "Send Burst at count: 0x" << count << std::endl;
 					// send a packet
 					buff[0] =
-					    wasDataEnable ? 2 : 1;  // type := burst middle (2) or first (1)
-					buff[1] = sequence++;       // 1-byte sequence id increments and wraps
+					    wasDataSent ? 2 : 1;  // type := burst middle (2) or first (1)
+					buff[1] = sequence++;     // 1-byte sequence id increments and wraps
 					memcpy((void*)&buff[TX_DATA_OFFSET],
 					       (void*)&count,
 					       8);  // make data counter
@@ -515,22 +536,24 @@ int main(int argc, char** argv)
 					        sendSockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) ==
 					   -1)
 					{
-						perror("Hw: sendto");
+						perror("Hw: sendto error!");
 						exit(1);
 					}
-					__PRINTF__("hw: sent %d bytes back. sequence=%d\n",
+					__PRINTF__("hw: Sent %d streaming bytes. sequence=%d\n",
 					           numberOfBytes,
 					           (unsigned char)buff[1]);
 
 					if(data_gen_cnt != (uint64_t)-1)
 						--data_gen_cnt;
+
+					wasDataSent = true;
 				}
 
-				wasDataEnable = true;
+				wasDataEnabled = true;
 			}
-			else if(wasDataEnable)  // send last in burst packet
+			else if(wasDataEnabled)  // send last in burst packet
 			{
-				wasDataEnable = false;
+				wasDataSent = wasDataEnabled = false;
 				__COUT__ << std::hex << ":::"
 				         << "Send Last in Burst at count:" << count << std::endl;
 				// send a packet
@@ -547,10 +570,10 @@ int main(int argc, char** argv)
 					        sendSockfd, buff, packetSz, 0, p->ai_addr, p->ai_addrlen)) ==
 					   -1)
 					{
-						perror("hw: sendto");
+						perror("hw: sendto error!");
 						exit(1);
 					}
-					__PRINTF__("hw: sent %d bytes back. sequence=%d\n",
+					__PRINTF__("hw: Sent %d closing bytes. sequence=%d\n",
 					           numberOfBytes,
 					           (unsigned char)buff[1]);
 				}
