@@ -257,6 +257,11 @@ fi
     cat >setup_ots.sh <<-EOF
 echo # This script is intended to be sourced.
 
+if [ \${OTSDAQ_SETUP:-0} -eq 0 ]; then
+  # Save environment
+  declare -x >$Base/.env_before_setup_ots
+fi
+
 SCRIPT_DIR="\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 otsdir=\$SCRIPT_DIR
 
@@ -323,6 +328,14 @@ alias  mb='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build
 alias  ml='date; start_time=\$(date +%s); spack find | grep gcc; spack mpd build -G Ninja -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g | sed s/\\\[padded-to-255-chars\\\]//g | sed s/\\\/tdaq-v......../\\\/tdaq-v_\ \ \ /g | tee m.txt; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"; less m.txt'
 alias  mz='date; start_time=\$(date +%s); spack concretize --force --deprecated; spack mpd build -G Ninja --clean -j\$CETPKG_J 2>&1 | sed s/__spack_path_placeholder__//g; end_time=\$(date +%s); pushd $Base/build; ninja install; popd; date; delta_time=\$((end_time - start_time)); fractional_minutes=\$(echo "scale=1; \$delta_time / 60" | bc); echo "Full time: \$delta_time seconds or \$fractional_minutes minutes"'
 
+
+if [ \${OTSDAQ_SETUP:-0} -eq 0 ]; then
+  # Now save a copy of the environment after setup
+  declare -x >$Base/.env_after_setup_ots
+  # Next, remove any variables that haven't changed
+  grep -v -x -Ff $Base/.env_before_setup_ots $Base/.env_after_setup_ots >$Base/setup_ots_rte.sh
+fi
+export OTSDAQ_SETUP=1
 
 echo
 echo -e "setup_ots.sh:\${LINENO} |  \t  Now use 'ots --wiz' to configure otsdaq"
