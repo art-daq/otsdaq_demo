@@ -406,6 +406,12 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
         spack mpd new-project --force -y --name ots-develop -C gcc@13.4.0 cxxstd=20 generator=ninja
     fi
     spack env activate ots-develop
+
+    spack add lcov
+    spack add py-black
+    spack add py-cmake-format
+    spack concretize --force
+
     spack mpd build --clean -j $BUILD_J
     spack mpd install
     installStatus=$?
