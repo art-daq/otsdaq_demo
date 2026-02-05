@@ -393,7 +393,7 @@ chmod 755 reset_ots_tutorial.sh
 
 
 if [ ${opt_dev_only:-0} -eq 0 ];then
-    spack concretize --force && spack install -j $BUILD_J
+    spack concretize --force --deprecated && spack install --deprecated -j $BUILD_J
     installStatus=$?
 fi
 if [[ ${opt_develop:-0} -eq 1 ]];then
@@ -410,7 +410,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     spack add lcov
     spack add py-black
     spack add py-cmake-format
-    spack concretize --force
+    spack concretize --force --deprecated
 
     spack mpd build --clean -j $BUILD_J
     spack mpd install
