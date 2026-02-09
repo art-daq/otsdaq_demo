@@ -138,7 +138,7 @@ if [[ "x$build_system_script" == "x" ]];then
 fi
 source $build_system_script
 # Note that install_spack_build_system sources setup-env.sh
-install_spack_build_system $Base $spackdir $opt_padding $arch_opt
+install_spack_build_system $Base $spackdir $opt_padding
 
 if [[ $tag == "develop" ]] && [[ $opt_dev_only -eq 0 ]]; then
     tag=`spack list --format=version_json otsdaq-suite|jq ".[]|.latest_version"| sed -e 's/^"//' -e 's/"$//'`
@@ -146,10 +146,11 @@ fi
 
 concrete_include_cmd=
 
+os=$(cat /etc/redhat-release |grep -oE "release [0-9]+"|cut -d' ' -f2)
 if [ $opt_use_cvmfs -eq 1 ] && [ -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1 ]; then
-  art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/art-suite-*|tail -1`
-  artdaq=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/artdaq-*|tail -1`
-  ots=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/ots-*|tail -1`
+  art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/art-suite-*-al${os}|tail -1`
+  artdaq=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/artdaq-*-al${os}|tail -1`
+  ots=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/ots-*-al${os}|tail -1`
 
   upstreams+=($ots $artdaq $art)
 fi
@@ -185,7 +186,7 @@ for upstream in ${upstreams[@]}; do
     for envdir in `find $upstream -type d -wholename '*/var/spack/environments' 2>/dev/null`; do
         echo "Looking for otsdaq environments in $envdir"
 
-        environment="ots-${tag}"
+        environment="ots-${tag}-al${os}"
         if ! [ -d $environment ]; then continue; fi
         environment_dir=`realpath $environment`
         echo "Adding environment $environment_dir to include-concrete list"
@@ -195,17 +196,35 @@ done
 
 spack reindex
 
+env_name=ots-${tag}-al${os}
+if [ $os -eq 9 ];then
+    gccver=13.4.0
+elif [ $os -eq 10 ];then
+    gccver=13.4.0
+fi
+
+if [ "x$gccver" != "x" ];then
+    spack load --first gcc@${gccver} >/dev/null 2>&1
+    if [ $? -ne 0 ];then
+      spack install -j $BUILD_J gcc@${gccver} $arch_opt +binutils
+      installStatus=$?
+      spack load gcc@${gccver}
+    fi
+fi
+
+spack compiler find
+
 cd $Base
 
 if [ ${opt_dev_only:-0} -eq 0 ];then
-    spack env create ${concrete_include_cmd} $view_opt ots-${tag}
-    spack env activate ots-${tag}
-    ln -s ${spackdir}/var/spack/environments/ots-${tag}
+    spack env create ${concrete_include_cmd} $view_opt ${env_name}
+    spack env activate ${env_name}
+    ln -s ${spackdir}/var/spack/environments/${env_name}
 
     # OTS always wants to re-make the srcs link
     if ! [ -d srcs ];then
         rm srcs >/dev/null 2>&1
-        ln -s $spackdir/var/spack/environments/ots-${tag} srcs
+        ln -s $spackdir/var/spack/environments/${env_name} srcs
     fi
 
     if [ $opt_no_kmod -eq 1 ];then
@@ -215,8 +234,8 @@ if [ ${opt_dev_only:-0} -eq 0 ];then
     fi
 
     spack add otsdaq-suite@${tag}+demo ${svariant} ${advariant} ${arch_opt}
-    spack add otsdaq %gcc@13.4.0 # Ensure proper compiler is used
-    env_to_activate="ots-${tag}"
+    spack add otsdaq %gcc${gccver:+@${gccver}} # Ensure proper compiler is used
+    env_to_activate=${env_name}
 fi
 
 function checkout_package()
@@ -401,9 +420,9 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
 
     spack mpd init
     if [ ${opt_dev_only:-0} -eq 0 ];then
-        spack mpd new-project --force -y --name ots-develop -C gcc@13.4.0 -E ots-${tag} cxxstd=20 generator=ninja
+        spack mpd new-project --force -y --name ots-develop -C gcc${gccver:+@${gccver}} -E ${env_name} cxxstd=20 generator=ninja
     else
-        spack mpd new-project --force -y --name ots-develop -C gcc@13.4.0 cxxstd=20 generator=ninja
+        spack mpd new-project --force -y --name ots-develop -C gcc${gccver:+@${gccver}} cxxstd=20 generator=ninja
     fi
     spack env activate ots-develop
 
