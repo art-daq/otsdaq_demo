@@ -203,6 +203,7 @@ done
 
 spack reindex
 
+BUILD_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
 env_name=ots-${tag}-al${os}
 if [ $os -eq 9 ];then
     gccver=13.4.0
@@ -437,7 +438,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     spack add py-black
     spack add py-cmake-format
     spack concretize --force --deprecated
-
+    spack install --deprecated
     spack mpd build --clean -j $BUILD_J
     spack mpd install
     installStatus=$?
