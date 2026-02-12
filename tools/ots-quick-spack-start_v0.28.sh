@@ -37,7 +37,8 @@ prompted for this location.
 -w            Check out repositories read/write
 --no-extra-products  Skip the automatic use of central product areas, such as CVMFS
 --upstream    Use <dir> as a Spack upstream (repeatable)
---use-cvmfs   Use CVMFS artdaq areas if available
+--no-use-cvmfs Do not search /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v0.28 for upstreams
+              If --upstream is used, CVMFS will not be automatically searched for upstreams
 --padding     Set directory padding to 255, for relocatability
 --no-view     Do not create Spack environment views
 --arch        Set architechture for build (ex. linux-almalinux9-x86_64_v3)
@@ -55,7 +56,7 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0; opt_dev_only=0; opt_use_cvmfs=0;
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0; opt_dev_only=0; opt_use_cvmfs=1;
 while [ -n "${1-}" ];do
     if expr "x${1-}" : 'x-' >/dev/null;then
         op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
@@ -76,12 +77,12 @@ while [ -n "${1-}" ];do
             -spackdir)  eval $op1arg; spackdir=$1; shift;;
             -no-extra-products)  opt_skip_extra_products=1;;
             -no-pull)   opt_no_pull=1;;
-            -upstream)  eval $op1arg; upstreams+=($1); shift;;
+            -upstream)  eval $op1arg; upstreams+=($1); opt_use_cvmfs=0; shift;;
             -padding)   opt_padding=1;;
             -arch)      eval $op1arg; arch=$1; shift;;
             -no-kmod)   opt_no_kmod=1;;
             -no-view)   opt_no_view=1;;
-            -use-cvmfs)  opt_use_cvmfs=1;;
+            -no-use-cvmfs)  opt_use_cvmfs=0;;
             *)          echo "Unknown option -$op"; do_help=1;;
         esac
     else
