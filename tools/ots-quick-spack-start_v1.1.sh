@@ -440,8 +440,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     spack add py-cmake-format
     spack concretize --force --deprecated
     spack install --deprecated
-    spack mpd build --clean -j $BUILD_J
-    spack mpd install
+    spack mpd build --clean -j $BUILD_J && spack mpd install
     installStatus=$?
     cd $Base
 fi

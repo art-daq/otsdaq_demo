@@ -438,10 +438,13 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     spack concretize --force --deprecated
     spack install --deprecated
     spack mpd build -G Ninja
-    cd $Base/build
-    ninja install
     installStatus=$?
-    cd $Base
+    if [ $installStatus -eq 0 ]; then
+        cd $Base/build
+        ninja install
+        installStatus=$?
+        cd $Base
+    fi
 fi
 
 if [ $installStatus -eq 0 ]; then
