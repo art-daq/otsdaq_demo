@@ -74,12 +74,12 @@ endif()
 
 find_package(otsdaq 2.06.06 REQUIRED)
 find_package(otsdaq-components 2.06.06 REQUIRED)
- 
+
  # XDAQ Extra setup
  include_directories($ENV{XDAQ_ROOT}/include/linux $ENV{XDAQ_ROOT}/include)
 link_directories($ENV{XDAQ_ROOT}/lib)
 link_directories($ENV{ARTDAQ_DATABASE_LIB})
- set(XDAQ_BASIC_LIB_LIST 
+ set(XDAQ_BASIC_LIB_LIST
    xcept
    xoap
    xdaq
@@ -88,7 +88,7 @@ link_directories($ENV{ARTDAQ_DATABASE_LIB})
    cgicc
  )
  set(XDAQ_XERCES-C xerces-c)
- 
+
 #string(REGEX MATCHALL "[0-9][0-9]?[0-9]?" ART_VERSION_LIST "$ENV{ART_VERSION}")
 #list(GET ART_VERSION_LIST 0 ART_MAJOR_VERSION)
 #list(GET ART_VERSION_LIST 1 ART_MINOR_VERSION)

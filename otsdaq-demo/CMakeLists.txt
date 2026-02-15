@@ -8,4 +8,3 @@ add_subdirectory(Overlays)
 add_subdirectory(SlowControlsInterfacePlugins)
 add_subdirectory(DetectorReader)
 #add_subdirectory(TemplateDirectory)
-
