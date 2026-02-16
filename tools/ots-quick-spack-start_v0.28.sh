@@ -15,16 +15,14 @@ test -d log || mkdir log
 test -d Data && rmdir Data
 test -d databases && rmdir databases
 
-env_opts_var=`basename $0 | sed 's/\.sh$//' | tr 'a-z-' 'A-Z_'`_OPTS
+env_opts_var=`basename $0 | sed 's/\.sh$//' | tr 'a-z-.' 'A-Z__'`_OPTS
 USAGE="\
    usage: `basename $0` [options] [demo_root]
 examples: `basename $0` .
-          `basename $0` --run-ots
           `basename $0` --debug
           `basename $0` --tag v2_08_04
 If the \"demo_root\" optional parameter is not supplied, the user will be
 prompted for this location.
---run-ots     runs otsdaq
 --debug       perform a debug build
 --develop     Install the develop version of the software (may be unstable!)
 --dev-only    Do not install otsdaq-suite in a local environment (use with --upstream!)
@@ -70,7 +68,6 @@ while [ -n "${1-}" ];do
             s*)         eval $op1arg; squalifier=$1; shift;;
             w*)         eval $op1chr; opt_w=`expr $opt_w + 1`;;
             -debug)     opt_debug=--debug;;
-            -run-ots)   opt_run_ots=--run-ots;;
             -develop)   opt_develop=1;;
             -dev-only)  opt_dev_only=1;;
             -tag)       eval $reqarg; tag=$1; shift;;
