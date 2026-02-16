@@ -267,7 +267,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     rm srcs
     mkdir srcs
     cd srcs
-    for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
+    for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization otsdaq-suite;do
         checkout_package $pkg
     done
     cd $Base
@@ -432,11 +432,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
         spack mpd new-project --force -y --name ots-develop cxxstd=20 %gcc${gccver:+@${gccver}}
     fi
     spack env activate ots-develop
-    spack add lcov # For coverage collection
-    spack add py-black # For python code formatting
-    spack add py-cmake-format # For CMake code formatting
-    spack concretize --force --deprecated
-    spack install --deprecated
+
     spack mpd build -G Ninja
     installStatus=$?
     if [ $installStatus -eq 0 ]; then

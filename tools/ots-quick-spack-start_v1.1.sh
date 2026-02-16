@@ -269,7 +269,7 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     rm srcs
     mkdir srcs
     cd srcs
-    for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization;do
+    for pkg in otsdaq otsdaq-demo otsdaq-utilities otsdaq-components otsdaq-epics otsdaq-prepmodernization otsdaq-suite;do
         checkout_package $pkg
     done
     cd $Base
@@ -435,11 +435,6 @@ if [[ ${opt_develop:-0} -eq 1 ]];then
     fi
     spack env activate ots-develop
 
-    spack add lcov
-    spack add py-black
-    spack add py-cmake-format
-    spack concretize --force --deprecated
-    spack install --deprecated
     spack mpd build --clean -j $BUILD_J && spack mpd install
     installStatus=$?
     cd $Base
