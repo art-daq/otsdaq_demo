@@ -58,12 +58,12 @@ thing = OEI("192.168.133.12")
 
 # single read should be 0xdeadbeef
 
-print hex(thing.read(0xAA55,1)[2])
+print(hex(thing.read(0xAA55,1)[2]))
 
 # write to test register and read it back
 
 thing.write(0x12345678, [0xdeadbeefbabecafe] )
-print hex(thing.read(0x12345678,1)[2])
+print(hex(thing.read(0x12345678,1)[2]))
 
 # write 4 words ram
 
@@ -71,7 +71,7 @@ thing.write(0x70000, [21,37,98,294])
 
 # read 4 words from ram
 
-print thing.read(0x70000,4)
+print(thing.read(0x70000,4))
 
 # write 6 words to FIFO
 
@@ -79,6 +79,6 @@ thing.writef(0x80000000,[342,11,99,67,224,4535])
 
 # read 6 words from FIFO
 
-print thing.readf(0x80000000,6)
+print(thing.readf(0x80000000,6))
 
 thing.close()
