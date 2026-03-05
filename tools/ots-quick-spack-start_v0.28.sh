@@ -152,10 +152,10 @@ concrete_include_cmd=
 
 os_long=$(spack arch -o)
 os=$(echo ${os_long//./_}|sed 's/almalinux/al/;s/ubuntu/u/')
-if [ $opt_use_cvmfs -eq 1 ] && [ -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas ]; then
-  art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas/art-suite-*-${os}|tail -1`
-  artdaq=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas/artdaq-*-${os}|tail -1`
-  ots=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_areas/ots-*-${os}|tail -1`
+if [ $opt_use_cvmfs -eq 1 ] && [ -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v0.28 ]; then
+  art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v0.28/art-suite-*-${os}|tail -1`
+  artdaq=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v0.28/artdaq-*-${os}|tail -1`
+  ots=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v0.28/ots-*-${os}|tail -1`
 
   upstreams+=($ots $artdaq $art)
 fi
