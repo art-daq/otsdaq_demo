@@ -135,7 +135,7 @@ if [[ "x$build_system_script" == "x" ]];then
   build_system_script=$Base/setup_spack_build_system_v1.1.sh
 fi
 
-echo "65aba39314fb588b2d0b256d675fa05cf7a044db *$build_system_script" | sha1sum -c -
+echo "924add2e07a0ff2acb5ca7915f0ba20074f9881a *$build_system_script" | sha1sum -c -
 if [ $? -ne 0 ]; then
   echo "ERROR: setup_spack_build_system_v1.1.sh does not have the expected checksum! Please check Github for updates to this script!"
   exit 1
@@ -151,11 +151,12 @@ fi
 
 concrete_include_cmd=
 
-os=$(cat /etc/redhat-release |grep -oE "release [0-9]+"|cut -d' ' -f2)
+os_long=$(spack arch -o)
+os=$(echo ${os_long//./_}|sed 's/almalinux/al/;s/ubuntu/u/')
 if [ $opt_use_cvmfs -eq 1 ] && [ -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1 ]; then
-  art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/art-suite-*-al${os}|tail -1`
-  artdaq=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/artdaq-*-al${os}|tail -1`
-  ots=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/ots-*-al${os}|tail -1`
+  art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/art-suite-*-${os}|tail -1`
+  artdaq=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/artdaq-*-${os}|tail -1`
+  ots=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/ots-*-${os}|tail -1`
 
   upstreams+=($ots $artdaq $art)
 fi
@@ -191,7 +192,7 @@ for upstream in ${upstreams[@]}; do
     for envdir in `find $upstream -type d -wholename '*/var/spack/environments' 2>/dev/null`; do
         echo "Looking for otsdaq environments in $envdir"
 
-        environment="ots-${tag}-al${os}"
+        environment="ots-${tag}-${os_long//./_}"
         if ! [ -d $environment ]; then continue; fi
         environment_dir=`realpath $environment`
         echo "Adding environment $environment_dir to include-concrete list"
@@ -202,12 +203,8 @@ done
 spack reindex
 
 BUILD_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
-env_name=ots-${tag}-al${os}
-if [ $os -eq 9 ];then
-    gccver=13.4.0
-elif [ $os -eq 10 ];then
-    gccver=13.4.0
-fi
+env_name=ots-${tag}-${os_long//./_}
+gccver=13.4.0
 
 if [ "x$gccver" != "x" ];then
     spack load --first gcc@${gccver} >/dev/null 2>&1
@@ -287,6 +284,7 @@ sh -c "[ \`ps \$\$ | grep bash | wc -l\` -gt 0 ] || { echo 'Please switch to the
 
 export BUILD_J=\$((\`cat /proc/cpuinfo|grep processor|tail -1|awk '{print \$3}'\` + 1))
 export SPACK_DISABLE_LOCAL_CONFIG=true
+export SPACK_USER_CACHE_PATH=$Base/.spack-cache
 source $spackdir/share/spack/setup-env.sh
 
 spack env activate ${env_to_activate}
