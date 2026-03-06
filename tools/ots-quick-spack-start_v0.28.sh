@@ -204,7 +204,7 @@ spack reindex
 cd $Base
 
 BUILD_J=$((`cat /proc/cpuinfo|grep processor|tail -1|awk '{print $3}'` + 1))
-env_name=ots-${tag}-${os_long//./_}
+env_name=ots-${tag}-${os}
 gccver=13.1.0
 if [ "$os_long" == "almalinux10" ];then
     gccver=13.3.0
