@@ -309,7 +309,6 @@ if [ -d \$SCRIPT_DIR/local/install ]; then
         export OTS_FILE_PARSE_PATTERN="/srcs/" #will be used to parse filename (i.e. for TRACE)
 
         export FHICL_FILE_PATH=\$SCRIPT_DIR/local/install/fcl:\$FHICL_FILE_PATH
-        export MU2E_SEARCH_PATH=\$SCRIPT_DIR/local/install/share:\$MU2E_SEARCH_PATH
 
         export  ARTDAQ_DAQINTERFACE_DIR=\${ARTDAQ_DAQINTERFACE_DIR:-\$SCRIPT_DIR/local/install} #only set if not set by spack, e.g. needed by UpdateOTS.sh
 
@@ -443,6 +442,8 @@ fi
 
 if [ $installStatus -eq 0 ]; then
     echo "otsdaq-demo has been installed correctly. Use 'source setup_ots.sh' to setup your otsdaq software, then follow the instructions or visit the project redmine page for more info: https://github.com/art-daq/otsdaq/wiki"
+    echo
+    ehco "UpdateOTS.sh --tables # will attempt to fix USER_DATA area; if UpdateOTS.sh does not exist, you may have to compile"
     echo
     echo "In the future, when you open a new terminal, just use 'source setup_ots.sh' to setup your ots installation."
     echo
