@@ -39,7 +39,8 @@ prompted for this location.
               If --upstream is used, CVMFS will not be automatically searched for upstreams
 --padding     Set directory padding to 255, for relocatability
 --no-view     Do not create Spack environment views
---arch        Set architechture for build (ex. linux-almalinux9-x86_64_v3)
+--arch        Architecture for build (Defaults to linux-almalinux9-x86_64_v3)
+--host-arch   Use Spack-default arch
 --no-kmod     Do not build TRACE kernel module (for Docker builds)
 "
 
@@ -47,6 +48,7 @@ prompted for this location.
 eval env_opts=\${$env_opts_var-} # can be args too
 
 spackdir="${SPACK_ROOT:-$Base/spack}"
+arch=""
 upstreams=()
 tag=develop
 installStatus=0
@@ -54,33 +56,34 @@ eval "set -- $env_opts \"\$@\""
 op1chr='rest=`expr "$op" : "[^-]\(.*\)"`   && set -- "-$rest" "$@"'
 op1arg='rest=`expr "$op" : "[^-]\(.*\)"`   && set --  "$rest" "$@"'
 reqarg="$op1arg;"'test -z "${1+1}" &&echo opt -$op requires arg. &&echo "$USAGE" &&exit'
-args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0; opt_dev_only=0; opt_use_cvmfs=1;
+args= do_help= opt_v=0; opt_w=0; opt_develop=0; opt_skip_extra_products=0; opt_no_pull=0; opt_padding=0; opt_no_kmod=0; opt_no_view=0; opt_dev_only=0; opt_use_cvmfs=1; opt_host_arch=0
 while [ -n "${1-}" ];do
     if expr "x${1-}" : 'x-' >/dev/null;then
         op=`expr "x$1" : 'x-\(.*\)'`; shift   # done with $1
         leq=`expr "x$op" : 'x-[^=]*\(=\)'` lev=`expr "x$op" : 'x-[^=]*=\(.*\)'`
         test -n "$leq"&&eval "set -- \"\$lev\" \"\$@\""&&op=`expr "x$op" : 'x\([^=]*\)'`
         case "$op" in
-            \?*|h*)     eval $op1chr; do_help=1;;
-            v*)         eval $op1chr; opt_v=`expr $opt_v + 1`;;
-            x*)         eval $op1chr; set -x;;
-            a*)         eval $op1arg; aqualifier=$1; shift;;
-            s*)         eval $op1arg; squalifier=$1; shift;;
-            w*)         eval $op1chr; opt_w=`expr $opt_w + 1`;;
-            -debug)     opt_debug=--debug;;
-            -develop)   opt_develop=1;;
-            -dev-only)  opt_dev_only=1;;
-            -tag)       eval $reqarg; tag=$1; shift;;
-            -spackdir)  eval $op1arg; spackdir=$1; shift;;
+            \?*|h*)              eval $op1chr; do_help=1;;
+            v*)                  eval $op1chr; opt_v=`expr $opt_v + 1`;;
+            x*)                  eval $op1chr; set -x;;
+            a*)                  eval $op1arg; aqualifier=$1; shift;;
+            s*)                  eval $op1arg; squalifier=$1; shift;;
+            w*)                  eval $op1chr; opt_w=`expr $opt_w + 1`;;
+            -debug)              opt_debug=--debug;;
+            -develop)            opt_develop=1;;
+            -dev-only)           opt_dev_only=1;;
+            -tag)                eval $reqarg; tag=$1; shift;;
+            -spackdir)           eval $op1arg; spackdir=$1; shift;;
             -no-extra-products)  opt_skip_extra_products=1;;
-            -no-pull)   opt_no_pull=1;;
-            -upstream)  eval $op1arg; upstreams+=($1); opt_use_cvmfs=0; shift;;
-            -padding)   opt_padding=1;;
-            -arch)      eval $op1arg; arch=$1; shift;;
-            -no-kmod)   opt_no_kmod=1;;
-            -no-view)   opt_no_view=1;;
-            -no-use-cvmfs)  opt_use_cvmfs=0;;
-            *)          echo "Unknown option -$op"; do_help=1;;
+            -no-pull)            opt_no_pull=1;;
+            -upstream)           eval $op1arg; upstreams+=($1); opt_use_cvmfs=0; shift;;
+            -padding)            opt_padding=1;;
+            -arch)               eval $op1arg; arch=$1; shift;;
+            -host-arch)          opt_host_arch=1;;
+            -no-kmod)            opt_no_kmod=1;;
+            -no-view)            opt_no_view=1;;
+            -no-use-cvmfs)       opt_use_cvmfs=0;;
+            *)                   echo "Unknown option -$op"; do_help=1;;
         esac
     else
         aa=`echo "$1" | sed -e"s/'/'\"'\"'/g"` args="$args '$aa'"; shift
@@ -117,17 +120,12 @@ if [ -n "${aqualifier-}" ]; then
     advariant="artdaq=${aqualifier}"
 fi
 
-arch_opt=""
-if [ "x$arch" != "x" ]; then
-   arch_opt="arch=$arch"
-fi
-
 view_opt=""
 if [ $opt_no_view -eq 1 ];then
     view_opt="--without-view"
 fi
 
-build_system_script=`find $Base -maxdepth 4 -type f -name setup_spack_build_system_v1.1.sh`
+build_system_script=`find $Base/srcs $Base -maxdepth 4 -type f -name setup_spack_build_system_v1.1.sh|head -1`
 if [[ "x$build_system_script" == "x" ]];then
   echo "WARNING: setup_spack_build_system_v1.1.sh not found, downloading from https://github.com/art-daq/artdaq-demo"
   cd $Base
@@ -152,6 +150,15 @@ fi
 concrete_include_cmd=
 
 os_long=$(spack arch -o)
+
+if [ $opt_host_arch -eq 1 ]; then
+    arch_opt=""
+elif [[ "x$arch" != "x" ]]; then
+    arch_opt="arch=$arch"
+else
+    arch_opt="arch=linux-${os_long}-x86_64_v3"
+fi
+
 os=$(echo ${os_long//./_}|sed 's/almalinux/al/;s/ubuntu/u/')
 if [ $opt_use_cvmfs -eq 1 ] && [ -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1 ]; then
   art=`ls -d /cvmfs/fermilab.opensciencegrid.org/products/artdaq/spack_v1.1/art-suite-*-${os}|tail -1`
