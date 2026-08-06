@@ -297,6 +297,9 @@ export SPACK_USER_CACHE_PATH=$Base/.spack-cache
 source $spackdir/share/spack/setup-env.sh
 
 spack env activate ${env_to_activate}
+pushd $Base
+spack mpd select .
+popd
 
 #handle using ots-develop local install area
 if [ -d \$SCRIPT_DIR/local/install ]; then
